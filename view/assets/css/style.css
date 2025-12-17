@@ -1,0 +1,37 @@
+/* --------------------------------------------------  RESET CSS  --------------------------------------------------*/
+
+/* enlever les marges naturelles + reset du body/html */
+html,
+body,
+header {
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* tous les élements, et pseudo-éléments héritent de la valeur de box-sizing du parent */
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/* enlever le style des listes */
+ul,
+ol {
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+/* corriger l’affichage des images */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
