@@ -46,5 +46,5 @@
       href="#########insérer_chemin_favicon##########"
     />
     
-    <link href="#########insérer_chemin_fichier_style.css##########" rel="stylesheet" type="text/css" />
+    <link href="view/assets/css/style.css" rel="stylesheet" type="text/css" />
   </head>

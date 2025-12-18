@@ -1,3 +1,7 @@
+<?php
+    require_once("view/partials/head.php");
+?>
+
 <body>
     <header>
         <a href="index.php"><img src="https://placehold.co/132x54/000000/FFFFFF/png" alt=""></a>
