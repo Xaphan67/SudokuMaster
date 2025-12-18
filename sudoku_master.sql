@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 18 déc. 2025 à 10:07
+-- Généré le : jeu. 18 déc. 2025 à 11:37
 -- Version du serveur : 9.1.0
 -- Version de PHP : 8.3.14
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `sudoku_master`
 --
+CREATE DATABASE IF NOT EXISTS `sudoku_master` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `sudoku_master`;
 
 -- --------------------------------------------------------
 
