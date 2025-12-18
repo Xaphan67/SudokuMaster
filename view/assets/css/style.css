@@ -38,14 +38,14 @@ svg {
 
 
 #grille {
-  border-radius: 15px;
-  border: 3px solid black;
+  border-radius: 20px;
+  border: 6px solid black;
   border-spacing: 0px;
 }
 
 #grille td {
-  height: 50px;
-  width: 50px;
+  height: 80px;
+  width: 80px;
   border: 1px solid black;
   text-align: center;
 }
@@ -62,37 +62,33 @@ svg {
 }
 
 #grille tr:nth-child(4) td {
-  border-top: 2px solid black;
+  border-top: 4px solid black;
 }
 
 #grille tr:nth-child(6) td {
-  border-bottom: 2px solid black;
+  border-bottom: 4px solid black;
 }
 
 #grille tr td:nth-child(4) {
-  border-left: 2px solid black;
+  border-left: 4px solid black;
 }
 
 #grille tr td:nth-child(6) {
-  border-right: 2px solid black;
+  border-right: 4px solid black;
 }
 
-#grille tr:first-child td:first-child {
+#grille tr:first-child td {
   border-top: none;
-  border-left: none;
 }
 
-#grille tr:first-child td:last-child {
-  border-top: none;
-  border-right: none;
-}
-
-#grille tr:last-child td:first-child {
-  border-left: none;
+#grille tr:last-child td {
   border-bottom: none;
 }
 
-#grille tr:last-child td:last-child {
+#grille tr td:first-child {
+  border-left: none;
+}
+
+#grille tr td:last-child {
   border-right: none;
-  border-bottom: none;
 }
