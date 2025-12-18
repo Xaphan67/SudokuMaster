@@ -35,3 +35,64 @@ svg {
   display: block;
   max-width: 100%;
 }
+
+
+#grille {
+  border-radius: 15px;
+  border: 3px solid black;
+  border-spacing: 0px;
+}
+
+#grille td {
+  height: 50px;
+  width: 50px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+#grille tr:nth-child(4):not(td:nth-child(4)), #grille tr:nth-child(5), #grille tr:nth-child(6),
+#grille tr td:nth-child(4), #grille tr td:nth-child(5), #grille tr td:nth-child(6) {
+  background-color: antiquewhite;
+}
+
+#grille tr:nth-child(4) td:nth-child(4), #grille tr:nth-child(4) td:nth-child(5), #grille tr:nth-child(4) td:nth-child(6),
+#grille tr:nth-child(5) td:nth-child(4), #grille tr:nth-child(5) td:nth-child(5), #grille tr:nth-child(5) td:nth-child(6),
+#grille tr:nth-child(6) td:nth-child(4), #grille tr:nth-child(6) td:nth-child(5), #grille tr:nth-child(6) td:nth-child(6) {
+  background-color: white;
+}
+
+#grille tr:nth-child(4) td {
+  border-top: 2px solid black;
+}
+
+#grille tr:nth-child(6) td {
+  border-bottom: 2px solid black;
+}
+
+#grille tr td:nth-child(4) {
+  border-left: 2px solid black;
+}
+
+#grille tr td:nth-child(6) {
+  border-right: 2px solid black;
+}
+
+#grille tr:first-child td:first-child {
+  border-top: none;
+  border-left: none;
+}
+
+#grille tr:first-child td:last-child {
+  border-top: none;
+  border-right: none;
+}
+
+#grille tr:last-child td:first-child {
+  border-left: none;
+  border-bottom: none;
+}
+
+#grille tr:last-child td:last-child {
+  border-right: none;
+  border-bottom: none;
+}

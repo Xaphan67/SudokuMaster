@@ -1,7 +1,6 @@
 <main>
-<button id="test">Test</button>
+    <button id="test">Test</button>
 
-<table id="grille">
-
-</table>
+    <table id="grille">
+    </table>
 </main>

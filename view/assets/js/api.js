@@ -8,7 +8,11 @@ BUTTON.addEventListener("click", async (e) => {
 
     GRID_INFO.puzzle.forEach(line => {
         let newRow = TABLE.insertRow(-1);
-
+        line.forEach((element, index) => {
+            let newCell = newRow.insertCell(index);
+            let newNumber = document.createTextNode(element != "0" ? element : "");
+            newCell.appendChild(newNumber);
+        });
     });
 })
 
