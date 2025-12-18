@@ -2,7 +2,7 @@
 
  require_once "entity.php";
 
- class Statistiques extends Entity {
+ class Classer extends Entity {
     private string $id;
     private Utilisateur $utilisateur;
     private ModeDeJeu $modeDeJeu;
