@@ -1,6 +1,5 @@
 <main>
-    <button id="test">Test</button>
-
+    <p id="difficulte"></p>
     <table id="grille">
     </table>
 </main>

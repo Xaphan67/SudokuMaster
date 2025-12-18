@@ -41,6 +41,7 @@ svg {
   border-radius: 20px;
   border: 6px solid black;
   border-spacing: 0px;
+  display: none;
 }
 
 #grille td {
