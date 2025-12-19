@@ -93,10 +93,6 @@ justify-content: center;
   text-align: center;
 }
 
-.cellule {
-  background-color: var(--secondary);
-}
-
 #grille tr:nth-child(4) td {
   border-top: 4px solid var(--MidnightViolet);
 }
@@ -159,9 +155,14 @@ justify-content: center;
   margin: 0 30px;
 }
 
-.cellule {
+td, #pave_numerique p, #boutons_difficulte div {
   pointer-events: all;
   cursor: pointer;
+}
+
+.cellule {
+  background-color: var(--WisteriaBlue);
+  
 }
 
 .selected {
@@ -170,4 +171,32 @@ justify-content: center;
 
 .selected_highlight {
   background-color: var(--CrimsonViolet75pourcent) !important;
+}
+
+#choix_difficulte {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  gap: 20px;
+  align-self: center;
+  width: 450px;
+  height: 292px;
+  border-radius: 15px;
+  background-color: var(--WisteriaBlue);
+  box-shadow: 0px 4px 4px 0px #686868;
+  text-align: center;
+}
+
+#boutons_difficulte {
+  display: flex;
+  justify-content: space-between;
+}
+
+#boutons_difficulte div {
+  border-radius: 15px;
+  width: 120px;
+  height: 95px;
+  line-height: 95px; /* A supprimer une fois les images de bouton ajoutés */
+  background-color: white;
 }

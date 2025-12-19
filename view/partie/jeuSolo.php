@@ -31,5 +31,24 @@
 
             <div id="bouton_jeu">Nouvelle Partie</div>
         </div>
+
+        <div id="choix_difficulte"><!-- popup de début de partie -->
+            <h3>Séléctionnez la difficulté</h3>
+            <p>La partie débutera dès que vous aurez fait votre choix</p>
+            <div id="boutons_difficulte">
+                <div>
+                    <img src="" alt="">
+                    <p>Facile</p>
+                </div>
+                <div>
+                    <img src="" alt="">
+                    <p>Moyen</p>
+                </div>
+                <div>
+                    <img src="" alt="">
+                    <p>Difficile</p>
+                </div>
+            </div>
+        </div>
     </div>
 </main>

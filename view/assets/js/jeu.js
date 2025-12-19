@@ -2,7 +2,21 @@ const TABLE = document.getElementById("grille");
 const PAVE = document.getElementById("pave_numerique");
 const BOUTONS =  Array.prototype.slice.call(PAVE.getElementsByTagName("p"));
 
+let difficulte = 1;
 let caseActuelle = null;
+
+// Séléction de la difficulté
+const DIFFICULTE = document.getElementById("difficulte");
+const POPUP_DIFFICULTE = document.getElementById("choix_difficulte");
+const POPUP_BOUTONS_DIFFICULTE = Array.prototype.slice.call(document.getElementById("boutons_difficulte").getElementsByTagName("div"));
+POPUP_BOUTONS_DIFFICULTE.forEach(element => {
+    element.onclick=function() {
+        difficulte = element.children[1].innerHTML;
+        POPUP_DIFFICULTE.style.display = "none";
+        DIFFICULTE.innerHTML = difficulte;
+        callSudokuAPI();
+    }
+})
 
 // Stocke la case sur laquelle l'utilisateur à cliqué
 TABLE.addEventListener("click", (e) => {

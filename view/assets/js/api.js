@@ -1,16 +1,15 @@
+let difficulteEN = 'easy';
+
 // Appel l'API pour charger une grille à la fin du chargement de la page
 // puis l'afficher ainssi que sa difficulté
-addEventListener("DOMContentLoaded", async (e) => {
-    e.preventDefault();
-
+async function callSudokuAPI() {
     // Constantes
-    const DIFFICULTE = document.getElementById("difficulte");
-    const DIFFICULTE_FR = {easy: 'Facile', medium: 'Moyen', hard: 'Difficile'};
     const TABLE = document.getElementById("grille");
     const GRID_INFO = await getGrid();
-
-    // Récupère la difficulté de la grille renvoyée par l'API, et la traduit en français à l'aide du tableau DIFFICULTE_FR
-    DIFFICULTE.innerHTML = DIFFICULTE_FR[GRID_INFO.difficulty];
+    
+    // Récupère la difficulté choisie par l'utilisateur et la traduit pour l'envoyer à l'API
+    const DIFFICULTE_EN = {Facile: 'easy', Moyen: 'medium', Difficile: 'hard'};
+    difficulteEN = DIFFICULTE_EN[difficulte];
 
     // Parcours la grille renvoyée par l'API et l'affiche dans un tableau
     GRID_INFO.puzzle.forEach((line, lineIndex) => {
@@ -25,7 +24,7 @@ addEventListener("DOMContentLoaded", async (e) => {
         });
     });
     TABLE.style.display = "inline-table";
-})
+}
 
 // Récupère les informations d'une grille grâce à un appel API
 async function getGrid() {
@@ -37,7 +36,7 @@ async function getGrid() {
                 'Content-Type': 'application/json', // Indique qu'on envoie du JSON
                 'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
             },
-            body: JSON.stringify({ difficulte: 'easy'}) // Objet JS converti en chaîne JSON
+            body: JSON.stringify({ difficulte: difficulteEN}) // Objet JS converti en chaîne JSON
         });
         const GRID = await RES_GRID.json();
 
