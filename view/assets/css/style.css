@@ -73,6 +73,10 @@ p {
   font-family: "inter";
 }
 
+body {
+  font-size : 62.5% 
+}
+
 main {
   max-width: 1120px;
   min-height: calc(100vh - 146px);
@@ -198,8 +202,9 @@ footer div:last-child {
 
 #conteneur_jeu {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   filter: opacity(0.40);
 }
 
@@ -214,18 +219,22 @@ footer div:last-child {
   border: 6px solid var(--MidnightViolet);
   border-spacing: 0px;
   /*border-collapse: collapse;*/
+  width: 80dvw;
+  height: 80dvw;
+  min-height: 380px;
+  min-width: 380px;
 }
 
 #grille {
   display: none;
-  font-size: 36px;
+  font-size: calc(1rem + 2vw);
   font-weight: bold;
 }
 
 
 .grille td {
-  height: 80px;
-  width: 80px;
+  min-width: 40px;
+  min-height: 40px;
   border: 1px solid var(--MidnightViolet);
   text-align: center;
 }
@@ -399,4 +408,37 @@ td:not(.celluleFixe, .selected_highlight) {
 #boutons_difficulte div:active {
   background-color: var(--CrimsonViolet75pourcent);
   transition: all 0.1s ease;
+}
+
+
+/* --------------------------------------------------  RESPONSIVE  -------------------------------------------------- */
+
+@media screen and (min-width: 769px) {
+
+  #conteneur_jeu {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.grille {
+  width: 40dvw;
+  height: 40dvw;
+
+  max-width: 40dvw;
+  max-height: 40dvw;
+
+  min-height: 380px;
+  min-width: 380px;
+}
+
+#grille {
+  font-size: 36px;
+}
+
+#interface_de_jeu {
+  min-height: 100%;
+ height: 100%;
+}
+
 }
