@@ -62,6 +62,16 @@ p {
   font-family: "inter";
 }
 
+main {
+  max-width: 1120px;
+  margin: 40px auto;
+}
+
+a, a:visited {
+  text-decoration: none;
+  color: var(--CrimsonViolet);
+}
+
 p {
   margin: 0;
   padding: 0;
@@ -69,7 +79,7 @@ p {
 }
 
 td {
-   color: var(--MidnightViolet);
+  color: var(--MidnightViolet);
 }
 
 .bouton {
@@ -111,14 +121,69 @@ td {
   transition: filter 0.1s ease;
 }
 
+/* --------------------------------------------------  Header  --------------------------------------------------*/
+
+header {
+  border-bottom: 1px solid var(--CrimsonViolet50pourcent);
+  box-shadow: 0px 4px 4px var(--CrimsonViolet50pourcent);
+}
+
+header>div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 1120px;
+  height: 80px;
+  font-size: 24px;
+}
+
+nav {
+  display: flex;
+  gap: 60px;
+}
+
+#utilisateur {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* --------------------------------------------------  Footer  --------------------------------------------------*/
+
+footer {
+  border-top: 1px solid var(--CrimsonViolet50pourcent);
+  box-shadow: 0px 0px 4px var(--CrimsonViolet50pourcent);
+}
+
+footer>div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 1120px;
+  height: 64px;
+}
+
+footer>div div {
+  display: flex;
+}
+
+footer div:first-child {
+  gap: 20px;
+}
+
+footer div:last-child {
+  gap: 27px;
+}
+
 /* --------------------------------------------------  Tableau de jeu  --------------------------------------------------*/
 
 #conteneur_jeu {
-display: flex;
-flex-direction: row;
-gap: 40px;
-justify-content: center;
-filter: opacity(0.40);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  filter: opacity(0.40);
 }
 
 #interface_de_jeu {
@@ -131,6 +196,7 @@ filter: opacity(0.40);
   border-radius: 20px;
   border: 6px solid var(--MidnightViolet);
   border-spacing: 0px;
+  /*border-collapse: collapse;*/
 }
 
 #grille {
@@ -138,6 +204,7 @@ filter: opacity(0.40);
   font-size: 36px;
   font-weight: bold;
 }
+
 
 .grille td {
   height: 80px;
@@ -167,9 +234,8 @@ filter: opacity(0.40);
 }
 
 .grille tr:last-child td:last-child {
-   border-radius:  0 0 12px 0;
+  border-radius:  0 0 12px 0;
 }
-
 
 .grille tr td:nth-child(4) {
   border-left: 4px solid var(--MidnightViolet);
@@ -280,8 +346,8 @@ td:not(.celluleFixe, .selected_highlight) {
 }
 
 #boutons_difficulte div img {
-width: 50px;
-height: 50px;
+  width: 50px;
+  height: 50px;
 }
 
 #boutons_difficulte div:hover {

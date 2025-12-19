@@ -1,6 +1,6 @@
 <main>
     
-    <p id="difficulte"></p>
+    <h2 id="difficulte">Jeu solo</h2>
     <div id="conteneur_jeu">
         <table class="grille" id="grille_vide">
             <tbody>

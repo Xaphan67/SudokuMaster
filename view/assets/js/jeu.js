@@ -14,7 +14,7 @@ POPUP_BOUTONS_DIFFICULTE.forEach(element => {
     element.onclick=function() {
         difficulte = element.children[1].innerHTML;
         POPUP_DIFFICULTE.style.display = "none";
-        DIFFICULTE.innerHTML = difficulte;
+        DIFFICULTE.innerHTML += ' : Difficulté ' + difficulte;
         callSudokuAPI();
     }
 })
