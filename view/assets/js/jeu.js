@@ -5,6 +5,9 @@ const BOUTONS =  Array.prototype.slice.call(PAVE.getElementsByTagName("p"));
 let difficulte = 1;
 let caseActuelle = null;
 let case_focus = null;
+let timerMinutes = 0;
+let timerSecondes = 0;
+let timerId = null;
 
 // Séléction de la difficulté
 const TITRE_JEU = document.getElementById("titre_jeu");
@@ -16,6 +19,7 @@ POPUP_BOUTONS_DIFFICULTE.forEach(element => {
         POPUP_DIFFICULTE.style.display = "none";
         TITRE_JEU.innerHTML += ' : Difficulté ' + difficulte;
         callSudokuAPI();
+        startTimer();
     }
 })
 
@@ -55,3 +59,37 @@ BOUTONS.forEach(element => {
         }
     }
 })
+
+// Force l'attente du sript pendant la durée pasée en paramettres (en milisecondes)
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Démare le timer
+async function startTimer() {
+    const CONTENEUR_JEU = document.getElementById("conteneur_jeu");
+    while (CONTENEUR_JEU.style.filter != "none") {
+        await sleep()
+    }
+    timerMinutes = 14;
+    timerSecondes = 59;
+    timerId = setInterval(decreaseTimer, 1000); // Décompte les secondes
+}
+
+function decreaseTimer() {
+    const TIMER = document.getElementById("timer"); // Récupère la div "timer"
+    TIMER.innerText = "Temps : " + (timerMinutes < 10 ? "0" + timerMinutes : timerMinutes) + ':' + (timerSecondes < 10 ? "0" + timerSecondes : timerSecondes); // Affiche la valeur du timer
+    
+    // Si le timer des secondes est égal à 0
+    if (timerSecondes == 0) {
+
+        // Si les minutes sont à zero
+        if (timerMinutes == 0) {
+            clearInterval(timerId); // Stop le timer
+        }
+
+        timerMinutes--; // Retire une minute
+        timerSecondes = 60; // Remet les secondes à 60
+    }
+    timerSecondes--; // Retire une seconde
+}

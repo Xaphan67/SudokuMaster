@@ -118,7 +118,7 @@
                 </div>
                 <div>
                     <div class="boutonPave"><img src="https://placehold.co/50x50/000000/FFFFFF/png" alt=""></div>
-                    <p>Temps : 00:00</p>
+                    <p id="timer">Temps : 15:00</p>
                 </div>
             </div>
 
