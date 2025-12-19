@@ -1,3 +1,8 @@
+:root {
+  --primary : #65082D;
+  --secondary : #E3E4F4;
+}
+
 /* --------------------------------------------------  RESET CSS  --------------------------------------------------*/
 
 /* enlever les marges naturelles + reset du body/html */
@@ -36,6 +41,26 @@ svg {
   max-width: 100%;
 }
 
+p {
+  margin: 0;
+  padding: 0;
+}
+
+/* --------------------------------------------------  Tableau de jeu  --------------------------------------------------*/
+
+
+#conteneur_jeu {
+display: flex;
+flex-direction: row;
+gap: 40px;
+justify-content: center;
+}
+
+#interface_de_jeu {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
 
 #grille {
   border-radius: 20px;
@@ -53,7 +78,7 @@ svg {
 
 #grille tr:nth-child(4):not(td:nth-child(4)), #grille tr:nth-child(5), #grille tr:nth-child(6),
 #grille tr td:nth-child(4), #grille tr td:nth-child(5), #grille tr td:nth-child(6) {
-  background-color: antiquewhite;
+  background-color: var(--secondary);
 }
 
 #grille tr:nth-child(4) td:nth-child(4), #grille tr:nth-child(4) td:nth-child(5), #grille tr:nth-child(4) td:nth-child(6),
@@ -92,4 +117,36 @@ svg {
 
 #grille tr td:last-child {
   border-right: none;
+}
+
+
+#pave_numerique {
+  width: 330px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#pave_numerique>div {
+  width: 100px;
+  height: 100px;
+  background-color: var(--secondary);
+  border-radius: 15px;
+  text-align: center;
+  line-height: 100px;
+}
+
+#bouton_jeu {
+  height: 80px;
+  background-color: var(--primary);
+  border-radius: 15px;
+  text-align: center;
+  line-height: 80px;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 30px;
+
+
 }
