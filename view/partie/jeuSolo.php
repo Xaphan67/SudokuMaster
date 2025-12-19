@@ -113,11 +113,11 @@
         <div id="interface_de_jeu"> <!-- boutons de jeu -->
             <div> <!-- notes et temps -->
                 <div>
-                    <div><img src="" alt=""></div>
+                    <div class="boutonPave"><img src="" alt=""></div>
                     <p>Notes : OFF</p>
                 </div>
                 <div>
-                    <div><img src="" alt=""></div>
+                    <div class="boutonPave"><img src="" alt=""></div>
                     <p>Temps : 00:00</p>
                 </div>
             </div>
@@ -142,16 +142,16 @@
         <h3>Séléctionnez la difficulté</h3>
         <p>La partie débutera dès que vous aurez fait votre choix</p>
         <div id="boutons_difficulte">
-            <div>
-                <img src="" alt="">
+            <div class="bouton">
+                <img src="https://placehold.co/50x50/000000/FFFFFF/png" alt="">
                 <p>Facile</p>
             </div>
-            <div>
-                <img src="" alt="">
+            <div class="bouton">
+                <img src="https://placehold.co/50x50/000000/FFFFFF/png" alt="">
                 <p>Moyen</p>
             </div>
-            <div>
-                <img src="" alt="">
+            <div class="bouton">
+                <img src="https://placehold.co/50x50/000000/FFFFFF/png" alt="">
                 <p>Difficile</p>
             </div>
         </div>
