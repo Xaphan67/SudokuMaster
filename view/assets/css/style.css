@@ -52,6 +52,9 @@ p {
 }
 
 /* --------------------------------------------------  Setting généraux  --------------------------------------------------*/
+* {
+  font-family: "inter";
+}
 
 p {
   margin: 0;
@@ -61,6 +64,38 @@ p {
 
 td {
    color: var(--MidnightViolet);
+}
+
+.bouton {
+  cursor: pointer;
+}
+
+.boutonPrincipal {
+   box-shadow: 0px 4px 4px 0px #686868;
+  transition: background-color 0.5s ease;
+}
+
+.boutonPrincipal:hover {
+  background-color: var(--CrimsonViolet75pourcent);
+}
+
+.boutonPrincipal:active {
+  background-color: var(--CrimsonViolet50pourcent);
+  transition: filter 0.1s ease;
+}
+
+.boutonPave {
+   box-shadow: 0px 2px 2px 0px #686868;
+  transition: filter 0.5s ease;
+}
+
+.boutonPave:hover {
+  filter: brightness(0.94);
+}
+
+.boutonPave:active {
+  filter: brightness(0.8);
+  transition: filter 0.1s ease;
 }
 
 /* --------------------------------------------------  Tableau de jeu  --------------------------------------------------*/
@@ -107,6 +142,23 @@ filter: opacity(0.40);
   border-bottom: 4px solid var(--MidnightViolet);
 }
 
+.grille tr:first-child td:first-child {
+  border-radius: 12px 0 0 0;
+}
+
+.grille tr:first-child td:last-child {
+  border-radius:  0 12px 0 0;
+}
+
+.grille tr:last-child td:first-child {
+  border-radius:  0 0 0 12px;
+}
+
+.grille tr:last-child td:last-child {
+   border-radius:  0 0 12px 0;
+}
+
+
 .grille tr td:nth-child(4) {
   border-left: 4px solid var(--MidnightViolet);
 }
@@ -149,6 +201,9 @@ filter: opacity(0.40);
   line-height: 100px;
 }
 
+
+
+
 #bouton_jeu {
   height: 80px;
   background-color: var(--CrimsonViolet);
@@ -166,9 +221,13 @@ td, #pave_numerique p, #boutons_difficulte div {
   cursor: pointer;
 }
 
+td:not(.celluleFixe, .selected_highlight) {
+  color: var(--CrimsonViolet75pourcent);
+  font-weight:normal;
+}
+
 .celluleBleue {
   background-color: var(--WisteriaBlue);
-  
 }
 
 .selected {
@@ -178,6 +237,10 @@ td, #pave_numerique p, #boutons_difficulte div {
 .selected_highlight {
   background-color: var(--CrimsonViolet75pourcent) !important;
   color: var(--White);
+}
+
+.selected_highlight:not(.celluleFixe) {
+  font-weight: normal;
 }
 
 #choix_difficulte {
@@ -208,8 +271,4 @@ td, #pave_numerique p, #boutons_difficulte div {
   height: 95px;
   line-height: 95px; /* A supprimer une fois les images de bouton ajoutés */
   background-color: var(--White);
-}
-
-td:not(.celluleFixe, .selected_highlight) {
-  color: var(--CrimsonViolet);
 }

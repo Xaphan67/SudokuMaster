@@ -123,18 +123,18 @@
             </div>
 
             <div id="pave_numerique"> <!-- pavé numérique -->
-                <p>1</p>
-                <p>2</p>
-                <p>3</p>
-                <p>4</p>
-                <p>5</p>
-                <p>6</p>
-                <p>7</p>
-                <p>8</p>
-                <p>9</p>
+                <p class="bouton boutonPave">1</p>
+                <p class="bouton boutonPave">2</p>
+                <p class="bouton boutonPave">3</p>
+                <p class="bouton boutonPave">4</p>
+                <p class="bouton boutonPave">5</p>
+                <p class="bouton boutonPave">6</p>
+                <p class="bouton boutonPave">7</p>
+                <p class="bouton boutonPave">8</p>
+                <p class="bouton boutonPave">9</p>
             </div>
 
-            <div id="bouton_jeu">Nouvelle Partie</div>
+            <div id="bouton_jeu" class="bouton boutonPrincipal">Nouvelle Partie</div>
         </div>
 
     </div>
