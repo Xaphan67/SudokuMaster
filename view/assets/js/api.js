@@ -21,7 +21,10 @@ async function callSudokuAPI() {
             if (((lineIndex < 3 || lineIndex >= 6) && colIindex >= 3 && colIindex < 6) || (lineIndex >= 3 && lineIndex < 6 && (colIindex < 3 || colIindex >= 6))) {
                 newCell.className = 'celluleBleue';
             }
-            let newNumber = document.createTextNode(element != "0" ? element : "");
+            newNumber = document.createTextNode(element != "0" ? element : "");
+            if (element != "0") {
+                newCell.classList.add("celluleFixe")
+            }
             newCell.appendChild(newNumber);
         });
     });

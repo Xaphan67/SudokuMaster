@@ -87,7 +87,9 @@ filter: opacity(0.40);
 }
 
 #grille {
-  display: none; 
+  display: none;
+  font-size: 36px;
+  font-weight: bold;
 }
 
 .grille td {
@@ -135,6 +137,7 @@ filter: opacity(0.40);
   flex-direction: row;
   flex-wrap: wrap;
   gap: 10px;
+  font-size: 40px;
 }
 
 #pave_numerique p {
@@ -174,6 +177,7 @@ td, #pave_numerique p, #boutons_difficulte div {
 
 .selected_highlight {
   background-color: var(--CrimsonViolet75pourcent) !important;
+  color: var(--White);
 }
 
 #choix_difficulte {
@@ -203,5 +207,9 @@ td, #pave_numerique p, #boutons_difficulte div {
   width: 120px;
   height: 95px;
   line-height: 95px; /* A supprimer une fois les images de bouton ajoutés */
-  background-color: white;
+  background-color: var(--White);
+}
+
+td:not(.celluleFixe, .selected_highlight) {
+  color: var(--CrimsonViolet);
 }

@@ -4,6 +4,7 @@ const BOUTONS =  Array.prototype.slice.call(PAVE.getElementsByTagName("p"));
 
 let difficulte = 1;
 let caseActuelle = null;
+let case_focus = null;
 
 // Séléction de la difficulté
 const DIFFICULTE = document.getElementById("difficulte");
@@ -20,11 +21,11 @@ POPUP_BOUTONS_DIFFICULTE.forEach(element => {
 
 // Stocke la case sur laquelle l'utilisateur à cliqué
 TABLE.addEventListener("click", (e) => {
-    const ELEMENT_CLICK = e.target;
+    case_focus = e.target;
     const CELLULES = Array.prototype.slice.call(TABLE.getElementsByTagName("td"));
-    if (ELEMENT_CLICK.nodeName == "TD") {
-        caseActuelle = ELEMENT_CLICK;
-        ELEMENT_CLICK.classList.add("selected_highlight");
+    if (case_focus.nodeName == "TD") {
+        caseActuelle = case_focus;
+        case_focus.classList.add("selected_highlight");
         
          // Color toutes les cellules autres que celle selectionnée
             CELLULES.forEach(cellule => {
@@ -49,7 +50,7 @@ TABLE.addEventListener("click", (e) => {
 // Change la valeur de la case cliquée lors d'un click sur un des boutons du pavé numérique
 BOUTONS.forEach(element => {
     element.onclick=function() {
-        if (caseActuelle != null) {
+        if (caseActuelle != null && !case_focus.classList.contains("celluleFixe")) {
             caseActuelle.innerHTML = this.innerHTML;
         }
     }
