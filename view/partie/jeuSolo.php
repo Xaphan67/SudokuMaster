@@ -18,33 +18,15 @@
             </div>
 
             <div id="pave_numerique"> <!-- pavé numérique -->
-                <div id="pave_1">
-                    <p>1</p>
-                </div>
-                <div id="pave_2">
-                    <p>2</p>
-                </div>
-                <div id="pave_3">
-                    <p>3</p>
-                </div>
-                <div id="pave_4">
-                    <p>4</p>
-                </div>
-                <div id="pave_5">
-                    <p>5</p>
-                </div>
-                <div id="pave_6">
-                    <p>6</p>
-                </div>
-                <div id="pave_7">
-                    <p>7</p>
-                </div>
-                <div id="pave_8">
-                    <p>8</p>
-                </div>
-                <div id="pave_9">
-                    <p>9</p>
-                </div>
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
+                <p>4</p>
+                <p>5</p>
+                <p>6</p>
+                <p>7</p>
+                <p>8</p>
+                <p>9</p>
             </div>
 
             <div id="bouton_jeu">Nouvelle Partie</div>
