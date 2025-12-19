@@ -2,7 +2,112 @@
     
     <p id="difficulte"></p>
     <div id="conteneur_jeu">
-        <table id="grille">
+        <table class="grille" id="grille_vide">
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+
+        </table>
+
+        <table class="grille" id="grille">
         </table>
 
         <div id="interface_de_jeu"> <!-- boutons de jeu -->
@@ -32,22 +137,22 @@
             <div id="bouton_jeu">Nouvelle Partie</div>
         </div>
 
-        <div id="choix_difficulte"><!-- popup de début de partie -->
-            <h3>Séléctionnez la difficulté</h3>
-            <p>La partie débutera dès que vous aurez fait votre choix</p>
-            <div id="boutons_difficulte">
-                <div>
-                    <img src="" alt="">
-                    <p>Facile</p>
-                </div>
-                <div>
-                    <img src="" alt="">
-                    <p>Moyen</p>
-                </div>
-                <div>
-                    <img src="" alt="">
-                    <p>Difficile</p>
-                </div>
+    </div>
+    <div id="choix_difficulte"><!-- popup de début de partie -->
+        <h3>Séléctionnez la difficulté</h3>
+        <p>La partie débutera dès que vous aurez fait votre choix</p>
+        <div id="boutons_difficulte">
+            <div>
+                <img src="" alt="">
+                <p>Facile</p>
+            </div>
+            <div>
+                <img src="" alt="">
+                <p>Moyen</p>
+            </div>
+            <div>
+                <img src="" alt="">
+                <p>Difficile</p>
             </div>
         </div>
     </div>

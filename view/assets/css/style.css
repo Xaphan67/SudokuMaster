@@ -71,6 +71,7 @@ display: flex;
 flex-direction: row;
 gap: 40px;
 justify-content: center;
+filter: opacity(0.40);
 }
 
 #interface_de_jeu {
@@ -79,52 +80,54 @@ justify-content: center;
   flex-direction: column;
 }
 
-#grille {
+.grille {
   border-radius: 20px;
   border: 6px solid var(--MidnightViolet);
   border-spacing: 0px;
-  display: none;
 }
 
-#grille td {
+#grille {
+  display: none; 
+}
+
+.grille td {
   height: 80px;
   width: 80px;
   border: 1px solid var(--MidnightViolet);
   text-align: center;
 }
 
-#grille tr:nth-child(4) td {
+.grille tr:nth-child(4) td {
   border-top: 4px solid var(--MidnightViolet);
 }
 
-#grille tr:nth-child(6) td {
+.grille tr:nth-child(6) td {
   border-bottom: 4px solid var(--MidnightViolet);
 }
 
-#grille tr td:nth-child(4) {
+.grille tr td:nth-child(4) {
   border-left: 4px solid var(--MidnightViolet);
 }
 
-#grille tr td:nth-child(6) {
+.grille tr td:nth-child(6) {
   border-right: 4px solid var(--MidnightViolet);
 }
 
-#grille tr:first-child td {
+.grille tr:first-child td {
   border-top: none;
 }
 
-#grille tr:last-child td {
+.grille tr:last-child td {
   border-bottom: none;
 }
 
-#grille tr td:first-child {
+.grille tr td:first-child {
   border-left: none;
 }
 
-#grille tr td:last-child {
+.grille tr td:last-child {
   border-right: none;
 }
-
 
 #pave_numerique {
   width: 330px;
@@ -160,7 +163,7 @@ td, #pave_numerique p, #boutons_difficulte div {
   cursor: pointer;
 }
 
-.cellule {
+.celluleBleue {
   background-color: var(--WisteriaBlue);
   
 }
@@ -179,7 +182,9 @@ td, #pave_numerique p, #boutons_difficulte div {
   flex-direction: column;
   padding: 40px;
   gap: 20px;
-  align-self: center;
+  top : 50%;
+  left : 50%;
+  transform: translateX(-50%) translateY(-50%);
   width: 450px;
   height: 292px;
   border-radius: 15px;

@@ -5,6 +5,8 @@ let difficulteEN = 'easy';
 async function callSudokuAPI() {
     // Constantes
     const TABLE = document.getElementById("grille");
+    const TABLE_VIDE = document.getElementById("grille_vide");
+    const CONTENEUR_JEU = document.getElementById("conteneur_jeu");
     const GRID_INFO = await getGrid();
     
     // Récupère la difficulté choisie par l'utilisateur et la traduit pour l'envoyer à l'API
@@ -17,13 +19,15 @@ async function callSudokuAPI() {
         line.forEach((element, colIindex) => {
             let newCell = newRow.insertCell(colIindex);
             if (((lineIndex < 3 || lineIndex >= 6) && colIindex >= 3 && colIindex < 6) || (lineIndex >= 3 && lineIndex < 6 && (colIindex < 3 || colIindex >= 6))) {
-                newCell.className = 'cellule';
+                newCell.className = 'celluleBleue';
             }
             let newNumber = document.createTextNode(element != "0" ? element : "");
             newCell.appendChild(newNumber);
         });
     });
     TABLE.style.display = "inline-table";
+    TABLE_VIDE.style.display = "none";
+    CONTENEUR_JEU.style.filter = "none";
 }
 
 // Récupère les informations d'une grille grâce à un appel API
