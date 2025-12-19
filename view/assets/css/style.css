@@ -8,6 +8,12 @@
   --White : #FFFFFF;
 }
 
+@font-face {
+  font-family: "Berlin";
+  font-weight: 400;
+  src: url("../fonts/berlin-sans-fb-demi/BRLNSDB.TTF") format("truetype");
+}
+
 /* --------------------------------------------------  RESET CSS  --------------------------------------------------*/
 
 /* enlever les marges naturelles + reset du body/html */
@@ -31,6 +37,11 @@ header {
 h1, h2, h3, h4, h5, h6, p, a {
   margin: 0;
   padding: 0;
+}
+
+h1, h2 {
+  font-family: "Berlin";
+
 }
 
 
@@ -69,7 +80,7 @@ main {
 
 a, a:visited {
   text-decoration: none;
-  color: var(--CrimsonViolet);
+  color: var(--MidnightViolet);
 }
 
 p {
@@ -179,6 +190,10 @@ footer div:last-child {
 
 /* --------------------------------------------------  Tableau de jeu  --------------------------------------------------*/
 
+#titre_jeu {
+  margin-bottom: 40px;
+}
+
 #conteneur_jeu {
   display: flex;
   flex-direction: row;
@@ -260,6 +275,31 @@ footer div:last-child {
 .grille tr td:last-child {
   border-right: none;
 }
+
+#interface_de_jeu>div {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#interface_de_jeu>div>div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+}
+
+#interface_de_jeu>div>div>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin-bottom: 16px;
+}
+
+
 
 #pave_numerique {
   width: 330px;

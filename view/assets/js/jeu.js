@@ -7,14 +7,14 @@ let caseActuelle = null;
 let case_focus = null;
 
 // Séléction de la difficulté
-const DIFFICULTE = document.getElementById("difficulte");
+const TITRE_JEU = document.getElementById("titre_jeu");
 const POPUP_DIFFICULTE = document.getElementById("choix_difficulte");
 const POPUP_BOUTONS_DIFFICULTE = Array.prototype.slice.call(document.getElementById("boutons_difficulte").getElementsByTagName("div"));
 POPUP_BOUTONS_DIFFICULTE.forEach(element => {
     element.onclick=function() {
         difficulte = element.children[1].innerHTML;
         POPUP_DIFFICULTE.style.display = "none";
-        DIFFICULTE.innerHTML += ' : Difficulté ' + difficulte;
+        TITRE_JEU.innerHTML += ' : Difficulté ' + difficulte;
         callSudokuAPI();
     }
 })
