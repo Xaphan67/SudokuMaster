@@ -13,10 +13,13 @@ addEventListener("DOMContentLoaded", async (e) => {
     DIFFICULTE.innerHTML = DIFFICULTE_FR[GRID_INFO.difficulty];
 
     // Parcours la grille renvoyée par l'API et l'affiche dans un tableau
-    GRID_INFO.puzzle.forEach(line => {
+    GRID_INFO.puzzle.forEach((line, lineIndex) => {
         let newRow = TABLE.insertRow(-1);
-        line.forEach((element, index) => {
-            let newCell = newRow.insertCell(index);
+        line.forEach((element, colIindex) => {
+            let newCell = newRow.insertCell(colIindex);
+            if (((lineIndex < 3 || lineIndex >= 6) && colIindex >= 3 && colIindex < 6) || (lineIndex >= 3 && lineIndex < 6 && (colIindex < 3 || colIindex >= 6))) {
+                newCell.className = 'cellule';
+            }
             let newNumber = document.createTextNode(element != "0" ? element : "");
             newCell.appendChild(newNumber);
         });
