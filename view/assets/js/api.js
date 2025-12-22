@@ -5,7 +5,6 @@ let difficulteEN = 'easy';
 async function callSudokuAPI(difficulte) {
     // Constantes
     const TABLE = document.getElementById("grille");
-    const TABLE_VIDE = document.getElementById("grille_vide");
     const CONTENEUR_JEU = document.getElementById("conteneur_jeu");
     const GRID_INFO = await getGrid();
 
@@ -31,8 +30,6 @@ async function callSudokuAPI(difficulte) {
             newCell.appendChild(newNumber);
         });
     });
-    TABLE.style.display = "inline-table";
-    TABLE_VIDE.style.display = "none";
     CONTENEUR_JEU.style.filter = "none";
 
     // Stocke la grille et sa solutions dans des variables pour travailler dessus plus tard

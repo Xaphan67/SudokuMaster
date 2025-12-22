@@ -1,44 +1,61 @@
 // Constantes
 const CONTENEUR_JEU = document.getElementById("conteneur_jeu");
 const TABLE = document.getElementById("grille");
+const TABLE_VIDE = document.getElementById("grille_vide");
 const PAVE = document.getElementById("pave_numerique");
 const BOUTONS =  Array.prototype.slice.call(PAVE.getElementsByTagName("p"));
+const BOUTON_NOTES = document.getElementById("interface_de_jeu").getElementsByTagName("div")[1];
+const BOUTON_PAUSE_TIMER = document.getElementById("interface_de_jeu").getElementsByTagName("div")[3];
+const TITRE_JEU = document.getElementById("titre_jeu");
+const POPUP_DIFFICULTE = document.getElementById("choix_difficulte");
+const POPUP_BOUTONS_DIFFICULTE = Array.prototype.slice.call(document.getElementById("boutons_difficulte").getElementsByTagName("div"));
+const POPUP_FIN_PARTIE = document.getElementById("fin_partie");
+const POPUP_FIN_PARTIE_TITRE = POPUP_FIN_PARTIE.getElementsByTagName("h3")[0];
+const POPUP_FIN_PARTIE_TEXTE = POPUP_FIN_PARTIE.getElementsByTagName("p")[0];
+const POPUP_FIN_PARTIE_RJOUER = POPUP_FIN_PARTIE.getElementsByTagName("div")[0];
+const TIMER = document.getElementById("timer");
 
-// Variiables
+// Variables
 // DOM
-let difficulte = 1;
+let difficulte = null;
 let caseActuelle = null;
 let case_focus = null;
 
 // Timer
-let timerMinutes = 0;
-let timerSecondes = 0;
-let timerId = null;
+let timerActif;
+let timerMinutes;
+let timerSecondes;
+let timerId = -1;
 
 // Grille
 let grille = [];
 let solution = [];
-let selectionX = -1;
-let selectionY = -1;
+let selectionX = null;
+let selectionY = null;
 
 // Séléction de la difficulté
-const TITRE_JEU = document.getElementById("titre_jeu");
-const POPUP_DIFFICULTE = document.getElementById("choix_difficulte");
-const POPUP_BOUTONS_DIFFICULTE = Array.prototype.slice.call(document.getElementById("boutons_difficulte").getElementsByTagName("div"));
 POPUP_BOUTONS_DIFFICULTE.forEach(element => {
     element.onclick= function() {
+        // Affiche la difficulté choisie
         difficulte = element.children[1].innerHTML;
         POPUP_DIFFICULTE.style.display = "none";
         TITRE_JEU.innerHTML = 'Jeu solo : Difficulté ' + difficulte;
+
+        // Appelle l'API pour obtenir une grille
         callSudokuAPI(difficulte);
+
+        // Configure et démarre le timer
+        timerActif = false;
+        timerMinutes = 14;
+        timerSecondes = 59;
         startTimer();
     }
 })
 
 // Stocke la case sur laquelle l'utilisateur à cliqué
 TABLE.addEventListener("click", (e) => {
+    let cellules = Array.prototype.slice.call(TABLE.getElementsByTagName("td"));
     case_focus = e.target;
-    const CELLULES = Array.prototype.slice.call(TABLE.getElementsByTagName("td"));
     if (case_focus.nodeName == "TD") {
         caseActuelle = case_focus;
 
@@ -50,7 +67,7 @@ TABLE.addEventListener("click", (e) => {
         case_focus.classList.add("selected_highlight");
 
          // Color toutes les cellules autres que celle selectionnée
-            CELLULES.forEach(cellule => {
+            cellules.forEach(cellule => {
                 if (cellule != e.target && e.target != 0) {
                     cellule.classList.remove("selected_highlight");
                     // si la cellule n'a pas le même chiffre que celle selectionné et qu'elle a la classe selected
@@ -67,6 +84,11 @@ TABLE.addEventListener("click", (e) => {
             });
 
     }
+})
+
+// Lors d'un clic sur le bouton pause...
+BOUTON_PAUSE_TIMER.addEventListener("click", (e) => {
+    startTimer();
 })
 
 // Lors d'un clic sur un des boutons du pavé numérique...
@@ -109,11 +131,6 @@ BOUTONS.forEach(element => {
 
 // Fin de partie
 function endGame() {
-    const POPUP_FIN_PARTIE = document.getElementById("fin_partie");
-    const POPUP_FIN_PARTIE_TITRE = POPUP_FIN_PARTIE.getElementsByTagName("h3")[0];
-    const POPUP_FIN_PARTIE_TEXTE = POPUP_FIN_PARTIE.getElementsByTagName("p")[0];
-    const POPUP_FIN_PARTIE_RJOUER = POPUP_FIN_PARTIE.getElementsByTagName("div")[0];
-
     CONTENEUR_JEU.style.filter = "opacity(0.40)";
     POPUP_FIN_PARTIE.style.display = "flex";
 
@@ -128,9 +145,15 @@ function endGame() {
     POPUP_FIN_PARTIE_TITRE.innerHTML = (timerNonEcoule ? "Victoire" : "Défaite") + " !";
     POPUP_FIN_PARTIE_TEXTE.innerHTML = "Partie terminée";
 
+    // Lors du clic sur Rejouer...
     POPUP_FIN_PARTIE_RJOUER.addEventListener("click", (e) => {
+
+        // Masque le popup
         POPUP_FIN_PARTIE.style.display = "none";
         POPUP_DIFFICULTE.style.display = "flex";
+
+        // Remet le timer à 15 minutes
+        TIMER.innerHTML = "Temps : 15:00";
     })
 }
 
@@ -141,17 +164,42 @@ function sleep(ms) {
 
 // Démare le timer
 async function startTimer() {
-    const CONTENEUR_JEU = document.getElementById("conteneur_jeu");
+    // Attends que l'API ait envoyé la grille (le filtre sur conteneur_jeu passe à "none")
     while (CONTENEUR_JEU.style.filter != "none") {
         await sleep()
     }
-    timerMinutes = 14;
-    timerSecondes = 59;
-    timerId = setInterval(decreaseTimer, 1000); // Décompte les secondes
+
+    if (timerActif == false) { // Si le timer n'a pas démarré ou est en pause, on le démarre
+        // Rends les éléments visibles et interactibles
+        TABLE.style.display = "inline-table";
+        TABLE_VIDE.style.display = "none";
+        TABLE_VIDE.style.filter = "none";
+        BOUTON_NOTES.style.filter = "none";
+        BOUTON_NOTES.inert = false;
+        PAVE.style.filter = "none";
+        PAVE.inert = false;
+
+        // Démarre le timer
+        timerActif = true;
+        timerId = setInterval(decreaseTimer, 1000); // Décompte les secondes
+    }
+    else { // Sinon, on le met en pause
+        // Rends les éléments légèrement opaques et non-interactibles
+        TABLE.style.display = "none";
+        TABLE_VIDE.style.display = "inline-table";
+        TABLE_VIDE.style.filter = "opacity(0.40)";
+        BOUTON_NOTES.style.filter = "opacity(0.40)";
+        BOUTON_NOTES.inert = true;
+        PAVE.style.filter = "opacity(0.40)";
+        PAVE.inert = true;
+
+        // Met le timer en pause
+        clearInterval(timerId);
+        timerActif = false;
+    }
 }
 
 function decreaseTimer() {
-    const TIMER = document.getElementById("timer"); // Récupère la div "timer"
     TIMER.innerText = "Temps : " + (timerMinutes < 10 ? "0" + timerMinutes : timerMinutes) + ':' + (timerSecondes < 10 ? "0" + timerSecondes : timerSecondes); // Affiche la valeur du timer
 
     // Si le timer des secondes est égal à 0

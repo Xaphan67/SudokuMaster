@@ -2,7 +2,7 @@
 
     <h2 id="titre_jeu">Jeu solo</h2>
     <div id="conteneur_jeu" inert>
-        <table class="grille" id="grille_vide">
+        <table class="grille" id="grille_vide" inert>
             <tbody>
                 <tr>
                     <td></td>
@@ -136,7 +136,6 @@
 
             <div id="bouton_jeu" class="bouton boutonPrincipal">Nouvelle Partie</div>
         </div>
-
     </div>
 
     <div id="choix_difficulte"><!-- popup de début de partie -->
