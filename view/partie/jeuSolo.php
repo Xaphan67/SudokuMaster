@@ -1,7 +1,7 @@
 <main>
-    
+
     <h2 id="titre_jeu">Jeu solo</h2>
-    <div id="conteneur_jeu">
+    <div id="conteneur_jeu" inert>
         <table class="grille" id="grille_vide">
             <tbody>
                 <tr>
@@ -138,6 +138,7 @@
         </div>
 
     </div>
+
     <div id="choix_difficulte"><!-- popup de début de partie -->
         <h3>Séléctionnez la difficulté</h3>
         <p>La partie débutera dès que vous aurez fait votre choix</p>
@@ -154,6 +155,15 @@
                 <img src="https://placehold.co/50x50/000000/FFFFFF/png" alt="">
                 <p>Difficile</p>
             </div>
+        </div>
+    </div>
+
+    <div id="fin_partie"><!-- popup de fin de partie -->
+        <h3></h3>
+        <p></p>
+        <div class="bouton">
+            <img src="https://placehold.co/50x50/000000/FFFFFF/png" alt="">
+            <p>Rejouer</p>
         </div>
     </div>
 </main>

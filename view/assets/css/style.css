@@ -353,7 +353,9 @@ td:not(.celluleFixe, .selected_highlight) {
   font-weight: normal;
 }
 
-#choix_difficulte {
+/* --------------------------------------------------  Popups  --------------------------------------------------*/
+
+#choix_difficulte, #fin_partie {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -369,12 +371,17 @@ td:not(.celluleFixe, .selected_highlight) {
   text-align: center;
 }
 
+#fin_partie {
+  display: none;
+  align-items: center;
+}
+
 #boutons_difficulte {
   display: flex;
   justify-content: space-between;
 }
 
-#boutons_difficulte div {
+#boutons_difficulte div, #fin_partie div {
   display: flex;
   flex-direction: column;
   align-items: center;
