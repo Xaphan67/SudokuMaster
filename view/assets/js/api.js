@@ -16,18 +16,21 @@ async function callSudokuAPI(difficulte) {
     TABLE.innerHTML = "";
 
     // Parcours la grille renvoyée par l'API et l'affiche dans un tableau
-    GRID_INFO.puzzle.forEach((line, lineIndex) => {
-        let newRow = TABLE.insertRow(-1);
-        line.forEach((element, colIindex) => {
-            let newCell = newRow.insertCell(colIindex);
-            if (((lineIndex < 3 || lineIndex >= 6) && colIindex >= 3 && colIindex < 6) || (lineIndex >= 3 && lineIndex < 6 && (colIindex < 3 || colIindex >= 6))) {
-                newCell.className = 'celluleBleue';
+    GRID_INFO.puzzle.forEach((line, ligneIndex) => {
+        let nouvelleLigne = TABLE.insertRow(-1);
+        line.forEach((element, coloneIndex) => {
+            let nouvelleCellule = nouvelleLigne.insertCell(coloneIndex);
+            if (((ligneIndex < 3 || ligneIndex >= 6) && coloneIndex >= 3 && coloneIndex < 6) || (ligneIndex >= 3 && ligneIndex < 6 && (coloneIndex < 3 || coloneIndex >= 6))) {
+                nouvelleCellule.className = 'celluleBleue';
             }
-            newNumber = document.createTextNode(element != "0" ? element : "");
             if (element != "0") {
-                newCell.classList.add("celluleFixe")
+                nouvelleCellule.classList.add("celluleFixe")
             }
-            newCell.appendChild(newNumber);
+            const NOUVEAU_P = document.createElement("p");
+            NOUVEAU_P.inert = true;
+            const NOMBRE = document.createTextNode(element != "0" ? element : "");
+            NOUVEAU_P.appendChild(NOMBRE);
+            nouvelleCellule.appendChild(NOUVEAU_P);
         });
     });
     CONTENEUR_JEU.style.filter = "none";

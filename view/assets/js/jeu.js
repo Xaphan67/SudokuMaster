@@ -3,16 +3,17 @@ const CONTENEUR_JEU = document.getElementById("conteneur_jeu");
 const TABLE = document.getElementById("grille");
 const TABLE_VIDE = document.getElementById("grille_vide");
 const PAVE = document.getElementById("pave_numerique");
-const BOUTONS =  Array.prototype.slice.call(PAVE.getElementsByTagName("p"));
+const BOUTONS =  Array.from(PAVE.getElementsByTagName("p"));
 const BOUTON_NOTES = document.getElementById("interface_de_jeu").getElementsByTagName("div")[1];
 const BOUTON_PAUSE_TIMER = document.getElementById("interface_de_jeu").getElementsByTagName("div")[3];
 const TITRE_JEU = document.getElementById("titre_jeu");
 const POPUP_DIFFICULTE = document.getElementById("choix_difficulte");
-const POPUP_BOUTONS_DIFFICULTE = Array.prototype.slice.call(document.getElementById("boutons_difficulte").getElementsByTagName("div"));
+const POPUP_BOUTONS_DIFFICULTE = Array.from(document.getElementById("boutons_difficulte").getElementsByTagName("div"));
 const POPUP_FIN_PARTIE = document.getElementById("fin_partie");
 const POPUP_FIN_PARTIE_TITRE = POPUP_FIN_PARTIE.getElementsByTagName("h3")[0];
 const POPUP_FIN_PARTIE_TEXTE = POPUP_FIN_PARTIE.getElementsByTagName("p")[0];
 const POPUP_FIN_PARTIE_RJOUER = POPUP_FIN_PARTIE.getElementsByTagName("div")[0];
+const NOTES = document.getElementById("notes");
 const TIMER = document.getElementById("timer");
 
 // Variables
@@ -33,9 +34,13 @@ let solution = [];
 let selectionX = null;
 let selectionY = null;
 
+// Mode Notes
+let modeNotes = false;
+
 // Séléction de la difficulté
 POPUP_BOUTONS_DIFFICULTE.forEach(element => {
     element.onclick= function() {
+
         // Affiche la difficulté choisie
         difficulte = element.children[1].innerHTML;
         POPUP_DIFFICULTE.style.display = "none";
@@ -50,11 +55,11 @@ POPUP_BOUTONS_DIFFICULTE.forEach(element => {
         timerSecondes = 59;
         startTimer();
     }
-})
+});
 
 // Stocke la case sur laquelle l'utilisateur à cliqué
 TABLE.addEventListener("click", (e) => {
-    let cellules = Array.prototype.slice.call(TABLE.getElementsByTagName("td"));
+    let cellules = Array.from(TABLE.getElementsByTagName("td"));
     case_focus = e.target;
     if (case_focus.nodeName == "TD") {
         caseActuelle = case_focus;
@@ -66,68 +71,157 @@ TABLE.addEventListener("click", (e) => {
         // Met la case en surbrillance
         case_focus.classList.add("selected_highlight");
 
-         // Color toutes les cellules autres que celle selectionnée
-            cellules.forEach(cellule => {
-                if (cellule != e.target && e.target != 0) {
-                    cellule.classList.remove("selected_highlight");
-                    // si la cellule n'a pas le même chiffre que celle selectionné et qu'elle a la classe selected
-                    if (cellule.innerHTML != e.target.innerHTML && cellule.classList.contains("selected")) {
-                        //on enlève la classe selected
-                        cellule.classList.remove("selected");
-                    }
-                    // si la cellule a le même chiffre que celle selectionnée et que ce n'est pas vide
-                    if (cellule.innerHTML == e.target.innerHTML && e.target.innerHTML != 0) {
-                        cellule.classList.add("selected");
-                        cellule.classList.remove("selected_highlight");
-                    }
-                }
-            });
+        // Colorie toutes les cellules autres que celle selectionnée
+        cellules.forEach(cellule => {
+            if (cellule != e.target && e.target != 0) {
+                cellule.classList.remove("selected_highlight");
 
+                // Si la cellule n'a pas le même chiffre que celle selectionné et qu'elle a la classe selected
+                if (cellule.getElementsByTagName("p")[0].innerHTML != e.target.getElementsByTagName("p")[0].innerHTML && cellule.classList.contains("selected")) {
+                    //on enlève la classe selected
+                    cellule.classList.remove("selected");
+                }
+
+                // Si la cellule a le même chiffre que celle selectionnée et que ce n'est pas vide
+                if (cellule.getElementsByTagName("p")[0].innerHTML == e.target.getElementsByTagName("p")[0].innerHTML && e.target.getElementsByTagName("p")[0].innerHTML != 0) {
+                    cellule.classList.add("selected");
+                    cellule.classList.remove("selected_highlight");
+                }
+            }
+        });
     }
-})
+});
+
+// Lors d'un clic sur le bouton notes...
+BOUTON_NOTES.addEventListener("click", (e) => {
+    modeNotes = !modeNotes;
+    NOTES.innerHTML = "Notes : " + (modeNotes ? "ON" : "OFF");
+});
 
 // Lors d'un clic sur le bouton pause...
 BOUTON_PAUSE_TIMER.addEventListener("click", (e) => {
     startTimer();
-})
+});
 
 // Lors d'un clic sur un des boutons du pavé numérique...
 BOUTONS.forEach(element => {
     element.onclick=function() {
-        // Change la valeur de la case cliquée
-        if (caseActuelle != null && !case_focus.classList.contains("celluleFixe")) {
+        const LISTE_NOTES = caseActuelle.getElementsByTagName("ul")[0];
 
-            // Change la valeur de la case dans le DOM
-            caseActuelle.innerHTML = this.innerHTML;
+        // Vérifie si le mode notes est activé
+        if (modeNotes) {
+            // Ajoute la note dans la liste de notes de la case
 
-            // Change la valeur de la case dans la variable grille
-            grille[selectionY][selectionX] = this.innerHTML;
+            // Vérifie que la case actuelle n'est pas nulle et qu'elle peux être modifiée par le joueur
+            if (caseActuelle != null && !case_focus.classList.contains("celluleFixe")) {
+
+                // Si la case à déjà été remplie par le joueur, on supprime ce qu'il à marqué
+                caseActuelle.getElementsByTagName("p")[0].innerHTML = "";
+
+                // Si la case n'a pas de liste de notes, on en crée une
+                if (LISTE_NOTES == undefined) {
+                    const NOUVEAU_UL = document.createElement("ul");
+                    NOUVEAU_UL.inert = true;
+                    const NOUVEAU_LI = document.createElement("li");
+                    const NOMBRE = document.createTextNode(this.innerHTML);
+                    NOUVEAU_LI.appendChild(NOMBRE);
+                    NOUVEAU_UL.appendChild(NOUVEAU_LI);
+                    caseActuelle.appendChild(NOUVEAU_UL);
+                }
+                else { // Sinon, on ajoute à la liste existante
+                    // On récupère les notes actuellement dans la liste
+                    const NOTES_ACTUELLES = Array.from(caseActuelle.getElementsByTagName("li"));
+                    let existeDeja = false;
+                    let noteIndex = 0;
+
+                    // On vérifie si la note existe déja dans la liste
+                    NOTES_ACTUELLES.forEach((note, index) => {
+                        if (note.innerHTML == this.innerHTML) {
+                            existeDeja = true;
+                            noteIndex = index;
+                        }
+                    })
+
+                    // Si la note existe déja, on l'enlève de la liste à la place
+                    if (existeDeja) {
+                        caseActuelle.getElementsByTagName("li")[noteIndex].remove();
+
+                        // Si la liste de notes est vide, on l'enlève aussi
+                        if (LISTE_NOTES.getElementsByTagName("li")[0] == undefined) {
+                            LISTE_NOTES.remove();
+                        }
+                    }
+                    else {
+                        const NOUVEAU_LI = document.createElement("li");
+                        const NOMBRE = document.createTextNode(this.innerHTML);
+                        NOUVEAU_LI.appendChild(NOMBRE);
+
+                        // On insert la note de manière à ce qu'elle soit dans l'ordre
+
+                        // Pour chaque note existante...
+                        let inseree = false;
+                        for (i = 0; i < NOTES_ACTUELLES.length; i ++) {
+
+                            // Si la note existante est supérieure à celle à insérer, on insert la note juste avant
+                            if (NOTES_ACTUELLES[i].innerHTML > this.innerHTML) {
+                                LISTE_NOTES.insertBefore(NOUVEAU_LI, LISTE_NOTES.getElementsByTagName("li")[i]);
+                                inseree = true;
+                                break;
+                            }
+                        }
+
+                        // Si la note n'a pas été insérée, on l'insert à la fin de la liste car c'est la note la plus "grande"
+                        if (!inseree) {
+                            LISTE_NOTES.appendChild(NOUVEAU_LI);
+                        }
+                    }
+                }
+            }
         }
+        else {
+            // Change la valeur de la case cliquée
 
-        // Vérifie que la grille est terminée
-        let grilleTermine = true;
-        for (i = 0; i < 9; i ++) {
-            for (j = 0; j < 9; j ++) {
-                // Si au moins une valeur de la grille est différente de sa valeur correspondante dans la solution
-                // La grille n'est pas terminée
-                if (grille[i][j] != solution[i][j])
-                {
-                    grilleTermine = false;
+            // Vérifie que la case actuelle n'est pas nulle et qu'elle peux être modifiée par le joueur
+            if (caseActuelle != null && !case_focus.classList.contains("celluleFixe")) {
+
+                // Change la valeur de la case dans le DOM
+                caseActuelle.getElementsByTagName("p")[0].innerHTML = this.innerHTML;
+
+                // Change la valeur de la case dans la variable grille
+                grille[selectionY][selectionX] = this.innerHTML;
+
+                // Si la case à une liste de notes, on la supprime
+                if (LISTE_NOTES != undefined) {
+                    LISTE_NOTES.remove();
+                }
+            }
+
+            // Vérifie que la grille est terminée
+            let grilleTermine = true;
+            for (i = 0; i < 9; i ++) {
+                for (j = 0; j < 9; j ++) {
+
+                    // Si au moins une valeur de la grille est différente de sa valeur correspondante dans la solution
+                    // La grille n'est pas terminée
+                    if (grille[i][j] != solution[i][j])
+                    {
+                        grilleTermine = false;
+                        break;
+                    }
+                }
+                // Sort de la boucle si la grille n'est pas terminée
+                if (!grilleTermine) {
                     break;
                 }
             }
-            // Sort de la boucle si la grille n'est pas terminée
-            if (!grilleTermine) {
-                break;
+
+            // Si la grille est terminée...
+            if (grilleTermine) {
+                endGame();
             }
         }
-
-        // Si la grille est terminée...
-        if (grilleTermine) {
-            endGame();
-        }
     }
-})
+});
 
 // Fin de partie
 function endGame() {
@@ -154,7 +248,7 @@ function endGame() {
 
         // Remet le timer à 15 minutes
         TIMER.innerHTML = "Temps : 15:00";
-    })
+    });
 }
 
 // Force l'attente du sript pendant la durée pasée en paramettres (en milisecondes)
@@ -199,6 +293,7 @@ async function startTimer() {
     }
 }
 
+// Tant que le timer est actif, on execute cette fonction chaque seconde
 function decreaseTimer() {
     TIMER.innerText = "Temps : " + (timerMinutes < 10 ? "0" + timerMinutes : timerMinutes) + ':' + (timerSecondes < 10 ? "0" + timerSecondes : timerSecondes); // Affiche la valeur du timer
 

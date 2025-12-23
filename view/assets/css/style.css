@@ -222,8 +222,23 @@ footer div:last-child {
   font-weight: bold;
 }
 
+#grille ul {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 20px;
+  top: 8px;
+  left: 8px;
+}
+
+#grille li {
+  width: 20px;
+  height: 20px;
+  font-weight: lighter;
+}
 
 .grille td {
+  position: relative;
   height: 80px;
   width: 80px;
   border: 1px solid var(--MidnightViolet);
@@ -301,8 +316,6 @@ footer div:last-child {
   margin-bottom: 16px;
 }
 
-
-
 #pave_numerique {
   width: 330px;
   display: flex;
@@ -331,9 +344,13 @@ td, #pave_numerique p, #boutons_difficulte div {
   cursor: pointer;
 }
 
-td:not(.celluleFixe, .selected_highlight) {
+td:not(.celluleFixe, .selected_highlight) p {
   color: var(--CrimsonViolet75pourcent);
   font-weight:normal;
+}
+
+td:not(.celluleFixe, .selected_highlight) li {
+  color: var(--CrimsonViolet75pourcent);
 }
 
 .celluleBleue {
@@ -344,7 +361,7 @@ td:not(.celluleFixe, .selected_highlight) {
   background-color: var(--CrimsonViolet25pourcent) !important;
 }
 
-.selected_highlight {
+.selected_highlight, .selected_highlight p, .selected_highlight li {
   background-color: var(--CrimsonViolet75pourcent) !important;
   color: var(--White);
 }
