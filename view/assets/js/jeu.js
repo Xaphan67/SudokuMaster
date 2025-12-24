@@ -132,6 +132,7 @@ BOUTONS.forEach(element => {
 
                 // Si la case à déjà été remplie par le joueur, on supprime ce qu'il à marqué
                 caseActuelle.getElementsByTagName("p")[0].innerHTML = "";
+                grille[selectionY][selectionX] = "0";
 
                 // Si la case n'a pas de liste de notes, on en crée une
                 if (LISTE_NOTES == undefined) {
@@ -212,7 +213,6 @@ BOUTONS.forEach(element => {
                 }
             }
         }
-
     }
 });
 
