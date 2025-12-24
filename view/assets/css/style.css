@@ -95,6 +95,10 @@ td {
   color: var(--MidnightViolet);
 }
 
+#conteneur_principal {
+  position: relative;
+}
+
 .bouton {
   cursor: pointer;
 }
@@ -206,6 +210,7 @@ footer div:last-child {
 #interface_de_jeu {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-direction: column;
 }
 
@@ -298,7 +303,15 @@ footer div:last-child {
   justify-content: space-evenly;
 }
 
-#interface_de_jeu>div>div {
+#interface_de_jeu>div:first-child {
+  gap:38px;
+}
+
+#interface_de_jeu>div:last-child {
+  position: relative;
+}
+
+.boutons_ronds {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -306,7 +319,7 @@ footer div:last-child {
   width: 150px;
 }
 
-#interface_de_jeu>div>div>div {
+.boutons_ronds>div {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -334,12 +347,13 @@ footer div:last-child {
 
 #bouton_jeu {
   height: 80px;
+  width: 352px;
   border-radius: 15px;
   line-height: 80px;
   margin: 0 30px;
 }
 
-td, #pave_numerique p, #boutons_difficulte div {
+td, #pave_numerique p, .boutons_difficulte div {
   pointer-events: all;
   cursor: pointer;
 }
@@ -372,15 +386,13 @@ td:not(.celluleFixe, .selected_highlight) li {
 
 /* --------------------------------------------------  Popups  --------------------------------------------------*/
 
-#choix_difficulte, #fin_partie {
+.popup {
   position: absolute;
-  display: flex;
   flex-direction: column;
   padding: 40px;
   gap: 20px;
   top : 50%;
   left : 50%;
-  transform: translateX(-50%) translateY(-50%);
   width: 450px;
   border-radius: 15px;
   background-color: var(--WisteriaBlue);
@@ -388,17 +400,27 @@ td:not(.celluleFixe, .selected_highlight) li {
   text-align: center;
 }
 
+#debut_partie, #fin_partie {
+  display: flex;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+#menu_partie {
+  display: none;
+  transform: translateX(-50%) translateY(calc(-100% - 70px));
+}
+
 #fin_partie {
   display: none;
   align-items: center;
 }
 
-#boutons_difficulte {
+.boutons_difficulte {
   display: flex;
   justify-content: space-between;
 }
 
-#boutons_difficulte div, #fin_partie div {
+.boutons_difficulte div, #fin_partie div {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -411,16 +433,16 @@ td:not(.celluleFixe, .selected_highlight) li {
   transition: all 0.5s ease;
 }
 
-#boutons_difficulte div img {
+.boutons_difficulte div img {
   width: 50px;
   height: 50px;
 }
 
-#boutons_difficulte div:hover {
+.boutons_difficulte div:hover {
   background-color: var(--CrimsonViolet50pourcent);
 }
 
-#boutons_difficulte div:active {
+.boutons_difficulte div:active {
   background-color: var(--CrimsonViolet75pourcent);
   transition: all 0.1s ease;
 }

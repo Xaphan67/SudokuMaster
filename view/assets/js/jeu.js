@@ -6,9 +6,12 @@ const PAVE = document.getElementById("pave_numerique");
 const BOUTONS =  Array.from(PAVE.getElementsByTagName("p"));
 const BOUTON_NOTES = document.getElementById("interface_de_jeu").getElementsByTagName("div")[1];
 const BOUTON_PAUSE_TIMER = document.getElementById("interface_de_jeu").getElementsByTagName("div")[3];
+const BOUTON_JEU = document.getElementById("bouton_jeu");
+const MENU_PARTIE = document.getElementById("menu_partie");
+const MENU_PARTIE_BOUTONS_DIFFICULTE = Array.from(document.getElementsByClassName("boutons_difficulte")[0].getElementsByTagName("div"));
 const TITRE_JEU = document.getElementById("titre_jeu");
-const POPUP_DIFFICULTE = document.getElementById("choix_difficulte");
-const POPUP_BOUTONS_DIFFICULTE = Array.from(document.getElementById("boutons_difficulte").getElementsByTagName("div"));
+const POPUP_DEBUT_PARTIE = document.getElementById("debut_partie");
+const POPUP_BOUTONS_DIFFICULTE = Array.from(document.getElementsByClassName("boutons_difficulte")[1].getElementsByTagName("div"));
 const POPUP_FIN_PARTIE = document.getElementById("fin_partie");
 const POPUP_FIN_PARTIE_TITRE = POPUP_FIN_PARTIE.getElementsByTagName("h3")[0];
 const POPUP_FIN_PARTIE_TEXTE = POPUP_FIN_PARTIE.getElementsByTagName("p")[0];
@@ -37,23 +40,36 @@ let selectionY = null;
 // Mode Notes
 let modeNotes = false;
 
-// Séléction de la difficulté
+// Menu Bouton Jeu
+let menuOuvert = false;
+
+// Séléction de la difficulté via popop début de partie
 POPUP_BOUTONS_DIFFICULTE.forEach(element => {
     element.onclick= function() {
+        // Masque le popup
+        POPUP_DEBUT_PARTIE.style.display = "none";
 
-        // Affiche la difficulté choisie
-        difficulte = element.children[1].innerHTML;
-        POPUP_DIFFICULTE.style.display = "none";
-        TITRE_JEU.innerHTML = 'Jeu solo : Difficulté ' + difficulte;
+        // Démarre la partie
+        startGame(element);
+    }
+});
 
-        // Appelle l'API pour obtenir une grille
-        callSudokuAPI(difficulte);
+// Séléction de la difficulté via le menu
+MENU_PARTIE_BOUTONS_DIFFICULTE.forEach(element => {
+    element.onclick= function() {
+        // Masque le menu et le considère comme fermé
+        MENU_PARTIE.style.display = "none";
+        menuOuvert = false;
+        BOUTON_JEU.innerHTML = "Nouvelle partie";
 
-        // Configure et démarre le timer
-        timerActif = false;
-        timerMinutes = 14;
-        timerSecondes = 59;
-        startTimer();
+        // Met fin à la partie
+        endGame(false);
+
+        // Remet le timer à 15 minutes
+        resetTimer();
+
+        // Démarre la partie
+        startGame(element);
     }
 });
 
@@ -106,14 +122,13 @@ BOUTON_PAUSE_TIMER.addEventListener("click", (e) => {
 // Lors d'un clic sur un des boutons du pavé numérique...
 BOUTONS.forEach(element => {
     element.onclick=function() {
-        const LISTE_NOTES = caseActuelle.getElementsByTagName("ul")[0];
+        // Vérifie que la case actuelle n'est pas nulle et qu'elle peux être modifiée par le joueur
+        if (caseActuelle != null && !case_focus.classList.contains("celluleFixe")) {
+            const LISTE_NOTES = caseActuelle.getElementsByTagName("ul")[0];
 
-        // Vérifie si le mode notes est activé
-        if (modeNotes) {
-            // Ajoute la note dans la liste de notes de la case
-
-            // Vérifie que la case actuelle n'est pas nulle et qu'elle peux être modifiée par le joueur
-            if (caseActuelle != null && !case_focus.classList.contains("celluleFixe")) {
+            // Vérifie si le mode notes est activé
+            if (modeNotes) {
+                // Ajoute la note dans la liste de notes de la case
 
                 // Si la case à déjà été remplie par le joueur, on supprime ce qu'il à marqué
                 caseActuelle.getElementsByTagName("p")[0].innerHTML = "";
@@ -177,12 +192,8 @@ BOUTONS.forEach(element => {
                     }
                 }
             }
-        }
-        else {
-            // Change la valeur de la case cliquée
-
-            // Vérifie que la case actuelle n'est pas nulle et qu'elle peux être modifiée par le joueur
-            if (caseActuelle != null && !case_focus.classList.contains("celluleFixe")) {
+            else {
+                // Change la valeur de la case cliquée
 
                 // Change la valeur de la case dans le DOM
                 caseActuelle.getElementsByTagName("p")[0].innerHTML = this.innerHTML;
@@ -194,39 +205,49 @@ BOUTONS.forEach(element => {
                 if (LISTE_NOTES != undefined) {
                     LISTE_NOTES.remove();
                 }
-            }
 
-            // Vérifie que la grille est terminée
-            let grilleTermine = true;
-            for (i = 0; i < 9; i ++) {
-                for (j = 0; j < 9; j ++) {
-
-                    // Si au moins une valeur de la grille est différente de sa valeur correspondante dans la solution
-                    // La grille n'est pas terminée
-                    if (grille[i][j] != solution[i][j])
-                    {
-                        grilleTermine = false;
-                        break;
-                    }
+                // Si la grille est terminée, met fin à la partie
+                if (grille.equals(solution)) {
+                    endGame();
                 }
-                // Sort de la boucle si la grille n'est pas terminée
-                if (!grilleTermine) {
-                    break;
-                }
-            }
-
-            // Si la grille est terminée...
-            if (grilleTermine) {
-                endGame();
             }
         }
+
     }
 });
 
+// Lors d'un clic sur le bouton jeu...
+BOUTON_JEU.addEventListener("click", (e) => {
+
+    // Affiche ou masque le menu, et change le texte du bouton
+    menuOuvert = !menuOuvert;
+    MENU_PARTIE.style.display = menuOuvert ? "flex" : "none";
+    BOUTON_JEU.innerHTML = menuOuvert ? "Annuler" : "Nouvelle partie";
+});
+
+// Début de partie
+function startGame(element) {
+    // Masque la grille
+        TABLE.style.display = "none";
+        TABLE_VIDE.style.display = "inline-table";
+
+    // Affiche la difficulté choisie
+        difficulte = element.children[1].innerHTML;
+        TITRE_JEU.innerHTML = 'Jeu solo : Difficulté ' + difficulte;
+
+        // Appelle l'API pour obtenir une grille et l'afficher
+        callSudokuAPI(difficulte);
+
+        // Configure et démarre le timer
+        timerActif = false;
+        timerMinutes = 14;
+        timerSecondes = 59;
+        startTimer();
+}
+
 // Fin de partie
-function endGame() {
+function endGame(popup = true) {
     CONTENEUR_JEU.style.filter = "opacity(0.40)";
-    POPUP_FIN_PARTIE.style.display = "flex";
 
     // Stop le timer
     clearInterval(timerId);
@@ -234,21 +255,29 @@ function endGame() {
     // Empèche l'utilisateur d'intéragir avec le plateau de jeu
     CONTENEUR_JEU.inert = true;
 
-    // Affiche un message de victoire ou défaite selon l'état de la partie quand le popup s'affiche
-    let timerNonEcoule = timerMinutes > 0 || (timerMinutes == 0 && timerSecondes > 0);
-    POPUP_FIN_PARTIE_TITRE.innerHTML = (timerNonEcoule ? "Victoire" : "Défaite") + " !";
-    POPUP_FIN_PARTIE_TEXTE.innerHTML = "Partie terminée";
+    if (popup) {
+        // Affiche un message de victoire ou défaite selon l'état de la partie quand le popup s'affiche
+        let timerNonEcoule = timerMinutes > 0 || (timerMinutes == 0 && timerSecondes > 0);
+        POPUP_FIN_PARTIE.style.display = "flex";
+        POPUP_FIN_PARTIE_TITRE.innerHTML = (timerNonEcoule ? "Victoire" : "Défaite") + " !";
+        POPUP_FIN_PARTIE_TEXTE.innerHTML = "Partie terminée";
 
-    // Lors du clic sur Rejouer...
-    POPUP_FIN_PARTIE_RJOUER.addEventListener("click", (e) => {
+        // Lors du clic sur Rejouer...
+        POPUP_FIN_PARTIE_RJOUER.addEventListener("click", (e) => {
 
-        // Masque le popup
-        POPUP_FIN_PARTIE.style.display = "none";
-        POPUP_DIFFICULTE.style.display = "flex";
+            // Masque le popup
+            POPUP_FIN_PARTIE.style.display = "none";
+            POPUP_DEBUT_PARTIE.style.display = "flex";
 
-        // Remet le timer à 15 minutes
-        TIMER.innerHTML = "Temps : 15:00";
-    });
+            // Remet le timer à 15 minutes
+            resetTimer();
+        });
+    }
+}
+
+// Remet le timer à 15 minutes
+function resetTimer() {
+    TIMER.innerHTML = "Temps : 15:00";
 }
 
 // Force l'attente du sript pendant la durée pasée en paramettres (en milisecondes)
@@ -311,4 +340,29 @@ function decreaseTimer() {
         }
     }
     timerSecondes--; // Retire une seconde
+}
+
+// Ajoute la fonction "equals" aux tableaux pour comparer qu'ils sont identiques
+// Assume que les tableaux ont la même taille
+// tableau => tableau auquel celui qui appelle la fonction sera comparé
+Array.prototype.equals = function (tableau) {
+    // Si "tableau" n'est pas une valeur correcte, retourne faux
+    if (!tableau)
+        return false;
+
+    for (let i = 0; i < this.length; i++) {
+        // Vérifie si'il y à un tableau imbriqué
+        if (this[i] instanceof Array && tableau[i] instanceof Array) {
+
+            // Si oui, execute la fonction sur le tableau imbriqué
+            if (!this[i].equals(tableau[i])) {
+                return false;
+            }
+
+        } // Sinon, vérifie les valeurs du tableau
+        else if (this[i] != tableau[i]) {
+            return false;
+        }
+    }
+    return true;
 }
