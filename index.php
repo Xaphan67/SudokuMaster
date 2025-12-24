@@ -5,7 +5,7 @@
     $action = $_GET["action"] ?? "home";
 
     $controllerPath = "controller/" . $controller . "Controller.php";
-    
+
     // Si le controleur existe, on l'appelle
     if (file_exists($controllerPath)) {
         require_once($controllerPath);
