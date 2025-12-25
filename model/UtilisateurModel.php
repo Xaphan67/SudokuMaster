@@ -8,6 +8,24 @@
             $utilisateurs = $this->connect()->query($query)->fetchAll();
             return $utilisateurs;
         }
+
+        function add(Utilisateur $utilisateur) : bool {
+
+            // Requête préparée pour ajouter l'utilisateur
+            $query =
+               "INSERT INTO utilisateur (pseudo, email, mdp)
+                VALUES(:pseudo, :email, :mdp)";
+
+            $prepare = $this->connect()->prepare($query);
+
+            // Définition des paramettres de la requête préparée
+            $prepare->bindValue(":pseudo", $utilisateur->getPseudo(), PDO::PARAM_STR);
+			$prepare->bindValue(":email", $utilisateur->getEmail(), PDO::PARAM_STR);
+			$prepare->bindValue(":mdp", $utilisateur->getMdp(), PDO::PARAM_STR);
+
+            // Execute la requête. Retourne true (si réussite) ou false (si echec)
+            return $prepare->execute();
+        }
     }
 
 ?>

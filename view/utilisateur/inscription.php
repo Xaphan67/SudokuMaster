@@ -14,11 +14,11 @@
                 </div>
                 <div>
                     <label>Mot de passe</label>
-                    <input type="password" name="password" placeholder="*********" />
+                    <input type="password" name="mdp" placeholder="*********" />
                 </div>
                 <div>
                     <label>Confirmation du mot de passe</label>
-                    <input type="password" name="password_confirm" placeholder="*********" />
+                    <input type="password" name="mdp_confirm" placeholder="*********" />
                 </div>
                 <input type="submit" value="Créer mon compte" />
             </form>

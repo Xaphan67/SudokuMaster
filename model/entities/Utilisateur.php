@@ -9,6 +9,12 @@
     private string $mdp;
     private Role $role;
 
+    // Constructeur
+
+    function __construct()
+    {
+        $this->_strPrefix = "utilisateur";
+    }
 
     // Getters
 
@@ -59,7 +65,7 @@
     // Autres méthodes
 
     public function supprimerCompte() {
-        
+
     }
 
  }
