@@ -8,36 +8,69 @@
         // Affiche la page d'inscription
         public function signUp() {
 
+            // Crée un tableau pour gérer les erreurs
+            $erreurs = [];
+
             // Si le formulaire est soumis
             if (count($_POST) > 0) {
 
                 // Filtrage des données
                 // Protège contre la faille XSS
-                $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_SPECIAL_CHARS);
-                $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL, FILTER_VALIDATE_EMAIL);
+                $pseudo = trim(filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_SPECIAL_CHARS));
+                $email = trim(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
 
-                // Hashe le mot de passe de l'utilisateur
-                $mdp = password_hash($_POST["mdp"], PASSWORD_DEFAULT);
+                // Test si l'email est dans un format valide
+                $emailValide = filter_var($email, FILTER_VALIDATE_EMAIL);
 
-                // Crée un tableau avec les données de l'utilisateur
-                $donneesUtilisateur["pseudo"] = $pseudo;
-                $donneesUtilisateur["email"] = $email;
-                $donneesUtilisateur["mdp"] = $mdp;
+                // Test des données
+                if (!$pseudo) {
+                    $erreurs["pseudo"] = "Ce champ est obligatoire";
+                }
 
-                // Crée un nouvel objet Utilisateur et l'hydrate avec les données
-                $utilisateur = new Utilisateur;
-                $utilisateur->hydrate($donneesUtilisateur);
+                if (!$email) {
+                    $erreurs["email"] = "Ce champ est obligatoire";
+                }
+                else if (!$emailValide) {
+                    $erreurs["email"] = "Adresse mail invalide";
+                }
 
-                // Crée une instance du modèle Utilisateur et appelle la méthode
-                // pour insérer l'utilisateur en base de données
-                $utilisateurModel = new UtilisateurModel;
-                $utilisateurAjoute = $utilisateurModel->add($utilisateur);
+                if (empty($_POST["mdp"])) {
+                    $erreurs["mdp"] = "Ce champ est obligatoire";
+                }
 
-                // Si l'utilisateur à été ajouté correctement en base de données
-                if ($utilisateurAjoute) {
+                if (empty($_POST["mdp_confirm"])) {
+                    $erreurs["mdp_confirm"] = "Ce champ est obligatoire";
+                }
+                else if ($_POST["mdp"] != $_POST["mdp_confirm"]) {
+                    $erreurs["mdp_confirm"] = "Les mots de passe ne sont pas identiques";
+                }
 
-                    // Redirige l'utilisateur vers la page de connexion
-                    header("Location:index.php?controller=utilisateur&action=login");
+                // Si il n'y à aucune erreur
+                if (count($erreurs) == 0) {
+
+                    // Hashe le mot de passe de l'utilisateur
+                    $mdp = password_hash($_POST["mdp"], PASSWORD_DEFAULT);
+
+                    // Crée un tableau avec les données de l'utilisateur
+                    $donneesUtilisateur["pseudo"] = $pseudo;
+                    $donneesUtilisateur["email"] = $email;
+                    $donneesUtilisateur["mdp"] = $mdp;
+
+                    // Crée un nouvel objet Utilisateur et l'hydrate avec les données
+                    $utilisateur = new Utilisateur;
+                    $utilisateur->hydrate($donneesUtilisateur);
+
+                    // Crée une instance du modèle Utilisateur et appelle la méthode
+                    // pour insérer l'utilisateur en base de données
+                    $utilisateurModel = new UtilisateurModel;
+                    $utilisateurAjoute = $utilisateurModel->add($utilisateur);
+
+                    // Si l'utilisateur à été ajouté correctement en base de données
+                    if ($utilisateurAjoute) {
+
+                        // Redirige l'utilisateur vers la page de connexion
+                        header("Location:index.php?controller=utilisateur&action=login");
+                    }
                 }
             }
 
