@@ -1,5 +1,10 @@
 <?php
 
+    // Démarre la session si elle ne l'est pas déjà
+    if (session_status() === PHP_SESSION_NONE){
+		session_start();
+	}
+
     // Détermine le controleur à appeler et son action en fonction de l'url
     $controller = $_GET["controller"] ?? "main";
     $action = $_GET["action"] ?? "home";

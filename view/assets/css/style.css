@@ -74,6 +74,9 @@ p {
 }
 
 main {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   max-width: 1120px;
   min-height: calc(100vh - 146px);
   padding: 40px 0 40px 0;
@@ -98,6 +101,11 @@ td {
 #conteneur_principal {
   position: relative;
   display: flex;
+  justify-content: space-between;
+}
+
+#conteneur_principal>img {
+  margin: auto 0;
 }
 
 .bouton {
@@ -139,6 +147,8 @@ td {
   transition: filter 0.1s ease;
 }
 
+/* --------------------------------------------------  Formulaires  --------------------------------------------------*/
+
 form {
   display: flex;
   flex-direction: column;
@@ -149,6 +159,29 @@ form {
 form>div {
   display: flex;
   flex-direction: column;
+}
+
+.formulaire {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 80px;
+  width: 520px;
+}
+
+.formulaire>img {
+  margin: 0 auto 30px auto;
+}
+
+label, form p {
+  text-align: left;
+}
+
+input[type="text"], input[type="email"], input[type="password"]{
+  width: 360px;
+  height: 53px;
+  border-radius: 10px;
 }
 
 /* --------------------------------------------------  Header  --------------------------------------------------*/

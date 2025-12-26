@@ -1,9 +1,3 @@
-<?php
-	if (session_status() === PHP_SESSION_NONE){
-		session_start();
-	}
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -52,6 +46,6 @@
       type="image/png"
       href="#########insérer_chemin_favicon##########"
     />
-    
+
     <link href="view/assets/css/style.css" rel="stylesheet" type="text/css" />
   </head>

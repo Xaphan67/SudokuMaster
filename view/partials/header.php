@@ -13,7 +13,14 @@
                 <a href="index.php?action=rules">Règles</a>
             </nav>
             <div id="utilisateur">
-                <a href="index.php?controller=utilisateur&action=login">Connexion</a>
+                <?php
+                    if (isset($_SESSION["utilisateur"])) {
+                        echo '<a href="index.php?controller=utilisateur&action=profil&utilisateurId=' . $_SESSION["utilisateur"]["id_utilisateur"] . '">' . $_SESSION["utilisateur"]["pseudo"] .' </a>';
+                    }
+                    else {
+                        echo '<a href="index.php?controller=utilisateur&action=login">Connexion</a>';
+                    }
+                ?>
                 <img src="https://placehold.co/54x54/000000/FFFFFF/png" alt="">
             </div>
         </div>
