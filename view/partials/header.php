@@ -22,6 +22,26 @@
                     }
                 ?>
                 <img src="https://placehold.co/54x54/000000/FFFFFF/png" alt="">
+                 <?php
+                    if(isset($_SESSION["utilisateur"])) {
+                ?>
+                <div id="menu_utilisateur">
+                    <div>
+                        <img src="https://placehold.co/20x20/000000/FFFFFF/png" alt="">
+                        <a href="index.php?controller=utilisateur&action=profil&utilisateurId=<?php echo $_SESSION["utilisateur"]["id_utilisateur"]; ?>">Profil</a>
+                    </div>
+                    <div>
+                        <img src="https://placehold.co/20x20/000000/FFFFFF/png" alt="">
+                        <a href="index.php?#">Accessibilité</a>
+                    </div>
+                    <div>
+                        <img src="https://placehold.co/20x20/000000/FFFFFF/png" alt="">
+                        <a href="index.php?controller=utilisateur&action=logout">Se déconnecter</a>
+                    </div>
+                </div>
+                <?php
+                    }
+                ?>
             </div>
         </div>
     </header>

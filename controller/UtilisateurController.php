@@ -144,9 +144,14 @@
             require_once("view/partials/footer.php");
         }
 
-        // Deconnecte l'utilisateur
+        // Déconnecte l'utilisateur
         public function logout() {
 
+            // Retire l'utilisateur de la session
+            unset($_SESSION["utilisateur"]);
+
+            // Redirige l'utilisateur vers la page d'accueil
+            header("Location:index.php");
         }
 
         // Affiche le profil de l'utilisateur

@@ -189,6 +189,7 @@ input[type="text"], input[type="email"], input[type="password"]{
 header {
   border-bottom: 1px solid var(--CrimsonViolet50pourcent);
   box-shadow: 0px 4px 4px var(--CrimsonViolet50pourcent);
+  overflow: visible;
 }
 
 header>div {
@@ -207,9 +208,39 @@ nav {
 }
 
 #utilisateur {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 20px;
+  height: 80px;
+}
+
+#menu_utilisateur {
+  display: none;
+  position: absolute;
+  gap: 7px;
+  right: 0px;
+  top: 80px;
+  min-width: 200px;
+  font-size: 16px;
+  background-color: var(--CrimsonViolet);
+  border-radius: 10px;
+  padding: 7px 0px 7px 25px;
+}
+
+#menu_utilisateur>div {
+  display: flex;
+  gap: 16px;
+}
+
+#menu_utilisateur a {
+  color: var(--White);
+}
+
+#utilisateur:hover #menu_utilisateur {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 /* --------------------------------------------------  Footer  --------------------------------------------------*/
