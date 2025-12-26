@@ -3,7 +3,7 @@
         <img src="https://placehold.co/394x394/000000/FFFFFF/png" alt="">
         <div class="formulaire">
             <img src="https://placehold.co/221x109/000000/FFFFFF/png" alt="">
-            <h1>Connexion au compte</h1>
+            <h2>Connexion au compte</h2>
             <form method="post">
                 <div>
                     <label for="email">Adresse mail</label>
