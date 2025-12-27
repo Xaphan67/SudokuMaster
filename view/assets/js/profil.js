@@ -4,12 +4,13 @@ const BOUTON_MODIFIER_COMPTE = document.getElementById("bouton_modifier");
 const BOUTON_ANNULER_MODIFIER_COMPTE = document.getElementById("bouton_annuler_modifier");
 const POPUP_MODIFIER_COMPTE = document.getElementById("modifier_compte");
 const ERREURS_FORMULAIRES = document.getElementById("erreurs");
-
-// Données initiales des formulaires
 const MODIFIER_COMPTE_PSEUDO = document.getElementById("pseudo");
 const MODIFIER_COMPTE_PSEUDO_VALEUR = MODIFIER_COMPTE_PSEUDO.placeholder;
 const MODIFIER_COMPTE_EMAIL = document.getElementById("email");
 const MODIFIER_COMPTE_EMAIL_VALEUR = MODIFIER_COMPTE_EMAIL.placeholder;
+const MODIFIER_COMPTE_MDP = document.getElementById("mdp");
+const MODIFIER_COMPTE_MDP_CONFIRM = document.getElementById("mdp_confirm");
+const MODIFIER_COMPTE_MDP_CHECK = document.getElementById("modifier_compte_mdp_check");
 
 // Affiche le popup pour modifier le compte
 BOUTON_MODIFIER_COMPTE.addEventListener("click", (e) => {
@@ -31,6 +32,9 @@ BOUTON_ANNULER_MODIFIER_COMPTE.addEventListener("click", (e) => {
     // Restaure les données initiales du formulaire si l'utilisateur rouvre le popup plus tard
     MODIFIER_COMPTE_PSEUDO.value = MODIFIER_COMPTE_PSEUDO_VALEUR;
     MODIFIER_COMPTE_EMAIL.value = MODIFIER_COMPTE_EMAIL_VALEUR;
+    MODIFIER_COMPTE_MDP.value = "";
+    MODIFIER_COMPTE_MDP_CONFIRM.value = "";
+    MODIFIER_COMPTE_MDP_CHECK.value = "";
 });
 
 // Vérifie qi'il y a des erreurs dans un formulaire
