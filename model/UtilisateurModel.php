@@ -27,6 +27,51 @@
             return $prepare->execute();
         }
 
+        function edit(Utilisateur $utilisateur) : bool {
+
+            // Requête préparée pour modifier l'utilisateur
+            $query =
+            "UPDATE utilisateur
+                SET pseudo = :pseudo, email = :email";
+
+            if (!empty($utilisateur->getMdp())) {
+                $query .= ", mdp = :mdp";
+            }
+
+            $query .= " WHERE id_utilisateur = :id";
+
+            $prepare = $this->connect()->prepare($query);
+
+            // Définition des paramettres de la requête préparée
+            $prepare->bindValue(":pseudo", $utilisateur->getPseudo(), PDO::PARAM_STR);
+			$prepare->bindValue(":email", $utilisateur->getEmail(), PDO::PARAM_STR);
+            $prepare->bindValue(":id", $utilisateur->getId(), PDO::PARAM_INT);
+
+            if (!empty($utilisateur->getMdp())) {
+                $prepare->bindValue(":mdp", $utilisateur->getMdp(), PDO::PARAM_STR);
+            }
+
+            // Execute la requête. Retourne true (si réussite) ou false (si echec)
+            return $prepare->execute();
+        }
+
+        function findById(int $id) {
+
+            // Requête préparée pour récupérer les informations de l'utilisateur
+            $query =
+                "SELECT id_utilisateur, pseudo, email FROM utilisateur
+                WHERE id_utilisateur=:id";
+
+            $prepare = $this->connect()->prepare($query);
+
+            // Définition des paramettres de la requête préparée
+			$prepare->bindValue(":id", $id, PDO::PARAM_INT);
+
+            // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
+            $prepare->execute();
+            return $prepare->fetch();
+        }
+
         function findByMail(string $email) {
 
             // Requête préparée pour récupérer les informations de l'utilisateur

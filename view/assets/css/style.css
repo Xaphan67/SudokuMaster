@@ -109,6 +109,10 @@ td {
   color: var(--MidnightViolet);
 }
 
+.vertical {
+  flex-direction: column;
+}
+
 #conteneur_principal {
   position: relative;
   display: flex;
@@ -121,6 +125,14 @@ td {
 
 .bouton {
   cursor: pointer;
+  border-radius: 15px;
+}
+
+.boutonDefaut {
+  height: 40px;
+  line-height: 40px;
+  min-width: 280px;
+  padding: 0px 15px;
 }
 
 .boutonPrincipal {
@@ -209,6 +221,14 @@ input[type="text"], input[type="email"], input[type="password"]{
   width: 360px;
   height: 53px;
   border-radius: 10px;
+}
+
+input[type="submit"] {
+  border: transparent;
+}
+
+.actions {
+  gap: 20px;
 }
 
 /* --------------------------------------------------  Header  --------------------------------------------------*/
@@ -306,7 +326,7 @@ footer div:last-child {
   justify-content: space-between;
   align-self: center;
   padding: 40px;
-  margin-top: 40px;
+  margin: 40px auto auto auto;
   background-color: var(--WisteriaBlue);
   border-radius: 20px;
 }
@@ -332,7 +352,6 @@ footer div:last-child {
   justify-content: center;
   width: 150px;
   padding: 10px;
-  border-radius: 10px;
 }
 
 .boutonProfil p {
@@ -524,14 +543,12 @@ footer div:last-child {
 #pave_numerique p {
   width: 100px;
   height: 100px;
-  border-radius: 15px;
   line-height: 100px;
 }
 
 #bouton_jeu {
   height: 80px;
   width: 352px;
-  border-radius: 15px;
   line-height: 80px;
   margin: 0 30px;
 }
@@ -583,9 +600,18 @@ td:not(.celluleFixe, .selected_highlight) li {
   text-align: center;
 }
 
-#debut_partie, #fin_partie {
+#debut_partie, #fin_partie, #modifier_compte {
   display: flex;
   transform: translateX(-50%) translateY(-50%);
+}
+
+#modifier_compte {
+  display: none;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+#modifier_compte p {
+  text-align: center;
 }
 
 #menu_partie {
@@ -610,7 +636,6 @@ td:not(.celluleFixe, .selected_highlight) li {
   justify-content: space-between;
   padding: 20px;
   background-color: var(--CrimsonViolet25pourcent);
-  border-radius: 15px;
   width: 120px;
   height: 120px;
   transition: all 0.5s ease;

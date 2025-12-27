@@ -156,6 +156,101 @@
 
         // Affiche le profil de l'utilisateur
         public function profil() {
+
+            $script = ["profil.js"];
+
+            // Crée un tableau pour gérer les erreurs
+            $erreurs = [];
+
+            // Si le formulaire de modification des données du compte est soumis
+            if (isset($_POST["modifier_compte"])) {
+
+                // Crée une instance du modèle Utilisateur
+                $utilisateurModel = new UtilisateurModel;
+
+                // Crée un nouvel objet Utilisateur et l'hydrate avec les données présentes en base de donnée
+                $utilisateur = new Utilisateur;
+                $utilisateur->hydrate($utilisateurModel->findById($_SESSION["utilisateur"]["id_utilisateur"]));
+
+                // Filtrage des données
+                // Protège contre la faille XSS
+                $pseudo = trim(filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_SPECIAL_CHARS));
+                $email = trim(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
+
+                // Test si l'email est dans un format valide
+                $emailValide = filter_var($email, FILTER_VALIDATE_EMAIL);
+
+                // Test des données
+                if (!$pseudo) {
+                    $erreurs["pseudo"] = "Ce champ est obligatoire";
+                }
+
+                if (!$email) {
+                    $erreurs["email"] = "Ce champ est obligatoire";
+                }
+                else if (!$emailValide) {
+                    $erreurs["email"] = "Adresse mail invalide";
+                }
+
+                $changerMdp = false;
+                if (!empty($_POST["mdp"])) {
+                    if ($_POST["mdp"] != $_POST["mdp_confirm"]) {
+                        $erreurs["mdp_confirm"] = "Les mots de passe ne sont pas identiques";
+                    }
+                    else {
+                        $changerMdp = true;
+                    }
+                }
+
+                if (empty($_POST["mdp_check"])) {
+                    $erreurs["mdp_check"] = "Ce champ est obligatoire";
+                }
+
+                // Si il n'y à aucune erreur
+                if (count($erreurs) == 0) {
+
+                    // S'il faut changer le mot de passe
+                    if ($changerMdp) {
+
+                        // Hashe le mot de passe de l'utilisateur
+                        $mdp = password_hash($_POST["mdp"], PASSWORD_DEFAULT);
+                    }
+
+                    // Crée un tableau avec les données de l'utilisateur
+                    $donneesUtilisateur["id"] = $_SESSION["utilisateur"]["id_utilisateur"];
+                    $donneesUtilisateur["pseudo"] = $pseudo;
+                    $donneesUtilisateur["email"] = $email;
+                    $donneesUtilisateur["mdp"] = isset($mdp) ? $mdp : "";
+
+                    // Hhydrate l'objet utilisateur avec les données mises à jour
+                    $utilisateur->hydrate($donneesUtilisateur);
+
+                    // Modifie l'utilisateur en base de données
+                    $utilisateurModifie = $utilisateurModel->edit($utilisateur);
+
+                    // Si l'utilisateur à été modifié correctement en base de données
+                    if ($utilisateurModifie) {
+
+                        // Met à jour les données en session
+                        $_SESSION["utilisateur"]["pseudo"] = $utilisateur->getPseudo();
+                        $_SESSION["utilisateur"]["email"] = $utilisateur->getEmail();
+
+                        // Redirige l'utilisateur vers la page de son profil
+                        header("Location:index.php?controller=utilisateur&action=profil&utilisateur_id=" . $utilisateur->getId());
+                    }
+                }
+                else {
+
+                    // Ajoute au tableau d'erreurs l'identifiant du formulaire
+                    $erreurs["formulaire"] = "modifier_compte";
+
+                    // Stocke les données saisies par l'utilisateur
+                    // Pour les afficher à la place de celles en session
+                    $pseudoSaisi = $_POST["pseudo"];
+                    $emailSaisi = $_POST["email"];
+                }
+            }
+
             require_once("view/partials/header.php");
             include("view/utilisateur/profil.php");
             require_once("view/partials/footer.php");
