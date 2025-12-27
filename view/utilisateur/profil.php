@@ -118,6 +118,27 @@
             </div>
         </form>
     </div>
+    <div id="supprimer_compte" class="popup"> <!-- popup supression du compte -->
+        <h3>Supprimer votre compte</h3>
+        <p>Vous êtes sur le point de supprimer votre compte. Cette action est irreversible !</p>
+        <p>Confirmez la supression</br> en entrant votre mot de passe</p>
+        <form method="post">
+            <div>
+                <label for="supprimer_compte_mdp_check">Mot de passe actuel</label>
+                <input id="supprimer_compte_mdp_check"
+                    name="mdp_check"
+                    type="password"
+                    placeholder="*********"
+                    autocomplete="off"
+                />
+                <?php if (isset($erreurs["mdp_check"])) { echo '<p class="erreur">' . $erreurs["mdp_check"] . '</p>'; } ?>
+            </div>
+            <div class="actions">
+                <input type="submit" name="supprimer_compte" class="bouton boutonPrincipal boutonDefaut" value="Supprimer mon compte" />
+                <div id="bouton_annuler_supprimer" class="bouton boutonPrincipal boutonDefaut">Annuler</div>
+            </div>
+        </form>
+    </div>
     <!-- Récupère le formulaire qui possède des erreurs pour être utilisé en JS et afficher immédiatement le popup correspondant -->
     <input type="hidden" id="erreurs" value="<?php echo isset($erreurs["formulaire"]) ? $erreurs["formulaire"] : ""; ?>" />
 </main>

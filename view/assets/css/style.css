@@ -600,14 +600,13 @@ td:not(.celluleFixe, .selected_highlight) li {
   text-align: center;
 }
 
-#debut_partie, #fin_partie, #modifier_compte {
+#debut_partie, #fin_partie, #modifier_compte, #supprimer_compte {
   display: flex;
   transform: translateX(-50%) translateY(-50%);
 }
 
-#modifier_compte {
+#modifier_compte, #supprimer_compte {
   display: none;
-  transform: translateX(-50%) translateY(-50%);
 }
 
 #modifier_compte p {

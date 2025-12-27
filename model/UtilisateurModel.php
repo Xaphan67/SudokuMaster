@@ -31,7 +31,7 @@
 
             // Requête préparée pour modifier l'utilisateur
             $query =
-            "UPDATE utilisateur
+                "UPDATE utilisateur
                 SET pseudo = :pseudo, email = :email";
 
             if (!empty($utilisateur->getMdp())) {
@@ -50,6 +50,23 @@
             if (!empty($utilisateur->getMdp())) {
                 $prepare->bindValue(":mdp", $utilisateur->getMdp(), PDO::PARAM_STR);
             }
+
+            // Execute la requête. Retourne true (si réussite) ou false (si echec)
+            return $prepare->execute();
+        }
+
+        function delete(Utilisateur $utilisateur) : bool {
+
+            // Requête préparée pour supprimer (anonymiser) l'utilisateur
+            $query =
+                "UPDATE utilisateur
+                SET pseudo = 'Utilisateur supprimé', email = 'utilisateur@supprime.com', mdp = '', inactif = 1
+                WHERE id_utilisateur=:id";
+
+            $prepare = $this->connect()->prepare($query);
+
+            // Définition des paramettres de la requête préparée
+			$prepare->bindValue(":id", $utilisateur->getId(), PDO::PARAM_INT);
 
             // Execute la requête. Retourne true (si réussite) ou false (si echec)
             return $prepare->execute();

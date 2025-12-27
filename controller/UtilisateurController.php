@@ -251,6 +251,44 @@
                 }
             }
 
+            // Si le formulaire de modification des données du compte est soumis
+            if (isset($_POST["supprimer_compte"])) {
+
+                // Crée une instance du modèle Utilisateur
+                $utilisateurModel = new UtilisateurModel;
+
+                // Test des données
+                if (empty($_POST["mdp_check"])) {
+                    $erreurs["mdp_check"] = "Ce champ est obligatoire";
+                }
+
+                // Si il n'y à aucune erreur
+                if (count($erreurs) == 0) {
+
+                    // Crée un nouvel objet Utilisateur et l'hydrate avec les données présentes en base de donnée
+                    $utilisateur = new Utilisateur;
+                    $utilisateur->hydrate($utilisateurModel->findById($_SESSION["utilisateur"]["id_utilisateur"]));
+
+                    // Supprime l'utilisateur en base de données
+                    $utilisateurSupprime = $utilisateurModel->delete($utilisateur);
+
+                    // Si l'utilisateur à été supprimé correctement en base de données
+                    if ($utilisateurSupprime) {
+
+                        // Détruit la session en cours
+                        session_destroy();
+
+                        // Redirige l'utilisateur vers la page d'accueil
+                        header("Location:index.php");
+                    }
+                }
+                else {
+
+                    // Ajoute au tableau d'erreurs l'identifiant du formulaire
+                    $erreurs["formulaire"] = "supprimer_compte";
+                }
+            }
+
             require_once("view/partials/header.php");
             include("view/utilisateur/profil.php");
             require_once("view/partials/footer.php");
