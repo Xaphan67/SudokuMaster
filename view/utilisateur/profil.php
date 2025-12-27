@@ -67,6 +67,7 @@
                     placeholder="<?php echo $_SESSION["utilisateur"]["pseudo"] ?>"
                     autocomplete="username"
                     <?php echo 'value="' . (isset($pseudoSaisi) ? $pseudoSaisi : $_SESSION["utilisateur"]["pseudo"]) . '"' ?>
+                    required
                 />
                 <?php if (isset($erreurs["pseudo"])) { echo '<p class="erreur">' . $erreurs["pseudo"] . '</p>'; } ?>
             </div>
@@ -78,6 +79,7 @@
                     placeholder="<?php echo $_SESSION["utilisateur"]["email"] ?>"
                     autocomplete="email"
                     <?php echo 'value="' . (isset($emailSaisi) ? $emailSaisi : $_SESSION["utilisateur"]["email"]) . '"' ?>
+                    required
                 />
                 <?php if (isset($erreurs["email"])) { echo '<p class="erreur">' . $erreurs["email"] . '</p>'; } ?>
             </div>
@@ -109,6 +111,7 @@
                     type="password"
                     placeholder="*********"
                     autocomplete="off"
+                    required
                 />
                 <?php if (isset($erreurs["mdp_check"])) { echo '<p class="erreur">' . $erreurs["mdp_check"] . '</p>'; } ?>
             </div>
@@ -130,6 +133,7 @@
                     type="password"
                     placeholder="*********"
                     autocomplete="off"
+                    required
                 />
                 <?php if (isset($erreurs["mdp_check"])) { echo '<p class="erreur">' . $erreurs["mdp_check"] . '</p>'; } ?>
             </div>

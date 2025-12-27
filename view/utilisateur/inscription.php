@@ -12,6 +12,7 @@
                         placeholder="Pseudo..."
                         autocomplete="username"
                         <?php if (isset($_POST["pseudo"])) { echo 'value="' . $_POST["pseudo"] . '"'; } ?>
+                        required
                     />
                     <?php if (isset($erreurs["pseudo"])) { echo '<p>' . $erreurs["pseudo"] . '</p>'; } ?>
                 </div>
@@ -23,6 +24,7 @@
                         placeholder="exemple@exemple.fr"
                         autocomplete="email"
                         <?php if (isset($_POST["email"])) { echo 'value="' . $_POST["email"] . '"'; } ?>
+                        required
                     />
                     <?php if (isset($erreurs["email"])) { echo '<p>' . $erreurs["email"] . '</p>'; } ?>
                 </div>
@@ -33,6 +35,7 @@
                         type="password"
                         placeholder="*********"
                         autocomplete="off"
+                        required
                     />
                     <?php if (isset($erreurs["mdp"])) { echo '<p>' . $erreurs["mdp"] . '</p>'; } ?>
                 </div>
@@ -43,6 +46,7 @@
                         type="password"
                         placeholder="*********"
                         autocomplete="off"
+                        required
                     />
                     <?php if (isset($erreurs["mdp_confirm"])) { echo '<p>' . $erreurs["mdp_confirm"] . '</p>'; } ?>
                 </div>
