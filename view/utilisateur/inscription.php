@@ -46,7 +46,7 @@
                     />
                     <?php if (isset($erreurs["mdp_confirm"])) { echo '<p>' . $erreurs["mdp_confirm"] . '</p>'; } ?>
                 </div>
-                <input type="submit" value="Créer mon compte" />
+                <input type="submit" class="bouton boutonPrincipal boutonDefaut" value="Créer mon compte" />
             </form>
         </div>
     </div>

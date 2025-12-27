@@ -27,7 +27,7 @@
                     <?php if (isset($erreurs["mdp"])) { echo '<p>' . $erreurs["mdp"] . '</p>'; } ?>
                 </div>
                 <?php if (isset($erreurs["identifiants"])) { echo '<p>' . $erreurs["identifiants"] . '</p>'; } ?>
-                <input type="submit" value="Se connecter" />
+                <input type="submit" class="bouton boutonPrincipal boutonDefaut" value="Se connecter" />
             </form>
             <hr />
             <a href="index.php?controller=utilisateur&action=signUp">Créer un compte Sudoku Master gratuit</a>
