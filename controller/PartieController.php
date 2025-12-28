@@ -84,10 +84,8 @@
                 $classerModel = new ClasserModel;
                 $donneesClasser = $classerModel->findByUserId($utilisateur->getId());
 
-                // Crée un nouvel objet Classer
+                // Crée un nouvel objet Classer et l'hydrate avec les données
                 $classer = new Classer;
-
-                // Ajoute l'utilisateur et le mode de jeu à l'objet Classer
                 $classer->setUtilisateur($utilisateur);
                 $classer->setMode_de_jeu($modeDeJeu);
 
@@ -105,7 +103,7 @@
                     // Ajoute une grille jouée
                     $classer->setGrilles_jouees($classer->getGrilles_jouees() + 1);
 
-                    // Met à jour lesdonnées en base de donnée
+                    // Met à jour les données en base de donnée
                     $classerModel->edit($classer);
                 }
 
