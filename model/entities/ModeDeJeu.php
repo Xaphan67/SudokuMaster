@@ -6,6 +6,12 @@
     private string $id;
     private string $libelle;
 
+    // Constructeur
+
+    function __construct()
+    {
+        $this->_strPrefix = "mode_de_jeu";
+    }
 
     // Getters
 

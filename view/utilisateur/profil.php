@@ -9,8 +9,8 @@
                     <p>Mot de passe :</p>
                 </div>
                 <div>
-                    <p><?php echo $_SESSION["utilisateur"]["pseudo"]?></p>
-                    <p><?php echo $_SESSION["utilisateur"]["email"]?></p>
+                    <p><?php echo $_SESSION["utilisateur"]["pseudo_utilisateur"]?></p>
+                    <p><?php echo $_SESSION["utilisateur"]["email_utilisateur"]?></p>
                     <p>*********</p>
                 </div>
             </div>
@@ -64,9 +64,9 @@
                 <input id="pseudo"
                     name="pseudo"
                     type="text"
-                    placeholder="<?php echo $_SESSION["utilisateur"]["pseudo"] ?>"
+                    placeholder="<?php echo $_SESSION["utilisateur"]["pseudo_utilisateur"] ?>"
                     autocomplete="username"
-                    <?php echo 'value="' . (isset($pseudoSaisi) ? $pseudoSaisi : $_SESSION["utilisateur"]["pseudo"]) . '"' ?>
+                    <?php echo 'value="' . (isset($pseudoSaisi) ? $pseudoSaisi : $_SESSION["utilisateur"]["pseudo_utilisateur"]) . '"' ?>
                     required
                 />
                 <?php if (isset($erreurs["pseudo"])) { echo '<p class="erreur">' . $erreurs["pseudo"] . '</p>'; } ?>
@@ -76,9 +76,9 @@
                 <input id="email"
                     name="email"
                     type="email"
-                    placeholder="<?php echo $_SESSION["utilisateur"]["email"] ?>"
+                    placeholder="<?php echo $_SESSION["utilisateur"]["email_utilisateur"] ?>"
                     autocomplete="email"
-                    <?php echo 'value="' . (isset($emailSaisi) ? $emailSaisi : $_SESSION["utilisateur"]["email"]) . '"' ?>
+                    <?php echo 'value="' . (isset($emailSaisi) ? $emailSaisi : $_SESSION["utilisateur"]["email_utilisateur"]) . '"' ?>
                     required
                 />
                 <?php if (isset($erreurs["email"])) { echo '<p class="erreur">' . $erreurs["email"] . '</p>'; } ?>

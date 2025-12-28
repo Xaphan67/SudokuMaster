@@ -8,6 +8,22 @@
             $participers = $this->connect()->query($query)->fetchAll();
             return $participers;
         }
+
+        function add(Participer $participer) : bool {
+
+            // Requête préparée pour ajouter la participation
+            $query = "INSERT INTO participer (id_utilisateur, id_partie)
+                VALUES(:id_utilisateur, :id_partie)";
+
+            $prepare = $this->connect()->prepare($query);
+
+            // Définition des paramettres de la requête préparée
+            $prepare->bindValue(":id_utilisateur", $participer->getUtilisateur()->getId(), PDO::PARAM_INT);
+			$prepare->bindValue(":id_partie", $participer->getPartie()->getId(), PDO::PARAM_INT);
+
+            // Execute la requête. Retourne true (si réussite) ou false (si echec)
+            return $prepare->execute();
+        }
     }
 
 ?>

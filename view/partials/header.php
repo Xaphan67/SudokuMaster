@@ -15,7 +15,7 @@
             <div id="utilisateur">
                 <?php
                     if (isset($_SESSION["utilisateur"])) {
-                        echo '<a href="index.php?controller=utilisateur&action=profil&utilisateurId=' . $_SESSION["utilisateur"]["id_utilisateur"] . '">' . $_SESSION["utilisateur"]["pseudo"] .' </a>';
+                        echo '<a href="index.php?controller=utilisateur&action=profil&utilisateurId=' . $_SESSION["utilisateur"]["id_utilisateur"] . '">' . $_SESSION["utilisateur"]["pseudo_utilisateur"] .' </a>';
                     }
                     else {
                         echo '<a href="index.php?controller=utilisateur&action=login">Connexion</a>';

@@ -4,11 +4,19 @@
 
  class Partie extends Entity {
     private string $id;
-    private ModeDeJeu $modeDeJeu;
+    private ModeDeJeu $mode_de_jeu;
     private Difficulte $difficulte;
     private int $duree;
-    private Utilisateur $utilisateurGagnant = null;
-    
+    private ?Utilisateur $gagnant = null;
+    private string $numero_salle;
+
+    // Constructeur
+
+    function __construct()
+    {
+        $this->_strPrefix = "partie";
+    }
+
 
     // Getters
 
@@ -16,8 +24,8 @@
         return $this->id;
     }
 
-    public function getModeDeJeu() : ModeDeJeu {
-        return $this->modeDeJeu;
+    public function getMode_de_jeu() : ModeDeJeu {
+        return $this->mode_de_jeu;
     }
 
     public function getDifficulte() : Difficulte {
@@ -28,8 +36,12 @@
         return $this->duree;
     }
 
-    public function getUtilisateurGagnant() : Utilisateur {
-        return $this->utilisateurGagnant;
+    public function getGagnant() : ?Utilisateur {
+        return $this->gagnant;
+    }
+
+    public function getNumero_salle() : string {
+        return $this->numero_salle;
     }
 
 
@@ -39,8 +51,8 @@
         $this->id = $id;
     }
 
-    public function setModeDeJeu($modeDeJeu) {
-        $this->modeDeJeu = $modeDeJeu;
+    public function setMode_de_jeu($mode_de_jeu) {
+        $this->mode_de_jeu = $mode_de_jeu;
     }
 
     public function setDifficulte($difficulte) {
@@ -51,8 +63,12 @@
         $this->duree = $duree;
     }
 
-    public function setUtilisateurGagnant($utilisateurGagnant) {
-        $this->utilisateurGagnant = $utilisateurGagnant;
+    public function setGagnant($gagnant) {
+        $this->gagnant = $gagnant;
     }
-    
+
+    public function setNumero_salle($numero_salle) {
+        $this->numero_salle = $numero_salle;
+    }
+
  }

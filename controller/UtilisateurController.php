@@ -59,14 +59,11 @@
                         // Hashe le mot de passe de l'utilisateur
                         $mdp = password_hash($_POST["mdp"], PASSWORD_DEFAULT);
 
-                        // Crée un tableau avec les données de l'utilisateur
-                        $donneesUtilisateur["pseudo"] = $pseudo;
-                        $donneesUtilisateur["email"] = $email;
-                        $donneesUtilisateur["mdp"] = $mdp;
-
                         // Crée un nouvel objet Utilisateur et l'hydrate avec les données
                         $utilisateur = new Utilisateur;
-                        $utilisateur->hydrate($donneesUtilisateur);
+                        $utilisateur->setPseudo($pseudo);
+                        $utilisateur->setEmail($email);
+                        $utilisateur->setMdp($mdp);
 
                         // Crée une instance du modèle Utilisateur et appelle la méthode
                         // pour insérer l'utilisateur en base de données
@@ -139,7 +136,7 @@
                         if ($donneesUtilisateur) {
 
                             // Vérifie que le mot de passe entré via le formulaire correspond à l'utilisateur demandé
-                            if (password_verify($_POST["mdp"], $mdpHash["mdp"])) {
+                            if (password_verify($_POST["mdp"], $mdpHash["mdp_utilisateur"])) {
 
                                 // Enregistre les données de l'utilisateur en session
                                 $_SESSION["utilisateur"] = $donneesUtilisateur;
@@ -241,14 +238,11 @@
                             $mdp = password_hash($_POST["mdp"], PASSWORD_DEFAULT);
                         }
 
-                        // Crée un tableau avec les données de l'utilisateur
-                        $donneesUtilisateur["id"] = $_SESSION["utilisateur"]["id_utilisateur"];
-                        $donneesUtilisateur["pseudo"] = $pseudo;
-                        $donneesUtilisateur["email"] = $email;
-                        $donneesUtilisateur["mdp"] = isset($mdp) ? $mdp : "";
-
                         // Hhydrate l'objet utilisateur avec les données mises à jour
-                        $utilisateur->hydrate($donneesUtilisateur);
+                        $utilisateur->setId($_SESSION["utilisateur"]["id_utilisateur"]);
+                        $utilisateur->setPseudo($pseudo);
+                        $utilisateur->setEmail($email);
+                        $utilisateur->setMdp(isset($mdp) ? $mdp : "");
 
                         // Modifie l'utilisateur en base de données
                         $utilisateurModifie = $utilisateurModel->edit($utilisateur);
@@ -257,8 +251,8 @@
                         if ($utilisateurModifie) {
 
                             // Met à jour les données en session
-                            $_SESSION["utilisateur"]["pseudo"] = $utilisateur->getPseudo();
-                            $_SESSION["utilisateur"]["email"] = $utilisateur->getEmail();
+                            $_SESSION["utilisateur"]["pseudo_utilisateur"] = $utilisateur->getPseudo();
+                            $_SESSION["utilisateur"]["email_utilisateur"] = $utilisateur->getEmail();
 
                             // Redirige l'utilisateur vers la page de son profil
                             header("Location:index.php?controller=utilisateur&action=profil&utilisateur_id=" . $utilisateur->getId());

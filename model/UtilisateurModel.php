@@ -13,15 +13,15 @@
 
             // Requête préparée pour ajouter l'utilisateur
             $query =
-               "INSERT INTO utilisateur (pseudo, email, mdp)
-                VALUES(:pseudo, :email, :mdp)";
+               "INSERT INTO utilisateur (pseudo_utilisateur, email_utilisateur, mdp_utilisateur)
+                VALUES(:pseudo_utilisateur, :email_utilisateur, :mdp_utilisateur)";
 
             $prepare = $this->connect()->prepare($query);
 
             // Définition des paramettres de la requête préparée
-            $prepare->bindValue(":pseudo", $utilisateur->getPseudo(), PDO::PARAM_STR);
-			$prepare->bindValue(":email", $utilisateur->getEmail(), PDO::PARAM_STR);
-			$prepare->bindValue(":mdp", $utilisateur->getMdp(), PDO::PARAM_STR);
+            $prepare->bindValue(":pseudo_utilisateur", $utilisateur->getPseudo(), PDO::PARAM_STR);
+			$prepare->bindValue(":email_utilisateur", $utilisateur->getEmail(), PDO::PARAM_STR);
+			$prepare->bindValue(":mdp_utilisateur", $utilisateur->getMdp(), PDO::PARAM_STR);
 
             // Execute la requête. Retourne true (si réussite) ou false (si echec)
             return $prepare->execute();
@@ -32,23 +32,23 @@
             // Requête préparée pour modifier l'utilisateur
             $query =
                 "UPDATE utilisateur
-                SET pseudo = :pseudo, email = :email";
+                SET pseudo_utilisateur = :pseudo_utilisateur, email_utilisateur = :email_utilisateur";
 
             if (!empty($utilisateur->getMdp())) {
-                $query .= ", mdp = :mdp";
+                $query .= ", mdp_utilisateur = :mdp_utilisateur";
             }
 
-            $query .= " WHERE id_utilisateur = :id";
+            $query .= " WHERE id_utilisateur = :id_utilisateur";
 
             $prepare = $this->connect()->prepare($query);
 
             // Définition des paramettres de la requête préparée
-            $prepare->bindValue(":pseudo", $utilisateur->getPseudo(), PDO::PARAM_STR);
-			$prepare->bindValue(":email", $utilisateur->getEmail(), PDO::PARAM_STR);
-            $prepare->bindValue(":id", $utilisateur->getId(), PDO::PARAM_INT);
+            $prepare->bindValue(":pseudo_utilisateur", $utilisateur->getPseudo(), PDO::PARAM_STR);
+			$prepare->bindValue(":email_utilisateur", $utilisateur->getEmail(), PDO::PARAM_STR);
+            $prepare->bindValue(":id_utilisateur", $utilisateur->getId(), PDO::PARAM_INT);
 
             if (!empty($utilisateur->getMdp())) {
-                $prepare->bindValue(":mdp", $utilisateur->getMdp(), PDO::PARAM_STR);
+                $prepare->bindValue(":mdp_utilisateur", $utilisateur->getMdp(), PDO::PARAM_STR);
             }
 
             // Execute la requête. Retourne true (si réussite) ou false (si echec)
@@ -60,13 +60,13 @@
             // Requête préparée pour supprimer (anonymiser) l'utilisateur
             $query =
                 "UPDATE utilisateur
-                SET pseudo = 'Utilisateur supprimé', email = 'utilisateur@supprime.com', mdp = '', inactif = 1
-                WHERE id_utilisateur=:id";
+                SET pseudo_utilisateur = 'Utilisateur supprimé', email_utilisateur = 'utilisateur@supprime.com', mdp_utilisateur = '', inactif = 1
+                WHERE id_utilisateur=:id_utilisateur";
 
             $prepare = $this->connect()->prepare($query);
 
             // Définition des paramettres de la requête préparée
-			$prepare->bindValue(":id", $utilisateur->getId(), PDO::PARAM_INT);
+			$prepare->bindValue(":id_utilisateur", $utilisateur->getId(), PDO::PARAM_INT);
 
             // Execute la requête. Retourne true (si réussite) ou false (si echec)
             return $prepare->execute();
@@ -76,13 +76,13 @@
 
             // Requête préparée pour récupérer les informations de l'utilisateur
             $query =
-                "SELECT id_utilisateur, pseudo, email FROM utilisateur
-                WHERE id_utilisateur=:id";
+                "SELECT id_utilisateur, pseudo_utilisateur, email_utilisateur FROM utilisateur
+                WHERE id_utilisateur=:id_utilisateur";
 
             $prepare = $this->connect()->prepare($query);
 
             // Définition des paramettres de la requête préparée
-			$prepare->bindValue(":id", $id, PDO::PARAM_INT);
+			$prepare->bindValue(":id_utilisateur", $id, PDO::PARAM_INT);
 
             // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
             $prepare->execute();
@@ -93,13 +93,13 @@
 
             // Requête préparée pour récupérer les informations de l'utilisateur
             $query =
-                "SELECT id_utilisateur, pseudo, email  FROM utilisateur
-                WHERE email=:email";
+                "SELECT id_utilisateur, pseudo_utilisateur, email_utilisateur  FROM utilisateur
+                WHERE email_utilisateur=:email_utilisateur";
 
             $prepare = $this->connect()->prepare($query);
 
             // Définition des paramettres de la requête préparée
-			$prepare->bindValue(":email", $email, PDO::PARAM_STR);
+			$prepare->bindValue(":email_utilisateur", $email, PDO::PARAM_STR);
 
             // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
             $prepare->execute();
@@ -110,13 +110,13 @@
 
             // Requête préparée pour trouver le hash du mort de passe de l'utilisateur
             $query =
-                "SELECT mdp FROM utilisateur
-                WHERE email=:email";
+                "SELECT mdp_utilisateur FROM utilisateur
+                WHERE email_utilisateur=:email_utilisateur";
 
             $prepare = $this->connect()->prepare($query);
 
             // Définition des paramettres de la requête préparée
-			$prepare->bindValue(":email", $email, PDO::PARAM_STR);
+			$prepare->bindValue(":email_utilisateur", $email, PDO::PARAM_STR);
 
             // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
             $prepare->execute();

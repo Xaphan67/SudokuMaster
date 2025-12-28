@@ -18,12 +18,16 @@ const POPUP_FIN_PARTIE_TEXTE = POPUP_FIN_PARTIE.getElementsByTagName("p")[0];
 const POPUP_FIN_PARTIE_RJOUER = POPUP_FIN_PARTIE.getElementsByTagName("div")[0];
 const NOTES = document.getElementById("notes");
 const TIMER = document.getElementById("timer");
+const UTILISATEUR_CONNECTE = document.getElementById("session_utilisateur");
 
 // Variables
 // DOM
 let difficulte = null;
 let caseActuelle = null;
 let case_focus = null;
+
+// Partie
+let id_partie = null;
 
 // Timer
 let timerActif;
@@ -226,23 +230,35 @@ BOUTON_JEU.addEventListener("click", (e) => {
 });
 
 // Début de partie
-function startGame(element) {
+async function startGame(element) {
     // Masque la grille
-        TABLE.style.display = "none";
-        TABLE_VIDE.style.display = "inline-table";
+    TABLE.style.display = "none";
+    TABLE_VIDE.style.display = "inline-table";
 
     // Affiche la difficulté choisie
-        difficulte = element.children[1].innerHTML;
-        TITRE_JEU.innerHTML = 'Jeu solo : Difficulté ' + difficulte;
+    difficulte = element.children[1].innerHTML;
+    TITRE_JEU.innerHTML = 'Jeu solo : Difficulté ' + difficulte;
 
-        // Appelle l'API pour obtenir une grille et l'afficher
-        callSudokuAPI(difficulte);
+    // Ajoute la partie dans la base de données
+    // Et retourne son ID (ou 0 si aucun utilisateur connecté)
+    const RES_PARTIE = await fetch("index.php?controller=partie&action=new", {
+        method: "POST",
+        headers: {
+                'Content-Type': 'application/json', // Indique qu'on envoie du JSON
+                'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
+            },
+            body: JSON.stringify({ modeDeJeu: "Solo", difficulte: difficulte}) // Objet JS converti en chaîne JSON
+    });
+    id_partie = await RES_PARTIE.json();
 
-        // Configure et démarre le timer
-        timerActif = false;
-        timerMinutes = 14;
-        timerSecondes = 59;
-        startTimer();
+    // Appelle l'API pour obtenir une grille et l'afficher
+    callSudokuAPI(difficulte);
+
+    // Configure et démarre le timer
+    timerActif = false;
+    timerMinutes = 14;
+    timerSecondes = 59;
+    startTimer();
 }
 
 // Fin de partie

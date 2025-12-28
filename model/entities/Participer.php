@@ -4,10 +4,15 @@
 
  class Participer extends Entity {
     private string $id;
-    private string $numeroSalle;
-    private array $utilisateurs;
+    private ?Utilisateur $utilisateur;
     private Partie $partie;
 
+    // Constructeur
+
+    function __construct()
+    {
+        $this->_strPrefix = "participer";
+    }
 
     // Getters
 
@@ -15,12 +20,8 @@
         return $this->id;
     }
 
-    public function getNumeroSalle() : string {
-        return $this->numeroSalle;
-    }
-
-    public function getUtilisateurs() : array {
-        return $this->utilisateurs;
+    public function getUtilisateur() : ?Utilisateur {
+        return $this->utilisateur;
     }
 
     public function getPartie() : Partie {
@@ -34,16 +35,12 @@
         $this->id = $id;
     }
 
-    public function setNumeroSalle($numeroSalle) {
-        $this->numeroSalle = $numeroSalle;
-    }
-
-    public function setUtilisateurs($utilisateurs) {
-        $this->utilisateurs = $utilisateurs;
+    public function setUtilisateur($utilisateur) {
+        $this->utilisateur = $utilisateur;
     }
 
     public function setPartie($partie) {
         $this->partie = $partie;
     }
-    
+
  }
