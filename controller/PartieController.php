@@ -82,7 +82,7 @@
                 // Crée une instance du modèle Classer et appelle la méthode
                 // pour récupérer les statistiques en base de donnée
                 $classerModel = new ClasserModel;
-                $donneesClasser = $classerModel->findByUserId($utilisateur->getId());
+                $donneesClasser = $classerModel->findByUserAndMode($utilisateur->getId(), $modeDeJeu->getId());
 
                 // Crée un nouvel objet Classer et l'hydrate avec les données
                 $classer = new Classer;

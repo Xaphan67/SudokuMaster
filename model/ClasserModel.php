@@ -9,17 +9,18 @@
             return $classers;
         }
 
-        function findByUserId(int $id) {
+        function findByUserAndMode(int $utilisateurId, int $modeId) {
 
             // Requête préparée pour récupérer les sttistiques de l'utilisateur
             $query =
                 "SELECT id_utilisateur, id_mode_de_jeu, score_global, grilles_jouees, grilles_resolues, temps_moyen, meilleur_temps, serie_victoires FROM classer
-                WHERE id_utilisateur=:id_utilisateur";
+                WHERE id_utilisateur=:id_utilisateur AND id_mode_de_jeu = :id_mode_de_jeu";
 
             $prepare = $this->connect()->prepare($query);
 
             // Définition des paramettres de la requête préparée
-			$prepare->bindValue(":id_utilisateur", $id, PDO::PARAM_INT);
+			$prepare->bindValue(":id_utilisateur", $utilisateurId, PDO::PARAM_INT);
+            $prepare->bindValue(":id_mode_de_jeu", $modeId, PDO::PARAM_INT);
 
             // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
             $prepare->execute();
