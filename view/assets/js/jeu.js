@@ -30,10 +30,12 @@ let case_focus = null;
 let id_partie = null;
 
 // Timer
+let start = null;
+let deltaPause = null;
 let timerActif;
 let timerMinutes;
 let timerSecondes;
-let timerId = -1;
+let timerInterval = -1;
 
 // Grille
 let grille = [];
@@ -256,8 +258,6 @@ async function startGame(element) {
 
     // Configure et démarre le timer
     timerActif = false;
-    timerMinutes = 14;
-    timerSecondes = 59;
     startTimer();
 }
 
@@ -266,17 +266,24 @@ function endGame(popup = true) {
     CONTENEUR_JEU.style.filter = "opacity(0.40)";
 
     // Stop le timer
-    clearInterval(timerId);
+    clearInterval(timerInterval);
 
     // Empèche l'utilisateur d'intéragir avec le plateau de jeu
     CONTENEUR_JEU.inert = true;
 
     if (popup) {
         // Affiche un message de victoire ou défaite selon l'état de la partie quand le popup s'affiche
-        let timerNonEcoule = timerMinutes > 0 || (timerMinutes == 0 && timerSecondes > 0);
+        let victoire = timerMinutes < 14;
         POPUP_FIN_PARTIE.style.display = "flex";
-        POPUP_FIN_PARTIE_TITRE.innerHTML = (timerNonEcoule ? "Victoire" : "Défaite") + " !";
+        POPUP_FIN_PARTIE_TITRE.innerHTML = (victoire ? "Victoire" : "Défaite") + " !";
         POPUP_FIN_PARTIE_TEXTE.innerHTML = "Partie terminée";
+
+        // Si un joueur est connecté
+        if (id_partie != 0) {
+
+            // Met à jour les statistiques du joueur
+            updateStats(victoire);
+        }
 
         // Lors du clic sur Rejouer...
         POPUP_FIN_PARTIE_RJOUER.addEventListener("click", (e) => {
@@ -289,6 +296,17 @@ function endGame(popup = true) {
             resetTimer();
         });
     }
+}
+
+// Met à jour les statistiques du joueur
+function updateStats(victoire) {
+    fetch("index.php?controller=partie&action=end", {
+        method: "POST",
+        headers: {
+                'Content-Type': 'application/json', // Indique qu'on envoie du JSON
+            },
+            body: JSON.stringify({ idPartie: id_partie, modeDeJeu: "Solo", victoire: victoire, timerMinutes: timerMinutes, timerSecondes: timerSecondes}) // Objet JS converti en chaîne JSON
+    });
 }
 
 // Remet le timer à 15 minutes
@@ -318,9 +336,15 @@ async function startTimer() {
         PAVE.style.filter = "none";
         PAVE.inert = false;
 
+        // Attends une seconde car le timer commence à 14:59 sauf si le timer était en pause
+        if (deltaPause == null) {
+            await sleep(1000)
+        }
+
         // Démarre le timer
         timerActif = true;
-        timerId = setInterval(decreaseTimer, 1000); // Décompte les secondes
+        start = Date.now() - deltaPause;
+        timerInterval = setInterval(decreaseTimer, 100);
     }
     else { // Sinon, on le met en pause
         // Rends les éléments légèrement opaques et non-interactibles
@@ -333,29 +357,37 @@ async function startTimer() {
         PAVE.inert = true;
 
         // Met le timer en pause
-        clearInterval(timerId);
+        clearInterval(timerInterval);
+        deltaPause = Date.now() - start;
         timerActif = false;
     }
 }
 
-// Tant que le timer est actif, on execute cette fonction chaque seconde
+// Tant que le timer est actif, on execute cette fonction chaque dixième de seconde
 function decreaseTimer() {
-    TIMER.innerText = "Temps : " + (timerMinutes < 10 ? "0" + timerMinutes : timerMinutes) + ':' + (timerSecondes < 10 ? "0" + timerSecondes : timerSecondes); // Affiche la valeur du timer
 
-    // Si le timer des secondes est égal à 0
-    if (timerSecondes == 0) {
+    // Calcule le delta entre le moment ou le timer à démarré et le moment ou cette fonction s'exécute
+    let delta = Date.now() - start;
 
-        // Si les minutes sont à zero
-        if (timerMinutes == 0) {
-            clearInterval(timerId); // Stop le timer
-            endGame();
-        }
-        else {
-            timerMinutes--; // Retire une minute
-            timerSecondes = 60; // Remet les secondes à 60
-        }
+    // Calcule les minutes et secondes écoulées
+    timerMinutes =  Math.trunc(delta / 1000 / 60);
+    timerSecondes =  Math.trunc(delta / 1000);
+    if (timerSecondes > 59) {
+        timerSecondes -= 60 * timerMinutes;
     }
-    timerSecondes--; // Retire une seconde
+
+    // Converti l'affichage pour que le timer soit un décompte
+    let affichageMinutes = 14 - timerMinutes;
+    let affichageSecondes = 59 - timerSecondes;
+
+    // Affiche le temps
+    TIMER.innerText = "Temps : " + (affichageMinutes < 10 ? "0" : "") + affichageMinutes + ":" + (affichageSecondes < 10 ? "0" : "") + affichageSecondes;
+
+    // Met fin à la partie si le temps est écoulé
+    if (timerMinutes == 14 && timerSecondes == 59) {
+        clearInterval(timerInterval); // Stop le timer
+        endGame();
+    }
 }
 
 // Ajoute la fonction "equals" aux tableaux pour comparer qu'ils sont identiques

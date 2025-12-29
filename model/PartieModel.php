@@ -41,6 +41,109 @@
 
             return $partieID["id_partie"];
         }
+
+        function edit(Partie $partie) : bool {
+
+            // Requête préparée pour modifier la partie
+            $query =
+                "UPDATE partie SET";
+
+            $multiple = false;
+
+            if (!empty($partie->getDuree())) {
+                $query .= " duree_partie = :duree_partie";
+                $multiple = true;
+            }
+
+            if (!empty($partie->getGagnant())) {
+                $query .= $multiple ? "," : "";
+                $query .= " gagnant_partie = :gagnant_partie";
+                $multiple = true;
+            }
+
+            if (!empty($partie->getNumero_salle())) {
+                $query .= $multiple ? "," : "";
+                $query .= " numero_salle_partie = :numero_salle_partie";
+            }
+
+            $query .= " WHERE id_partie = :id_partie";
+
+            $prepare = $this->connect()->prepare($query);
+
+            // Définition des paramettres de la requête préparée
+            if (!empty($partie->getDuree())) {
+                $prepare->bindValue(":duree_partie", $partie->getDuree(), PDO::PARAM_STR);
+            }
+
+            if (!empty($partie->getGagnant())) {
+                $prepare->bindValue(":gagnant_partie", $partie->getGagnant()->getId(), PDO::PARAM_INT);
+            }
+
+            if (!empty($partie->getNumero_salle())) {
+                $prepare->bindValue(":numero_salle_partie", $partie->getNumero_salle(), PDO::PARAM_STR);
+            }
+
+            $prepare->bindValue(":id_partie", $partie->getId(), PDO::PARAM_INT);
+
+
+            // Execute la requête. Retourne true (si réussite) ou false (si echec)
+            return $prepare->execute();
+        }
+
+        function findById($id) {
+
+            // Requête préparée pour récupérer les informations de la partie
+            $query =
+                "SELECT id_partie, duree_partie, gagnant_partie, numero_salle_partie, id_mode_de_jeu, id_difficulte FROM partie
+                WHERE id_partie=:id_partie";
+
+            $prepare = $this->connect()->prepare($query);
+
+            // Définition des paramettres de la requête préparée
+			$prepare->bindValue(":id_partie", $id, PDO::PARAM_INT);
+
+            // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
+            $prepare->execute();
+            return $prepare->fetch();
+        }
+
+        function getAverageTime($id) {
+
+            // Requête préparée pour trouver le temps moyen de l'utilisateur
+            $query =
+                "SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(duree_partie))) AS temps_moyen
+                FROM partie
+                INNER JOIN participer ON participer.id_partie = partie.id_partie
+                WHERE id_utilisateur = :id_utilisateur";
+
+            $prepare = $this->connect()->prepare($query);
+
+            // Définition des paramettres de la requête préparée
+			$prepare->bindValue(":id_utilisateur", $id, PDO::PARAM_INT);
+
+            // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
+            $prepare->execute();
+            return $prepare->fetch();
+        }
+
+        function getBestTime($id) {
+
+            // Requête préparée pour trouver le meilleur temps de l'utilisateur
+            $query =
+                "SELECT MIN(duree_partie) AS meilleur_temps
+                FROM partie
+                INNER JOIN participer ON participer.id_partie = partie.id_partie
+                WHERE id_utilisateur = :id_utilisateur";
+
+            $prepare = $this->connect()->prepare($query);
+
+            // Définition des paramettres de la requête préparée
+			$prepare->bindValue(":id_utilisateur", $id, PDO::PARAM_INT);
+
+            // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
+            $prepare->execute();
+            return $prepare->fetch();
+        }
     }
 
 ?>

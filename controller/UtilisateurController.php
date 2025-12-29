@@ -324,6 +324,10 @@
                     // S'il y à des statistiques pour le mode
                     if ($donneesClasser) {
 
+                        // Retire l'affichage des heures (qui sera toujours 00:) et tronque les millisecondes
+                        $donneesClasser["temps_moyen"] = substr($donneesClasser["temps_moyen"], 3, 5);
+                        $donneesClasser["meilleur_temps"] = substr($donneesClasser["meilleur_temps"], 3, 5);
+
                         // Crée un nouvel objet Classer et l'hydrate avec les données
                         $classer = new Classer;
                         $classer->hydrate($donneesClasser);

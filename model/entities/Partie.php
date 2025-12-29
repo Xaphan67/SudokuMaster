@@ -6,9 +6,9 @@
     private string $id;
     private ModeDeJeu $mode_de_jeu;
     private Difficulte $difficulte;
-    private int $duree;
+    private ?string $duree;
     private ?Utilisateur $gagnant = null;
-    private string $numero_salle;
+    private ?string $numero_salle;
 
     // Constructeur
 
@@ -32,7 +32,7 @@
         return $this->difficulte;
     }
 
-    public function getDuree() : int {
+    public function getDuree() : ?string {
         return $this->duree;
     }
 
@@ -40,7 +40,7 @@
         return $this->gagnant;
     }
 
-    public function getNumero_salle() : string {
+    public function getNumero_salle() : ?string {
         return $this->numero_salle;
     }
 

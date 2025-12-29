@@ -26,6 +26,7 @@
         }
 
         // Crée une partie dans la base de données
+        // et retourne l'ID de la partie qui vient d'être créée
         public function new() {
 
             // Si un utilisateur est connecté
@@ -114,6 +115,104 @@
 
                 // Aucune partie créée
                 echo 0;
+            }
+        }
+
+        // Met fin à la partie
+        public function end() {
+            // Si un utilisateur est connecté
+            if (isset($_SESSION["utilisateur"])) {
+
+                // Récupération des données envoyées par JS
+                $json_data = file_get_contents('php://input'); // Lit le corps brut de la requête
+                $dataJS = json_decode($json_data, true); // Décode le JSON en tableau associatif
+
+                // Crée une instance du modèle Partie et appelle la méthode
+                // pour récupérer la partie en base de données et via son ID
+                $partieModel = new PartieModel;
+                $donneesPartie = $partieModel->findById($dataJS["idPartie"]);
+
+                // Crée un nouvel objet Partie et l'hydrate avec les données
+                $partie = new Partie;
+                $partie->hydrate($donneesPartie);
+
+                // Crée une instance du modèle Utilisateur
+                $utilisateurModel = new UtilisateurModel;
+
+                // Crée un nouvel objet Utilisateur et l'hydrate avec les données présentes en base de donnée
+                $utilisateur = new Utilisateur;
+                $utilisateur->hydrate($utilisateurModel->findById($_SESSION["utilisateur"]["id_utilisateur"]));
+
+                // En cas de victoire du joueur
+                if ($dataJS["victoire"]) {
+
+                    // Ajoute le gagnant à l'objet Partie
+                    $partie->setGagnant($utilisateur);
+                }
+
+                // Calcule le temps de la partie
+                // Il faut ajouter une seconde car le timer commence a 14:59
+                $minutes = $dataJS["timerMinutes"];
+                $secondes = $dataJS["timerSecondes"];
+
+                if ($secondes + 1 == 60) {
+                    $minutes += 1;
+                    $secondes = 0;
+                }
+
+                // Met à jour le temps dans l'objet Partie
+                $partie->setDuree("00:" . ($minutes < 10 ? "0" : "") . $minutes . ":" . ($secondes < 10 ? "0" : "") . $secondes);
+
+                // Met à jour les données de la partie en base de donnée
+                $partieModel->edit($partie);
+
+                // Crée une instance du modèle ModeDeJeu
+                $modeDeJeuModel = new ModeDeJeuModel;
+
+                // Crée un nouvel objet ModeDeJeu et l'hydrate avec les données présentes en base de donnée
+                $modeDeJeu = new ModeDeJeu;
+                $modeDeJeu->hydrate($modeDeJeuModel->findByLabel($dataJS["modeDeJeu"]));
+
+                // Crée une instance du modèle Classer et appelle la méthode
+                // pour récupérer les statistiques en base de donnée
+                $classerModel = new ClasserModel;
+                $donneesClasser = $classerModel->findByUserAndMode($utilisateur->getId(), $modeDeJeu->getId());
+
+                // Crée un nouvel objet Classer et l'hydrate avec les données
+                $classer = new Classer;
+                $classer->setUtilisateur($utilisateur);
+                $classer->setMode_de_jeu($modeDeJeu);
+                $classer->hydrate($donneesClasser);
+
+                // Récupère le temps moyen du joueur
+                $tempsMoyen = $partieModel->getAverageTime($utilisateur->getId());
+
+                // Met à jour le temps moyen du joueur
+                $classer->setTemps_moyen($tempsMoyen["temps_moyen"]);
+
+                // Récupère le meilleur temps du joueur
+                $meilleurTemps = $partieModel->getBestTime($utilisateur->getId());
+
+                // Met à jour le meilleur temps du joueur
+                $classer->setMeilleur_temps($meilleurTemps["meilleur_temps"]);
+
+                // En cas de victoire du joueur
+                if ($dataJS["victoire"]) {
+
+                    // Ajoute une grille résolue
+                    $classer->setGrilles_resolues($classer->getGrilles_resolues() + 1);
+
+                    // Augmente la série de victoire
+                    $classer->setSerie_victoires($classer->getSerie_victoires() + 1);
+                }
+                else
+                {
+                    // Remet la série de victoire à 0
+                    $classer->setSerie_victoires(0);
+                }
+
+                // Met à jour les données en base de donnée
+                $classerModel->edit($classer);
             }
         }
     }

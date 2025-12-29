@@ -47,8 +47,8 @@
                         <tr>
                             <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getGrilles_jouees() : "0" ?></td>
                             <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getGrilles_resolues() : "0" ?></td>
-                            <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getTemps_moyen() : "00:00:00" ?></td>
-                            <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getMeilleur_temps() : "00:00:00" ?></td>
+                            <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getTemps_moyen() : "00:00" ?></td>
+                            <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getMeilleur_temps() : "00:00" ?></td>
                             <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getSerie_victoires() : "0" ?></td>
                         </tr>
                     </tbody>
@@ -69,8 +69,8 @@
                         <tr>
                             <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getGrilles_jouees() : "0" ?></td>
                             <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getGrilles_resolues() : "0" ?></td>
-                            <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getTemps_moyen() : "00:00:00" ?></td>
-                            <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getMeilleur_temps() : "00:00:00" ?></td>
+                            <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getTemps_moyen() : "00:00" ?></td>
+                            <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getMeilleur_temps() : "00:00" ?></td>
                             <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getSerie_victoires() : "0" ?></td>
                         </tr>
                     </tbody>
@@ -91,8 +91,8 @@
                         <tr>
                             <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getGrilles_jouees() : "0" ?></td>
                             <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getGrilles_resolues() : "0" ?></td>
-                            <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getTemps_moyen() : "00:00:00" ?></td>
-                            <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getMeilleur_temps() : "00:00:00" ?></td>
+                            <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getTemps_moyen() : "00:00" ?></td>
+                            <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getMeilleur_temps() : "00:00" ?></td>
                             <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getSerie_victoires() : "0" ?></td>
                         </tr>
                     </tbody>
