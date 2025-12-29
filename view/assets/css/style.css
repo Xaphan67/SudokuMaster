@@ -551,6 +551,7 @@ td:not(.celluleFixe, .selected_highlight) li {
 * {
   font-family: "inter";
   cursor: default;
+  user-select: none;
 }
 
 main {
