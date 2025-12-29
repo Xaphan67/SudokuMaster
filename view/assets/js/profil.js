@@ -16,6 +16,11 @@ const MODIFIER_COMPTE_MDP_CONFIRM = document.getElementById("mdp_confirm");
 const MODIFIER_COMPTE_MDP_CHECK = document.getElementById("modifier_compte_mdp_check");
 const SUPPRIMER_COMPTE_MDP_CHECK = document.getElementById("supprimer_compte_mdp_check");
 
+const ONGLETS = document.getElementsByClassName("onglets")[0];
+const ONGLET_STATISTIQUES_SOLO = document.getElementById("statistiques_solo");
+const ONGLET_STATISTIQUES_COOPERATIF = document.getElementById("statistiques_cooperatif");
+const ONGLET_STATISTIQUES_COMPETITIF = document.getElementById("statistiques_competitif");
+
 // Affiche le popup pour modifier le compte
 BOUTON_MODIFIER_COMPTE.addEventListener("click", (e) => {
     openEditAccount();
@@ -74,6 +79,54 @@ if (ERREURS_FORMULAIRES.value !== "") {
             break;
     }
 }
+
+// Affiche les statistiques du mode Solo
+ONGLETS.getElementsByTagName("P")[0].addEventListener("click", (e) => {
+    if (!e.target.classList.contains("onglet_actif")) {
+        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet Solo
+        Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
+            element.classList.remove("onglet_actif");
+        });
+        e.target.classList.add("onglet_actif");
+
+        // Affiche l'onglet Solo et masque les autres onglets
+        ONGLET_STATISTIQUES_SOLO.style.display = "flex";
+        ONGLET_STATISTIQUES_COOPERATIF.style.display = "none";
+        ONGLET_STATISTIQUES_COMPETITIF.style.display = "none";
+    }
+});
+
+// Affiche les statistiques du mode Coopératif
+ONGLETS.getElementsByTagName("P")[1].addEventListener("click", (e) => {
+    if (!e.target.classList.contains("onglet_actif")) {
+        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet Coopératif
+        Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
+            element.classList.remove("onglet_actif");
+        });
+        e.target.classList.add("onglet_actif");
+
+        // Affiche l'onglet Coopératif et masque les autres onglets
+        ONGLET_STATISTIQUES_SOLO.style.display = "none";
+        ONGLET_STATISTIQUES_COOPERATIF.style.display = "flex";
+        ONGLET_STATISTIQUES_COMPETITIF.style.display = "none";
+    }
+});
+
+// Affiche les statistiques du mode Compétitif
+ONGLETS.getElementsByTagName("P")[2].addEventListener("click", (e) => {
+    if (!e.target.classList.contains("onglet_actif")) {
+        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet Compétitif
+        Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
+            element.classList.remove("onglet_actif");
+        });
+        e.target.classList.add("onglet_actif");
+
+        // Affiche l'onglet Compétitif et masque les autres onglets
+        ONGLET_STATISTIQUES_SOLO.style.display = "none";
+        ONGLET_STATISTIQUES_COOPERATIF.style.display = "none";
+        ONGLET_STATISTIQUES_COMPETITIF.style.display = "flex";
+    }
+});
 
 // Ouvre le popup "Modifier informations du compte"
 function openEditAccount() {

@@ -4,7 +4,11 @@
   --CrimsonViolet75pourcent : #8C4662;
   --CrimsonViolet50pourcent : #B18395;
   --CrimsonViolet25pourcent : #c3adc2;
-  --WisteriaBlue : #E3E4F4;
+  --WisteriaBlue125pourcent : #6973C5;
+  --WisteriaBlue : #8F95D3;
+  --WisteriaBlue75pourcent : #B3B6E1;
+  --WisteriaBlue50pourcent : #ced0ec;
+  --WisteriaBlue25pourcent : #e3e4f4;
   --White : #FFFFFF;
   --Red : #FF0000;
 }
@@ -66,124 +70,6 @@ svg {
 p {
   margin: 0;
   padding: 0;
-}
-
-/* --------------------------------------------------  Setting généraux  --------------------------------------------------*/
-* {
-  font-family: "inter";
-}
-
-main {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  max-width: 1120px;
-  min-height: calc(100vh - 146px);
-  padding: 40px 0 40px 0;
-  margin: 0 auto;
-}
-
-h1 {
-  font-size: 58px;
-  font-weight: bold;
-  text-align: center;
-}
-
-h2 {
-  font-size: 32px;
-  font-weight: bold;
-}
-
-a, a:visited {
-  text-decoration: none;
-  color: var(--MidnightViolet);
-}
-
-p {
-  margin: 0;
-  padding: 0;
-  color: var(--MidnightViolet);
-}
-
-td {
-  color: var(--MidnightViolet);
-}
-
-.vertical {
-  flex-direction: column;
-}
-
-#conteneur_principal {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-}
-
-#conteneur_principal>img {
-  margin: auto 0;
-}
-
-.bouton {
-  cursor: pointer;
-  border-radius: 15px;
-}
-
-.boutonDefaut {
-  height: 40px;
-  line-height: 40px;
-  min-width: 280px;
-  padding: 0px 15px;
-}
-
-.boutonPrincipal {
-  background-color: var(--CrimsonViolet);
-  color: var(--White);
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  box-shadow: 0px 4px 4px 0px #686868;
-  transition: all 0.5s ease;
-}
-
-.boutonPrincipal:hover {
-  background-color: #540726;
-}
-
-.boutonPrincipal:active {
-  background-color: #3e051c;
-  transition: filter 0.1s ease;
-}
-
-.boutonPave {
-  text-align: center;
-  background-color: var(--WisteriaBlue);
-  box-shadow: 0px 2px 2px 0px #686868;
-  transition: filter 0.5s ease;
-}
-
-.boutonPave:hover {
-  filter: brightness(0.94);
-}
-
-.boutonPave:active {
-  filter: brightness(0.8);
-  transition: filter 0.1s ease;
-}
-
-.onglets {
-  display: flex;
-  width: 100%;
-  height: 40px;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.score_principal {
-  border-radius: 25px;
-  background-color: var(--Red);
-  color: var(--White);
-  padding: 0 10px;
-  text-align: center;
 }
 
 /* --------------------------------------------------  Formulaires  --------------------------------------------------*/
@@ -327,7 +213,7 @@ footer div:last-child {
   align-self: center;
   padding: 40px;
   margin: 40px auto auto auto;
-  background-color: var(--WisteriaBlue);
+  background-color: var(--WisteriaBlue25pourcent);
   border-radius: 20px;
 }
 
@@ -365,7 +251,7 @@ footer div:last-child {
   padding: 40px;
   margin-top: 40px;
   font-size: 24px;
-  background-color: var(--WisteriaBlue);
+  background-color: var(--WisteriaBlue25pourcent);
   border-radius: 20px;
 }
 
@@ -377,6 +263,13 @@ footer div:last-child {
 #statistiques td {
   cursor: auto;
   width: 20%;
+}
+
+.statistiques {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .onglets-stats {
@@ -568,7 +461,7 @@ td:not(.celluleFixe, .selected_highlight) li {
 }
 
 .celluleBleue {
-  background-color: var(--WisteriaBlue);
+  background-color: var(--WisteriaBlue25pourcent);
 }
 
 .selected {
@@ -595,7 +488,7 @@ td:not(.celluleFixe, .selected_highlight) li {
   left : 50%;
   width: 450px;
   border-radius: 15px;
-  background-color: var(--WisteriaBlue);
+  background-color: var(--WisteriaBlue25pourcent);
   box-shadow: 0px 4px 4px 0px #686868;
   text-align: center;
 }
@@ -652,4 +545,160 @@ td:not(.celluleFixe, .selected_highlight) li {
 .boutons_difficulte div:active {
   background-color: var(--CrimsonViolet75pourcent);
   transition: all 0.1s ease;
+}
+
+/* --------------------------------------------------  Setting généraux  --------------------------------------------------*/
+* {
+  font-family: "inter";
+  cursor: default;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 1120px;
+  min-height: calc(100vh - 146px);
+  padding: 40px 0 40px 0;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 58px;
+  font-weight: bold;
+  text-align: center;
+}
+
+h2 {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+a, a:visited {
+  text-decoration: none;
+  color: var(--MidnightViolet);
+  cursor: pointer;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+  color: var(--MidnightViolet);
+  cursor: inherit;
+}
+
+img {
+  cursor: inherit;
+}
+
+td {
+  color: var(--MidnightViolet);
+}
+
+.vertical {
+  flex-direction: column;
+}
+
+#conteneur_principal {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+#conteneur_principal>img {
+  margin: auto 0;
+}
+
+.bouton {
+  cursor: pointer;
+  border-radius: 15px;
+}
+
+.boutonDefaut {
+  height: 40px;
+  line-height: 40px;
+  min-width: 280px;
+  padding: 0px 15px;
+}
+
+.boutonPrincipal {
+  background-color: var(--CrimsonViolet);
+  color: var(--White);
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0px 4px 4px 0px #686868;
+  transition: all 0.5s ease;
+}
+
+.boutonPrincipal:hover {
+  background-color: #540726;
+}
+
+.boutonPrincipal:active {
+  background-color: #3e051c;
+  transition: filter 0.1s ease;
+}
+
+.boutonPave {
+  text-align: center;
+  background-color: var(--WisteriaBlue25pourcent);
+  box-shadow: 0px 2px 2px 0px #686868;
+  transition: filter 0.5s ease;
+}
+
+.boutonPave:hover {
+  filter: brightness(0.94);
+}
+
+.onglets {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.onglets>p:not(.onglet_actif) {
+  min-width: 200px;
+  height: 40px;
+  line-height: 40px;
+  background-color: var(--WisteriaBlue50pourcent);
+  border-radius: 15px;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.onglets>p:not(.onglet_actif):hover {
+  background-color: var(--WisteriaBlue75pourcent);
+}
+
+.onglet_actif {
+  min-width: 200px;
+  height: 40px;
+  line-height: 40px;
+  background-color: var(--WisteriaBlue);
+  border-radius: 15px;
+  transition: all 0.5s ease;
+}
+
+.onglet_actif:hover {
+  background-color: var(--WisteriaBlue125pourcent);
+}
+
+.boutonPave:active, .onglets>p:not(.onglet_actif):active {
+  filter: brightness(0.8);
+  transition: filter 0.1s ease;
+}
+
+.contenu_onglet_actif {
+  display: flex;
+}
+
+.score_principal {
+  border-radius: 25px;
+  background-color: var(--Red);
+  color: var(--White);
+  padding: 0 10px;
+  text-align: center;
 }

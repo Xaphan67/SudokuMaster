@@ -1,6 +1,8 @@
 <?php
 
+    require("model/ClasserModel.php");
     require("model/UtilisateurModel.php");
+    require("model/entities/Classer.php");
     require("model/entities/Utilisateur.php");
 
     class UtilisateurController {
@@ -307,6 +309,29 @@
                         $erreurs["formulaire"] = "supprimer_compte";
                     }
                 }
+
+                // Crée une instance du modèle Classer et appelle la méthode
+                // pour récupérer les statistiques en base de donnée
+                $classerModel = new ClasserModel;
+
+                // Instancie un tableau qui contiendra les statistiques
+                $statistiques = [];
+
+                // Pour chaque mode de jeu, récupère les statistiques
+                for($mode = 1; $mode <= 3; $mode++) {
+                    $donneesClasser = $classerModel->findByUserAndMode($_SESSION["utilisateur"]["id_utilisateur"], $mode);
+
+                    // S'il y à des statistiques pour le mode
+                    if ($donneesClasser) {
+
+                        // Crée un nouvel objet Classer et l'hydrate avec les données
+                        $classer = new Classer;
+                        $classer->hydrate($donneesClasser);
+
+                        // Ajoute l'objet Classer au tableau de statistiques
+                        $statistiques[$mode] = $classer;
+                    }
+                };
 
                 require_once("view/partials/header.php");
                 include("view/utilisateur/profil.php");

@@ -28,30 +28,76 @@
         <div id="statistiques">
             <h2>Statistiques Personnelles</h2>
             <div class="onglets onglets-stats">
-                <p>Solo</p>
-                <p>Coopératif</p>
+                <p class="onglet_actif">Solo</p>
+                <p class>Coopératif</p>
                 <p>Compétitif</p>
             </div>
-            <p>Score global</p>
-            <p class="score_principal score_large">?</p>
-            <table>
-                <tbody>
-                    <tr>
-                        <th>Grilles jouées</th>
-                        <th>Grilles résolues</th>
-                        <th>Temps moyen</th>
-                        <th>Meilleur temps</th>
-                        <th>Série de victoires</th>
-                    </tr>
-                    <tr>
-                        <td>?</td>
-                        <td>?</td>
-                        <td>?</td>
-                        <td>?</td>
-                        <td>?</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div id="statistiques_solo" class="statistiques contenu_onglet_actif">
+                <p>Score global</p>
+                <p class="score_principal score_large"><?php echo isset($statistiques[1]) ? $statistiques[1]->getScore_global() : "0" ?></p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Grilles jouées</th>
+                            <th>Grilles résolues</th>
+                            <th>Temps moyen</th>
+                            <th>Meilleur temps</th>
+                            <th>Série de victoires</th>
+                        </tr>
+                        <tr>
+                            <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getGrilles_jouees() : "0" ?></td>
+                            <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getGrilles_resolues() : "0" ?></td>
+                            <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getTemps_moyen() : "00:00:00" ?></td>
+                            <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getMeilleur_temps() : "00:00:00" ?></td>
+                            <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getSerie_victoires() : "0" ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="statistiques_cooperatif" class="statistiques">
+                <p>Score global</p>
+                <p class="score_principal score_large"><?php echo isset($statistiques[2]) ? $statistiques[2]->getScore_global() : "0" ?></p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Grilles jouées</th>
+                            <th>Grilles résolues</th>
+                            <th>Temps moyen</th>
+                            <th>Meilleur temps</th>
+                            <th>Série de victoires</th>
+                        </tr>
+                        <tr>
+                            <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getGrilles_jouees() : "0" ?></td>
+                            <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getGrilles_resolues() : "0" ?></td>
+                            <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getTemps_moyen() : "00:00:00" ?></td>
+                            <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getMeilleur_temps() : "00:00:00" ?></td>
+                            <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getSerie_victoires() : "0" ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="statistiques_competitif" class="statistiques">
+                <p>Score global</p>
+                <p class="score_principal score_large"><?php echo isset($statistiques[3]) ? $statistiques[3]->getScore_global() : "0" ?></p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Grilles jouées</th>
+                            <th>Grilles résolues</th>
+                            <th>Temps moyen</th>
+                            <th>Meilleur temps</th>
+                            <th>Série de victoires</th>
+                        </tr>
+                        <tr>
+                            <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getGrilles_jouees() : "0" ?></td>
+                            <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getGrilles_resolues() : "0" ?></td>
+                            <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getTemps_moyen() : "00:00:00" ?></td>
+                            <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getMeilleur_temps() : "00:00:00" ?></td>
+                            <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getSerie_victoires() : "0" ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div id="modifier_compte" class="popup"> <!-- popup modification des données du compte -->
