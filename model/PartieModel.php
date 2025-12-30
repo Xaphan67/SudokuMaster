@@ -15,8 +15,8 @@
 
             // Requête préparée pour ajouter la partie
             $query =
-               "INSERT INTO partie (id_mode_de_jeu, id_difficulte)
-                VALUES (:id_mode_de_jeu, :id_difficulte)";
+               "INSERT INTO partie (id_mode_de_jeu, id_difficulte, duree_partie)
+                VALUES (:id_mode_de_jeu, :id_difficulte, '00:15:00')";
 
             $prepare = $db->prepare($query);
 

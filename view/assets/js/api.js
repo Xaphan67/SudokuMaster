@@ -1,4 +1,4 @@
-let difficulteEN = 'easy';
+let difficulteEN = null;
 
 // Appel l'API pour charger une grille à la fin du chargement de la page
 // puis l'afficher ainssi que sa difficulté
@@ -16,7 +16,7 @@ async function callSudokuAPI(difficulte) {
     TABLE.innerHTML = "";
 
     // Parcours la grille renvoyée par l'API et l'affiche dans un tableau
-    GRID_INFO.puzzle.forEach((line, ligneIndex) => {
+    GRID_INFO[difficulteEN].forEach((line, ligneIndex) => {
         let nouvelleLigne = TABLE.insertRow(-1);
         line.forEach((element, coloneIndex) => {
             let nouvelleCellule = nouvelleLigne.insertCell(coloneIndex);
@@ -35,9 +35,9 @@ async function callSudokuAPI(difficulte) {
     });
     CONTENEUR_JEU.style.filter = "none";
 
-    // Stocke la grille et sa solutions dans des variables pour travailler dessus plus tard
-    grille = GRID_INFO.puzzle;
-    solution = GRID_INFO.solution;
+    // Stocke la grille et sa solution dans des variables pour travailler dessus plus tard
+    grille = GRID_INFO[difficulteEN];
+    solution = GRID_INFO.data;
 
     // Permet à l'utilisateur d'intéragir avec le plateau de jeu
     CONTENEUR_JEU.inert = false;
@@ -57,6 +57,7 @@ async function getGrid() {
         });
         const GRID = await RES_GRID.json();
 
+        console.log(GRID);
         return GRID;
     }
     catch (err)

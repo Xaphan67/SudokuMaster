@@ -27,7 +27,8 @@ let caseActuelle = null;
 let case_focus = null;
 
 // Partie
-let id_partie = null;
+let idPartie = null;
+let serieVictoires = null;
 
 // Timer
 let start = null;
@@ -242,7 +243,7 @@ async function startGame(element) {
     TITRE_JEU.innerHTML = 'Jeu solo : Difficulté ' + difficulte;
 
     // Ajoute la partie dans la base de données
-    // Et retourne son ID (ou 0 si aucun utilisateur connecté)
+    // Et retourne son ID (ou 0 si aucun utilisateur connecté) et la série de victoire du joueur avant cette partie
     const RES_PARTIE = await fetch("index.php?controller=partie&action=new", {
         method: "POST",
         headers: {
@@ -251,7 +252,9 @@ async function startGame(element) {
             },
             body: JSON.stringify({ modeDeJeu: "Solo", difficulte: difficulte}) // Objet JS converti en chaîne JSON
     });
-    id_partie = await RES_PARTIE.json();
+    resPartie = await RES_PARTIE.json();
+    idPartie = resPartie["partieId"];
+    serieVictoires = resPartie["serie_victoires"];
 
     // Appelle l'API pour obtenir une grille et l'afficher
     callSudokuAPI(difficulte);
@@ -279,7 +282,7 @@ function endGame(popup = true) {
         POPUP_FIN_PARTIE_TEXTE.innerHTML = "Partie terminée";
 
         // Si un joueur est connecté
-        if (id_partie != 0) {
+        if (idPartie != 0) {
 
             // Met à jour les statistiques du joueur
             updateStats(victoire);
@@ -305,7 +308,7 @@ function updateStats(victoire) {
         headers: {
                 'Content-Type': 'application/json', // Indique qu'on envoie du JSON
             },
-            body: JSON.stringify({ idPartie: id_partie, modeDeJeu: "Solo", victoire: victoire, timerMinutes: timerMinutes, timerSecondes: timerSecondes}) // Objet JS converti en chaîne JSON
+            body: JSON.stringify({ idPartie: idPartie, modeDeJeu: "Solo", victoire: victoire, timerMinutes: timerMinutes, timerSecondes: timerSecondes, serieVictoires: serieVictoires}) // Objet JS converti en chaîne JSON
     });
 }
 

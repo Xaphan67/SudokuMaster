@@ -104,17 +104,24 @@
                     // Ajoute une grille jouée
                     $classer->setGrilles_jouees($classer->getGrilles_jouees() + 1);
 
+                    // Récupère la série de victoires actuelle de l'utilisateur
+                    $serieVictoires = $classer->getSerie_victoires();
+
+                    // Remet la série de victoires à 0 pour forcer l'utilisateur
+                    // à finir (et gagner) la partie pour conserver sa série de victoires
+                    $classer->setSerie_victoires(0);
+
                     // Met à jour les données en base de donnée
                     $classerModel->edit($classer);
                 }
 
                 // Retourne l'ID de la partie insérée pour pouvoir la récupérer en JS plus tard
-                echo $partieID;
+                echo '{"partieId": ' . $partieID . ', "serie_victoires": ' . (isset($serieVictoires) ? $serieVictoires : 0) . '}';
             }
             else {
 
                 // Aucune partie créée
-                echo 0;
+                echo '{"partieId": 0}';
             }
         }
 
@@ -203,12 +210,7 @@
                     $classer->setGrilles_resolues($classer->getGrilles_resolues() + 1);
 
                     // Augmente la série de victoire
-                    $classer->setSerie_victoires($classer->getSerie_victoires() + 1);
-                }
-                else
-                {
-                    // Remet la série de victoire à 0
-                    $classer->setSerie_victoires(0);
+                    $classer->setSerie_victoires($dataJS["serieVictoires"] + 1);
                 }
 
                 // Met à jour les données en base de donnée
