@@ -227,6 +227,24 @@ BOUTONS.forEach(element => {
     }
 });
 
+// Lors d'un appui sur une touche du clavier correspondant à une touche du pavé numérique...
+document.addEventListener("keydown", (e) => {
+
+    // Si l'appui n'est pas répété (Donc uniquement déclenché une fois)
+    if (!e.repeat) {
+
+        // Pour chaque bouton du pavé numérique...
+        BOUTONS.forEach(element => {
+
+            // Si la touche appuyée correspond au contenu du bouton,
+            // on appelle l'évènement onclick du bouton (défini au dessus)
+            if (element.innerHTML == e.key) {
+                element.onclick();
+            }
+        });
+    }
+});
+
 // Lors d'un clic sur le bouton jeu...
 BOUTON_JEU.addEventListener("click", (e) => {
 
