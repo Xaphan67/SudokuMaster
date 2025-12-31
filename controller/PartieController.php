@@ -25,6 +25,14 @@
             require_once("view/partials/footer.php");
         }
 
+        // Afficher l'écran de lobby pour partie multijoueur
+        public function lobby() {
+
+            require_once("view/partials/header.php");
+            include("view/partie/salon.php");
+            require_once("view/partials/footer.php");
+        }
+
         // Crée une partie dans la base de données
         // et retourne l'ID de la partie qui vient d'être créée
         public function new() {
