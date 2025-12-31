@@ -15,7 +15,8 @@ const POPUP_BOUTONS_DIFFICULTE = Array.from(document.getElementsByClassName("bou
 const POPUP_FIN_PARTIE = document.getElementById("fin_partie");
 const POPUP_FIN_PARTIE_TITRE = POPUP_FIN_PARTIE.getElementsByTagName("h3")[0];
 const POPUP_FIN_PARTIE_TEXTE = POPUP_FIN_PARTIE.getElementsByTagName("p")[0];
-const POPUP_FIN_PARTIE_RJOUER = POPUP_FIN_PARTIE.getElementsByTagName("div")[0];
+const POPUP_FIN_PARTIE_SCORE_GLOBAL = POPUP_FIN_PARTIE.getElementsByTagName("p")[1];
+const POPUP_FIN_PARTIE_RJOUER = POPUP_FIN_PARTIE.getElementsByTagName("div")[1];
 const NOTES = document.getElementById("notes");
 const TIMER = document.getElementById("timer");
 const UTILISATEUR_CONNECTE = document.getElementById("session_utilisateur");
@@ -29,6 +30,9 @@ let case_focus = null;
 // Partie
 let idPartie = null;
 let serieVictoires = null;
+let scoreGlobal = null;
+let valeur = null;
+let evolution = null;
 
 // Timer
 let start = null;
@@ -252,9 +256,10 @@ async function startGame(element) {
             },
             body: JSON.stringify({ modeDeJeu: "Solo", difficulte: difficulte}) // Objet JS converti en chaîne JSON
     });
-    resPartie = await RES_PARTIE.json();
+    let resPartie = await RES_PARTIE.json();
     idPartie = resPartie["partieId"];
     serieVictoires = resPartie["serie_victoires"];
+    scoreGlobal = resPartie["score_global"];
 
     // Appelle l'API pour obtenir une grille et l'afficher
     callSudokuAPI(difficulte);
@@ -265,7 +270,7 @@ async function startGame(element) {
 }
 
 // Fin de partie
-function endGame(popup = true) {
+async function endGame(popup = true) {
     CONTENEUR_JEU.style.filter = "opacity(0.40)";
 
     // Stop le timer
@@ -275,18 +280,36 @@ function endGame(popup = true) {
     CONTENEUR_JEU.inert = true;
 
     if (popup) {
-        // Affiche un message de victoire ou défaite selon l'état de la partie quand le popup s'affiche
-        let victoire = timerMinutes < 14;
-        POPUP_FIN_PARTIE.style.display = "flex";
-        POPUP_FIN_PARTIE_TITRE.innerHTML = (victoire ? "Victoire" : "Défaite") + " !";
-        POPUP_FIN_PARTIE_TEXTE.innerHTML = "Partie terminée";
+        // Détermine si la partie est gagnée ou perdue
+        let victoire = timerMinutes < 14 || (timerMinutes == 14 && timerSecondes < 59);
 
         // Si un joueur est connecté
         if (idPartie != 0) {
 
             // Met à jour les statistiques du joueur
-            updateStats(victoire);
+            // Et retourne son gain ou perte de score global
+            let differenceStats = await updateStats(victoire);
+            if (differenceStats >= 0) {
+                differenceStats = "+" + differenceStats;
+            }
+
+            // Ajoute un nouvel élément au DOM pour afficher la différence de score
+            valeur = document.createElement("P");
+            valeur.innerHTML = differenceStats;
+            valeur.classList.add("score_global_valeur", differenceStats >= 0 ? "victoire" : "defaite");
+            POPUP_FIN_PARTIE_SCORE_GLOBAL.insertAdjacentElement('afterend', valeur);
+            evolution = document.createElement("P");
+            let scoreFinal = scoreGlobal + parseInt(differenceStats);
+            evolution.innerHTML = scoreGlobal + " --> " + scoreFinal;
+            evolution.classList.add("score_golbal_evolution");
+            valeur.insertAdjacentElement('afterend', evolution);
         }
+
+        // Affiche un message de victoire ou défaite selon l'état de la partie quand le popup s'affiche
+        POPUP_FIN_PARTIE.style.display = "flex";
+        POPUP_FIN_PARTIE_TITRE.innerHTML = (victoire ? "Victoire" : "Défaite") + " !";
+        POPUP_FIN_PARTIE_TEXTE.innerHTML = "Partie terminée";
+
 
         // Lors du clic sur Rejouer...
         POPUP_FIN_PARTIE_RJOUER.addEventListener("click", (e) => {
@@ -295,6 +318,10 @@ function endGame(popup = true) {
             POPUP_FIN_PARTIE.style.display = "none";
             POPUP_DEBUT_PARTIE.style.display = "flex";
 
+            // Retire les éléments ajoutés au DOM
+            valeur.remove();
+            evolution.remove();
+
             // Remet le timer à 15 minutes
             resetTimer();
         });
@@ -302,14 +329,17 @@ function endGame(popup = true) {
 }
 
 // Met à jour les statistiques du joueur
-function updateStats(victoire) {
-    fetch("index.php?controller=partie&action=end", {
+async function updateStats(victoire) {
+    const RES_STATS = await fetch("index.php?controller=partie&action=end", {
         method: "POST",
         headers: {
                 'Content-Type': 'application/json', // Indique qu'on envoie du JSON
+                'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
             },
-            body: JSON.stringify({ idPartie: idPartie, modeDeJeu: "Solo", victoire: victoire, timerMinutes: timerMinutes, timerSecondes: timerSecondes, serieVictoires: serieVictoires}) // Objet JS converti en chaîne JSON
+            body: JSON.stringify({ idPartie: idPartie, modeDeJeu: "Solo", difficulte: difficulte, victoire: victoire, timerMinutes: timerMinutes, timerSecondes: timerSecondes, scoreGlobal: scoreGlobal, serieVictoires: serieVictoires}) // Objet JS converti en chaîne JSON
     });
+    let resStats = await RES_STATS.json();
+    return resStats["difference_score"];
 }
 
 // Remet le timer à 15 minutes

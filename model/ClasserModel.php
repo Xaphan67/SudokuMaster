@@ -13,13 +13,14 @@
 
             // Requête préparée pour ajouter les statistiques
             $query = "INSERT INTO classer (id_utilisateur, id_mode_de_jeu, score_global, grilles_jouees, grilles_resolues, temps_moyen, meilleur_temps, serie_victoires)
-                VALUES(:id_utilisateur, :id_mode_de_jeu, '0', '1', '0', '00:15:00', '00:15:00', '0')";
+                VALUES(:id_utilisateur, :id_mode_de_jeu, :score_global, '1', '0', '00:15:00', '00:15:00', '0')";
 
             $prepare = $this->connect()->prepare($query);
 
             // Définition des paramettres de la requête préparée
             $prepare->bindValue(":id_utilisateur", $classer->getUtilisateur()->getId(), PDO::PARAM_INT);
 			$prepare->bindValue(":id_mode_de_jeu", $classer->getMode_de_jeu()->getId(), PDO::PARAM_INT);
+            $prepare->bindValue(":score_global", $classer->getScore_global(), PDO::PARAM_INT);
 
             // Execute la requête. Retourne true (si réussite) ou false (si echec)
             return $prepare->execute();

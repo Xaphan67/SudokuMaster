@@ -516,12 +516,33 @@ td:not(.celluleFixe, .selected_highlight) li {
   align-items: center;
 }
 
+.score_global {
+  font-weight: bold;
+}
+
+.score_global_valeur {
+  font-size:50px;
+  line-height: 80px;
+}
+
+.score_golbal_evolution {
+  font-size: 32px;
+}
+
+.victoire {
+  color: green;
+}
+
+.defaite {
+  color: red;
+}
+
 .boutons_difficulte {
   display: flex;
   justify-content: space-between;
 }
 
-.boutons_difficulte div, #fin_partie div {
+.boutons_difficulte div, #fin_partie div:last-child {
   display: flex;
   flex-direction: column;
   align-items: center;

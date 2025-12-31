@@ -138,7 +138,7 @@
                 <div>
                     <div id="menu_partie" class="popup"><!-- menu -->
                         <h3>Séléctionnez la difficulté</h3>
-                        <p>La progression de la partie actuelle sera perdue</p>
+                        <p>La progression de la partie actuelle sera perdue et comptera comme une défaite</p>
                         <div class="boutons_difficulte">
                             <div class="bouton">
                                 <img src="https://placehold.co/50x50/000000/FFFFFF/png" alt="">
@@ -162,6 +162,7 @@
         <div id="debut_partie" class="popup"><!-- popup de début de partie -->
             <h3>Séléctionnez la difficulté</h3>
             <p>La partie débutera dès que vous aurez fait votre choix</p>
+            <p>Attention, quitter ou abandonner la partie sera considéré comme une défaite</p>
             <div class="boutons_difficulte">
                 <div class="bouton">
                     <img src="https://placehold.co/50x50/000000/FFFFFF/png" alt="">
@@ -181,6 +182,9 @@
         <div id="fin_partie" class="popup"><!-- popup de fin de partie -->
             <h3></h3>
             <p></p>
+            <div>
+                <p class="score_global">Score global</p>
+            </div>
             <div class="bouton">
                 <img src="https://placehold.co/50x50/000000/FFFFFF/png" alt="">
                 <p>Rejouer</p>

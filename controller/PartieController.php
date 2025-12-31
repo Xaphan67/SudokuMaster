@@ -93,6 +93,13 @@
                 // Si aucune statistiques enregistrée en base de donnée
                 if (!$donneesClasser) {
 
+                    // Calcule le score global de base en fonction de la difficulté choise
+                    $coefficientDifficulte = $dataJS["difficulte"] == "Facile" ? 10 : ($dataJS["difficulte"] == "Moyen" ? 20 : 30);
+                    $scoreGlobalBase = (int)(1000 + ($coefficientDifficulte * max(0.2, 1 - 900 / 900) * -1) * 1 / (sqrt(1 + 1 / 20)));
+
+                    // Défini le score global de base
+                    $classer->setScore_global($scoreGlobalBase);
+
                     // Insère les statistiques en base de donnée
                     $classerModel->add($classer);
                 }
@@ -111,12 +118,22 @@
                     // à finir (et gagner) la partie pour conserver sa série de victoires
                     $classer->setSerie_victoires(0);
 
+                    // Récupère le score global actuel de l'utilisateur
+                    $scoreGlobal = $classer->getScore_global();
+
+                    // Calcule le score global de l'utilisateur en cas de défaite de cette partie
+                    // pour forcer l'utilisateur à finir la partie en fonction de la difficulté choise
+                    $coefficientDifficulte = $dataJS["difficulte"] == "Facile" ? 10 : ($dataJS["difficulte"] == "Moyen" ? 20 : 30);
+                    $scoreGlobalDefaite = (int)($scoreGlobal + ($coefficientDifficulte * max(0.2, 1 - 900 / 900) * -1) * 1 / (sqrt(1 + $classer->getGrilles_jouees() / 20)));
+                    $classer->setScore_global($scoreGlobalDefaite);
+
                     // Met à jour les données en base de donnée
                     $classerModel->edit($classer);
                 }
 
                 // Retourne l'ID de la partie insérée pour pouvoir la récupérer en JS plus tard
-                echo '{"partieId": ' . $partieID . ', "serie_victoires": ' . (isset($serieVictoires) ? $serieVictoires : 0) . '}';
+                // ainsi que la série de victoires et le score global du joueur du joueur avant cette partie
+                echo '{"partieId": ' . $partieID . ', "serie_victoires": ' . (isset($serieVictoires) ? $serieVictoires : 0) . ', "score_global": ' . (isset($scoreGlobal) ? $scoreGlobal : 1000) . '}';
             }
             else {
 
@@ -211,10 +228,22 @@
 
                     // Augmente la série de victoire
                     $classer->setSerie_victoires($dataJS["serieVictoires"] + 1);
+
+                    // Met à jour le score global du joueur
+                    $coefficientDifficulte = $dataJS["difficulte"] == "Facile" ? 10 : ($dataJS["difficulte"] == "Moyen" ? 20 : 30);
+                    $scoreGlobal = (int)($dataJS["scoreGlobal"] + ($coefficientDifficulte * max(0.2, 1 - ($minutes * 60 + $secondes) / 900)) * 1 / (sqrt(1 + $classer->getGrilles_jouees() / 20)));
+                    $classer->setScore_global($scoreGlobal);
+                }
+                else {
+                    // Récupère le score global déjà égal à celui d'une defaite
+                    $scoreGlobal = $classer->getScore_global();
                 }
 
                 // Met à jour les données en base de donnée
                 $classerModel->edit($classer);
+
+                // Retourne la différence entre le score global avant la partie et après
+                echo '{"difference_score": ' . ($scoreGlobal - $dataJS["scoreGlobal"]) . "}";
             }
         }
     }
