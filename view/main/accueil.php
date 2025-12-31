@@ -17,7 +17,7 @@
         </section>
         <div>
             <a href="index.php?controller=partie&action=soloBoard" class="bouton boutonPrincipal boutonLarge">Jouer seul</a>
-            <a href="index.php?controller=paraction=lobby" class="bouton boutonPrincipal boutonLarge">Jouer à plusieurs</a>
+            <a href="index.php?controller=partie&action=lobby" class="bouton boutonPrincipal boutonLarge">Jouer à plusieurs</a>
         </div>
         <section id="accueil_bas" class="vertical">
             <h3>Comment jouer au Sudoku</h3>

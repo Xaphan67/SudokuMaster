@@ -8,7 +8,7 @@
             <a href="index.php"><img src="https://placehold.co/132x54/000000/FFFFFF/png" alt=""></a>
             <nav>
                 <a href="index.php?controller=partie&action=soloBoard">Jeu Solo</a>
-                <a href="">Multijoueur</a>
+                <a href="index.php?controller=partie&action=lobby">Multijoueur</a>
                 <a href="index.php?action=leaderboard">Classements</a>
                 <a href="index.php?action=rules">Règles</a>
             </nav>
