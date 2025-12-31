@@ -595,6 +595,58 @@ td:not(.celluleFixe, .selected_highlight) li {
   width: 80px;
 }
 
+/* --------------------------------------------------  Accueil  --------------------------------------------------*/
+
+#accueil_haut {
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+#accueil_haut>div:first-child {
+  position: relative;
+  height: 268px;
+  width: 268px;
+  margin: auto auto auto 22px;
+}
+
+#accueil_haut>div>img {
+  position: absolute;
+  transform: rotate(-10deg);
+  top: 19px;
+  left: 19px;
+}
+
+#accueil_haut>div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 720px;
+}
+
+#accueil_haut>div>h3 {
+  margin-top: 10px;
+  font-family: "Berlin";
+  font-weight: bold;
+  font-size: 24px;
+}
+
+#accueil_haut+div {
+  display: flex;
+  gap: 80px;
+  align-self: center;
+}
+
+#accueil_bas {
+  margin-top: 30px;
+  gap: 25px;
+}
+
+ #accueil_bas>h3 {
+  font-family: "Berlin";
+  font-weight: bold;
+  font-size: 24px;
+ }
+
 /* --------------------------------------------------  Popups  --------------------------------------------------*/
 
 .popup {
@@ -703,6 +755,13 @@ main {
   margin: 0 auto;
 }
 
+section {
+  display: flex;
+  padding: 40px;
+  border-radius: 20px;
+  background-color: var(--WisteriaBlue25pourcent);
+}
+
 h1 {
   font-size: 58px;
   font-weight: bold;
@@ -714,7 +773,7 @@ h2 {
   font-weight: bold;
 }
 
-a, a:visited {
+a, a:visited:not(.bouton) {
   text-decoration: none;
   color: var(--MidnightViolet);
   cursor: pointer;
@@ -758,6 +817,14 @@ td {
   height: 40px;
   line-height: 40px;
   min-width: 280px;
+  padding: 0px 15px;
+}
+
+.boutonLarge {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  min-width: 357px;
   padding: 0px 15px;
 }
 
