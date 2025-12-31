@@ -50,6 +50,27 @@
             return $prepare->execute();
         }
 
+        function findAllByMode(int $modeId, int $limit) {
+
+            // Requête préparée pour récupérer les sttistiques de tout les utilisateurs par mode
+            $query =
+                "SELECT pseudo_utilisateur, score_global
+                FROM classer
+                INNER JOIN utilisateur ON utilisateur.id_utilisateur = classer.id_utilisateur
+                WHERE id_mode_de_jeu = :id_mode_de_jeu
+                ORDER BY score_global DESC LIMIT :limit";
+
+            $prepare = $this->connect()->prepare($query);
+
+            // Définition des paramettres de la requête préparée
+            $prepare->bindValue(":id_mode_de_jeu", $modeId, PDO::PARAM_INT);
+            $prepare->bindValue(":limit", $limit, PDO::PARAM_INT);
+
+            // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
+            $prepare->execute();
+            return $prepare->fetchAll();
+        }
+
         function findByUserAndMode(int $utilisateurId, int $modeId) {
 
             // Requête préparée pour récupérer les sttistiques de l'utilisateur

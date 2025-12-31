@@ -130,7 +130,7 @@ header>div {
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  max-width: 1120px;
+  max-width: 1200px;
   height: 80px;
   font-size: 24px;
 }
@@ -188,7 +188,7 @@ footer>div {
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  max-width: 1120px;
+  max-width: 1200px;
   height: 64px;
 }
 
@@ -300,6 +300,7 @@ footer div:last-child {
   flex-direction: row;
   justify-content: space-between;
   filter: opacity(0.40);
+  min-width: 100%;
 }
 
 #interface_de_jeu {
@@ -477,6 +478,123 @@ td:not(.celluleFixe, .selected_highlight) li {
   font-weight: normal;
 }
 
+/* --------------------------------------------------  Classements  --------------------------------------------------*/
+
+#classements {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+#classements>div {
+  width: 360px;
+  height: 680px;
+  padding: 17px 40px 40px 40px;
+  background-color: var(--WisteriaBlue25pourcent);
+  border-radius: 20px;
+}
+
+#classements>div>div:first-child {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.top_10 {
+  display: flex;
+  flex-direction: column;
+  gap: 27px;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.top_10>div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top_3 {
+  position: relative;
+  text-align: center;
+  height: 184px;
+  background-color: var(--WisteriaBlue50pourcent);
+  border-radius: 15px;
+}
+
+.top_3>div {
+  width: 95px;
+}
+
+.top_3>div>img {
+  position: relative;
+  margin: auto;
+  z-index: 2;
+}
+
+.top_3>div:first-child {
+  position: absolute;
+  height: calc(62px + 28px + 28px);
+  transform: translateX(-50%);
+  left: 50%;
+  top: 5px;
+}
+
+.top_3>div:nth-child(2) {
+  position: absolute;
+  height: calc(47px + 28px + 28px);
+  transform: translateX(-50%);
+  left: 25%;
+  bottom: 15px;
+}
+
+.top_3>div:nth-child(3) {
+  position: absolute;
+  height: calc(47px + 28px + 28px);
+  transform: translateX(-50%);
+  left: 75%;
+  bottom: 15px;
+}
+
+.top_3>div:first-child p:last-child {
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  top: calc(62px + 23px);
+  white-space: nowrap;
+}
+
+.top_3>div:not(:first-child) p:last-child {
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  top: calc(47px + 28px);
+  white-space: nowrap;
+}
+
+.score_top {
+  position: absolute;
+  transform: translateX(-50%);
+  height: 33px;
+  line-height: 33px;
+  width: 65px;
+  left: 50%;
+  top: calc(47px - 5px);
+  z-index: 1;
+}
+
+.score_top_1 {
+  top: calc(62px - 10px);
+}
+
+.score {
+  height: 30px;
+  line-height: 30px;
+  width: 80px;
+}
+
 /* --------------------------------------------------  Popups  --------------------------------------------------*/
 
 .popup {
@@ -579,7 +697,7 @@ main {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  max-width: 1120px;
+  max-width: 1200px;
   min-height: calc(100vh - 146px);
   padding: 40px 0 40px 0;
   margin: 0 auto;
