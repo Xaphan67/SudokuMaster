@@ -75,8 +75,21 @@
                         // Si l'utilisateur à été ajouté correctement en base de données
                         if ($utilisateurAjoute) {
 
-                            // Redirige l'utilisateur vers la page de connexion
-                            header("Location:index.php?controller=utilisateur&action=login");
+                            // Si l'utilisateur à été redirigé par une autre page
+                            // on le renvoie vers cette page
+                            if (isset($_GET["from"])) {
+
+                                // Récupère le contrôleur et la méthode à appeler
+                                $infos = explode(':',$_GET["from"]);
+
+                                // Redirige l'utilisateur
+                                header("Location:index.php?controller=" . $infos[0] . "&action=" . $infos[1]);
+                            }
+                            else {
+
+                                // Redirige l'utilisateur vers la page de connexion
+                                header("Location:index.php?controller=utilisateur&action=login");
+                            }
                         }
                     }
                 }
@@ -143,8 +156,21 @@
                                 // Enregistre les données de l'utilisateur en session
                                 $_SESSION["utilisateur"] = $donneesUtilisateur;
 
-                                // Redirige l'utilisateur vers la page d'accueil
-                                header("Location:index.php");
+                                // Si l'utilisateur à été redirigé par une autre page
+                                // on le renvoie vers cette page
+                                if (isset($_GET["from"])) {
+
+                                    // Récupère le contrôleur et la méthode à appeler
+                                    $infos = explode(':',$_GET["from"]);
+
+                                    // Redirige l'utilisateur
+                                    header("Location:index.php?controller=" . $infos[0] . "&action=" . $infos[1]);
+                                }
+                                else {
+
+                                    // Redirige l'utilisateur vers la page d'accueil
+                                    header("Location:index.php");
+                                }
                             }
                         }
 

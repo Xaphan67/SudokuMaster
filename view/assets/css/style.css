@@ -614,6 +614,10 @@ margin-bottom: 11px;
   margin: 40px auto;
 }
 
+.salon_inactif {
+  filter: opacity(0.40);
+}
+
 /* --------------------------------------------------  Classements  --------------------------------------------------*/
 
 #classements {
@@ -814,7 +818,7 @@ margin-bottom: 11px;
   font-size: 36px;
 }
 
-#debut_partie, #fin_partie, #modifier_compte, #supprimer_compte, #erreur {
+#debut_partie, #fin_partie, #modifier_compte, #supprimer_compte, #compte_requis, #erreur {
   display: flex;
   transform: translateX(-50%) translateY(-50%);
 }

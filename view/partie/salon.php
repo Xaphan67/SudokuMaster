@@ -1,5 +1,9 @@
+<?php
+    $utilisateurConnecte = isset($_SESSION["utilisateur"]);
+?>
+
 <main>
-    <div id="conteneur_principal" class="vertical">
+    <div id="conteneur_principal" <?php echo 'class="vertical ' . (!$utilisateurConnecte ? 'salon_inactif" inert' : '"') ?>>
         <h1>Multijoueur</h1>
         <p id="salon_instructions">Vous pouvez créer une salle et inviter un autre joueur à vous rejoindre, ou rejoindre une salle déja créée par un autre joueur en entrant son numéro de salle.</p>
         <div id="salon">
@@ -15,7 +19,7 @@
                     </div>
                     <div>
                         <label for="difficulte">Difficulté</label>
-                        <select name="mode" id="mode" required>
+                        <select name="difficulte" id="difficulte" required>
                             <option value="facile">Facile</option>
                             <option value="moyen">Moyen</option>
                             <option value="difficile">Difficile</option>
@@ -42,4 +46,17 @@
             </section>
         </div>
     </div>
+    <?php
+        if (!$utilisateurConnecte) {
+    ?>
+            <div id="compte_requis" class="popup"><!-- popup si non connecté -->
+                <h3>Compte requis</h3>
+                <p>Pour jouer en multijoueur, vous devez vous connecter avec votre compte</p>
+                <p>Vous n'avez pas de compte ? Créez-en un facilement en cliquant sur le bouton çi-dessous</p>
+                <a href="index.php?controller=utilisateur&action=signUp&from=partie:lobby" class="bouton boutonPrincipal boutonLarge">Créer un compte</a>
+                <a href="index.php?controller=utilisateur&action=login&from=partie:lobby" class="bouton boutonPrincipal boutonLarge">Se connecter</a>
+            </div>
+    <?php
+        };
+    ?>
 </main>
