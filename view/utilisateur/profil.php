@@ -27,7 +27,7 @@
         </div>
         <div id="statistiques">
             <h2>Statistiques Personnelles</h2>
-            <div class="onglets onglets-stats">
+            <div class="onglets onglets_stats">
                 <p class="onglet_actif">Solo</p>
                 <p>Coopératif</p>
                 <p>Compétitif</p>
