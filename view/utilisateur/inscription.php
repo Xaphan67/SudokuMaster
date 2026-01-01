@@ -1,7 +1,9 @@
 <main>
     <div id="conteneur_principal">
-        <img src="https://placehold.co/394x394/000000/FFFFFF/png" alt="">
-        <div class="formulaire">
+        <div class="formulaire_image">
+            <img src="https://placehold.co/394x394/000000/FFFFFF/png" alt="">
+        </div>
+        <section class="formulaire">
             <h2>Créer un compte</h2>
             <form method="post">
                 <div>
@@ -52,6 +54,6 @@
                 </div>
                 <input type="submit" class="bouton boutonPrincipal boutonDefaut" value="Créer mon compte" />
             </form>
-        </div>
+        </section>
     </div>
 </main>
