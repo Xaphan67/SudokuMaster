@@ -141,13 +141,24 @@ label, form p {
   text-align: left;
 }
 
-input[type="text"], input[type="email"], input[type="password"] {
+select, input[type="text"], input[type="email"], input[type="password"] {
   width: 360px;
   height: 53px;
   font-size: 24px;
   padding: 0px 20px;
+  border: 2px solid var(--MidnightViolet);
   border-radius: 10px;
   cursor: text;
+}
+
+select {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path fill="%23000000" d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 18px top 18px;
+  cursor: default;
+  appearance:none;
+  -moz-appearance:none; /* Firefox */
+  -webkit-appearance:none; /* Safari et Chrome */
 }
 
 .popup input[type="text"], .popup input[type="email"], .popup input[type="password"] {
@@ -563,6 +574,44 @@ td:not(.celluleFixe, .selected_highlight) li {
 
 .selected_highlight:not(.celluleFixe) {
   font-weight: normal;
+}
+
+/* --------------------------------------------------  Salon  --------------------------------------------------*/
+
+#salon {
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+  width: 980px;
+}
+
+#salon>section {
+  display: flex;
+  flex-direction: column;
+}
+
+#salon form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  margin-top: 35px;
+}
+
+#salon label {
+font-size: 24px;
+font-weight: bold;
+margin-bottom: 11px;
+}
+
+#salon h2 {
+  text-align: center;
+}
+
+#salon_instructions {
+  max-width: 725px;
+  text-align: center;
+  margin: 40px auto;
 }
 
 /* --------------------------------------------------  Classements  --------------------------------------------------*/
