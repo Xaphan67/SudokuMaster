@@ -93,28 +93,70 @@ form>div {
   text-align: center;
   padding: 40px 80px;
   width: 520px;
+  height: 720px;
 }
 
 .formulaire>img {
   margin: 0 auto 30px auto;
 }
 
+.formulaire h1 {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.formulaire form {
+  margin-top: 35px;
+}
+
+.formulaire a:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.formulaire label {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 11px;
+}
+
 label, form p {
   text-align: left;
 }
 
-input[type="text"], input[type="email"], input[type="password"]{
+input[type="text"], input[type="email"], input[type="password"] {
   width: 360px;
   height: 53px;
+  font-size: 24px;
+  padding: 0px 20px;
   border-radius: 10px;
+  cursor: text;
+}
+
+input[type="text"]::placeholder, input[type="email"]::placeholder, input[type="password"]::placeholder {
+  color: var(--CrimsonViolet25pourcent);
 }
 
 input[type="submit"] {
   border: transparent;
+  margin-top: 13px;
 }
 
 .actions {
   gap: 20px;
+}
+
+.formulaire_image {
+  position: relative;
+  height: 456px;
+  width: 456px;
+  margin: auto auto auto 0px;
+}
+
+.formulaire_image>img {
+  position: absolute;
+  transform: rotate(-10deg);
+  top: 31px;
+  left: 31px;
 }
 
 /* --------------------------------------------------  Header  --------------------------------------------------*/
@@ -829,6 +871,12 @@ section {
   background-color: var(--WisteriaBlue25pourcent);
 }
 
+hr {
+  border: 1px solid var(--MidnightViolet);
+  width: 360px;
+  margin: 40px 0px;
+}
+
 h1 {
   font-size: 58px;
   font-weight: bold;
@@ -837,6 +885,11 @@ h1 {
 
 h2 {
   font-size: 32px;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 24px;
   font-weight: bold;
 }
 

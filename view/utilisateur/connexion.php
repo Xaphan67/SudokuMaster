@@ -1,9 +1,11 @@
 <main>
     <div id="conteneur_principal">
-        <img src="https://placehold.co/394x394/000000/FFFFFF/png" alt="">
-        <div class="formulaire">
+        <div class="formulaire_image">
+            <img src="https://placehold.co/394x394/000000/FFFFFF/png" alt="">
+        </div>
+        <section class="formulaire">
             <img src="https://placehold.co/221x109/000000/FFFFFF/png" alt="">
-            <h2>Connexion au compte</h2>
+            <h1>Connexion au compte</h1>
             <form method="post">
                 <div>
                     <label for="email">Adresse mail</label>
@@ -34,6 +36,6 @@
             <hr />
             <a href="index.php?controller=utilisateur&action=signUp">Créer un compte Sudoku Master gratuit</a>
             <a href="#">Vous avez oublié votre mot de passe ?</a>
-        </div>
+        </section>
     </div>
 </main>
