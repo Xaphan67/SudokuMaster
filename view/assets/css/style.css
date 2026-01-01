@@ -197,6 +197,9 @@ header>div {
   margin: 0 auto;
   max-width: 1200px;
   height: 80px;
+}
+
+header>div a {
   font-size: 24px;
 }
 
@@ -346,8 +349,10 @@ footer div:last-child {
   margin-top: 35px;
 }
 
-.statistiques>p:first-child {
-  margin-bottom: 10px;
+.statistiques p:first-child {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
 }
 
 .statistiques>p:nth-child(2) {
@@ -703,8 +708,9 @@ td:not(.celluleFixe, .selected_highlight) li {
 #accueil_haut>div:last-child {
   display: flex;
   flex-direction: column;
+  text-align: justify;
   gap: 15px;
-  width: 720px;
+  width: 780px;
 }
 
 #accueil_haut>div>h3 {
@@ -722,6 +728,7 @@ td:not(.celluleFixe, .selected_highlight) li {
 
 #accueil_bas {
   margin-top: 20px;
+  text-align: justify;
   gap: 16px;
 }
 
@@ -842,7 +849,7 @@ td:not(.celluleFixe, .selected_highlight) li {
 }
 
 #regles>div:not(:first-child) {
-  margin: auto 80px;
+  margin: auto 40px;
 }
 
 #regles h2 {
@@ -873,6 +880,7 @@ td:not(.celluleFixe, .selected_highlight) li {
 #regles_repetez, #regles_processus {
   display: none;
   justify-content: space-between;
+  gap: 20px;
 }
 
 #regles_repetez>img, #regles_processus>img {
@@ -884,7 +892,6 @@ td:not(.celluleFixe, .selected_highlight) li {
   flex-direction: column;
   justify-content: center;
   gap: 20px;
-  width: 520px;
   text-align: justify;
 }
 
@@ -936,12 +943,15 @@ h3 {
 }
 
 a, a:visited:not(.bouton) {
+  font-size: 18px;
   text-decoration: none;
   color: var(--MidnightViolet);
   cursor: pointer;
 }
 
+
 p {
+  font-size: 18px;
   margin: 0;
   padding: 0;
   color: var(--MidnightViolet);
