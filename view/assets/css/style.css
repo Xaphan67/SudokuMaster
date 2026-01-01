@@ -119,6 +119,24 @@ form>div {
   margin-bottom: 11px;
 }
 
+.champs_doubles{
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  text-align: left;
+}
+
+.champs_doubles>div {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.popup label {
+  font-size: 20px;
+  font-weight: bold;
+}
+
 label, form p {
   text-align: left;
 }
@@ -130,6 +148,11 @@ input[type="text"], input[type="email"], input[type="password"] {
   padding: 0px 20px;
   border-radius: 10px;
   cursor: text;
+}
+
+.popup input[type="text"], .popup input[type="email"], .popup input[type="password"] {
+  font-size: 20px;
+  margin-top: 11px;
 }
 
 input[type="text"]::placeholder, input[type="email"]::placeholder, input[type="password"]::placeholder {
@@ -196,16 +219,23 @@ nav {
   gap: 7px;
   right: 0px;
   top: 80px;
-  min-width: 200px;
-  font-size: 16px;
+  min-width: 280px;
+  font-size: 24px;
   background-color: var(--CrimsonViolet);
   border-radius: 10px;
   padding: 7px 0px 7px 25px;
+  z-index: 2;
 }
 
 #menu_utilisateur>div {
   display: flex;
+  align-items: center;
   gap: 16px;
+  height: 45px;
+}
+
+#menu_utilisateur>div img {
+  margin: auto 0;
 }
 
 #menu_utilisateur a {
@@ -710,11 +740,23 @@ td:not(.celluleFixe, .selected_highlight) li {
   gap: 20px;
   top : 50%;
   left : 50%;
-  width: 450px;
+  width: 550px;
   border-radius: 15px;
   background-color: var(--WisteriaBlue25pourcent);
   box-shadow: 0px 4px 4px 0px #686868;
   text-align: center;
+}
+
+.popup_large {
+  width: 850px;
+}
+
+.popup p:not(.score_global_valeur) {
+  font-size: 18px;
+}
+
+.popup h3 {
+  font-size: 36px;
 }
 
 #debut_partie, #fin_partie, #modifier_compte, #supprimer_compte {

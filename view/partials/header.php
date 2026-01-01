@@ -27,15 +27,15 @@
                 ?>
                 <div id="menu_utilisateur">
                     <div>
-                        <img src="https://placehold.co/20x20/000000/FFFFFF/png" alt="">
+                        <img src="https://placehold.co/36x36/000000/FFFFFF/png" alt="">
                         <a href="index.php?controller=utilisateur&action=profil&utilisateurId=<?php echo $_SESSION["utilisateur"]["id_utilisateur"]; ?>">Profil</a>
                     </div>
                     <div>
-                        <img src="https://placehold.co/20x20/000000/FFFFFF/png" alt="">
+                        <img src="https://placehold.co/36x36/000000/FFFFFF/png" alt="">
                         <a href="index.php?#">Accessibilité</a>
                     </div>
                     <div>
-                        <img src="https://placehold.co/20x20/000000/FFFFFF/png" alt="">
+                        <img src="https://placehold.co/36x36/000000/FFFFFF/png" alt="">
                         <a href="index.php?controller=utilisateur&action=logout">Se déconnecter</a>
                     </div>
                 </div>

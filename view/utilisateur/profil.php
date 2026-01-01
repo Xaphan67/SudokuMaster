@@ -100,54 +100,63 @@
             </div>
         </div>
     </div>
-    <div id="modifier_compte" class="popup"> <!-- popup modification des données du compte -->
+    <div id="modifier_compte" class="popup popup_large"> <!-- popup modification des données du compte -->
         <h3>Modifier vos informations personelles</h3>
         <p>Remplissez le formulaire pour mettre à jour vos informations de compte</p>
-        <p>Les champs de mot de passe peuvent rester vide si vous ne souhaitez pas le modifier</p>
+        <p>
+            Les champs de mot de passe peuvent rester vide<br>
+            si vous ne souhaitez pas le modifier
+        </p>
         <form method="post">
-            <div>
-                <label for="pseudo">Pseudo</label>
-                <input id="pseudo"
-                    name="pseudo"
-                    type="text"
-                    placeholder="<?php echo $_SESSION["utilisateur"]["pseudo_utilisateur"] ?>"
-                    autocomplete="username"
-                    <?php echo 'value="' . (isset($pseudoSaisi) ? $pseudoSaisi : $_SESSION["utilisateur"]["pseudo_utilisateur"]) . '"' ?>
-                    required
-                />
-                <?php if (isset($erreurs["pseudo"])) { echo '<p class="erreur">' . $erreurs["pseudo"] . '</p>'; } ?>
-            </div>
-            <div>
-                <label for="email">Adresse mail</label>
-                <input id="email"
-                    name="email"
-                    type="email"
-                    placeholder="<?php echo $_SESSION["utilisateur"]["email_utilisateur"] ?>"
-                    autocomplete="email"
-                    <?php echo 'value="' . (isset($emailSaisi) ? $emailSaisi : $_SESSION["utilisateur"]["email_utilisateur"]) . '"' ?>
-                    required
-                />
-                <?php if (isset($erreurs["email"])) { echo '<p class="erreur">' . $erreurs["email"] . '</p>'; } ?>
-            </div>
-            <div>
-                <label for="mdp">Mot de passe</label>
-                <input id="mdp"
-                    name="mdp"
-                    type="password"
-                    placeholder="*********"
-                    autocomplete="off"
-                />
-                <?php if (isset($erreurs["mdp"])) { echo '<p class="erreur">' . $erreurs["mdp"] . '</p>'; } ?>
-            </div>
-            <div>
-                <label for="mdp_confirm">Confirmation du mot de passe</label>
-                <input id="mdp_confirm"
-                    name="mdp_confirm"
-                    type="password"
-                    placeholder="*********"
-                    autocomplete="off"
-                />
-                <?php if (isset($erreurs["mdp_confirm"])) { echo '<p class="erreur">' . $erreurs["mdp_confirm"] . '</p>'; } ?>
+            <div class="champs_doubles">
+                <div>
+                    <div>
+                        <label for="pseudo">Pseudo</label>
+                        <input id="pseudo"
+                            name="pseudo"
+                            type="text"
+                            placeholder="<?php echo $_SESSION["utilisateur"]["pseudo_utilisateur"] ?>"
+                            autocomplete="username"
+                            <?php echo 'value="' . (isset($pseudoSaisi) ? $pseudoSaisi : $_SESSION["utilisateur"]["pseudo_utilisateur"]) . '"' ?>
+                            required
+                        />
+                        <?php if (isset($erreurs["pseudo"])) { echo '<p class="erreur">' . $erreurs["pseudo"] . '</p>'; } ?>
+                    </div>
+                    <div>
+                        <label for="email">Adresse mail</label>
+                        <input id="email"
+                            name="email"
+                            type="email"
+                            placeholder="<?php echo $_SESSION["utilisateur"]["email_utilisateur"] ?>"
+                            autocomplete="email"
+                            <?php echo 'value="' . (isset($emailSaisi) ? $emailSaisi : $_SESSION["utilisateur"]["email_utilisateur"]) . '"' ?>
+                            required
+                        />
+                        <?php if (isset($erreurs["email"])) { echo '<p class="erreur">' . $erreurs["email"] . '</p>'; } ?>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="mdp">Mot de passe</label>
+                        <input id="mdp"
+                            name="mdp"
+                            type="password"
+                            placeholder="*********"
+                            autocomplete="off"
+                        />
+                        <?php if (isset($erreurs["mdp"])) { echo '<p class="erreur">' . $erreurs["mdp"] . '</p>'; } ?>
+                    </div>
+                    <div>
+                        <label for="mdp_confirm">Confirmation du mot de passe</label>
+                        <input id="mdp_confirm"
+                            name="mdp_confirm"
+                            type="password"
+                            placeholder="*********"
+                            autocomplete="off"
+                        />
+                        <?php if (isset($erreurs["mdp_confirm"])) { echo '<p class="erreur">' . $erreurs["mdp_confirm"] . '</p>'; } ?>
+                    </div>
+                </div>
             </div>
             <p>Saisissez votre mot de passe actuel pour confirmer les changements</p>
             <div>
@@ -169,7 +178,10 @@
     </div>
     <div id="supprimer_compte" class="popup"> <!-- popup supression du compte -->
         <h3>Supprimer votre compte</h3>
-        <p>Vous êtes sur le point de supprimer votre compte. Cette action est irreversible !</p>
+        <p>
+            Vous êtes sur le point de supprimer votre compte.<br>
+            Cette action est irreversible !
+        </p>
         <p>Confirmez la supression</br> en entrant votre mot de passe</p>
         <form method="post">
             <div>
