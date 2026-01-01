@@ -738,7 +738,62 @@ td:not(.celluleFixe, .selected_highlight) li {
   transition: all 0.1s ease;
 }
 
+/* -------------------------------------------------- Règles  --------------------------------------------------*/
+
+#regles {
+  margin-top: 40px;
+  min-height: 680px;
+}
+
+#regles>div:not(:first-child) {
+  margin: auto 80px;
+}
+
+#regles h2 {
+  margin-bottom: 34px;
+}
+
+.onglets_regles {
+  width: 1140px;
+}
+
+.onglets_regles p {
+  min-width: 320px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#regles_generalites {
+  display: flex;
+  flex-direction: column;
+  text-align: justify;
+}
+
+#regles_generalites>h2:not(:first-child) {
+  margin-top: 63px;
+}
+
+#regles_repetez, #regles_processus {
+  display: none;
+  justify-content: space-between;
+}
+
+#regles_repetez>img, #regles_processus>img {
+  margin: auto;
+}
+
+#regles_repetez>div, #regles_processus>div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  width: 520px;
+  text-align: justify;
+}
+
 /* --------------------------------------------------  Setting généraux  --------------------------------------------------*/
+
 * {
   font-family: "inter";
   cursor: default;
@@ -867,7 +922,6 @@ td {
 }
 
 .onglets>p:not(.onglet_actif) {
-  min-width: 200px;
   height: 40px;
   line-height: 40px;
   background-color: var(--WisteriaBlue50pourcent);
@@ -884,6 +938,7 @@ td {
   min-width: 200px;
   height: 40px;
   line-height: 40px;
+  color: var(--White);
   background-color: var(--WisteriaBlue);
   border-radius: 15px;
   transition: all 0.5s ease;

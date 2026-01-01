@@ -29,7 +29,7 @@
             <h2>Statistiques Personnelles</h2>
             <div class="onglets onglets-stats">
                 <p class="onglet_actif">Solo</p>
-                <p class>Coopératif</p>
+                <p>Coopératif</p>
                 <p>Compétitif</p>
             </div>
             <div id="statistiques_solo" class="statistiques contenu_onglet_actif">

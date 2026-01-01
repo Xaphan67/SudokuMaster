@@ -37,6 +37,9 @@
 
         // Affiche la page des règles
         public function rules() {
+
+            $script = ["regles.js"];
+
             require_once("view/partials/header.php");
             include("view/main/regles.php");
             require_once("view/partials/footer.php");
