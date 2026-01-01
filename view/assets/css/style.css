@@ -610,7 +610,8 @@ td:not(.celluleFixe, .selected_highlight) li {
 
 #accueil_haut {
   justify-content: space-between;
-  margin-bottom: 30px;
+  margin-top: 40px;
+  margin-bottom: 20px;
 }
 
 #accueil_haut>div:first-child {
@@ -630,7 +631,7 @@ td:not(.celluleFixe, .selected_highlight) li {
 #accueil_haut>div:last-child {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 15px;
   width: 720px;
 }
 
@@ -648,8 +649,8 @@ td:not(.celluleFixe, .selected_highlight) li {
 }
 
 #accueil_bas {
-  margin-top: 30px;
-  gap: 25px;
+  margin-top: 20px;
+  gap: 16px;
 }
 
  #accueil_bas>h3 {
