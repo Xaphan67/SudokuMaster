@@ -407,7 +407,6 @@ footer div:last-child {
 
 #grille {
   display: none;
-  font-size: 36px;
   font-weight: bold;
 }
 
@@ -519,12 +518,12 @@ footer div:last-child {
   flex-direction: row;
   flex-wrap: wrap;
   gap: 10px;
-  font-size: 40px;
 }
 
 #pave_numerique p {
   width: 100px;
   height: 100px;
+  font-size: 40px;
   line-height: 100px;
 }
 
@@ -964,6 +963,10 @@ img {
 
 td {
   color: var(--MidnightViolet);
+}
+
+td p {
+  font-size: 36px;
 }
 
 .vertical {
