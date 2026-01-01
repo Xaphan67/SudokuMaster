@@ -323,7 +323,7 @@ footer div:last-child {
 
 .grille {
   border-radius: 20px;
-  border: 6px solid var(--MidnightViolet);
+  border: 6px solid var(--CrimsonViolet);
   border-spacing: 0px;
   /*border-collapse: collapse;*/
 }
@@ -353,16 +353,16 @@ footer div:last-child {
   position: relative;
   height: 80px;
   width: 80px;
-  border: 1px solid var(--MidnightViolet);
+  border: 1px solid var(--CrimsonViolet);
   text-align: center;
 }
 
 .grille tr:nth-child(4) td {
-  border-top: 4px solid var(--MidnightViolet);
+  border-top: 4px solid var(--CrimsonViolet);
 }
 
 .grille tr:nth-child(6) td {
-  border-bottom: 4px solid var(--MidnightViolet);
+  border-bottom: 4px solid var(--CrimsonViolet);
 }
 
 .grille tr:first-child td:first-child {

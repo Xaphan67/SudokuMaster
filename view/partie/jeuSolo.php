@@ -114,11 +114,11 @@
             <div id="interface_de_jeu"> <!-- boutons de jeu -->
                 <div> <!-- notes et temps -->
                     <div class="boutons_ronds">
-                        <div class="boutonPave"><img src="https://placehold.co/50x50/000000/FFFFFF/png" alt=""></div>
+                        <div class="bouton boutonPave"><img src="https://placehold.co/50x50/000000/FFFFFF/png" alt=""></div>
                         <p id="notes">Notes : OFF</p>
                     </div>
                     <div class="boutons_ronds">
-                        <div class="boutonPave"><img src="https://placehold.co/50x50/000000/FFFFFF/png" alt=""></div>
+                        <div class="bouton boutonPave"><img src="https://placehold.co/50x50/000000/FFFFFF/png" alt=""></div>
                         <p id="timer">Temps : 15:00</p>
                     </div>
                 </div>
