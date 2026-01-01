@@ -191,7 +191,7 @@
             </div>
         </div>
 
-        <div id="erreur" class="popup"><!-- popup de fin de partie -->
+        <div id="erreur" class="popup"><!-- popup d'erreur de grille -->
             <h3>Une erreur est survenue</h3>
             <p>
                 Impossible de récupérer une grille actuellement.<br>
