@@ -190,5 +190,14 @@
                 <p>Rejouer</p>
             </div>
         </div>
+
+        <div id="erreur" class="popup"><!-- popup de fin de partie -->
+            <h3>Une erreur est survenue</h3>
+            <p>
+                Impossible de récupérer une grille actuellement.<br>
+                Veuillez réessayer plus tard.
+            </p>
+            <a href="index.php" class="bouton boutonPrincipal boutonLarge">Retour à l'accueil</a>
+        </div>
     </div>
 </main>

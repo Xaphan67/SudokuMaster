@@ -17,6 +17,7 @@ const POPUP_FIN_PARTIE_TITRE = POPUP_FIN_PARTIE.getElementsByTagName("h3")[0];
 const POPUP_FIN_PARTIE_TEXTE = POPUP_FIN_PARTIE.getElementsByTagName("p")[0];
 const POPUP_FIN_PARTIE_SCORE_GLOBAL = POPUP_FIN_PARTIE.getElementsByTagName("p")[1];
 const POPUP_FIN_PARTIE_RJOUER = POPUP_FIN_PARTIE.getElementsByTagName("div")[1];
+const POPUP_ERREUR = document.getElementById("erreur");
 const NOTES = document.getElementById("notes");
 const TIMER = document.getElementById("timer");
 const UTILISATEUR_CONNECTE = document.getElementById("session_utilisateur");
@@ -264,27 +265,40 @@ async function startGame(element) {
     difficulte = element.children[1].innerHTML;
     TITRE_JEU.innerHTML = 'Jeu solo : Difficulté ' + difficulte;
 
-    // Ajoute la partie dans la base de données
-    // Et retourne son ID (ou 0 si aucun utilisateur connecté) et la série de victoire du joueur avant cette partie
-    const RES_PARTIE = await fetch("index.php?controller=partie&action=new", {
-        method: "POST",
-        headers: {
-                'Content-Type': 'application/json', // Indique qu'on envoie du JSON
-                'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
-            },
-            body: JSON.stringify({ modeDeJeu: "Solo", difficulte: difficulte}) // Objet JS converti en chaîne JSON
-    });
-    let resPartie = await RES_PARTIE.json();
-    idPartie = resPartie["partieId"];
-    serieVictoires = resPartie["serie_victoires"];
-    scoreGlobal = resPartie["score_global"];
-
     // Appelle l'API pour obtenir une grille et l'afficher
-    callSudokuAPI(difficulte);
+    grilleObtenue = await callSudokuAPI(difficulte);
 
-    // Configure et démarre le timer
-    timerActif = false;
-    startTimer();
+    // Si la grille à bien été obtenue
+    if (grilleObtenue) {
+
+        // Ajoute la partie dans la base de données
+        // Et retourne son ID (ou 0 si aucun utilisateur connecté) et la série de victoire du joueur avant cette partie
+        const RES_PARTIE = await fetch("index.php?controller=partie&action=new", {
+            method: "POST",
+            headers: {
+                    'Content-Type': 'application/json', // Indique qu'on envoie du JSON
+                    'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
+                },
+                body: JSON.stringify({ modeDeJeu: "Solo", difficulte: difficulte}) // Objet JS converti en chaîne JSON
+        });
+        let resPartie = await RES_PARTIE.json();
+        idPartie = resPartie["partieId"];
+        serieVictoires = resPartie["serie_victoires"];
+        scoreGlobal = resPartie["score_global"];
+
+        // Permet à l'utilisateur d'intéragir avec le plateau de jeu
+        CONTENEUR_JEU.style.filter = "none";
+        CONTENEUR_JEU.inert = false;
+
+        // Configure et démarre le timer
+        timerActif = false;
+        startTimer();
+    }
+    else {
+
+        // Affiche le pupup d'erreur
+        POPUP_ERREUR.style.display = "flex";
+    }
 }
 
 // Fin de partie
@@ -372,11 +386,6 @@ function sleep(ms) {
 
 // Démare le timer
 async function startTimer() {
-    // Attends que l'API ait envoyé la grille (le filtre sur conteneur_jeu passe à "none")
-    while (CONTENEUR_JEU.style.filter != "none") {
-        await sleep()
-    }
-
     if (timerActif == false) { // Si le timer n'a pas démarré ou est en pause, on le démarre
         // Rends les éléments visibles et interactibles
         TABLE.style.display = "inline-table";

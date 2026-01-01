@@ -765,12 +765,12 @@ td:not(.celluleFixe, .selected_highlight) li {
   font-size: 36px;
 }
 
-#debut_partie, #fin_partie, #modifier_compte, #supprimer_compte {
+#debut_partie, #fin_partie, #modifier_compte, #supprimer_compte, #erreur {
   display: flex;
   transform: translateX(-50%) translateY(-50%);
 }
 
-#modifier_compte, #supprimer_compte {
+#modifier_compte, #supprimer_compte, #erreur {
   display: none;
 }
 
