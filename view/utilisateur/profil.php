@@ -34,7 +34,7 @@
             </div>
             <div id="statistiques_solo" class="statistiques contenu_onglet_actif">
                 <p>Score global</p>
-                <p class="score_principal score_large"><?php echo isset($statistiques[1]) ? $statistiques[1]->getScore_global() : "0" ?></p>
+                <p class="score_principal score_large"><?php echo isset($statistiques[1]) ? $statistiques[1]->getScore_global() : "1000" ?></p>
                 <table>
                     <tbody>
                         <tr>
@@ -56,7 +56,7 @@
             </div>
             <div id="statistiques_cooperatif" class="statistiques">
                 <p>Score global</p>
-                <p class="score_principal score_large"><?php echo isset($statistiques[2]) ? $statistiques[2]->getScore_global() : "0" ?></p>
+                <p class="score_principal score_large"><?php echo isset($statistiques[2]) ? $statistiques[2]->getScore_global() : "1000" ?></p>
                 <table>
                     <tbody>
                         <tr>
@@ -78,7 +78,7 @@
             </div>
             <div id="statistiques_competitif" class="statistiques">
                 <p>Score global</p>
-                <p class="score_principal score_large"><?php echo isset($statistiques[3]) ? $statistiques[3]->getScore_global() : "0" ?></p>
+                <p class="score_principal score_large"><?php echo isset($statistiques[3]) ? $statistiques[3]->getScore_global() : "1000" ?></p>
                 <table>
                     <tbody>
                         <tr>
