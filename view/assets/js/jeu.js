@@ -29,6 +29,7 @@ let caseActuelle = null;
 let case_focus = null;
 
 // Partie
+let partieEnCours = false;
 let idPartie = null;
 let serieVictoires = null;
 let scoreGlobal = null;
@@ -134,8 +135,9 @@ BOUTON_PAUSE_TIMER.addEventListener("click", (e) => {
 // Lors d'un clic sur un des boutons du pavé numérique...
 BOUTONS.forEach(element => {
     element.onclick=function() {
-        // Vérifie que la case actuelle n'est pas nulle et qu'elle peux être modifiée par le joueur
-        if (caseActuelle != null && !case_focus.classList.contains("celluleFixe")) {
+        // Vérifie que la case actuelle n'est pas nulle, qu'elle peux être modifiée par le joueur
+        // et que la partie est en cours
+        if (caseActuelle != null && !case_focus.classList.contains("celluleFixe") && partieEnCours) {
             const LISTE_NOTES = caseActuelle.getElementsByTagName("ul")[0];
 
             // Vérifie si le mode notes est activé
@@ -290,6 +292,9 @@ async function startGame(element) {
         CONTENEUR_JEU.style.filter = "none";
         CONTENEUR_JEU.inert = false;
 
+        // Déclare la partie comme commencée
+        partieEnCours = true;
+
         // Configure et démarre le timer
         timerActif = false;
         startTimer();
@@ -303,6 +308,11 @@ async function startGame(element) {
 
 // Fin de partie
 async function endGame(popup = true) {
+
+    // Déclare la partie comme terminée
+    partieEnCours = false;
+
+    // Opacifie la zone de jeu
     CONTENEUR_JEU.style.filter = "opacity(0.40)";
 
     // Stop le timer
