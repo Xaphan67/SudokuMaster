@@ -54,7 +54,7 @@
 
             // Requête préparée pour récupérer les statistiques de tout les utilisateurs par mode
             $query =
-                "SELECT pseudo_utilisateur, score_global
+                "SELECT pseudo_utilisateur, score_global, grilles_jouees, grilles_resolues, temps_moyen, meilleur_temps, serie_victoires
                 FROM classer
                 INNER JOIN utilisateur ON utilisateur.id_utilisateur = classer.id_utilisateur
                 WHERE id_mode_de_jeu = :id_mode_de_jeu AND inactif = 0

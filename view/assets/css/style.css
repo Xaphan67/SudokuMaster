@@ -670,7 +670,46 @@ margin-bottom: 11px;
 }
 
 .top_3>div {
+  position: relative;
   width: 95px;
+}
+
+.info_joueur {
+  position: absolute;
+  left: calc(50% - 200px);
+  bottom: calc(100% + 15px);
+  display: none;
+  width: 400px;
+  padding: 20px 40px;
+  background-color: var(--WisteriaBlue25pourcent);
+  box-shadow: 0px 4px 4px 0px #686868;
+  border-radius: 15px;
+  z-index: 10;
+}
+
+.info_joueur>div {
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.info_joueur>div>div:last-child {
+  text-align: right;
+}
+
+.top_3>div:hover .info_joueur {
+  display: flex;
+  flex-direction: column;
+}
+
+.info_joueur>img {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left: calc(50% - 20px);
+  bottom: calc(-20px);
+  transform: scaleY(-1);
 }
 
 .top_3>div>img {
@@ -703,7 +742,7 @@ margin-bottom: 11px;
   bottom: 15px;
 }
 
-.top_3>div:first-child p:last-child {
+.top_3>div:first-child>p:last-child {
   position: absolute;
   transform: translateX(-50%);
   left: 50%;
@@ -711,7 +750,7 @@ margin-bottom: 11px;
   white-space: nowrap;
 }
 
-.top_3>div:not(:first-child) p:last-child {
+.top_3>div:not(:first-child)>p:last-child {
   position: absolute;
   transform: translateX(-50%);
   left: 50%;
