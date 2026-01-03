@@ -52,12 +52,12 @@
 
         function findAllByMode(int $modeId, int $limit) {
 
-            // Requête préparée pour récupérer les sttistiques de tout les utilisateurs par mode
+            // Requête préparée pour récupérer les statistiques de tout les utilisateurs par mode
             $query =
                 "SELECT pseudo_utilisateur, score_global
                 FROM classer
                 INNER JOIN utilisateur ON utilisateur.id_utilisateur = classer.id_utilisateur
-                WHERE id_mode_de_jeu = :id_mode_de_jeu
+                WHERE id_mode_de_jeu = :id_mode_de_jeu AND inactif = 0
                 ORDER BY score_global DESC LIMIT :limit";
 
             $prepare = $this->connect()->prepare($query);
