@@ -16,11 +16,11 @@
             </div>
             <div>
                 <div id="bouton_modifier" class="bouton boutonPrincipal boutonProfil">
-                    <img src="https://placehold.co/40x40/000000/FFFFFF/png" alt="">
+                    <img src="view/assets/svg/Modifier.svg" alt="">
                     <p>Modifier</p>
                 </div>
                 <div id="bouton_supprimer" class="bouton boutonPrincipal boutonProfil">
-                    <img src="https://placehold.co/40x40/000000/FFFFFF/png" alt="">
+                    <img src="view/assets/svg/Supprimer.svg" alt="">
                     <p>Supprimer</p>
                 </div>
             </div>

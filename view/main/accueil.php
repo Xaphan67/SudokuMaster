@@ -3,7 +3,7 @@
         <h1>SUDOKU MASTER</h1>
         <section id="accueil_haut">
             <div>
-                <img src="https://placehold.co/231x231/000000/FFFFFF/png" alt="">
+                <img src="view/assets/img/Grille.webp" alt="">
             </div>
             <div>
                 <h2>Jouez à Sudoku Master gratuitement !</h2>

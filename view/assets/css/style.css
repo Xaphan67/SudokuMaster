@@ -210,6 +210,11 @@ header>div {
   height: 80px;
 }
 
+.logo {
+  width: 132px;
+  height: 54px;
+}
+
 header>div a {
   font-size: 24px;
 }
@@ -755,6 +760,7 @@ margin-bottom: 11px;
   transform: rotate(-10deg);
   top: 19px;
   left: 19px;
+  width: 231px;
 }
 
 #accueil_haut>div:last-child {

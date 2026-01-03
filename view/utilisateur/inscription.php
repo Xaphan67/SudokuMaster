@@ -1,7 +1,7 @@
 <main>
     <div id="conteneur_principal">
         <div class="formulaire_image">
-            <img src="https://placehold.co/394x394/000000/FFFFFF/png" alt="">
+            <img src="view/assets/img/Grille.webp" alt="">
         </div>
         <section class="formulaire">
             <h2>Créer un compte</h2>

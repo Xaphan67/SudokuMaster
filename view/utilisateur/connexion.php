@@ -1,10 +1,10 @@
 <main>
     <div id="conteneur_principal">
         <div class="formulaire_image">
-            <img src="https://placehold.co/394x394/000000/FFFFFF/png" alt="">
+            <img src="view/assets/img/Grille.webp" alt="">
         </div>
         <section class="formulaire">
-            <img src="https://placehold.co/221x109/000000/FFFFFF/png" alt="">
+            <img src="view/assets/img/SudokuMaster.png" alt="">
             <h1>Connexion au compte</h1>
             <form method="post">
                 <div>

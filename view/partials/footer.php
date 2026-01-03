@@ -1,8 +1,8 @@
     <footer>
       <div>
         <div>
-          <a><img src="https://placehold.co/124x40/000000/FFFFFF/png" alt=""></a>
-          <a><img src="https://placehold.co/124x40/000000/FFFFFF/png" alt=""></a>
+          <a><img src="view/assets/img/GooglePlay.webp" alt=""></a>
+          <a><img src="view/assets/img/AppStore.webp" alt=""></a>
         </div>
         <div>
           <a href="index.php?action=legals">Mentions légales</a>

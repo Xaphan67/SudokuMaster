@@ -114,11 +114,11 @@
             <div id="interface_de_jeu"> <!-- boutons de jeu -->
                 <div> <!-- notes et temps -->
                     <div class="boutons_ronds">
-                        <div class="bouton boutonPave"><img src="https://placehold.co/50x50/000000/FFFFFF/png" alt=""></div>
+                        <div class="bouton boutonPave"><img src="view/assets/svg/Notes.svg" alt=""></div>
                         <p id="notes">Notes : OFF</p>
                     </div>
                     <div class="boutons_ronds">
-                        <div class="bouton boutonPave"><img src="https://placehold.co/50x50/000000/FFFFFF/png" alt=""></div>
+                        <div class="bouton boutonPave"><img src="view/assets/svg/Pause.svg" alt=""></div>
                         <p id="timer">Temps : 15:00</p>
                     </div>
                 </div>
@@ -141,15 +141,15 @@
                         <p>La progression de la partie actuelle sera perdue et comptera comme une défaite</p>
                         <div class="boutons_difficulte">
                             <div class="bouton">
-                                <img src="https://placehold.co/50x50/000000/FFFFFF/png" alt="">
+                                <img src="view/assets/svg/Facile.svg" alt="">
                                 <p>Facile</p>
                             </div>
                             <div class="bouton">
-                                <img src="https://placehold.co/50x50/000000/FFFFFF/png" alt="">
+                                <img src="view/assets/svg/Moyen.svg" alt="">
                                 <p>Moyen</p>
                             </div>
                             <div class="bouton">
-                                <img src="https://placehold.co/50x50/000000/FFFFFF/png" alt="">
+                                <img src="view/assets/svg/Difficile.svg" alt="">
                                 <p>Difficile</p>
                             </div>
                         </div>
@@ -165,15 +165,15 @@
             <p>Attention, quitter ou abandonner la partie sera considéré comme une défaite</p>
             <div class="boutons_difficulte">
                 <div class="bouton">
-                    <img src="https://placehold.co/50x50/000000/FFFFFF/png" alt="">
+                    <img src="view/assets/svg/Facile.svg" alt="">
                     <p>Facile</p>
                 </div>
                 <div class="bouton">
-                    <img src="https://placehold.co/50x50/000000/FFFFFF/png" alt="">
+                    <img src="view/assets/svg/Moyen.svg" alt="">
                     <p>Moyen</p>
                 </div>
                 <div class="bouton">
-                    <img src="https://placehold.co/50x50/000000/FFFFFF/png" alt="">
+                    <img src="view/assets/svg/Difficile.svg" alt="">
                     <p>Difficile</p>
                 </div>
             </div>
@@ -186,7 +186,7 @@
                 <p class="score_global">Score global</p>
             </div>
             <div class="bouton">
-                <img src="https://placehold.co/50x50/000000/FFFFFF/png" alt="">
+                <img src="view/assets/svg/Rejouer.svg" alt="">
                 <p>Rejouer</p>
             </div>
         </div>

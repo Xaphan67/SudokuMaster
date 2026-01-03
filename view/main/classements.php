@@ -5,21 +5,21 @@
             <div>
                 <div>
                     <h2>Solo</h2>
-                    <img src="https://placehold.co/42x42/000000/FFFFFF/png" alt="">
+                    <img src="view/assets/svg/Solo.svg" alt="">
                 </div>
                 <div class="top_3">
                     <div>
-                        <img src="https://placehold.co/55x62/000000/FFFFFF/png" alt="">
+                        <img src="view/assets/img/TropheeOr.webp" alt="">
                         <p class="score_principal score_top score_top_1"><?php echo isset($classements[1][0]) ? $classements[1][0]["score_global"] : "0" ?></p>
                         <p><?php echo isset($classements[1][0]) ? $classements[1][0]["pseudo_utilisateur"] : "Place libre" ?></p>
                     </div>
                     <div>
-                        <img src="https://placehold.co/47x47/000000/FFFFFF/png" alt="">
+                        <img src="view/assets/img/TropheeArgent.webp" alt="">
                         <p class="score_principal score_top"><?php echo isset($classements[1][1]) ? $classements[1][1]["score_global"] : "0" ?></p>
                         <p><?php echo isset($classements[1][1]) ? $classements[1][1]["pseudo_utilisateur"] : "Place libre" ?></p>
                     </div>
                     <div>
-                        <img src="https://placehold.co/47x47/000000/FFFFFF/png" alt="">
+                        <img src="view/assets/img/TropheeBronze.webp" alt="">
                         <p class="score_principal score_top"><?php echo isset($classements[1][2]) ? $classements[1][2]["score_global"] : "0" ?></p>
                         <p><?php echo isset($classements[1][2]) ? $classements[1][2]["pseudo_utilisateur"] : "Place libre" ?></p>
                     </div>
@@ -50,21 +50,21 @@
             <div>
                 <div>
                     <h2>Coopératif</h2>
-                    <img src="https://placehold.co/42x42/000000/FFFFFF/png" alt="">
+                    <img src="view/assets/svg/Cooperatif.svg" alt="">
                 </div>
                 <div class="top_3">
                     <div>
-                        <img src="https://placehold.co/55x62/000000/FFFFFF/png" alt="">
+                        <img src="view/assets/img/TropheeOr.webp" alt="">
                         <p class="score_principal score_top score_top_1"><?php echo isset($classements[2][0]) ? $classements[2][0]["score_global"] : "0" ?></p>
                         <p><?php echo isset($classements[2][0]) ? $classements[2][0]["pseudo_utilisateur"] : "Place libre" ?></p>
                     </div>
                     <div>
-                        <img src="https://placehold.co/47x47/000000/FFFFFF/png" alt="">
+                        <img src="view/assets/img/TropheeArgent.webp" alt="">
                         <p class="score_principal score_top"><?php echo isset($classements[2][1]) ? $classements[2][1]["score_global"] : "0" ?></p>
                         <p><?php echo isset($classements[2][1]) ? $classements[2][1]["pseudo_utilisateur"] : "Place libre" ?></p>
                     </div>
                     <div>
-                        <img src="https://placehold.co/47x47/000000/FFFFFF/png" alt="">
+                        <img src="view/assets/img/TropheeBronze.webp" alt="">
                         <p class="score_principal score_top"><?php echo isset($classements[2][2]) ? $classements[2][2]["score_global"] : "0" ?></p>
                         <p><?php echo isset($classements[2][2]) ? $classements[2][2]["pseudo_utilisateur"] : "Place libre" ?></p>
                     </div>
@@ -95,21 +95,21 @@
             <div>
                 <div>
                     <h2>Compétitif</h2>
-                    <img src="https://placehold.co/42x42/000000/FFFFFF/png" alt="">
+                    <img src="view/assets/svg/Competitif.svg" alt="">
                 </div>
                 <div class="top_3">
                     <div>
-                        <img src="https://placehold.co/55x62/000000/FFFFFF/png" alt="">
+                        <img src="view/assets/img/TropheeOr.webp" alt="">
                         <p class="score_principal score_top score_top_1"><?php echo isset($classements[3][0]) ? $classements[3][0]["score_global"] : "0" ?></p>
                         <p><?php echo isset($classements[3][0]) ? $classements[3][0]["pseudo_utilisateur"] : "Place libre" ?></p>
                     </div>
                     <div>
-                        <img src="https://placehold.co/47x47/000000/FFFFFF/png" alt="">
+                        <img src="view/assets/img/TropheeArgent.webp" alt="">
                         <p class="score_principal score_top"><?php echo isset($classements[3][1]) ? $classements[3][1]["score_global"] : "0" ?></p>
                         <p><?php echo isset($classements[3][1]) ? $classements[3][1]["pseudo_utilisateur"] : "Place libre" ?></p>
                     </div>
                     <div>
-                        <img src="https://placehold.co/47x47/000000/FFFFFF/png" alt="">
+                        <img src="view/assets/img/TropheeBronze.webp" alt="">
                         <p class="score_principal score_top"><?php echo isset($classements[3][2]) ? $classements[3][2]["score_global"] : "0" ?></p>
                         <p><?php echo isset($classements[3][2]) ? $classements[3][2]["pseudo_utilisateur"] : "Place libre" ?></p>
                     </div>

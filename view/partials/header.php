@@ -5,7 +5,7 @@
 <body>
     <header>
         <div>
-            <a href="index.php"><img src="https://placehold.co/132x54/000000/FFFFFF/png" alt=""></a>
+            <a href="index.php"><img class="logo" src="view/assets/img/SudokuMaster.png" alt=""></a>
             <nav>
                 <a href="index.php?controller=partie&action=soloBoard">Jeu Solo</a>
                 <a href="index.php?controller=partie&action=lobby">Multijoueur</a>
@@ -21,21 +21,21 @@
                         echo '<a href="index.php?controller=utilisateur&action=login">Connexion</a>';
                     }
                 ?>
-                <img src="https://placehold.co/54x54/000000/FFFFFF/png" alt="">
+                <img src="view/assets/svg/AvatarUtilisateur.svg" alt="">
                  <?php
                     if(isset($_SESSION["utilisateur"])) {
                 ?>
                 <div id="menu_utilisateur">
                     <div>
-                        <img src="https://placehold.co/36x36/000000/FFFFFF/png" alt="">
+                        <img src="view/assets/svg/Profil.svg" alt="">
                         <a href="index.php?controller=utilisateur&action=profil&utilisateurId=<?php echo $_SESSION["utilisateur"]["id_utilisateur"]; ?>">Profil</a>
                     </div>
                     <div>
-                        <img src="https://placehold.co/36x36/000000/FFFFFF/png" alt="">
+                        <img src="view/assets/svg/Accessibilite.svg" alt="">
                         <a href="index.php?#">Accessibilité</a>
                     </div>
                     <div>
-                        <img src="https://placehold.co/36x36/000000/FFFFFF/png" alt="">
+                        <img src="view/assets/svg/Deconnexion.svg" alt="">
                         <a href="index.php?controller=utilisateur&action=logout">Se déconnecter</a>
                     </div>
                 </div>
