@@ -182,9 +182,7 @@
         <div id="fin_partie" class="popup"><!-- popup de fin de partie -->
             <h3></h3>
             <p></p>
-            <div>
-                <p class="score_global">Score global</p>
-            </div>
+            <p class="score_global">Score global</p>
             <div class="bouton">
                 <img src="view/assets/svg/Rejouer.svg" alt="">
                 <p>Rejouer</p>

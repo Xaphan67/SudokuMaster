@@ -16,7 +16,7 @@ const POPUP_FIN_PARTIE = document.getElementById("fin_partie");
 const POPUP_FIN_PARTIE_TITRE = POPUP_FIN_PARTIE.getElementsByTagName("h3")[0];
 const POPUP_FIN_PARTIE_TEXTE = POPUP_FIN_PARTIE.getElementsByTagName("p")[0];
 const POPUP_FIN_PARTIE_SCORE_GLOBAL = POPUP_FIN_PARTIE.getElementsByTagName("p")[1];
-const POPUP_FIN_PARTIE_RJOUER = POPUP_FIN_PARTIE.getElementsByTagName("div")[1];
+const POPUP_FIN_PARTIE_REJOUER = POPUP_FIN_PARTIE.getElementsByTagName("div")[0];
 const POPUP_ERREUR = document.getElementById("erreur");
 const NOTES = document.getElementById("notes");
 const TIMER = document.getElementById("timer");
@@ -346,6 +346,9 @@ async function endGame(popup = true) {
             evolution.classList.add("score_golbal_evolution");
             valeur.insertAdjacentElement('afterend', evolution);
         }
+        else {
+            POPUP_FIN_PARTIE_SCORE_GLOBAL.style.display = "none";
+        }
 
         // Affiche un message de victoire ou défaite selon l'état de la partie quand le popup s'affiche
         POPUP_FIN_PARTIE.style.display = "flex";
@@ -354,15 +357,19 @@ async function endGame(popup = true) {
 
 
         // Lors du clic sur Rejouer...
-        POPUP_FIN_PARTIE_RJOUER.addEventListener("click", (e) => {
+        POPUP_FIN_PARTIE_REJOUER.addEventListener("click", (e) => {
 
             // Masque le popup
             POPUP_FIN_PARTIE.style.display = "none";
             POPUP_DEBUT_PARTIE.style.display = "flex";
 
-            // Retire les éléments ajoutés au DOM
-            valeur.remove();
-            evolution.remove();
+             // Si un joueur est connecté
+            if (idPartie != 0) {
+
+                // Retire les éléments ajoutés au DOM
+                valeur.remove();
+                evolution.remove();
+            }
 
             // Remet le timer à 15 minutes
             resetTimer();
