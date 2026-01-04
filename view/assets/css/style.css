@@ -656,6 +656,7 @@ margin-bottom: 11px;
 }
 
 .top_10>div {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -698,9 +699,10 @@ margin-bottom: 11px;
   text-align: right;
 }
 
-.top_3>div:hover .info_joueur {
+.top_3>div:hover .info_joueur, .top_10>div:hover .info_joueur {
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 .info_joueur>img {

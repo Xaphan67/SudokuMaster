@@ -61,6 +61,26 @@
                                     if (isset($classements[$mode][$place])) {
                                     ?>
                                         <div>
+                                            <div class="info_joueur">
+                                                <h3><?php echo $classements[$mode][$place]["pseudo_utilisateur"] ?></h3>
+                                                <div>
+                                                    <div>
+                                                        <p>Nombre total de grilles jouées :</p>
+                                                        <p>Nombre de grilles résolues :</p>
+                                                        <p>Temps moyen :</p>
+                                                        <p>Meilleur temps :</p>
+                                                        <p>Série de victoires :</p>
+                                                    </div>
+                                                    <div>
+                                                        <p><?php echo $classements[$mode][$place]["grilles_jouees"] ?></p>
+                                                        <p><?php echo $classements[$mode][$place]["grilles_resolues"] ?></p>
+                                                        <p><?php echo substr($classements[$mode][$place]["temps_moyen"], 3, 5) ?></p>
+                                                        <p><?php echo substr($classements[$mode][$place]["meilleur_temps"], 3, 5) ?></p>
+                                                        <p><?php echo $classements[$mode][$place]["serie_victoires"] ?></p>
+                                                    </div>
+                                                </div>
+                                                <img src="view/assets/svg/Fleche.svg" alt="">
+                                            </div>
                                             <p><?php echo $classements[$mode][$place]["pseudo_utilisateur"] ?></p>
                                             <p class="score_principal score"><?php echo  $classements[$mode][$place]["score_global"] ?></p>
                                         </div>
