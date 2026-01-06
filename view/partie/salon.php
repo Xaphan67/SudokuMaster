@@ -9,7 +9,7 @@
         <div id="salon">
             <section>
                 <h2>Créer une salle</h2>
-                <form method="post">
+                <form method="post" action ="index.php?controller=partie&action=multiBoard">
                     <div>
                         <label for="mode">Mode de jeu</label>
                         <select name="mode" id="mode" required>
@@ -30,7 +30,7 @@
             </section>
             <section>
                 <h2>Rejoindre une salle</h2>
-                <form method="post">
+                <form method="post" action ="index.php?controller=partie&action=multiBoard">
                     <div>
                         <label for="salle">ID de la salle</label>
                         <input id="salle"

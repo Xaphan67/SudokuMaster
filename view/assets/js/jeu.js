@@ -8,10 +8,8 @@ const BOUTON_NOTES = document.getElementById("interface_de_jeu").getElementsByTa
 const BOUTON_PAUSE_TIMER = document.getElementById("interface_de_jeu").getElementsByTagName("div")[3];
 const BOUTON_JEU = document.getElementById("bouton_jeu");
 const MENU_PARTIE = document.getElementById("menu_partie");
-const MENU_PARTIE_BOUTONS_DIFFICULTE = Array.from(document.getElementsByClassName("boutons_difficulte")[0].getElementsByTagName("div"));
 const TITRE_JEU = document.getElementById("titre_jeu");
 const POPUP_DEBUT_PARTIE = document.getElementById("debut_partie");
-const POPUP_BOUTONS_DIFFICULTE = Array.from(document.getElementsByClassName("boutons_difficulte")[1].getElementsByTagName("div"));
 const POPUP_FIN_PARTIE = document.getElementById("fin_partie");
 const POPUP_FIN_PARTIE_TITRE = POPUP_FIN_PARTIE.getElementsByTagName("h3")[0];
 const POPUP_FIN_PARTIE_TEXTE = POPUP_FIN_PARTIE.getElementsByTagName("p")[0];
@@ -36,6 +34,11 @@ let scoreGlobal = null;
 let valeur = null;
 let evolution = null;
 
+// multijoueur
+let multijoueur;
+let connexion;
+let infosSalle;
+
 // Timer
 let start = null;
 let deltaPause = null;
@@ -56,35 +59,130 @@ let modeNotes = false;
 // Menu Bouton Jeu
 let menuOuvert = false;
 
-// Séléction de la difficulté via popop début de partie
-POPUP_BOUTONS_DIFFICULTE.forEach(element => {
-    element.onclick= function() {
-        // Masque le popup
-        POPUP_DEBUT_PARTIE.style.display = "none";
+// Si le joueur joue une partie solo ou multijoueur
+if (TITRE_JEU.innerHTML.includes('Multijoueur')) {
 
-        // Démarre la partie
-        startGame(element);
-    }
-});
+    // Set la variable multijoueur à vrai, et se connecte au serveur WebSocket
+    multijoueur = true;
+    connexion = new WebSocket('ws://localhost:8080');
 
-// Séléction de la difficulté via le menu
-MENU_PARTIE_BOUTONS_DIFFICULTE.forEach(element => {
-    element.onclick= function() {
-        // Masque le menu et le considère comme fermé
-        MENU_PARTIE.style.display = "none";
-        menuOuvert = false;
-        BOUTON_JEU.innerHTML = "Nouvelle partie";
+    // Cache le popup d'attente d'un joueur
+    POPUP_DEBUT_PARTIE.style.display = "none";
 
-        // Met fin à la partie
-        endGame(false);
+    joinRoom();
+}
 
-        // Remet le timer à 15 minutes
-        resetTimer();
+function joinRoom() {
 
-        // Démarre la partie
-        startGame(element);
-    }
-});
+    // Défini ce qui se passe lorsque la connexion est connectée au serveur WebSocket
+    connexion.onopen = async function (e) {
+
+        // Récupère l'information en PHP si le joueur est hote de la partie
+        // ou la salle qu'il souhaite rejoindre
+        const HOTE = await fetch("index.php?controller=partie&action=getRoomInfo", {
+                method: "POST",
+                headers: {
+                        'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
+                    }
+                });
+        infosSalle = await HOTE.json();
+
+        // Si le joueur est hote de la partie...
+        if (infosSalle.hote) {
+
+            // Change le titre du tableau de jeu
+            let mode = infosSalle.mode.charAt(0).toUpperCase() + infosSalle.mode.slice(1);
+            let difficulte = infosSalle.difficulte.charAt(0).toUpperCase() + infosSalle.difficulte.slice(1);
+            TITRE_JEU.innerHTML = "Jeu " + mode + " : Difficulté " + difficulte;
+
+            // Demande au serveur WebSocket de créer une salle
+            connexion.send(JSON.stringify({commande: "creer_salle", mode: mode, difficulte: difficulte}));
+
+            // Affiche le popup d'attente d'un joueur
+            POPUP_DEBUT_PARTIE.style.display = "flex";
+        }
+
+        // Sinon, demande au serveur WebSocket de rejoindre une salle
+        else {
+            connexion.send(JSON.stringify({commande: "rejoindre_salle", salle: infosSalle.salle}));
+        }
+    };
+
+    // Défini ce qui se passe quand le serveur WebSocket envoie un message à la connexion
+    connexion.onmessage = (e) => {
+        let message = JSON.parse(e.data);
+
+        switch (message.commande) {
+
+            // Le serveur renvoie l'Id de la salle créée
+            case "numero_salle":
+                TITRE_JEU.innerHTML += " - ID Salle : " +  message.numero;
+                break;
+
+            // Le serveur renvoie les infos de la salle rejointe
+            case "infos_salle":
+
+                // Stocke les infos
+                infosSalle.mode = message.mode;
+                infosSalle.difficulte = message.difficulte;
+
+                // Change le titre du tableau de jeu
+                TITRE_JEU.innerHTML = "Jeu " + infosSalle.mode + " : Difficulté " + infosSalle.difficulte + " - ID Salle : " + infosSalle.salle;
+                break;
+
+            // Le serveur indique qu'un joueur à rejoint la salle
+            case "joueur_rejoint":
+
+                // Masque le popup d'attente d'un joueur
+                POPUP_DEBUT_PARTIE.style.display = "none";
+                break;
+
+            // Le serveur indique que la salle à rejoindre n'existe pas
+            case "salle_inexistante":
+
+                // Affiche le popup indiquant que la salle n'existe pas
+                const ERREUR_SALLE = document.getElementById("erreur_salle");
+                ERREUR_SALLE.style.display = "flex";
+                break;
+        }
+    };
+}
+
+// Partie solo uniquement
+if (!multijoueur) {
+
+    // Séléction de la difficulté via popop début de partie
+    const POPUP_BOUTONS_DIFFICULTE = Array.from(document.getElementsByClassName("boutons_difficulte")[1].getElementsByTagName("div"));
+    POPUP_BOUTONS_DIFFICULTE.forEach(element => {
+        element.onclick= function() {
+            // Masque le popup
+            POPUP_DEBUT_PARTIE.style.display = "none";
+
+            // Démarre la partie
+            startGame(element);
+        }
+    });
+
+    // Séléction de la difficulté via le menu
+    const MENU_PARTIE_BOUTONS_DIFFICULTE = Array.from(document.getElementsByClassName("boutons_difficulte")[0].getElementsByTagName("div"));
+    MENU_PARTIE_BOUTONS_DIFFICULTE.forEach(element => {
+        element.onclick= function() {
+            // Masque le menu et le considère comme fermé
+            MENU_PARTIE.style.display = "none";
+            menuOuvert = false;
+            BOUTON_JEU.innerHTML = "Nouvelle partie";
+
+            // Met fin à la partie
+            endGame(false);
+
+            // Remet le timer à 15 minutes
+            resetTimer();
+
+            // Démarre la partie
+            startGame(element);
+        }
+    });
+}
 
 // Stocke la case sur laquelle l'utilisateur à cliqué
 TABLE.addEventListener("click", (e) => {

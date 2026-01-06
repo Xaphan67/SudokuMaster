@@ -33,6 +33,71 @@
             require_once("view/partials/footer.php");
         }
 
+        // Afficher l'écran de partie multijoueur
+        public function multiBoard() {
+
+            $script = ["jeu.js", "api.js"];
+
+            // Si le formulaire "Créer une salle" est soumis
+            if (isset($_POST["creer_salle"])) {
+
+                // Stocke en session le fait que le joueur est hote de la partie
+                // et les informations de la partie
+                $_SESSION["partie"]["hote"] = true;
+                $_SESSION["partie"]["mode"] = $_POST["mode"];
+                $_SESSION["partie"]["difficulte"] =  $_POST["difficulte"];
+            }
+
+            // Si le formulaire "Rejoindre une salle" est soumis
+            if (isset($_POST["rejoindre_salle"])) {
+                $_SESSION["partie"]["hote"] = false;
+                $_SESSION["partie"]["salle"] = $_POST["salle"];
+            }
+
+            require_once("view/partials/header.php");
+            include("view/partie/multijoueur.php");
+            require_once("view/partials/footer.php");
+        }
+
+        // Retourne si l'utilisateur est l'hôte de la partie multijoueur
+        // Si non, retourne la salle qu'il souhaite rejoindre
+        public function getRoomInfo() {
+
+            // Si les informations de la partie sont en session
+            if (isset($_SESSION["partie"]["hote"])) {
+
+                // Crée un tableau qui contiendra les informations de la partie à envoye au JS
+                $infos = ["hote" => $_SESSION["partie"]["hote"]];
+
+                // Si l'utilisateur est hote...
+                if ($_SESSION["partie"]["hote"]) {
+
+                    // Ajoute le mode de jeu et la difficulté qu'il à choisie
+                    $infos += [
+                        "mode" => $_SESSION["partie"]["mode"],
+                        "difficulte" => $_SESSION["partie"]["difficulte"]
+                    ];
+                }
+                else {
+
+                    // Ajoute le numéro de salle qu'il demande à rejoindre
+                    $infos += ["salle" => $_SESSION["partie"]["salle"]];
+                }
+            }
+
+            // S'il y à des informations à retourner
+            if (!empty($infos)) {
+                // Retourne les informations au JS au format JSON
+                echo json_encode($infos);
+
+                // Retire les variables de la session
+                unset($_SESSION["partie"]["hote"]);
+                unset($_SESSION["partie"]["mode"]);
+                unset($_SESSION["partie"]["difficulte"]);
+                unset($_SESSION["partie"]["salle"]);
+            }
+        }
+
         // Crée une partie dans la base de données
         // et retourne l'ID de la partie qui vient d'être créée
         public function new() {

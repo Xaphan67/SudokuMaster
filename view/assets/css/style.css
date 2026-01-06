@@ -853,6 +853,10 @@ margin-bottom: 11px;
   text-align: center;
 }
 
+.popup img {
+  margin: auto;
+}
+
 .popup_large {
   width: 850px;
 }
@@ -865,12 +869,12 @@ margin-bottom: 11px;
   font-size: 36px;
 }
 
-#debut_partie, #fin_partie, #modifier_compte, #supprimer_compte, #compte_requis, #erreur {
+#debut_partie, #fin_partie, #modifier_compte, #supprimer_compte, #compte_requis, #erreur, #erreur_salle {
   display: flex;
   transform: translateX(-50%) translateY(-50%);
 }
 
-#modifier_compte, #supprimer_compte, #erreur {
+#modifier_compte, #supprimer_compte, #erreur, #erreur_salle {
   display: none;
 }
 
