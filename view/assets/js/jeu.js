@@ -59,7 +59,7 @@ let modeNotes = false;
 // Menu Bouton Jeu
 let menuOuvert = false;
 
-// Si le joueur joue une partie solo ou multijoueur
+// Si le joueur joue une partie multijoueur
 if (TITRE_JEU.innerHTML.includes('Multijoueur')) {
 
     // Set la variable multijoueur à vrai, et se connecte au serveur WebSocket
@@ -96,7 +96,7 @@ function joinRoom() {
             TITRE_JEU.innerHTML = "Jeu " + mode + " : Difficulté " + difficulte;
 
             // Demande au serveur WebSocket de créer une salle
-            connexion.send(JSON.stringify({commande: "creer_salle", mode: mode, difficulte: difficulte}));
+            connexion.send(JSON.stringify({commande: "creer_salle", mode: mode, difficulte: difficulte, utilisateur: infosSalle.utilisateur}));
 
             // Affiche le popup d'attente d'un joueur
             POPUP_DEBUT_PARTIE.style.display = "flex";
@@ -104,7 +104,7 @@ function joinRoom() {
 
         // Sinon, demande au serveur WebSocket de rejoindre une salle
         else {
-            connexion.send(JSON.stringify({commande: "rejoindre_salle", salle: infosSalle.salle}));
+            connexion.send(JSON.stringify({commande: "rejoindre_salle", salle: infosSalle.salle, utilisateur: infosSalle.utilisateur}));
         }
     };
 
@@ -126,6 +126,8 @@ function joinRoom() {
                 infosSalle.mode = message.mode;
                 infosSalle.difficulte = message.difficulte;
 
+                console.log("hote : " + message.hoteId);
+
                 // Change le titre du tableau de jeu
                 TITRE_JEU.innerHTML = "Jeu " + infosSalle.mode + " : Difficulté " + infosSalle.difficulte + " - ID Salle : " + infosSalle.salle;
                 break;
@@ -135,6 +137,7 @@ function joinRoom() {
 
                 // Masque le popup d'attente d'un joueur
                 POPUP_DEBUT_PARTIE.style.display = "none";
+                console.log("Joueur qui a rejoint : " + message.joueur);
                 break;
 
             // Le serveur indique que la salle à rejoindre n'existe pas

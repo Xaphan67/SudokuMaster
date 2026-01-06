@@ -63,30 +63,34 @@
         // Si non, retourne la salle qu'il souhaite rejoindre
         public function getRoomInfo() {
 
-            // Si les informations de la partie sont en session
-            if (isset($_SESSION["partie"]["hote"])) {
+            // Si un utilisateur est connecté
+            if (isset($_SESSION["utilisateur"])) {
 
-                // Crée un tableau qui contiendra les informations de la partie à envoye au JS
-                $infos = ["hote" => $_SESSION["partie"]["hote"]];
+                // Si les informations de la partie sont en session
+                if (isset($_SESSION["partie"]["hote"])) {
 
-                // Si l'utilisateur est hote...
-                if ($_SESSION["partie"]["hote"]) {
+                    // Crée un tableau qui contiendra les informations de la partie à envoye au JS
+                    $infos = ["hote" => $_SESSION["partie"]["hote"]];
 
-                    // Ajoute le mode de jeu et la difficulté qu'il à choisie
-                    $infos += [
-                        "mode" => $_SESSION["partie"]["mode"],
-                        "difficulte" => $_SESSION["partie"]["difficulte"]
-                    ];
+                    // Si l'utilisateur est hote...
+                    if ($_SESSION["partie"]["hote"]) {
+
+                        // Ajoute le mode de jeu et la difficulté qu'il à choisie
+                        $infos += [
+                            "mode" => $_SESSION["partie"]["mode"],
+                            "difficulte" => $_SESSION["partie"]["difficulte"]
+                        ];
+                    }
+                    else {
+
+                        // Ajoute le numéro de salle qu'il demande à rejoindre
+                        $infos += ["salle" => $_SESSION["partie"]["salle"]];
+                    }
                 }
-                else {
 
-                    // Ajoute le numéro de salle qu'il demande à rejoindre
-                    $infos += ["salle" => $_SESSION["partie"]["salle"]];
-                }
-            }
+                // Ajoute l'id de l'utilisateur
+                $infos += ["utilisateur" => $_SESSION["utilisateur"]["id_utilisateur"]];
 
-            // S'il y à des informations à retourner
-            if (!empty($infos)) {
                 // Retourne les informations au JS au format JSON
                 echo json_encode($infos);
 

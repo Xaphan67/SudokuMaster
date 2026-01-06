@@ -5,17 +5,11 @@ use Ratchet\ConnectionInterface;
 
 class SudokuServer implements MessageComponentInterface {
     protected \SplObjectStorage $clients;
-    protected array $joueurs;
     protected array $salles;
-    protected array $modes;
-    protected array $difficultes;
 
     public function __construct() {
         $this->clients = new \SplObjectStorage;
-        $this->joueurs = [];
         $this->salles = [];
-        $this->modes = [];
-        $this->difficultes = [];
     }
 
     public function onOpen(ConnectionInterface $conn) {
@@ -23,10 +17,6 @@ class SudokuServer implements MessageComponentInterface {
         // Quand une connexion est faite au serveur
         // Ajoute la connection à la liste des clients
         $this->clients->attach($conn);
-
-        // Ajoute la connexion à la liste des joueurs connectés
-        // Pour pouvoir facilement lui envoyer des messages
-        $this->joueurs[$conn->resourceId] = $conn;
 
         echo "Nouvelle connexion! ({$conn->resourceId})\n";
     }
@@ -45,40 +35,56 @@ class SudokuServer implements MessageComponentInterface {
             // Le client veux créer une salle
             case "creer_salle":
 
-                // Ajoute l'Id du client dans le tableau des salles, et lui attribue une salle
-                // au format idConnexion heures(format sur 24 heures) minutes
+                // Génère un numéro de salle au format idConnexion heures(format sur 24 heures) minutes
                 $salle = $from->resourceId . date("G") . date("i");
-                $this->salles[$from->resourceId] = $salle;
-                echo "La connexion " . $from->resourceId . " à créé la salle " . $salle . "\n";
 
-                // Ajoute les informations de la salle dans leurs tableaux respectifs
-                $this->modes[$salle] = $message->mode;
-                $this->difficultes[$salle] = $message->difficulte;
+                // Ajoute le joueur à la salle
+                $this->salles[$from->resourceId] = ["numero" => $salle, "mode" => $message->mode, "difficulte" => $message->difficulte, "id" => $message->utilisateur];
 
                 // Renvoie le numéro de la salle au client
                 $from->send(json_encode(["commande" => "numero_salle", "numero" => $salle]));
+
+                echo "Le joueur " . $message->utilisateur . " à créé la salle " . $salle . "\n";
                 break;
 
             // Le client veux rejoindre une salle
             case "rejoindre_salle":
 
                 // Vérifie que la salle demandée existe
-                if (in_array($message->salle, $this->salles)) {
+                // Si oui, récupère ses informations
+                $salleExiste = false;
+                foreach($this->salles as $salle) {
+                    if ($salle["numero"] == $message->salle) {
+                        $salleExiste = $salle;
+                        break;
+                    }
+                }
 
-                    // Ajoute l'Id du client dans le tableau des salles
-                    $this->salles[$from->resourceId] = $message->salle;
-                    echo "La connexion " . $from->resourceId . " à rejoint la salle " . $message->salle . "\n";
+                if (is_array($salleExiste)) {
+
+                    // Ajoute le joueur à la salle
+                    $this->salles[$from->resourceId] = ["numero" => $message->salle, "mode" => $salleExiste["mode"], "difficulte" => $salleExiste["difficulte"], "id" => $message->utilisateur];
 
                     // Renvoie les informations de la salle au client
-                    $from->send(json_encode(["commande" => "infos_salle", "mode" => $this->modes[$message->salle], "difficulte" => $this->difficultes[$message->salle]]));
+                    $from->send(json_encode(["commande" => "infos_salle", "mode" => $salleExiste["mode"], "difficulte" => $salleExiste["difficulte"], "hoteId" => $salleExiste["id"]]));
 
                     // Notifie l'arrivée de cette connexion à l'autre connexion déjà dans la salle
-                    foreach ($this->salles as $clientId => $salle) {
-                        if ($clientId != $from->resourceId && $salle == $message->salle) {
-                            $this->joueurs[$clientId]->send(json_encode(["commande" => "joueur_rejoint"]));
-                            echo "Indique à la connexion " . $clientId . " que " . $from->resourceId . " à rejoint la salle\n";
+                    $destId = null;
+                    foreach ($this->salles as $clientId => $infos) {
+                        if ($clientId != $from->resourceId && $infos["numero"] == $message->salle) {
+                            $destId = $clientId;
+                            break;
                         }
                     }
+
+                    foreach($this->clients as $client) {
+                        if ($client->resourceId == $destId) {
+                            $client->send(json_encode(["commande" => "joueur_rejoint", "joueur" => $message->utilisateur]));
+                            break;
+                        }
+                    }
+
+                    echo "Le joueur " . $message->utilisateur . " à rejoint la salle " . $message->salle . "\n";
                 }
                 else {
 
@@ -95,19 +101,9 @@ class SudokuServer implements MessageComponentInterface {
         // Supprime la connexion de la liste des clients
         $this->clients->detach($conn);
 
-        // Supprime la connexion de la liste des joueurs connectés
-        unset($this->joueurs[$conn->resourceId]);
-
-        // Si le client était encore dans une salle, on l'enlève
+        // Retire le joueur de la salle
         if (array_key_exists($conn->resourceId, $this->salles)) {
-            $salle =$this->salles[$conn->resourceId];
             unset($this->salles[$conn->resourceId]);
-
-            // Si la salle est vide, on enlève les infos qui la concernent
-            if (!in_array($salle, $this->salles)) {
-                unset($this->modes[$salle]);
-                unset($this->difficultes[$salle]);
-            }
         }
 
         echo "La connexion {$conn->resourceId} s'est déconnectée\n";
