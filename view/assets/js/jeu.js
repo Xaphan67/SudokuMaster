@@ -252,13 +252,13 @@ TABLE.addEventListener("click", (e) => {
 });
 
 // Lors d'un clic sur le bouton notes...
-BOUTON_NOTES.addEventListener("click", (e) => {
+BOUTON_NOTES.getElementsByTagName("div")[0].addEventListener("click", (e) => {
     modeNotes = !modeNotes;
     NOTES.innerHTML = "Notes : " + (modeNotes ? "ON" : "OFF");
 });
 
 // Lors d'un clic sur le bouton pause...
-BOUTON_PAUSE_TIMER.addEventListener("click", (e) => {
+BOUTON_PAUSE_TIMER.getElementsByTagName("div")[0].addEventListener("click", (e) => {
     startTimer();
 });
 
@@ -613,6 +613,12 @@ async function startTimer() {
         BOUTON_NOTES.inert = false;
         PAVE.style.filter = "none";
         PAVE.inert = false;
+
+        // En multijoueur, empèche l'activation du bouton pause
+        if (multijoueur) {
+            BOUTON_PAUSE_TIMER.getElementsByTagName("div")[0].style.filter = "opacity(0.40)";
+            BOUTON_PAUSE_TIMER.getElementsByTagName("div")[0].inert = true;
+        }
 
         // Attends une seconde car le timer commence à 14:59 sauf si le timer était en pause
         if (deltaPause == null) {
