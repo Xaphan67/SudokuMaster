@@ -352,7 +352,7 @@ BOUTONS.forEach(element => {
                 }
 
                 // Si partie mulijoueur en mode coopératif
-                // on envoir la modification de la valeur de la case au 2eme joueur
+                // on envoie la modification de la valeur de la case au 2eme joueur
                 if (multijoueur && infosSalle.mode == "Cooperatif") {
                     connexion.send(JSON.stringify({commande: "changer_case", salle: infosSalle.salle, Y: selectionY, X: selectionX, valeur: this.innerHTML}));
                 }
