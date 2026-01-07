@@ -92,6 +92,26 @@ class SudokuServer implements MessageComponentInterface {
                     $from->send(json_encode(["commande" => "salle_inexistante"]));
                 }
                 break;
+
+            // L'hôte à créé une partie
+            case "partie_prete":
+
+                // Envoie les informations de la partie au 2eme joueur
+                $destId = null;
+                    foreach ($this->salles as $clientId => $infos) {
+                        if ($clientId != $from->resourceId && $infos["numero"] == $message->salle) {
+                            $destId = $clientId;
+                            break;
+                        }
+                    }
+
+                    foreach($this->clients as $client) {
+                        if ($client->resourceId == $destId) {
+                            $client->send(json_encode(["commande" => "partie_prete", "idPartie" => $message->idPartie, "grille" => $message->grille, "solution" => $message->solution]));
+                            break;
+                        }
+                    }
+                break;
         }
     }
 

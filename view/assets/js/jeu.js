@@ -90,13 +90,12 @@ function joinRoom() {
         // Si le joueur est hote de la partie...
         if (infosSalle.hote) {
 
-            // Change le titre du tableau de jeu
-            let mode = infosSalle.mode.charAt(0).toUpperCase() + infosSalle.mode.slice(1);
-            let difficulte = infosSalle.difficulte.charAt(0).toUpperCase() + infosSalle.difficulte.slice(1);
-            TITRE_JEU.innerHTML = "Jeu " + mode + " : Difficulté " + difficulte;
+            // Capitalise le mode de jkeu et la difficulté pour l'afficher plus tard
+            infosSalle.mode = infosSalle.mode.charAt(0).toUpperCase() + infosSalle.mode.slice(1);
+            infosSalle.difficulte = infosSalle.difficulte.charAt(0).toUpperCase() + infosSalle.difficulte.slice(1);
 
             // Demande au serveur WebSocket de créer une salle
-            connexion.send(JSON.stringify({commande: "creer_salle", mode: mode, difficulte: difficulte, utilisateur: infosSalle.utilisateur}));
+            connexion.send(JSON.stringify({commande: "creer_salle", mode: infosSalle.mode, difficulte: infosSalle.difficulte, utilisateur: infosSalle.utilisateur}));
 
             // Affiche le popup d'attente d'un joueur
             POPUP_DEBUT_PARTIE.style.display = "flex";
@@ -116,7 +115,12 @@ function joinRoom() {
 
             // Le serveur renvoie l'Id de la salle créée
             case "numero_salle":
-                TITRE_JEU.innerHTML += " - ID Salle : " +  message.numero;
+
+                // Stocke le numéro de salle obtenu
+                infosSalle.salle = message.numero;
+
+                // Affiche le numéro de salle sur le popup d'attente d'un joueur
+                POPUP_DEBUT_PARTIE.getElementsByTagName("P")[0].innerHTML += infosSalle.salle;
                 break;
 
             // Le serveur renvoie les infos de la salle rejointe
@@ -126,10 +130,10 @@ function joinRoom() {
                 infosSalle.mode = message.mode;
                 infosSalle.difficulte = message.difficulte;
 
-                console.log("hote : " + message.hoteId);
+                infosSalle.hoteId = message.hoteId;
 
-                // Change le titre du tableau de jeu
-                TITRE_JEU.innerHTML = "Jeu " + infosSalle.mode + " : Difficulté " + infosSalle.difficulte + " - ID Salle : " + infosSalle.salle;
+                // Démarre la partie
+                startGame();
                 break;
 
             // Le serveur indique qu'un joueur à rejoint la salle
@@ -137,7 +141,19 @@ function joinRoom() {
 
                 // Masque le popup d'attente d'un joueur
                 POPUP_DEBUT_PARTIE.style.display = "none";
-                console.log("Joueur qui a rejoint : " + message.joueur);
+                infosSalle.joueur = message.joueur;
+
+                // Démarre la partie
+                startGame();
+                break;
+
+            // le serveur indique les informations del a partie créée par l'hôte
+            case "partie_prete":
+
+                // Récupère les informations de la partie
+                idPartie = message.idPartie;
+                grille = message.grille;
+                solution = message.solution;
                 break;
 
             // Le serveur indique que la salle à rejoindre n'existe pas
@@ -365,46 +381,111 @@ async function startGame(element) {
     TABLE_VIDE.style.display = "inline-table";
 
     // Affiche la difficulté choisie
-    difficulte = element.children[1].innerHTML;
-    TITRE_JEU.innerHTML = 'Jeu solo : Difficulté ' + difficulte;
+    // et les informations du mode de jeu
+    if (multijoueur) {
+        TITRE_JEU.innerHTML = "Jeu " + infosSalle.mode + " : Difficulté " + infosSalle.difficulte + " - ID Salle : " + infosSalle.salle;
+    }
+    else {
+        difficulte = element.children[1].innerHTML;
+        TITRE_JEU.innerHTML = 'Jeu solo : Difficulté ' + difficulte;
+    }
 
-    // Appelle l'API pour obtenir une grille et l'afficher
-    grilleObtenue = await callSudokuAPI(difficulte);
+    // Mode solo ou hote de partie multijoueur
+    if (!multijoueur || (multijoueur && infosSalle.hote)) {
 
-    // Si la grille à bien été obtenue
-    if (grilleObtenue) {
+        // Appelle l'API pour obtenir une grille et l'afficher
+        grilleObtenue = await callSudokuAPI(multijoueur ? infosSalle.difficulte : difficulte);
 
-        // Ajoute la partie dans la base de données
-        // Et retourne son ID (ou 0 si aucun utilisateur connecté) et la série de victoire du joueur avant cette partie
-        const RES_PARTIE = await fetch("index.php?controller=partie&action=new", {
+        // Si la grille à bien été obtenue
+        if (grilleObtenue) {
+
+            // Ajoute la partie dans la base de données
+            // Et retourne son ID (ou 0 si aucun utilisateur connecté) et la série de victoire du joueur avant cette partie
+            const RES_PARTIE = await fetch("index.php?controller=partie&action=new", {
+                method: "POST",
+                headers: {
+                        'Content-Type': 'application/json', // Indique qu'on envoie du JSON
+                        'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
+                    },
+                    body: JSON.stringify({ modeDeJeu: multijoueur ? infosSalle.mode : "Solo", difficulte: multijoueur ? infosSalle.difficulte : difficulte, hote: multijoueur ? infosSalle.hote : false}) // Objet JS converti en chaîne JSON
+            });
+            let resPartie = await RES_PARTIE.json();
+            idPartie = resPartie["partieId"];
+
+            // En multijoueur, indique au 2eme joueur que la partie est prête
+            if (multijoueur) {
+
+                // Envoie les informations de la partie
+                connexion.send(JSON.stringify({commande: "partie_prete", idPartie: resPartie["partieId"], salle: infosSalle.salle, grille: grille, solution: solution}));
+            }
+
+            // Configure la partie
+            configureGame(resPartie);
+        }
+        else {
+
+            // Affiche le pupup d'erreur
+            POPUP_ERREUR.style.display = "flex";
+        }
+    }
+
+    // Mode multijoueur pour joueur non hote
+    if (multijoueur && !infosSalle.hote) {
+
+        // Attends que la partie soit créée par l'hôte
+        while (idPartie == null) {
+            await sleep(10)
+        }
+
+        grille.forEach((line, ligneIndex) => {
+            let nouvelleLigne = TABLE.insertRow(-1);
+            line.forEach((element, coloneIndex) => {
+                let nouvelleCellule = nouvelleLigne.insertCell(coloneIndex);
+                if (((ligneIndex < 3 || ligneIndex >= 6) && coloneIndex >= 3 && coloneIndex < 6) || (ligneIndex >= 3 && ligneIndex < 6 && (coloneIndex < 3 || coloneIndex >= 6))) {
+                    nouvelleCellule.className = 'celluleBleue';
+                }
+                if (element != "0") {
+                    nouvelleCellule.classList.add("celluleFixe")
+                }
+                const NOUVEAU_P = document.createElement("p");
+                NOUVEAU_P.inert = true;
+                const NOMBRE = document.createTextNode(element != "0" ? element : "");
+                NOUVEAU_P.appendChild(NOMBRE);
+                nouvelleCellule.appendChild(NOUVEAU_P);
+            });
+        });
+
+        // Ajoute le joueur à la partie dans la base de données
+        // Et retourne la série de victoire du joueur avant cette partie
+        const RES_PARTIE = await fetch("index.php?controller=partie&action=join", {
             method: "POST",
             headers: {
                     'Content-Type': 'application/json', // Indique qu'on envoie du JSON
                     'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
                 },
-                body: JSON.stringify({ modeDeJeu: "Solo", difficulte: difficulte}) // Objet JS converti en chaîne JSON
+                body: JSON.stringify({modeDeJeu: infosSalle.mode, difficulte: infosSalle.difficulte, idPartie: idPartie}) // Objet JS converti en chaîne JSON
         });
         let resPartie = await RES_PARTIE.json();
-        idPartie = resPartie["partieId"];
-        serieVictoires = resPartie["serie_victoires"];
-        scoreGlobal = resPartie["score_global"];
 
-        // Permet à l'utilisateur d'intéragir avec le plateau de jeu
-        CONTENEUR_JEU.style.filter = "none";
-        CONTENEUR_JEU.inert = false;
-
-        // Déclare la partie comme commencée
-        partieEnCours = true;
-
-        // Configure et démarre le timer
-        timerActif = false;
-        startTimer();
+        // Configure la partie
+        configureGame(resPartie);
     }
-    else {
+}
 
-        // Affiche le pupup d'erreur
-        POPUP_ERREUR.style.display = "flex";
-    }
+function configureGame(resPartie) {
+    serieVictoires = resPartie["serie_victoires"];
+    scoreGlobal = resPartie["score_global"];
+
+    // Permet à l'utilisateur d'intéragir avec le plateau de jeu
+    CONTENEUR_JEU.style.filter = "none";
+    CONTENEUR_JEU.inert = false;
+
+    // Déclare la partie comme commencée
+    partieEnCours = true;
+
+    // Configure et démarre le timer
+    timerActif = false;
+    startTimer();
 }
 
 // Fin de partie

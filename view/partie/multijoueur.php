@@ -161,6 +161,8 @@
 
         <div id="debut_partie" class="popup popup_large"><!-- popup de début de partie -->
             <h3>En attente d'un autre joueur...</h3>
+            <p>ID de la salle : </p>
+            <p>Communiquez cet ID à un autre joueur pour qu'il puisse vous rejoindre</p>
             <img src="view/assets/img/Sablier.webp" alt="">
             <a href="index.php?controller=partie&action=lobby" class="bouton boutonPrincipal boutonLarge">Quitter</a>
         </div>
