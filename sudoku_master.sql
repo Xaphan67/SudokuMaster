@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `mode_de_jeu` (
   `id_mode_de_jeu` int NOT NULL,
   `libelle_mode_de_jeu` varchar(50) NOT NULL,
   PRIMARY KEY (`id_mode_de_jeu`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table sudoku_master.mode_de_jeu : ~3 rows (environ)
 INSERT INTO `mode_de_jeu` (`id_mode_de_jeu`, `libelle_mode_de_jeu`) VALUES
