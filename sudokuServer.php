@@ -131,8 +131,6 @@ class SudokuServer implements MessageComponentInterface {
                         break;
                     }
                 }
-
-                echo "changer case";
                 break;
         }
     }
