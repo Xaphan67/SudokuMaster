@@ -98,19 +98,41 @@ class SudokuServer implements MessageComponentInterface {
 
                 // Envoie les informations de la partie au 2eme joueur
                 $destId = null;
-                    foreach ($this->salles as $clientId => $infos) {
-                        if ($clientId != $from->resourceId && $infos["numero"] == $message->salle) {
-                            $destId = $clientId;
-                            break;
-                        }
+                foreach ($this->salles as $clientId => $infos) {
+                    if ($clientId != $from->resourceId && $infos["numero"] == $message->salle) {
+                        $destId = $clientId;
+                        break;
                     }
+                }
 
-                    foreach($this->clients as $client) {
-                        if ($client->resourceId == $destId) {
-                            $client->send(json_encode(["commande" => "partie_prete", "idPartie" => $message->idPartie, "grille" => $message->grille, "solution" => $message->solution]));
-                            break;
-                        }
+                foreach($this->clients as $client) {
+                    if ($client->resourceId == $destId) {
+                        $client->send(json_encode(["commande" => "partie_prete", "idPartie" => $message->idPartie, "grille" => $message->grille, "solution" => $message->solution]));
+                        break;
                     }
+                }
+                break;
+
+            // Un joueur à changé la valeur d'une case de sa grille
+            case "changer_case":
+
+                // Envoie les informations de la case changée au 2eme joueur
+                $destId = null;
+                foreach ($this->salles as $clientId => $infos) {
+                    if ($clientId != $from->resourceId && $infos["numero"] == $message->salle) {
+                        $destId = $clientId;
+                        break;
+                    }
+                }
+
+                foreach($this->clients as $client) {
+                    if ($client->resourceId == $destId) {
+                        $client->send(json_encode(["commande" => "changer_case", "Y" => $message->Y, "X" => $message->X, "valeur" => $message->valeur]));
+                        break;
+                    }
+                }
+
+                echo "changer case";
                 break;
         }
     }

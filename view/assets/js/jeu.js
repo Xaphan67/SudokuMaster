@@ -147,7 +147,7 @@ function joinRoom() {
                 startGame();
                 break;
 
-            // le serveur indique les informations del a partie créée par l'hôte
+            // le serveur indique les informations de la partie créée par l'hôte
             case "partie_prete":
 
                 // Récupère les informations de la partie
@@ -162,6 +162,19 @@ function joinRoom() {
                 // Affiche le popup indiquant que la salle n'existe pas
                 const ERREUR_SALLE = document.getElementById("erreur_salle");
                 ERREUR_SALLE.style.display = "flex";
+                break;
+
+            // Le serveur indique qu'il faut changer la valeur d'une case
+            case "changer_case":
+
+                // Change la valeur de la case dans la variable grille
+                grille[message.Y][message.X] = message.valeur;
+
+                // Change la valeur de la case dans le DOM
+                const LIGNE = TABLE.getElementsByTagName("tr")[message.Y];
+                const COLONNE = LIGNE.getElementsByTagName("td")[message.X];
+                let valeur = COLONNE.getElementsByTagName("p")[0];
+                valeur.innerHTML = message.valeur;
                 break;
         }
     };
@@ -336,6 +349,12 @@ BOUTONS.forEach(element => {
                 // Si la case à une liste de notes, on la supprime
                 if (LISTE_NOTES != undefined) {
                     LISTE_NOTES.remove();
+                }
+
+                // Si partie mulijoueur en mode coopératif
+                // on envoir la modification de la valeur de la case au 2eme joueur
+                if (multijoueur && infosSalle.mode == "Cooperatif") {
+                    connexion.send(JSON.stringify({commande: "changer_case", salle: infosSalle.salle, Y: selectionY, X: selectionX, valeur: this.innerHTML}));
                 }
 
                 // Si la grille est terminée, met fin à la partie
