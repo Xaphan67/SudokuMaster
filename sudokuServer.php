@@ -132,6 +132,27 @@ class SudokuServer implements MessageComponentInterface {
                     }
                 }
                 break;
+
+            // Un joueur à terminé la partie
+            case "fin_partie":
+
+                // Envoie l'information au 2eme joueur que la partie est terminée
+                $destId = null;
+                foreach ($this->salles as $clientId => $infos) {
+                    if ($clientId != $from->resourceId && $infos["numero"] == $message->salle) {
+                        $destId = $clientId;
+                        break;
+                    }
+                }
+
+                foreach($this->clients as $client) {
+                    if ($client->resourceId == $destId) {
+                        $client->send(json_encode(["commande" => "fin_partie"]));
+                        break;
+                    }
+                }
+                break;
+                break;
         }
     }
 

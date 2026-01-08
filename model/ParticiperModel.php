@@ -18,8 +18,8 @@
             $prepare = $this->connect()->prepare($query);
 
             // Définition des paramettres de la requête préparée
-            $prepare->bindValue(":id_utilisateur", $participer->getUtilisateur()->getId(), PDO::PARAM_INT);
-			$prepare->bindValue(":id_partie", $participer->getPartie()->getId(), PDO::PARAM_INT);
+            $prepare->bindValue(":id_utilisateur", $participer->getUtilisateur(), PDO::PARAM_INT);
+			$prepare->bindValue(":id_partie", $participer->getPartie(), PDO::PARAM_INT);
 
             // Execute la requête. Retourne true (si réussite) ou false (si echec)
             return $prepare->execute();

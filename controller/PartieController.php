@@ -129,8 +129,8 @@
 
                 // Crée un nouvel objet Partie et l'hydrate avec les données
                 $partie = new Partie;
-                $partie->setMode_de_jeu($modeDeJeu);
-                $partie->setDifficulte($difficulte);
+                $partie->setMode_de_jeu($modeDeJeu->getId());
+                $partie->setDifficulte($difficulte->getId());
 
                 // Crée une instance du modèle Partie et appelle la méthode
                 // pour insérer la partie en base de données et récupérer son ID
@@ -149,8 +149,8 @@
 
                 // Crée un nouvel objet Participer et l'hydrate avec les données
                 $participer = new Participer;
-                $participer->setUtilisateur($utilisateur);
-                $participer->setPartie($partie);
+                $participer->setUtilisateur($utilisateur->getId());
+                $participer->setPartie($partie->getId());
 
                 // Crée une instance du modèle Participer et appelle la méthode
                 // pour insérer le participant en base de donnée
@@ -164,8 +164,8 @@
 
                 // Crée un nouvel objet Classer et l'hydrate avec les données
                 $classer = new Classer;
-                $classer->setUtilisateur($utilisateur);
-                $classer->setMode_de_jeu($modeDeJeu);
+                $classer->setUtilisateur($utilisateur->getId());
+                $classer->setMode_de_jeu($modeDeJeu->getId());
 
                 // Si aucune statistiques enregistrée en base de donnée
                 if (!$donneesClasser) {
@@ -248,8 +248,8 @@
 
                 // Crée un nouvel objet Participer et l'hydrate avec les données
                 $participer = new Participer;
-                $participer->setUtilisateur($utilisateur);
-                $participer->setPartie($partie);
+                $participer->setUtilisateur($utilisateur->getId());
+                $participer->setPartie($partie->getId());
 
                 // Crée une instance du modèle Participer et appelle la méthode
                 // pour insérer le participant en base de donnée
@@ -263,8 +263,8 @@
 
                 // Crée un nouvel objet Classer et l'hydrate avec les données
                 $classer = new Classer;
-                $classer->setUtilisateur($utilisateur);
-                $classer->setMode_de_jeu($modeDeJeu);
+                $classer->setUtilisateur($utilisateur->getId());
+                $classer->setMode_de_jeu($modeDeJeu->getId());
 
                 // Si aucune statistiques enregistrée en base de donnée
                 if (!$donneesClasser) {
@@ -330,6 +330,13 @@
                 $partie = new Partie;
                 $partie->hydrate($donneesPartie);
 
+                // Crée une instance du modèle ModeDeJeu
+                $modeDeJeuModel = new ModeDeJeuModel;
+
+                // Crée un nouvel objet ModeDeJeu et l'hydrate avec les données présentes en base de donnée
+                $modeDeJeu = new ModeDeJeu;
+                $modeDeJeu->hydrate($modeDeJeuModel->findByLabel($dataJS["modeDeJeu"]));
+
                 // Crée une instance du modèle Utilisateur
                 $utilisateurModel = new UtilisateurModel;
 
@@ -340,8 +347,20 @@
                 // En cas de victoire du joueur
                 if ($dataJS["victoire"]) {
 
-                    // Ajoute le gagnant à l'objet Partie
-                    $partie->setGagnant($utilisateur);
+                    // En partie solo, ou si hôte de la partie multijoueur
+                    if ($modeDeJeu->getLibelle() == "Solo" || (($modeDeJeu->getLibelle() != "Solo" && $dataJS["hote"])))
+                    {
+
+                        // Ajoute le gagnant à l'objet Partie
+                        $partie->setGagnant($utilisateur->getId());
+                    }
+
+                    // En partie multijoueur, si pas hôte
+                    else if ($modeDeJeu->getLibelle() != "Solo" && !$dataJS["hote"]) {
+
+                        // Ajoute le co-gagnant à l'objet Partie
+                        $partie->setCo_gagnant($utilisateur->getId());
+                    }
                 }
 
                 // Calcule le temps de la partie
@@ -360,13 +379,6 @@
                 // Met à jour les données de la partie en base de donnée
                 $partieModel->edit($partie);
 
-                // Crée une instance du modèle ModeDeJeu
-                $modeDeJeuModel = new ModeDeJeuModel;
-
-                // Crée un nouvel objet ModeDeJeu et l'hydrate avec les données présentes en base de donnée
-                $modeDeJeu = new ModeDeJeu;
-                $modeDeJeu->hydrate($modeDeJeuModel->findByLabel($dataJS["modeDeJeu"]));
-
                 // Crée une instance du modèle Classer et appelle la méthode
                 // pour récupérer les statistiques en base de donnée
                 $classerModel = new ClasserModel;
@@ -374,18 +386,18 @@
 
                 // Crée un nouvel objet Classer et l'hydrate avec les données
                 $classer = new Classer;
-                $classer->setUtilisateur($utilisateur);
-                $classer->setMode_de_jeu($modeDeJeu);
+                $classer->setUtilisateur($utilisateur->getId());
+                $classer->setMode_de_jeu($modeDeJeu->getId());
                 $classer->hydrate($donneesClasser);
 
                 // Récupère le temps moyen du joueur
-                $tempsMoyen = $partieModel->getAverageTime($utilisateur->getId());
+                $tempsMoyen = $partieModel->getAverageTime($utilisateur->getId(), $modeDeJeu->getId());
 
                 // Met à jour le temps moyen du joueur
                 $classer->setTemps_moyen($tempsMoyen["temps_moyen"]);
 
                 // Récupère le meilleur temps du joueur
-                $meilleurTemps = $partieModel->getBestTime($utilisateur->getId());
+                $meilleurTemps = $partieModel->getBestTime($utilisateur->getId(), $modeDeJeu->getId());
 
                 // Met à jour le meilleur temps du joueur
                 $classer->setMeilleur_temps($meilleurTemps["meilleur_temps"]);

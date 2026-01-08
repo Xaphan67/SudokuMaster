@@ -4,8 +4,8 @@
 
  class Participer extends Entity {
     private string $id;
-    private ?Utilisateur $utilisateur;
-    private Partie $partie;
+    private ?int $utilisateur;
+    private int $partie;
 
     // Constructeur
 
@@ -20,11 +20,11 @@
         return $this->id;
     }
 
-    public function getUtilisateur() : ?Utilisateur {
+    public function getUtilisateur() : ?int {
         return $this->utilisateur;
     }
 
-    public function getPartie() : Partie {
+    public function getPartie() : int {
         return $this->partie;
     }
 

@@ -18,8 +18,8 @@
             $prepare = $this->connect()->prepare($query);
 
             // Définition des paramettres de la requête préparée
-            $prepare->bindValue(":id_utilisateur", $classer->getUtilisateur()->getId(), PDO::PARAM_INT);
-			$prepare->bindValue(":id_mode_de_jeu", $classer->getMode_de_jeu()->getId(), PDO::PARAM_INT);
+            $prepare->bindValue(":id_utilisateur", $classer->getUtilisateur(), PDO::PARAM_INT);
+			$prepare->bindValue(":id_mode_de_jeu", $classer->getMode_de_jeu(), PDO::PARAM_INT);
             $prepare->bindValue(":score_global", $classer->getScore_global(), PDO::PARAM_INT);
 
             // Execute la requête. Retourne true (si réussite) ou false (si echec)
@@ -43,8 +43,8 @@
             $prepare->bindValue(":temps_moyen", $classer->getTemps_moyen(), PDO::PARAM_STR);
 			$prepare->bindValue(":meilleur_temps", $classer->getMeilleur_temps(), PDO::PARAM_STR);
             $prepare->bindValue(":serie_victoires", $classer->getSerie_victoires(), PDO::PARAM_INT);
-            $prepare->bindValue(":id_utilisateur", $classer->getUtilisateur()->getId(), PDO::PARAM_INT);
-			$prepare->bindValue(":id_mode_de_jeu", $classer->getMode_de_jeu()->getId(), PDO::PARAM_INT);
+            $prepare->bindValue(":id_utilisateur", $classer->getUtilisateur(), PDO::PARAM_INT);
+			$prepare->bindValue(":id_mode_de_jeu", $classer->getMode_de_jeu(), PDO::PARAM_INT);
 
             // Execute la requête. Retourne true (si réussite) ou false (si echec)
             return $prepare->execute();
@@ -75,7 +75,7 @@
 
             // Requête préparée pour récupérer les sttistiques de l'utilisateur
             $query =
-                "SELECT score_global, grilles_jouees, grilles_resolues, temps_moyen, meilleur_temps, serie_victoires FROM classer
+                "SELECT id_utilisateur, id_mode_de_jeu, score_global, grilles_jouees, grilles_resolues, temps_moyen, meilleur_temps, serie_victoires FROM classer
                 WHERE id_utilisateur=:id_utilisateur AND id_mode_de_jeu = :id_mode_de_jeu";
 
             $prepare = $this->connect()->prepare($query);

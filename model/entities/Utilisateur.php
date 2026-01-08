@@ -7,7 +7,7 @@
     private string $pseudo;
     private string $email;
     private string $mdp;
-    private Role $role;
+    private int $role;
 
     // Constructeur
 
@@ -34,7 +34,7 @@
         return $this->mdp;
     }
 
-    public function getRole() : Role {
+    public function getRole() : int {
         return $this->role;
     }
 

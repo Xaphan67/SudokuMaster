@@ -4,8 +4,8 @@
 
  class Classer extends Entity {
     private string $id;
-    private Utilisateur $utilisateur;
-    private ModeDeJeu $mode_de_jeu;
+    private int $utilisateur;
+    private int $mode_de_jeu;
     private int $grilles_jouees;
     private int $grilles_resolues;
     private string $temps_moyen;
@@ -26,11 +26,11 @@
         return $this->id;
     }
 
-    public function getUtilisateur() : Utilisateur {
+    public function getUtilisateur() : int {
         return $this->utilisateur;
     }
 
-    public function getMode_de_jeu() : ModeDeJeu {
+    public function getMode_de_jeu() : int {
         return $this->mode_de_jeu;
     }
 

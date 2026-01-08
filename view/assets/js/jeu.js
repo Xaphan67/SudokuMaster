@@ -176,6 +176,16 @@ function joinRoom() {
                 let valeur = COLONNE.getElementsByTagName("p")[0];
                 valeur.innerHTML = message.valeur;
                 break;
+
+            // Le serveur indique que la partie est terminée
+            case "fin_partie":
+
+                // Déclare la partie comme terminée
+                partieEnCours = false;
+
+                // Met fin à la partie
+                endGame();
+                break;
         }
     };
 }
@@ -510,6 +520,11 @@ function configureGame(resPartie) {
 // Fin de partie
 async function endGame(popup = true) {
 
+    // Si partie multijoueur, informe le 2eme joueur que la partie est terminée
+    if (multijoueur && partieEnCours) {
+        connexion.send(JSON.stringify({commande: "fin_partie", salle: infosSalle.salle}));
+    }
+
     // Déclare la partie comme terminée
     partieEnCours = false;
 
@@ -586,7 +601,7 @@ async function updateStats(victoire) {
                 'Content-Type': 'application/json', // Indique qu'on envoie du JSON
                 'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
             },
-            body: JSON.stringify({ idPartie: idPartie, modeDeJeu: "Solo", difficulte: difficulte, victoire: victoire, timerMinutes: timerMinutes, timerSecondes: timerSecondes, scoreGlobal: scoreGlobal, serieVictoires: serieVictoires}) // Objet JS converti en chaîne JSON
+            body: JSON.stringify({ idPartie: idPartie, modeDeJeu: multijoueur ? infosSalle.mode : "Solo", difficulte: multijoueur ? infosSalle.difficulte : difficulte, victoire: victoire, timerMinutes: timerMinutes, timerSecondes: timerSecondes, scoreGlobal: scoreGlobal, serieVictoires: serieVictoires, hote: multijoueur ? infosSalle.hote : false}) // Objet JS converti en chaîne JSON
     });
     let resStats = await RES_STATS.json();
     return resStats["difference_score"];
