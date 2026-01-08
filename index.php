@@ -8,6 +8,11 @@
     // Autoloader de composer
     require 'vendor/autoload.php';
 
+    // Charge DotEnv pour utiliser les fichier .env
+    // Permet d'utiliser les super globales $_ENV et $_SERVER
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+
     // Détermine le controleur à appeler et son action en fonction de l'url
     $controllerCall = $_GET["controller"] ?? "main";
     $actionCall = $_GET["action"] ?? "home";
