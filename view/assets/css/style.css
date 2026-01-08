@@ -1023,6 +1023,10 @@ section {
   background-color: var(--WisteriaBlue25pourcent);
 }
 
+sup {
+  line-height: 0px;
+}
+
 hr {
   border: 1px solid var(--MidnightViolet);
   width: 360px;

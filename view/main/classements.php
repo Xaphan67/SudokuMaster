@@ -48,7 +48,7 @@
                                         <div>
                                             <img src="view/assets/img/Trophee<?php echo ($place == 0 ? 'Or' : ($place == 1 ? 'Argent' : 'Bronze'))?>.webp" alt="">
                                             <p class="score_principal score_top <?php echo $place == 0 ? 'score_top_1' : '' ?>">0</p>
-                                            <p>Place libre</p>
+                                            <p><?php echo $place + 1 . "<sup>" . ($place == 0 ? "ère" : "eme") ?></sup> place</p>
                                         </div>
                                     <?php
                                     }
@@ -89,7 +89,7 @@
                                     else {
                                     ?>
                                         <div>
-                                            <p>Place libre</p>
+                                            <p><?php echo $place + 1 ?><sup>eme</sup> place</p>
                                             <p class="score_principal score">0</p>
                                         </div>
                                     <?php
