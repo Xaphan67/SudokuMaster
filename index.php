@@ -5,19 +5,8 @@
 		session_start();
 	}
 
-    // Autoloader
-    spl_autoload_register(function($class) {
-
-        // Pour chaque use, cette fonction est appellée
-        $fileName = str_replace('\\', '/', $class) . ".php";
-
-        // Si le fichier correspondant à la classe existe
-        if (file_exists($fileName)) {
-            
-            // Appel la classe
-            require_once($fileName);
-        }
-    });
+    // Autoloader de composer
+    require 'vendor/autoload.php';
 
     // Détermine le controleur à appeler et son action en fonction de l'url
     $controllerCall = $_GET["controller"] ?? "main";
@@ -27,7 +16,7 @@
     $bool404 = false;
     
     // Création du chemin vers le controller
-    $controllerName = 'app\Controllers\\' . ucfirst($controllerCall).'Controller';
+    $controllerName = 'Xaphan67\\SudokuMaster\\Controllers\\' . ucfirst($controllerCall).'Controller';
 
     // Test sur l'existence du controller
     if (class_exists($controllerName)) {
