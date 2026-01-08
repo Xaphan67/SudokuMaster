@@ -38,6 +38,7 @@ let evolution = null;
 let multijoueur;
 let connexion;
 let infosSalle;
+let defaiteCompetitif = false;
 
 // Timer
 let start = null;
@@ -182,6 +183,11 @@ function joinRoom() {
 
                 // Déclare la partie comme terminée
                 partieEnCours = false;
+
+                // En mode compétitif, le joueur à perdu
+                if (message.mode == "Competitif") {
+                    defaiteCompetitif = true;
+                }
 
                 // Met fin à la partie
                 endGame();
@@ -522,7 +528,7 @@ async function endGame(popup = true) {
 
     // Si partie multijoueur, informe le 2eme joueur que la partie est terminée
     if (multijoueur && partieEnCours) {
-        connexion.send(JSON.stringify({commande: "fin_partie", salle: infosSalle.salle}));
+        connexion.send(JSON.stringify({commande: "fin_partie", mode: infosSalle.mode, salle: infosSalle.salle}));
     }
 
     // Déclare la partie comme terminée
@@ -540,6 +546,13 @@ async function endGame(popup = true) {
     if (popup) {
         // Détermine si la partie est gagnée ou perdue
         let victoire = timerMinutes < 14 || (timerMinutes == 14 && timerSecondes < 59);
+
+        // Si partie multijoueur en mode compétitif
+        // Le joueur qui a notifié l'autre de sa victoire gagne
+        // donc, je deuxième joueur perd.
+        if (multijoueur && defaiteCompetitif) {
+            victoire = false;
+        }
 
         // Si un joueur est connecté
         if (idPartie != 0) {

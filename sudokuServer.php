@@ -147,7 +147,7 @@ class SudokuServer implements MessageComponentInterface {
 
                 foreach($this->clients as $client) {
                     if ($client->resourceId == $destId) {
-                        $client->send(json_encode(["commande" => "fin_partie"]));
+                        $client->send(json_encode(["commande" => "fin_partie", "mode" => $message->mode]));
                         break;
                     }
                 }
