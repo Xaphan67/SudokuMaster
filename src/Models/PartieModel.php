@@ -8,41 +8,32 @@ use Xaphan67\SudokuMaster\Entities\Partie;
 class PartieModel extends Model {
     function getAll() {
         $query = "SELECT * FROM partie";
-        $parties = $this->connect()->query($query)->fetchAll();
+        $parties = $this->_db->query($query)->fetchAll();
         return $parties;
     }
 
     function add(Partie $partie) {
-
-        $db = $this->connect();
 
         // Requête préparée pour ajouter la partie
         $query =
             "INSERT INTO partie (id_mode_de_jeu, id_difficulte, duree_partie)
             VALUES (:id_mode_de_jeu, :id_difficulte, '00:15:00')";
 
-        $prepare = $db->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":id_mode_de_jeu", $partie->getMode_de_jeu(), PDO::PARAM_INT);
         $prepare->bindValue(":id_difficulte", $partie->getDifficulte(), PDO::PARAM_INT);
 
-        // Execute la requête. Retourne true (si réussite) ou false (si echec)
-        $prepare->execute();
+        // Execute la requête. Retourne l'ID de la partie insérée (si réussite) ou false (si echec)
+        if ($prepare->execute()) {
 
-        /* Devrait retourner l'ID de la partie insérée mais retourne toujours 1 ?
-        $partieID = $db->lastInsertId() */
-
-        // Retourne l'ID de la partie ajoutée
-
-        // Requête préparée pour pour récupérer l'ID de la dernière partie
-        $query = "SELECT COUNT(*) AS id_partie FROM partie";
-
-        $prepare = $db->prepare($query);
-        $prepare->execute();
-        $partieID = $prepare->fetch();
-
-        return $partieID["id_partie"];
+            // Retourner l'ID de la partie insérée
+            return $partieID = $this->_db->lastInsertId();
+        }
+        else {
+            return false;
+        }
     }
 
     function edit(Partie $partie) : bool {
@@ -71,7 +62,7 @@ class PartieModel extends Model {
 
         $query .= " WHERE id_partie = :id_partie";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         if (!empty($partie->getDuree())) {
@@ -100,7 +91,7 @@ class PartieModel extends Model {
             "SELECT id_partie, duree_partie, gagnant_partie, co_gagnant_partie, id_mode_de_jeu, id_difficulte FROM partie
             WHERE id_partie=:id_partie";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":id_partie", $id, PDO::PARAM_INT);
@@ -119,7 +110,7 @@ class PartieModel extends Model {
             INNER JOIN participer ON participer.id_partie = partie.id_partie
             WHERE id_utilisateur = :id_utilisateur AND id_mode_de_jeu = :id_mode_de_jeu";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $id, PDO::PARAM_INT);
@@ -139,7 +130,7 @@ class PartieModel extends Model {
             INNER JOIN participer ON participer.id_partie = partie.id_partie
             WHERE id_utilisateur = :id_utilisateur AND id_mode_de_jeu = :id_mode_de_jeu";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $id, PDO::PARAM_INT);

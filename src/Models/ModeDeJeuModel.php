@@ -7,7 +7,7 @@ use PDO;
 class ModeDeJeuModel extends Model {
     function getAll() {
         $query = "SELECT * FROM mode";
-        $modes = $this->connect()->query($query)->fetchAll();
+        $modes = $this->_db->query($query)->fetchAll();
         return $modes;
     }
 
@@ -18,7 +18,7 @@ class ModeDeJeuModel extends Model {
             "SELECT id_mode_de_jeu, libelle_mode_de_jeu FROM mode_de_jeu
             WHERE libelle_mode_de_jeu=:libelle_mode_de_jeu";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":libelle_mode_de_jeu", $libelle, PDO::PARAM_STR);

@@ -8,7 +8,7 @@ use Xaphan67\SudokuMaster\Entities\Utilisateur;
 class UtilisateurModel extends Model {
     function getAll() {
         $query = "SELECT * FROM utilisateur";
-        $utilisateurs = $this->connect()->query($query)->fetchAll();
+        $utilisateurs = $this->_db->query($query)->fetchAll();
         return $utilisateurs;
     }
 
@@ -19,7 +19,7 @@ class UtilisateurModel extends Model {
             "INSERT INTO utilisateur (pseudo_utilisateur, email_utilisateur, mdp_utilisateur)
             VALUES(:pseudo_utilisateur, :email_utilisateur, :mdp_utilisateur)";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":pseudo_utilisateur", $utilisateur->getPseudo(), PDO::PARAM_STR);
@@ -43,7 +43,7 @@ class UtilisateurModel extends Model {
 
         $query .= " WHERE id_utilisateur = :id_utilisateur";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":pseudo_utilisateur", $utilisateur->getPseudo(), PDO::PARAM_STR);
@@ -66,7 +66,7 @@ class UtilisateurModel extends Model {
             SET pseudo_utilisateur = 'Utilisateur supprimé', email_utilisateur = 'utilisateur@supprime.com', mdp_utilisateur = '', inactif = 1
             WHERE id_utilisateur=:id_utilisateur";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $utilisateur->getId(), PDO::PARAM_INT);
@@ -82,7 +82,7 @@ class UtilisateurModel extends Model {
             "SELECT id_utilisateur, pseudo_utilisateur, email_utilisateur FROM utilisateur
             WHERE id_utilisateur=:id_utilisateur";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $id, PDO::PARAM_INT);
@@ -99,7 +99,7 @@ class UtilisateurModel extends Model {
             "SELECT id_utilisateur, pseudo_utilisateur, email_utilisateur  FROM utilisateur
             WHERE email_utilisateur=:email_utilisateur";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":email_utilisateur", $email, PDO::PARAM_STR);
@@ -116,7 +116,7 @@ class UtilisateurModel extends Model {
             "SELECT mdp_utilisateur FROM utilisateur
             WHERE email_utilisateur=:email_utilisateur";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":email_utilisateur", $email, PDO::PARAM_STR);

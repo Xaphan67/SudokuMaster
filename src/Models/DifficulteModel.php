@@ -7,7 +7,7 @@ use PDO;
 class DifficulteModel extends Model {
     function getAll() {
         $query = "SELECT * FROM difficulte";
-        $difficultes = $this->connect()->query($query)->fetchAll();
+        $difficultes = $this->_db->query($query)->fetchAll();
         return $difficultes;
     }
 
@@ -18,7 +18,7 @@ class DifficulteModel extends Model {
             "SELECT id_difficulte, libelle_difficulte FROM difficulte
             WHERE libelle_difficulte=:libelle_difficulte";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":libelle_difficulte", $libelle, PDO::PARAM_STR);

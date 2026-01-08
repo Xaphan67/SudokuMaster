@@ -8,7 +8,7 @@ use Xaphan67\SudokuMaster\Entities\Participer;
 class ParticiperModel extends Model {
     function getAll() {
         $query = "SELECT * FROM participer";
-        $participers = $this->connect()->query($query)->fetchAll();
+        $participers = $this->_db->query($query)->fetchAll();
         return $participers;
     }
 
@@ -18,7 +18,7 @@ class ParticiperModel extends Model {
         $query = "INSERT INTO participer (id_utilisateur, id_partie)
             VALUES(:id_utilisateur, :id_partie)";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $participer->getUtilisateur(), PDO::PARAM_INT);

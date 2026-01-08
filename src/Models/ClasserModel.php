@@ -8,7 +8,7 @@ use Xaphan67\SudokuMaster\Entities\Classer;
 class ClasserModel extends Model {
     function getAll() {
         $query = "SELECT * FROM classer";
-        $classers = $this->connect()->query($query)->fetchAll();
+        $classers = $this->_db->query($query)->fetchAll();
         return $classers;
     }
 
@@ -18,7 +18,7 @@ class ClasserModel extends Model {
         $query = "INSERT INTO classer (id_utilisateur, id_mode_de_jeu, score_global, grilles_jouees, grilles_resolues, temps_moyen, meilleur_temps, serie_victoires)
             VALUES(:id_utilisateur, :id_mode_de_jeu, :score_global, '1', '0', '00:15:00', '00:15:00', '0')";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $classer->getUtilisateur(), PDO::PARAM_INT);
@@ -37,7 +37,7 @@ class ClasserModel extends Model {
             SET score_global = :score_global, grilles_jouees = :grilles_jouees, grilles_resolues = :grilles_resolues, temps_moyen = :temps_moyen, meilleur_temps = :meilleur_temps, serie_victoires = :serie_victoires
             WHERE id_utilisateur = :id_utilisateur AND id_mode_de_jeu = :id_mode_de_jeu";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":score_global", $classer->getScore_global(), PDO::PARAM_INT);
@@ -63,7 +63,7 @@ class ClasserModel extends Model {
             WHERE id_mode_de_jeu = :id_mode_de_jeu AND inactif = 0
             ORDER BY score_global DESC LIMIT :limit";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":id_mode_de_jeu", $modeId, PDO::PARAM_INT);
@@ -81,7 +81,7 @@ class ClasserModel extends Model {
             "SELECT id_utilisateur, id_mode_de_jeu, score_global, grilles_jouees, grilles_resolues, temps_moyen, meilleur_temps, serie_victoires FROM classer
             WHERE id_utilisateur=:id_utilisateur AND id_mode_de_jeu = :id_mode_de_jeu";
 
-        $prepare = $this->connect()->prepare($query);
+        $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $utilisateurId, PDO::PARAM_INT);
