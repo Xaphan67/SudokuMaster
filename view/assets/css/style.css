@@ -957,12 +957,12 @@ margin-bottom: 11px;
   font-size: 36px;
 }
 
-#debut_partie, #fin_partie, #modifier_compte, #supprimer_compte, #compte_requis, #verif_joueur_pret, #erreur, #erreur_salle {
+#debut_partie, #fin_partie, #modifier_compte, #supprimer_compte, #compte_requis, #verif_joueur_pret, #abandon_partie, #erreur, #erreur_salle {
   display: flex;
   transform: translateX(-50%) translateY(-50%);
 }
 
-#modifier_compte, #supprimer_compte, #verif_joueur_pret, #erreur, #erreur_salle {
+#modifier_compte, #supprimer_compte, #verif_joueur_pret, #abandon_partie, #erreur, #erreur_salle {
   display: none;
 }
 

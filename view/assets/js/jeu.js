@@ -446,10 +446,36 @@ document.addEventListener("keydown", (e) => {
 // Lors d'un clic sur le bouton jeu...
 BOUTON_JEU.addEventListener("click", (e) => {
 
-    // Affiche ou masque le menu, et change le texte du bouton
-    menuOuvert = !menuOuvert;
-    MENU_PARTIE.style.display = menuOuvert ? "flex" : "none";
-    BOUTON_JEU.innerHTML = menuOuvert ? "Annuler" : "Nouvelle partie";
+    if (multijoueur) {
+
+        // Opacifie la zone de jeu
+        CONTENEUR_JEU.style.filter = "opacity(0.40)";
+        CONTENEUR_JEU.inert = "true";
+
+        // Affiche le popup d'abandon de partie
+        const POPUP_ABANDON_PARTIE = document.getElementById("abandon_partie");
+        const BOUTON_ANNULER_ABANDON_PARTIE = document.getElementById("bouton_annuler_partie");
+        POPUP_ABANDON_PARTIE.style.display = "flex";
+
+        // Si le joueur clique sur le bouton Annuler
+        BOUTON_ANNULER_ABANDON_PARTIE.addEventListener("click", (e) => {
+
+            // Masque le popup
+            POPUP_ABANDON_PARTIE.style.display = "none";
+
+            // Permet à l'utilisateur d'intéragir avec le plateau de jeu
+            CONTENEUR_JEU.style.filter = "none";
+            CONTENEUR_JEU.inert = false;
+        });
+    }
+    else {
+
+        // Affiche ou masque le menu, et change le texte du bouton
+        menuOuvert = !menuOuvert;
+        MENU_PARTIE.style.display = menuOuvert ? "flex" : "none";
+        BOUTON_JEU.innerHTML = menuOuvert ? "Annuler" : "Nouvelle partie";
+    }
+
 });
 
 // Début de partie

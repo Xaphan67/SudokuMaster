@@ -189,7 +189,7 @@
                     <p class="bouton boutonPave">9</p>
                 </div>
 
-                <div id="bouton_jeu" class="bouton boutonPrincipal">Commencer</div>
+                <div id="bouton_jeu" class="bouton boutonPrincipal">Abandonner</div>
             </div>
         </div>
 
@@ -222,6 +222,13 @@
                 </div>
             </div>
             <div id="bouton_pret" class="bouton boutonPrincipal boutonLarge">Je suis prêt</div>
+        </div>
+
+        <div id="abandon_partie" class="popup popup_large"><!-- popup d'abandon de partie' -->
+            <h3>Abandonner la partie ?</h3>
+            <p>La progression de la partie actuelle sera perdue et comptera comme une défaite</p>
+            <a href="index.php?controller=partie&action=lobby" class="bouton boutonPrincipal boutonLarge">Abandonner</a>
+            <div id="bouton_annuler_partie" class="bouton boutonPrincipal boutonDefaut">Annuler</div>
         </div>
 
         <div id="fin_partie" class="popup"><!-- popup de fin de partie -->
