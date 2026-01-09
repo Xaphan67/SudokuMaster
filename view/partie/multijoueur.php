@@ -259,5 +259,14 @@
             </p>
             <a href="index.php?controller=partie&action=lobby" class="bouton boutonPrincipal boutonLarge">Retour au salon</a>
         </div>
+
+        <div id="erreur_serveur" class="popup popup_large"><!-- popup d'erreur de connexion au serveur WebSocket -->
+            <h3>Une erreur est survenue</h3>
+            <p>
+                Impossible de contacter le serveur de parties.<br>
+                Veuillez réessayer plus tard.
+            </p>
+            <a href="index.php?controller=partie&action=lobby" class="bouton boutonPrincipal boutonLarge">Retour au salon</a>
+        </div>
     </div>
 </main>

@@ -69,6 +69,14 @@ if (TITRE_JEU.innerHTML.includes('Multijoueur')) {
     multijoueur = true;
     connexion = new WebSocket('ws://localhost:8080');
 
+    // En cas de problème de connexion au serveur
+    connexion.addEventListener("error", (event) => {
+        const POPUP_ERREUR_SERVEUR = document.getElementById("erreur_serveur");
+
+        // Affiche un popup d'erreur
+        POPUP_ERREUR_SERVEUR.style.display = "flex";
+    });
+
     // Cache le popup d'attente d'un joueur
     POPUP_DEBUT_PARTIE.style.display = "none";
 
