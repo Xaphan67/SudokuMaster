@@ -96,6 +96,9 @@ class UtilisateurController extends Controller {
                 }
             }
 
+            // Indique à la vue les variables nécessaires
+            $this->_donnees["erreurs"] = $erreurs;
+
             // Affiche la vue inscription
             $this->display("utilisateur/inscription");
         }
@@ -180,6 +183,10 @@ class UtilisateurController extends Controller {
                 }
             }
 
+
+            // Indique à la vue les variables nécessaires
+            $this->_donnees["erreurs"] = $erreurs;
+
             // Affiche la vue connexion
             $this->display("utilisateur/connexion");
         }
@@ -201,10 +208,6 @@ class UtilisateurController extends Controller {
 
     // Affiche le profil de l'utilisateur
     public function profil() {
-
-        // Indique à la vue le fichier JS à utiliser
-        $script = ["profil.js"];
-        $this->_donnees["script"] = $script;
 
         // Si l'utilisateur est connecté
         if (isset($_SESSION["utilisateur"])) {
@@ -363,8 +366,11 @@ class UtilisateurController extends Controller {
                 }
             };
 
-            // Indique à la vue le tableau statistiques
+            // Indique à la vue les variables nécessaires
+            $script = ["profil.js"];
+            $this->_donnees["script"] = $script;
             $this->_donnees["statistiques"] = $statistiques;
+            $this->_donnees["erreurs"] = $erreurs;
 
             // Affiche la vue profil
             $this->display("utilisateur/profil");
