@@ -1,6 +1,6 @@
 <main>
 
-    <h2 id="titre_jeu">Jeu solo</h2>
+    <h2 id="titre_jeu" class="separateur_haut">Jeu solo</h2>
     <div id="conteneur_principal">
         <div id="conteneur_jeu" inert>
             <table class="grille" id="grille_vide" inert>
@@ -112,13 +112,13 @@
             </table>
 
             <div id="interface_de_jeu"> <!-- boutons de jeu -->
-                <div> <!-- notes et temps -->
+                <div class="boutons_haut"> <!-- notes et temps -->
                     <div class="boutons_ronds">
-                        <div class="bouton boutonPave"><img src="view/assets/svg/Notes.svg" alt=""></div>
+                        <div id="bouton_notes" class="bouton boutonPave"><img src="view/assets/svg/Notes.svg" alt=""></div>
                         <p id="notes">Notes : OFF</p>
                     </div>
                     <div class="boutons_ronds">
-                        <div class="bouton boutonPave"><img src="view/assets/svg/Pause.svg" alt=""></div>
+                        <div id="bouton_pause" class="bouton boutonPave"><img src="view/assets/svg/Pause.svg" alt=""></div>
                         <p id="timer">Temps : 15:00</p>
                     </div>
                 </div>

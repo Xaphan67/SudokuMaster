@@ -4,8 +4,8 @@ const TABLE = document.getElementById("grille");
 const TABLE_VIDE = document.getElementById("grille_vide");
 const PAVE = document.getElementById("pave_numerique");
 const BOUTONS =  Array.from(PAVE.getElementsByTagName("p"));
-const BOUTON_NOTES = document.getElementById("interface_de_jeu").getElementsByTagName("div")[1];
-const BOUTON_PAUSE_TIMER = document.getElementById("interface_de_jeu").getElementsByTagName("div")[3];
+const BOUTON_NOTES = document.getElementById("bouton_notes");
+const BOUTON_PAUSE_TIMER = document.getElementById("bouton_pause");
 const BOUTON_JEU = document.getElementById("bouton_jeu");
 const MENU_PARTIE = document.getElementById("menu_partie");
 const TITRE_JEU = document.getElementById("titre_jeu");
@@ -39,6 +39,7 @@ let multijoueur;
 let connexion;
 let infosSalle;
 let defaiteCompetitif = false;
+let statsJoueur;
 
 // Timer
 let start = null;
@@ -109,7 +110,7 @@ function joinRoom() {
     };
 
     // Défini ce qui se passe quand le serveur WebSocket envoie un message à la connexion
-    connexion.onmessage = (e) => {
+    connexion.onmessage = async function (e) {
         let message = JSON.parse(e.data);
 
         switch (message.commande) {
@@ -133,6 +134,17 @@ function joinRoom() {
 
                 infosSalle.hoteId = message.hoteId;
 
+                // Récupère les statistiques du joueur qui à rejoint
+                const RES_STATS_HOTE = await fetch("index.php?controller=classer&action=getPlayerStats", {
+                    method: "POST",
+                    headers: {
+                            'Content-Type': 'application/json', // Indique qu'on envoie du JSON
+                            'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
+                        },
+                        body: JSON.stringify({ modeDeJeu: infosSalle.mode, idJoueur: infosSalle.hoteId}) // Objet JS converti en chaîne JSON
+                });
+                statsJoueur = await RES_STATS_HOTE.json();
+
                 // Démarre la partie
                 startGame();
                 break;
@@ -143,6 +155,17 @@ function joinRoom() {
                 // Masque le popup d'attente d'un joueur
                 POPUP_DEBUT_PARTIE.style.display = "none";
                 infosSalle.joueur = message.joueur;
+
+                // Récupère les statistiques du joueur qui à rejoint
+                const RES_STATS_REJOINT = await fetch("index.php?controller=classer&action=getPlayerStats", {
+                    method: "POST",
+                    headers: {
+                            'Content-Type': 'application/json', // Indique qu'on envoie du JSON
+                            'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
+                        },
+                        body: JSON.stringify({ modeDeJeu: infosSalle.mode, idJoueur: infosSalle.joueur}) // Objet JS converti en chaîne JSON
+                });
+                statsJoueur = await RES_STATS_REJOINT.json();
 
                 // Démarre la partie
                 startGame();
@@ -268,13 +291,13 @@ TABLE.addEventListener("click", (e) => {
 });
 
 // Lors d'un clic sur le bouton notes...
-BOUTON_NOTES.getElementsByTagName("div")[0].addEventListener("click", (e) => {
+BOUTON_NOTES.addEventListener("click", (e) => {
     modeNotes = !modeNotes;
     NOTES.innerHTML = "Notes : " + (modeNotes ? "ON" : "OFF");
 });
 
 // Lors d'un clic sur le bouton pause...
-BOUTON_PAUSE_TIMER.getElementsByTagName("div")[0].addEventListener("click", (e) => {
+BOUTON_PAUSE_TIMER.addEventListener("click", (e) => {
     startTimer();
 });
 
@@ -419,6 +442,33 @@ async function startGame(element) {
     // et les informations du mode de jeu
     if (multijoueur) {
         TITRE_JEU.innerHTML = "Jeu " + infosSalle.mode + " : Difficulté " + infosSalle.difficulte + " - ID Salle : " + infosSalle.salle;
+
+        // Affiche les informations des joueurs
+        const INFOS_JOUEURS = document.getElementById("infos_multijoueur");
+        const SECTION_JOUEUR_1 = INFOS_JOUEURS.children[0];
+        const JOUEUR_1 = document.getElementById("joueur_1");
+        const SECTION_JOUEUR_2 = INFOS_JOUEURS.children[2];
+        const JOUEUR_2 = document.getElementById("joueur_2");
+
+        INFOS_JOUEURS.inert = false;
+
+        SECTION_JOUEUR_1.children[1].innerHTML = statsJoueur.joueur_1.score_global;
+        SECTION_JOUEUR_1.children[2].innerHTML = statsJoueur.joueur_1.pseudo_utilisateur;
+        JOUEUR_1.children[0].innerHTML = statsJoueur.joueur_1.pseudo_utilisateur;
+        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[0].innerHTML = statsJoueur.joueur_1.grilles_jouees;
+        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[1].innerHTML = statsJoueur.joueur_1.grilles_resolues;
+        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[2].innerHTML = statsJoueur.joueur_1.temps_moyen;
+        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[3].innerHTML = statsJoueur.joueur_1.meilleur_temps;
+        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[4].innerHTML = statsJoueur.joueur_1.serie_victoires;
+
+        SECTION_JOUEUR_2.children[2].innerHTML = statsJoueur.joueur_2.score_global;
+        SECTION_JOUEUR_2.children[0].innerHTML = statsJoueur.joueur_2.pseudo_utilisateur;
+        JOUEUR_2.children[0].innerHTML = statsJoueur.joueur_2.pseudo_utilisateur;
+        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[0].innerHTML = statsJoueur.joueur_2.grilles_jouees;
+        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[1].innerHTML = statsJoueur.joueur_2.grilles_resolues;
+        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[2].innerHTML = statsJoueur.joueur_2.temps_moyen;
+        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[3].innerHTML = statsJoueur.joueur_2.meilleur_temps;
+        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[4].innerHTML = statsJoueur.joueur_2.serie_victoires;
     }
     else {
         difficulte = element.children[1].innerHTML;
@@ -637,15 +687,15 @@ async function startTimer() {
         TABLE.style.display = "inline-table";
         TABLE_VIDE.style.display = "none";
         TABLE_VIDE.style.filter = "none";
-        BOUTON_NOTES.style.filter = "none";
+        BOUTON_NOTES.style.filter = "revert-layer";
         BOUTON_NOTES.inert = false;
         PAVE.style.filter = "none";
         PAVE.inert = false;
 
         // En multijoueur, empèche l'activation du bouton pause
         if (multijoueur) {
-            BOUTON_PAUSE_TIMER.getElementsByTagName("div")[0].style.filter = "opacity(0.40)";
-            BOUTON_PAUSE_TIMER.getElementsByTagName("div")[0].inert = true;
+            BOUTON_PAUSE_TIMER.style.filter = "opacity(0.40)";
+            BOUTON_PAUSE_TIMER.inert = true;
         }
 
         // Attends une seconde car le timer commence à 14:59 sauf si le timer était en pause

@@ -16,7 +16,7 @@
                                     if (isset($classements[$mode][$place])) {
                                     ?>
                                         <div>
-                                            <div class="info_joueur">
+                                            <div class="info_joueur info_joueur_haut">
                                                 <h3><?php echo $classements[$mode][$place]["pseudo_utilisateur"] ?></h3>
                                                 <div>
                                                     <div>
@@ -61,7 +61,7 @@
                                     if (isset($classements[$mode][$place])) {
                                     ?>
                                         <div>
-                                            <div class="info_joueur">
+                                            <div class="info_joueur info_joueur_haut">
                                                 <h3><?php echo $classements[$mode][$place]["pseudo_utilisateur"] ?></h3>
                                                 <div>
                                                     <div>

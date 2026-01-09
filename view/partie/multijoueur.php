@@ -1,6 +1,60 @@
 <main>
-
-    <h2 id="titre_jeu">Multijoueur</h2>
+    <div id="haut" class="separateur_haut">
+        <h2 id="titre_jeu">Multijoueur</h2>
+        <div id="infos_multijoueur" inert>
+            <div>
+                <img src="view/assets/img/TropheeOr.webp" alt ="">
+                <p class="score_principal score_petit">0</p>
+                <p>???</p>
+                <div id="joueur_1" class="info_joueur info_joueur_bas">
+                    <h3>???</h3>
+                    <div>
+                        <div>
+                            <p>Nombre total de grilles jouées :</p>
+                            <p>Nombre de grilles résolues :</p>
+                            <p>Temps moyen :</p>
+                            <p>Meilleur temps :</p>
+                            <p>Série de victoires :</p>
+                        </div>
+                        <div>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                        </div>
+                    </div>
+                    <img src="view/assets/svg/Fleche.svg" alt="">
+                </div>
+            </div>
+            <img src="view/assets/svg/Competitif.svg" alt="">
+            <div>
+                <p>???</p>
+                <div id="joueur_2" class="info_joueur info_joueur_bas">
+                    <h3>???</h3>
+                    <div>
+                        <div>
+                            <p>Nombre total de grilles jouées :</p>
+                            <p>Nombre de grilles résolues :</p>
+                            <p>Temps moyen :</p>
+                            <p>Meilleur temps :</p>
+                            <p>Série de victoires :</p>
+                        </div>
+                        <div>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                        </div>
+                    </div>
+                    <img src="view/assets/svg/Fleche.svg" alt="">
+                </div>
+                <p class="score_principal score_petit score_petit_droite">0</p>
+                <img src="view/assets/img/TropheeOr.webp" alt ="">
+            </div>
+        </div>
+    </div>
     <div id="conteneur_principal">
         <div id="conteneur_jeu" inert>
             <table class="grille" id="grille_vide" inert>
@@ -112,13 +166,13 @@
             </table>
 
             <div id="interface_de_jeu"> <!-- boutons de jeu -->
-                <div> <!-- notes et temps -->
+                <div class="boutons_haut"> <!-- notes et temps -->
                     <div class="boutons_ronds">
-                        <div class="bouton boutonPave"><img src="view/assets/svg/Notes.svg" alt=""></div>
+                        <div id="bouton_notes" class="bouton boutonPave"><img src="view/assets/svg/Notes.svg" alt=""></div>
                         <p id="notes">Notes : OFF</p>
                     </div>
                     <div class="boutons_ronds">
-                        <div class="bouton boutonPave"><img src="view/assets/svg/Pause.svg" alt=""></div>
+                        <div id="bouton_pause" class="bouton boutonPave"><img src="view/assets/svg/Pause.svg" alt=""></div>
                         <p id="timer">Temps : 15:00</p>
                     </div>
                 </div>
@@ -135,27 +189,7 @@
                     <p class="bouton boutonPave">9</p>
                 </div>
 
-                <div>
-                    <div id="menu_partie" class="popup"><!-- menu -->
-                        <h3>Séléctionnez la difficulté</h3>
-                        <p>La progression de la partie actuelle sera perdue et comptera comme une défaite</p>
-                        <div class="boutons_difficulte">
-                            <div class="bouton">
-                                <img src="view/assets/svg/Facile.svg" alt="">
-                                <p>Facile</p>
-                            </div>
-                            <div class="bouton">
-                                <img src="view/assets/svg/Moyen.svg" alt="">
-                                <p>Moyen</p>
-                            </div>
-                            <div class="bouton">
-                                <img src="view/assets/svg/Difficile.svg" alt="">
-                                <p>Difficile</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="bouton_jeu" class="bouton boutonPrincipal">Nouvelle Partie</div>
-                </div>
+                <div id="bouton_jeu" class="bouton boutonPrincipal">Commencer</div>
             </div>
         </div>
 

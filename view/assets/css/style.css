@@ -391,11 +391,22 @@ footer div:last-child {
   line-height: 50px;
   font-size: 32px;
   min-width: 132px;
+  text-align: center;
 }
 
 /* --------------------------------------------------  Tableau de jeu  --------------------------------------------------*/
 
+#haut {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 #titre_jeu {
+  line-height: 40px;
+}
+
+.separateur_haut {
   margin-bottom: 40px;
 }
 
@@ -497,17 +508,75 @@ footer div:last-child {
   border-right: none;
 }
 
-#interface_de_jeu>div {
+#interface_de_jeu>div:not(#infos_multijoueur) {
   display: flex;
   justify-content: space-evenly;
 }
 
-#interface_de_jeu>div:first-child {
-  gap:38px;
-}
-
 #interface_de_jeu>div:last-child {
   position: relative;
+}
+
+#infos_multijoueur {
+  display: flex;
+  justify-content: space-between;
+  width: 33%;
+}
+
+#infos_multijoueur>div {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: calc(50% - 20px);
+}
+
+#infos_multijoueur>div:first-child {
+  justify-content: flex-start;
+  padding-left:25px;
+}
+
+#infos_multijoueur>div:last-child {
+  justify-content: flex-end;
+  padding-right:25px;
+}
+
+#infos_multijoueur>div:first-child:hover #joueur_1, #infos_multijoueur>div:last-child:hover #joueur_2 {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+#infos_multijoueur img {
+  width: 40px;
+}
+
+#infos_multijoueur>div>img {
+  position: absolute;
+}
+
+#infos_multijoueur>div>img:first-child {
+  left: 0px;
+}
+
+#infos_multijoueur>div>img:last-child {
+  right: 0px;
+  transform: scaleX(-1);
+}
+
+.score_petit {
+  height: 24px;
+  line-height: 24px;
+  width: 60px;
+  text-align: right;
+}
+
+.score_petit_droite {
+  text-align: left;
+}
+
+.boutons_haut {
+  gap:38px;
 }
 
 .boutons_ronds {
@@ -677,15 +746,24 @@ margin-bottom: 11px;
 
 .info_joueur {
   position: absolute;
-  left: calc(50% - 200px);
-  bottom: calc(100% + 15px);
   display: none;
   width: 400px;
   padding: 20px 40px;
+  color: var(--MidnightViolet);
   background-color: var(--WisteriaBlue25pourcent);
   box-shadow: 0px 4px 4px 0px #686868;
   border-radius: 15px;
   z-index: 10;
+}
+
+.info_joueur_haut {
+  left: calc(50% - 200px);
+  bottom: calc(100% + 15px);
+}
+
+.info_joueur_bas {
+  left: calc(50% - 200px);
+  top: calc(100% + 15px);
 }
 
 .info_joueur>div {
@@ -709,9 +787,17 @@ margin-bottom: 11px;
   position: absolute;
   width: 40px;
   height: 40px;
+}
+
+.info_joueur_haut>img {
   left: calc(50% - 20px);
   bottom: calc(-20px);
   transform: scaleY(-1);
+}
+
+.info_joueur_bas>img {
+  left: calc(50% - 20px);
+  top: calc(-20px);
 }
 
 .top_3>div>img {
@@ -766,6 +852,7 @@ margin-bottom: 11px;
   height: 33px;
   line-height: 33px;
   width: 65px;
+  text-align: center;
   left: 50%;
   top: calc(47px - 5px);
   z-index: 1;
@@ -779,6 +866,7 @@ margin-bottom: 11px;
   height: 30px;
   line-height: 30px;
   width: 80px;
+  text-align: center;
 }
 
 /* --------------------------------------------------  Accueil  --------------------------------------------------*/
@@ -1190,5 +1278,4 @@ td p {
   background-color: var(--Red);
   color: var(--White);
   padding: 0 10px;
-  text-align: center;
 }
