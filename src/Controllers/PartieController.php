@@ -38,10 +38,6 @@ class PartieController extends Controller {
     // Afficher l'écran de partie multijoueur
     public function multiBoard() {
 
-        // Indique à la vue les fichiers JS à utiliser
-        $script = ["jeu.js", "api.js"];
-        $this->_donnees["script"] = $script;
-
         // Si le formulaire "Créer une salle" est soumis
         if (isset($_POST["creer_salle"])) {
 
@@ -57,6 +53,10 @@ class PartieController extends Controller {
             $_SESSION["partie"]["hote"] = false;
             $_SESSION["partie"]["salle"] = $_POST["salle"];
         }
+
+        // Indique à la vue les variables nécessaires
+        $script = ["jeu.js", "api.js"];
+        $this->_donnees["script"] = $script;
 
         // Affiche la vue multijoueur
         $this->display("partie/multijoueur");

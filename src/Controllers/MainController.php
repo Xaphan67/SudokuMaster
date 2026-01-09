@@ -41,7 +41,7 @@ class MainController extends Controller {
     // Affiche la page des règles
     public function rules() {
 
-        // Indique à la vue le fichier JS à utiliser
+        // Indique à la vue les variables nécessaires
         $script = ["regles.js"];
         $this->_donnees["script"] = $script;
 
