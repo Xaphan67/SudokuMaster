@@ -224,6 +224,14 @@
             <div id="bouton_pret" class="bouton boutonPrincipal boutonLarge">Je suis prêt</div>
         </div>
 
+        <div id="abandon_autre_joueur_partie" class="popup popup_large"><!-- popup d'abandon de partie de l'autre joueur' -->
+            <h3>à abandonné la partie</h3>
+            <p>Vous pouvez terminer la partie seul, ou abandonner la partie</p>
+            <p>Attention ! Abandonner la partie comptera comme une défaite</p>
+            <div id="bouton_continuer_partie" class="bouton boutonPrincipal boutonDefaut">Terminer seul</div>
+            <a href="index.php?controller=partie&action=lobby" class="bouton boutonPrincipal boutonLarge">Abandonner</a>
+        </div>
+
         <div id="abandon_partie" class="popup popup_large"><!-- popup d'abandon de partie' -->
             <h3>Abandonner la partie ?</h3>
             <p>La progression de la partie actuelle sera perdue et comptera comme une défaite</p>

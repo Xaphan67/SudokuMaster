@@ -236,12 +236,57 @@ function joinRoom() {
                 partieEnCours = false;
 
                 // En mode compétitif, le joueur à perdu
-                if (message.mode == "Competitif") {
+                if (infosSalle.mode == "Competitif") {
                     defaiteCompetitif = true;
                 }
 
                 // Met fin à la partie
                 endGame();
+                break;
+
+            // Le serveur indique que le 2eme joueur à abandonné la partie
+            case "abandonner_partie":
+
+                if (partieEnCours) {
+
+                    // Si mode compétitif
+                    if (infosSalle.mode == "Competitif") {
+
+                        // Déclare la partie comme terminée
+                        partieEnCours = false;
+
+                        // Met fin à la partie
+                        endGame();
+                    }
+                    else {
+
+                        // Opacifie la zone de jeu
+                        CONTENEUR_JEU.style.filter = "opacity(0.40)";
+                        CONTENEUR_JEU.inert = "true";
+
+                        // Met la partie en pause
+                        startTimer();
+
+                        // Affiche le popup indiquant que le 2eme joueur à quitté la partie
+                        const POPUP_JOUEUR_ABANDON_PARTIE = document.getElementById("abandon_autre_joueur_partie");
+                        const BOUTON_CONTINUER_PARTIE = document.getElementById("bouton_continuer_partie");
+                        POPUP_JOUEUR_ABANDON_PARTIE.style.display = "flex";
+
+                        // Si le joueur clique sur le bouton Continue la partie
+                        BOUTON_CONTINUER_PARTIE.addEventListener("click", (e) => {
+
+                            // Masque le popup
+                            POPUP_JOUEUR_ABANDON_PARTIE.style.display = "none";
+
+                            // Reprends la partie
+                            startTimer();
+
+                            // Permet à l'utilisateur d'intéragir avec le plateau de jeu
+                            CONTENEUR_JEU.style.filter = "none";
+                            CONTENEUR_JEU.inert = false;
+                        });
+                    }
+                }
                 break;
         }
     };
@@ -528,6 +573,10 @@ async function startGame(element) {
         const POPUP_JOUEUR_PRET = document.getElementById("verif_joueur_pret");
         POPUP_JOUEUR_PRET.children[3].children[0].getElementsByTagName("p")[0].innerHTML = statsJoueur.joueur_1.pseudo_utilisateur;
         POPUP_JOUEUR_PRET.children[3].children[1].getElementsByTagName("p")[0].innerHTML = statsJoueur.joueur_2.pseudo_utilisateur;
+
+        // Affiche les information du 2eme joueur sur le popup d'avandon de partie
+        const POPUP_JOUEUR_ABANDON_PARTIE = document.getElementById("abandon_autre_joueur_partie");
+        POPUP_JOUEUR_ABANDON_PARTIE.getElementsByTagName("h3")[0].innerHTML = statsJoueur.joueur_2.pseudo_utilisateur + " " + POPUP_JOUEUR_ABANDON_PARTIE.getElementsByTagName("h3")[0].innerHTML;
     }
     else {
         difficulte = element.children[1].innerHTML;
@@ -664,7 +713,7 @@ async function endGame(popup = true) {
 
     // Si partie multijoueur, informe le 2eme joueur que la partie est terminée
     if (multijoueur && partieEnCours) {
-        connexion.send(JSON.stringify({commande: "fin_partie", mode: infosSalle.mode, salle: infosSalle.salle}));
+        connexion.send(JSON.stringify({commande: "fin_partie", salle: infosSalle.salle}));
     }
 
     // Déclare la partie comme terminée

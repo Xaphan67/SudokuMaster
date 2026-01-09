@@ -138,12 +138,25 @@ class SudokuServer implements MessageComponentInterface {
             case "fin_partie":
 
                 // Envoie l'information au 2eme joueur que la partie est terminée
-                $this->msgOtherPlayer($from, $message->salle, ["commande" => "fin_partie", "mode" => $message->mode]);
+                $this->msgOtherPlayer($from, $message->salle, ["commande" => "fin_partie"]);
                 break;
         }
     }
 
     public function onClose(ConnectionInterface $conn) {
+
+        // Notifie le 2eme joueur dans la salle du joueur qui quitte le serveur (s'il y en a un)
+        foreach($this->salles as $clientId => $infos) {
+            if ($clientId != $conn->resourceId && $this->salles[$clientId]["numero"] == $this->salles[$conn->resourceId]["numero"]) {
+                foreach($this->clients as $client) {
+                    if ($client->resourceId == $clientId) {
+                        $client->send(json_encode(["commande" => "abandonner_partie"]));
+                        break;
+                    }
+                }
+                break;
+            }
+        }
 
         // Quand une connexion quitte le serveur
         // Supprime la connexion de la liste des clients
