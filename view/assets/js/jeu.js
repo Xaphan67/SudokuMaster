@@ -40,6 +40,7 @@ let connexion;
 let infosSalle;
 let defaiteCompetitif = false;
 let statsJoueur;
+let resPartie;
 
 // Timer
 let start = null;
@@ -145,7 +146,7 @@ function joinRoom() {
                 });
                 statsJoueur = await RES_STATS_HOTE.json();
 
-                // Démarre la partie
+                //Démarre la partie
                 startGame();
                 break;
 
@@ -167,17 +168,36 @@ function joinRoom() {
                 });
                 statsJoueur = await RES_STATS_REJOINT.json();
 
-                // Démarre la partie
+                //Démarre la partie
                 startGame();
                 break;
 
-            // le serveur indique les informations de la partie créée par l'hôte
+            // Le serveur indique les informations de la partie créée par l'hôte
             case "partie_prete":
 
                 // Récupère les informations de la partie
                 idPartie = message.idPartie;
                 grille = message.grille;
                 solution = message.solution;
+                break;
+
+            // Le serveur indique que l'autre joueur est prêt
+            case "joueur_pret":
+
+                // Affiche la coche sur l'avatar du joueur
+                const AVATARS_JOUEURS = document.getElementById("joueurs");
+                AVATARS_JOUEURS.children[1].children[0].getElementsByTagName("img")[1].style.display="block";
+                break;
+
+            // Le serveur indique que la partie doit commencer (Lesdeux joueurs sont prêts)
+            case "commencer_partie":
+
+                // Masque le popup demandant au joueur s'il est prêt
+                const POPUP_JOUEUR_PRET = document.getElementById("verif_joueur_pret");
+                POPUP_JOUEUR_PRET.style.display = "none";
+
+                //Démarre la partie
+                configureGame(resPartie);
                 break;
 
             // Le serveur indique que la salle à rejoindre n'existe pas
@@ -443,7 +463,7 @@ async function startGame(element) {
     if (multijoueur) {
         TITRE_JEU.innerHTML = "Jeu " + infosSalle.mode + " : Difficulté " + infosSalle.difficulte + " - ID Salle : " + infosSalle.salle;
 
-        // Affiche les informations des joueurs
+        // Affiche les informations des joueurs sur le tableau de jeu
         const INFOS_JOUEURS = document.getElementById("infos_multijoueur");
         const SECTION_JOUEUR_1 = INFOS_JOUEURS.children[0];
         const JOUEUR_1 = document.getElementById("joueur_1");
@@ -469,6 +489,11 @@ async function startGame(element) {
         JOUEUR_2.children[1].children[1].getElementsByTagName("p")[2].innerHTML = statsJoueur.joueur_2.temps_moyen;
         JOUEUR_2.children[1].children[1].getElementsByTagName("p")[3].innerHTML = statsJoueur.joueur_2.meilleur_temps;
         JOUEUR_2.children[1].children[1].getElementsByTagName("p")[4].innerHTML = statsJoueur.joueur_2.serie_victoires;
+
+        // Affiche les information des joueurs sur le popup demandant au joueur s'il est prêt
+        const POPUP_JOUEUR_PRET = document.getElementById("verif_joueur_pret");
+        POPUP_JOUEUR_PRET.children[3].children[0].getElementsByTagName("p")[0].innerHTML = statsJoueur.joueur_1.pseudo_utilisateur;
+        POPUP_JOUEUR_PRET.children[3].children[1].getElementsByTagName("p")[0].innerHTML = statsJoueur.joueur_2.pseudo_utilisateur;
     }
     else {
         difficulte = element.children[1].innerHTML;
@@ -494,7 +519,7 @@ async function startGame(element) {
                     },
                     body: JSON.stringify({ modeDeJeu: multijoueur ? infosSalle.mode : "Solo", difficulte: multijoueur ? infosSalle.difficulte : difficulte, hote: multijoueur ? infosSalle.hote : false}) // Objet JS converti en chaîne JSON
             });
-            let resPartie = await RES_PARTIE.json();
+            resPartie = await RES_PARTIE.json();
             idPartie = resPartie["partieId"];
 
             // En multijoueur, indique au 2eme joueur que la partie est prête
@@ -502,10 +527,15 @@ async function startGame(element) {
 
                 // Envoie les informations de la partie
                 connexion.send(JSON.stringify({commande: "partie_prete", idPartie: resPartie["partieId"], salle: infosSalle.salle, grille: grille, solution: solution}));
-            }
 
-            // Configure la partie
-            configureGame(resPartie);
+                // Attends que le joueur soit prêt pour commencer
+                getPlayerReady();
+            }
+            else {
+
+                // Configure la partie
+                configureGame(resPartie);
+            }
         }
         else {
 
@@ -550,11 +580,33 @@ async function startGame(element) {
                 },
                 body: JSON.stringify({modeDeJeu: infosSalle.mode, difficulte: infosSalle.difficulte, idPartie: idPartie}) // Objet JS converti en chaîne JSON
         });
-        let resPartie = await RES_PARTIE.json();
+        resPartie = await RES_PARTIE.json();
 
-        // Configure la partie
-        configureGame(resPartie);
+        // Attends que le joueur soit prêt pour commencer
+        getPlayerReady();
     }
+}
+
+function getPlayerReady() {
+
+    // Affiche le popup demandant au joueur s'il est prêt
+    const POPUP_JOUEUR_PRET = document.getElementById("verif_joueur_pret");
+    const BOUTON_JOUEUR_PRET = document.getElementById("bouton_pret");
+    POPUP_JOUEUR_PRET.style.display = "flex";
+
+    BOUTON_JOUEUR_PRET.addEventListener("click", (e) => {
+
+        // Désactive le bouton "Je suis prêt"
+        BOUTON_JOUEUR_PRET.classList.add("inactif");
+        BOUTON_JOUEUR_PRET.inert = "true";
+
+        // Affiche la coche sur l'avatar du joueur
+        const AVATARS_JOUEURS = document.getElementById("joueurs");
+        AVATARS_JOUEURS.children[0].children[0].getElementsByTagName("img")[1].style.display="block";
+
+        // Indique au serveur que le joueur est prêt
+        connexion.send(JSON.stringify({commande: "joueur_pret", salle:infosSalle.salle}));
+    });
 }
 
 function configureGame(resPartie) {
@@ -633,7 +685,6 @@ async function endGame(popup = true) {
         POPUP_FIN_PARTIE.style.display = "flex";
         POPUP_FIN_PARTIE_TITRE.innerHTML = (victoire ? "Victoire" : "Défaite") + " !";
         POPUP_FIN_PARTIE_TEXTE.innerHTML = "Partie terminée";
-
 
         // Lors du clic sur Rejouer...
         POPUP_FIN_PARTIE_REJOUER.addEventListener("click", (e) => {

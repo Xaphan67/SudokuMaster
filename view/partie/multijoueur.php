@@ -201,6 +201,29 @@
             <a href="index.php?controller=partie&action=lobby" class="bouton boutonPrincipal boutonLarge">Quitter</a>
         </div>
 
+        <div id="verif_joueur_pret" class="popup popup_large"><!-- popup de vérification joueur prêt -->
+            <h3>Êtes-vous prêt ?</h3>
+            <p>Cliquez sur le bouton "Je suis prêt" dès que vous êtes prêt à commencer la partie.</p>
+            <p>La partie débutera dès que les deux joueurs sont prêts.</p>
+            <div id="joueurs">
+                <div>
+                    <div>
+                        <img src="view/assets/svg/AvatarUtilisateur.svg" alt="">
+                        <img src="view/assets/svg/Coche.svg" alt="">
+                    </div>
+                    <p></p>
+                </div>
+                <div>
+                    <div>
+                        <img src="view/assets/svg/AvatarUtilisateur.svg" alt="">
+                        <img src="view/assets/svg/Coche.svg" alt="">
+                    </div>
+                    <p></p>
+                </div>
+            </div>
+            <div id="bouton_pret" class="bouton boutonPrincipal boutonLarge">Je suis prêt</div>
+        </div>
+
         <div id="fin_partie" class="popup"><!-- popup de fin de partie -->
             <h3></h3>
             <p></p>

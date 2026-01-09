@@ -39,7 +39,7 @@ class SudokuServer implements MessageComponentInterface {
                 $salle = $from->resourceId . date("G") . date("i");
 
                 // Ajoute le joueur à la salle
-                $this->salles[$from->resourceId] = ["numero" => $salle, "mode" => $message->mode, "difficulte" => $message->difficulte, "id" => $message->utilisateur];
+                $this->salles[$from->resourceId] = ["numero" => $salle, "mode" => $message->mode, "difficulte" => $message->difficulte, "id" => $message->utilisateur, "pret" => "0"];
 
                 // Renvoie le numéro de la salle au client
                 $from->send(json_encode(["commande" => "numero_salle", "numero" => $salle]));
@@ -63,7 +63,7 @@ class SudokuServer implements MessageComponentInterface {
                 if (is_array($salleExiste)) {
 
                     // Ajoute le joueur à la salle
-                    $this->salles[$from->resourceId] = ["numero" => $message->salle, "mode" => $salleExiste["mode"], "difficulte" => $salleExiste["difficulte"], "id" => $message->utilisateur];
+                    $this->salles[$from->resourceId] = ["numero" => $message->salle, "mode" => $salleExiste["mode"], "difficulte" => $salleExiste["difficulte"], "id" => $message->utilisateur, "pret" => "0"];
 
                     // Renvoie les informations de la salle au client
                     $from->send(json_encode(["commande" => "infos_salle", "mode" => $salleExiste["mode"], "difficulte" => $salleExiste["difficulte"], "hoteId" => $salleExiste["id"]]));
@@ -109,6 +109,58 @@ class SudokuServer implements MessageComponentInterface {
                     if ($client->resourceId == $destId) {
                         $client->send(json_encode(["commande" => "partie_prete", "idPartie" => $message->idPartie, "grille" => $message->grille, "solution" => $message->solution]));
                         break;
+                    }
+                }
+                break;
+
+            // Un joueur est prêt
+            case "joueur_pret":
+
+                echo "Joueur " . $from->resourceId . " indique qu'il est prêt\n";
+
+                // Enregistre que le joueur est prêt
+                foreach ($this->salles as $clientId => $infos) {
+                    if ($clientId == $from->resourceId && $infos["numero"] == $message->salle) {
+                        $this->salles[$from->resourceId]["pret"] = "1";
+                        break;
+                    }
+                }
+
+                // Informe le 2eme joueur que le joueur est prêt
+                $destId = null;
+                foreach ($this->salles as $clientId => $infos) {
+                    if ($clientId != $from->resourceId && $infos["numero"] == $message->salle) {
+                        $destId = $clientId;
+                        break;
+                    }
+                }
+
+                foreach($this->clients as $client) {
+                    if ($client->resourceId == $destId) {
+                        $client->send(json_encode(["commande" => "joueur_pret"]));
+                        break;
+                    }
+                }
+
+                // Si les deux joueurs de la salle sont prêts
+                // Informe les deux joueurs de démarrer la partie
+                $joueursPrêts = [];
+                foreach($this->salles as $client => $infos) {
+                    if ($this->salles[$client]["pret"]) {
+                        array_push($joueursPrêts, $client);
+                        if (count($joueursPrêts) == 2) {
+
+                            echo "Tous les joueurs sont prêts. La partie peut commencer\n";
+
+                            foreach($this->clients as $client) {
+                                foreach ($joueursPrêts as $joueur) {
+                                    if ($client->resourceId == $joueur) {
+                                        $client->send(json_encode(["commande" => "commencer_partie"]));
+                                        break;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
                 break;
