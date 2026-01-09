@@ -20,7 +20,7 @@ class PartieController extends Controller {
     // Afficher l'écran de partie solo
     public function soloBoard() {
 
-        // Indique à la vue les fichiers JS à utiliser
+        // Indique à la vue les variables nécessaires
         $script = ["jeu.js", "api.js"];
         $this->_donnees["script"] = $script;
 
