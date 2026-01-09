@@ -681,6 +681,18 @@ async function endGame(popup = true) {
             POPUP_FIN_PARTIE_SCORE_GLOBAL.style.display = "none";
         }
 
+        // Affiche uniquement le bouton correspondant au mode de jeu solo ou multi
+        if (multijoueur) {
+
+            // Retire le bouton Rejouer
+            POPUP_FIN_PARTIE.children[5].remove();
+        }
+        else {
+
+            // Retire le bouton Retour au salon
+            POPUP_FIN_PARTIE.lastChild.remove();
+        }
+
         // Affiche un message de victoire ou défaite selon l'état de la partie quand le popup s'affiche
         POPUP_FIN_PARTIE.style.display = "flex";
         POPUP_FIN_PARTIE_TITRE.innerHTML = (victoire ? "Victoire" : "Défaite") + " !";

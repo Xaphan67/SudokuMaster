@@ -232,6 +232,7 @@
                 <img src="view/assets/svg/Rejouer.svg" alt="">
                 <p>Rejouer</p>
             </div>
+            <a href="index.php?controller=partie&action=lobby" class="bouton boutonPrincipal boutonLarge">Retour au salon</a>
         </div>
 
         <div id="erreur" class="popup"><!-- popup d'erreur de grille -->
