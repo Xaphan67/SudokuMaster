@@ -181,12 +181,9 @@
 
         <div id="fin_partie" class="popup"><!-- popup de fin de partie -->
             <h3></h3>
-            <p></p>
+            <p>Vous avez correctement teminé la grille</p>
             <p class="score_global">Score global</p>
-            <div class="bouton">
-                <img src="view/assets/svg/Rejouer.svg" alt="">
-                <p>Rejouer</p>
-            </div>
+            <div id="bouton_rejouer_partie" class="bouton boutonPrincipal boutonDefaut">Rejouer</div>
         </div>
 
         <div id="erreur" class="popup"><!-- popup d'erreur de grille -->

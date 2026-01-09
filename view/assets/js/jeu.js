@@ -63,7 +63,7 @@ let modeNotes = false;
 let menuOuvert = false;
 
 // Si le joueur joue une partie multijoueur
-if (TITRE_JEU.innerHTML.includes('Multijoueur')) {
+if (TITRE_JEU.textContent.includes('Multijoueur')) {
 
     // Set la variable multijoueur à vrai, et se connecte au serveur WebSocket
     multijoueur = true;
@@ -131,7 +131,7 @@ function joinRoom() {
                 infosSalle.salle = message.numero;
 
                 // Affiche le numéro de salle sur le popup d'attente d'un joueur
-                POPUP_DEBUT_PARTIE.getElementsByTagName("P")[0].innerHTML += infosSalle.salle;
+                POPUP_DEBUT_PARTIE.getElementsByTagName("P")[0].textContent += infosSalle.salle;
                 break;
 
             // Le serveur renvoie les infos de la salle rejointe
@@ -226,7 +226,7 @@ function joinRoom() {
                 const LIGNE = TABLE.getElementsByTagName("tr")[message.Y];
                 const COLONNE = LIGNE.getElementsByTagName("td")[message.X];
                 let valeur = COLONNE.getElementsByTagName("p")[0];
-                valeur.innerHTML = message.valeur;
+                valeur.textContent = message.valeur;
                 break;
 
             // Le serveur indique que la partie est terminée
@@ -254,6 +254,9 @@ function joinRoom() {
 
                         // Déclare la partie comme terminée
                         partieEnCours = false;
+
+                        // Change le texte qui s'affiche sur le popup de fin de partie
+                        POPUP_FIN_PARTIE_TEXTE.textContent = statsJoueur.joueur_2.pseudo_utilisateur + " à quitté la partie";
 
                         // Met fin à la partie
                         endGame();
@@ -314,7 +317,7 @@ if (!multijoueur) {
             // Masque le menu et le considère comme fermé
             MENU_PARTIE.style.display = "none";
             menuOuvert = false;
-            BOUTON_JEU.innerHTML = "Nouvelle partie";
+            BOUTON_JEU.textContent = "Nouvelle partie";
 
             // Met fin à la partie
             endGame(false);
@@ -348,13 +351,13 @@ TABLE.addEventListener("click", (e) => {
                 cellule.classList.remove("selected_highlight");
 
                 // Si la cellule n'a pas le même chiffre que celle selectionné et qu'elle a la classe selected
-                if (cellule.getElementsByTagName("p")[0].innerHTML != e.target.getElementsByTagName("p")[0].innerHTML && cellule.classList.contains("selected")) {
+                if (cellule.getElementsByTagName("p")[0].textContent != e.target.getElementsByTagName("p")[0].textContent && cellule.classList.contains("selected")) {
                     //on enlève la classe selected
                     cellule.classList.remove("selected");
                 }
 
                 // Si la cellule a le même chiffre que celle selectionnée et que ce n'est pas vide
-                if (cellule.getElementsByTagName("p")[0].innerHTML == e.target.getElementsByTagName("p")[0].innerHTML && e.target.getElementsByTagName("p")[0].innerHTML != 0) {
+                if (cellule.getElementsByTagName("p")[0].textContent == e.target.getElementsByTagName("p")[0].textContent && e.target.getElementsByTagName("p")[0].textContent != 0) {
                     cellule.classList.add("selected");
                     cellule.classList.remove("selected_highlight");
                 }
@@ -366,7 +369,7 @@ TABLE.addEventListener("click", (e) => {
 // Lors d'un clic sur le bouton notes...
 BOUTON_NOTES.addEventListener("click", (e) => {
     modeNotes = !modeNotes;
-    NOTES.innerHTML = "Notes : " + (modeNotes ? "ON" : "OFF");
+    NOTES.textContent = "Notes : " + (modeNotes ? "ON" : "OFF");
 });
 
 // Lors d'un clic sur le bouton pause...
@@ -387,7 +390,7 @@ BOUTONS.forEach(element => {
                 // Ajoute la note dans la liste de notes de la case
 
                 // Si la case à déjà été remplie par le joueur, on supprime ce qu'il à marqué
-                caseActuelle.getElementsByTagName("p")[0].innerHTML = "";
+                caseActuelle.getElementsByTagName("p")[0].textContent = "";
                 grille[selectionY][selectionX] = "0";
 
                 // Si la case n'a pas de liste de notes, on en crée une
@@ -395,7 +398,7 @@ BOUTONS.forEach(element => {
                     const NOUVEAU_UL = document.createElement("ul");
                     NOUVEAU_UL.inert = true;
                     const NOUVEAU_LI = document.createElement("li");
-                    const NOMBRE = document.createTextNode(this.innerHTML);
+                    const NOMBRE = document.createTextNode(this.textContent);
                     NOUVEAU_LI.appendChild(NOMBRE);
                     NOUVEAU_UL.appendChild(NOUVEAU_LI);
                     caseActuelle.appendChild(NOUVEAU_UL);
@@ -408,7 +411,7 @@ BOUTONS.forEach(element => {
 
                     // On vérifie si la note existe déja dans la liste
                     NOTES_ACTUELLES.forEach((note, index) => {
-                        if (note.innerHTML == this.innerHTML) {
+                        if (note.textContent == this.textContent) {
                             existeDeja = true;
                             noteIndex = index;
                         }
@@ -425,7 +428,7 @@ BOUTONS.forEach(element => {
                     }
                     else {
                         const NOUVEAU_LI = document.createElement("li");
-                        const NOMBRE = document.createTextNode(this.innerHTML);
+                        const NOMBRE = document.createTextNode(this.textContent);
                         NOUVEAU_LI.appendChild(NOMBRE);
 
                         // On insert la note de manière à ce qu'elle soit dans l'ordre
@@ -435,7 +438,7 @@ BOUTONS.forEach(element => {
                         for (i = 0; i < NOTES_ACTUELLES.length; i ++) {
 
                             // Si la note existante est supérieure à celle à insérer, on insert la note juste avant
-                            if (NOTES_ACTUELLES[i].innerHTML > this.innerHTML) {
+                            if (NOTES_ACTUELLES[i].textContent > this.textContent) {
                                 LISTE_NOTES.insertBefore(NOUVEAU_LI, LISTE_NOTES.getElementsByTagName("li")[i]);
                                 inseree = true;
                                 break;
@@ -453,10 +456,10 @@ BOUTONS.forEach(element => {
                 // Change la valeur de la case cliquée
 
                 // Change la valeur de la case dans le DOM
-                caseActuelle.getElementsByTagName("p")[0].innerHTML = this.innerHTML;
+                caseActuelle.getElementsByTagName("p")[0].textContent = this.textContent;
 
                 // Change la valeur de la case dans la variable grille
-                grille[selectionY][selectionX] = this.innerHTML;
+                grille[selectionY][selectionX] = this.textContent;
 
                 // Si la case à une liste de notes, on la supprime
                 if (LISTE_NOTES != undefined) {
@@ -466,7 +469,7 @@ BOUTONS.forEach(element => {
                 // Si partie mulijoueur en mode coopératif
                 // on envoie la modification de la valeur de la case au 2eme joueur
                 if (multijoueur && infosSalle.mode == "Cooperatif") {
-                    connexion.send(JSON.stringify({commande: "changer_case", salle: infosSalle.salle, Y: selectionY, X: selectionX, valeur: this.innerHTML}));
+                    connexion.send(JSON.stringify({commande: "changer_case", salle: infosSalle.salle, Y: selectionY, X: selectionX, valeur: this.textContent}));
                 }
 
                 // Si la grille est terminée, met fin à la partie
@@ -489,7 +492,7 @@ document.addEventListener("keydown", (e) => {
 
             // Si la touche appuyée correspond au contenu du bouton,
             // on appelle l'évènement onclick du bouton (défini au dessus)
-            if (element.innerHTML == e.key) {
+            if (element.textContent == e.key) {
                 element.onclick();
             }
         });
@@ -526,7 +529,7 @@ BOUTON_JEU.addEventListener("click", (e) => {
         // Affiche ou masque le menu, et change le texte du bouton
         menuOuvert = !menuOuvert;
         MENU_PARTIE.style.display = menuOuvert ? "flex" : "none";
-        BOUTON_JEU.innerHTML = menuOuvert ? "Annuler" : "Nouvelle partie";
+        BOUTON_JEU.textContent = menuOuvert ? "Annuler" : "Nouvelle partie";
     }
 
 });
@@ -540,7 +543,7 @@ async function startGame(element) {
     // Affiche la difficulté choisie
     // et les informations du mode de jeu
     if (multijoueur) {
-        TITRE_JEU.innerHTML = "Jeu " + infosSalle.mode + " : Difficulté " + infosSalle.difficulte + " - ID Salle : " + infosSalle.salle;
+        TITRE_JEU.textContent = "Jeu " + infosSalle.mode + " : Difficulté " + infosSalle.difficulte + " - ID Salle : " + infosSalle.salle;
 
         // Affiche les informations des joueurs sur le tableau de jeu
         const INFOS_JOUEURS = document.getElementById("infos_multijoueur");
@@ -551,36 +554,36 @@ async function startGame(element) {
 
         INFOS_JOUEURS.inert = false;
 
-        SECTION_JOUEUR_1.children[1].innerHTML = statsJoueur.joueur_1.score_global;
-        SECTION_JOUEUR_1.children[2].innerHTML = statsJoueur.joueur_1.pseudo_utilisateur;
-        JOUEUR_1.children[0].innerHTML = statsJoueur.joueur_1.pseudo_utilisateur;
-        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[0].innerHTML = statsJoueur.joueur_1.grilles_jouees;
-        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[1].innerHTML = statsJoueur.joueur_1.grilles_resolues;
-        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[2].innerHTML = statsJoueur.joueur_1.temps_moyen;
-        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[3].innerHTML = statsJoueur.joueur_1.meilleur_temps;
-        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[4].innerHTML = statsJoueur.joueur_1.serie_victoires;
+        SECTION_JOUEUR_1.children[1].textContent = statsJoueur.joueur_1.score_global;
+        SECTION_JOUEUR_1.children[2].textContent = statsJoueur.joueur_1.pseudo_utilisateur;
+        JOUEUR_1.children[0].textContent = statsJoueur.joueur_1.pseudo_utilisateur;
+        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[0].textContent = statsJoueur.joueur_1.grilles_jouees;
+        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[1].textContent = statsJoueur.joueur_1.grilles_resolues;
+        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[2].textContent = statsJoueur.joueur_1.temps_moyen;
+        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[3].textContent = statsJoueur.joueur_1.meilleur_temps;
+        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[4].textContent = statsJoueur.joueur_1.serie_victoires;
 
-        SECTION_JOUEUR_2.children[2].innerHTML = statsJoueur.joueur_2.score_global;
-        SECTION_JOUEUR_2.children[0].innerHTML = statsJoueur.joueur_2.pseudo_utilisateur;
-        JOUEUR_2.children[0].innerHTML = statsJoueur.joueur_2.pseudo_utilisateur;
-        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[0].innerHTML = statsJoueur.joueur_2.grilles_jouees;
-        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[1].innerHTML = statsJoueur.joueur_2.grilles_resolues;
-        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[2].innerHTML = statsJoueur.joueur_2.temps_moyen;
-        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[3].innerHTML = statsJoueur.joueur_2.meilleur_temps;
-        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[4].innerHTML = statsJoueur.joueur_2.serie_victoires;
+        SECTION_JOUEUR_2.children[2].textContent = statsJoueur.joueur_2.score_global;
+        SECTION_JOUEUR_2.children[0].textContent = statsJoueur.joueur_2.pseudo_utilisateur;
+        JOUEUR_2.children[0].textContent = statsJoueur.joueur_2.pseudo_utilisateur;
+        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[0].textContent = statsJoueur.joueur_2.grilles_jouees;
+        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[1].textContent = statsJoueur.joueur_2.grilles_resolues;
+        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[2].textContent = statsJoueur.joueur_2.temps_moyen;
+        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[3].textContent = statsJoueur.joueur_2.meilleur_temps;
+        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[4].textContent = statsJoueur.joueur_2.serie_victoires;
 
         // Affiche les information des joueurs sur le popup demandant au joueur s'il est prêt
         const POPUP_JOUEUR_PRET = document.getElementById("verif_joueur_pret");
-        POPUP_JOUEUR_PRET.children[3].children[0].getElementsByTagName("p")[0].innerHTML = statsJoueur.joueur_1.pseudo_utilisateur;
-        POPUP_JOUEUR_PRET.children[3].children[1].getElementsByTagName("p")[0].innerHTML = statsJoueur.joueur_2.pseudo_utilisateur;
+        POPUP_JOUEUR_PRET.children[3].children[0].getElementsByTagName("p")[0].textContent = statsJoueur.joueur_1.pseudo_utilisateur;
+        POPUP_JOUEUR_PRET.children[3].children[1].getElementsByTagName("p")[0].textContent = statsJoueur.joueur_2.pseudo_utilisateur;
 
         // Affiche les information du 2eme joueur sur le popup d'avandon de partie
         const POPUP_JOUEUR_ABANDON_PARTIE = document.getElementById("abandon_autre_joueur_partie");
-        POPUP_JOUEUR_ABANDON_PARTIE.getElementsByTagName("h3")[0].innerHTML = statsJoueur.joueur_2.pseudo_utilisateur + " " + POPUP_JOUEUR_ABANDON_PARTIE.getElementsByTagName("h3")[0].innerHTML;
+        POPUP_JOUEUR_ABANDON_PARTIE.getElementsByTagName("h3")[0].textContent = statsJoueur.joueur_2.pseudo_utilisateur + " " + POPUP_JOUEUR_ABANDON_PARTIE.getElementsByTagName("h3")[0].textContent;
     }
     else {
-        difficulte = element.children[1].innerHTML;
-        TITRE_JEU.innerHTML = 'Jeu solo : Difficulté ' + difficulte;
+        difficulte = element.children[1].textContent;
+        TITRE_JEU.textContent = 'Jeu solo : Difficulté ' + difficulte;
     }
 
     // Mode solo ou hote de partie multijoueur
@@ -739,6 +742,11 @@ async function endGame(popup = true) {
             victoire = false;
         }
 
+        // Change le texte qui s'affiche sur le popup de fin de partie en cas de défaite
+        if (!victoire) {
+            POPUP_FIN_PARTIE_TEXTE.textContent = (defaiteCompetitif ? statsJoueur.joueur_2.pseudo_utilisateur + " à terminé la grille avant vous" : "Le temps est écoulé");
+        }
+
         // Si un joueur est connecté
         if (idPartie != 0) {
 
@@ -751,12 +759,12 @@ async function endGame(popup = true) {
 
             // Ajoute un nouvel élément au DOM pour afficher la différence de score
             valeur = document.createElement("P");
-            valeur.innerHTML = differenceStats;
+            valeur.textContent = differenceStats;
             valeur.classList.add("score_global_valeur", differenceStats >= 0 ? "victoire" : "defaite");
             POPUP_FIN_PARTIE_SCORE_GLOBAL.insertAdjacentElement('afterend', valeur);
             evolution = document.createElement("P");
             let scoreFinal = scoreGlobal + parseInt(differenceStats);
-            evolution.innerHTML = scoreGlobal + " --> " + scoreFinal;
+            evolution.textContent = scoreGlobal + " --> " + scoreFinal;
             evolution.classList.add("score_golbal_evolution");
             valeur.insertAdjacentElement('afterend', evolution);
         }
@@ -764,41 +772,32 @@ async function endGame(popup = true) {
             POPUP_FIN_PARTIE_SCORE_GLOBAL.style.display = "none";
         }
 
-        // Affiche uniquement le bouton correspondant au mode de jeu solo ou multi
-        if (multijoueur) {
-
-            // Retire le bouton Rejouer
-            POPUP_FIN_PARTIE.children[5].remove();
-        }
-        else {
-
-            // Retire le bouton Retour au salon
-            POPUP_FIN_PARTIE.lastChild.remove();
-        }
-
         // Affiche un message de victoire ou défaite selon l'état de la partie quand le popup s'affiche
         POPUP_FIN_PARTIE.style.display = "flex";
-        POPUP_FIN_PARTIE_TITRE.innerHTML = (victoire ? "Victoire" : "Défaite") + " !";
-        POPUP_FIN_PARTIE_TEXTE.innerHTML = "Partie terminée";
+        POPUP_FIN_PARTIE_TITRE.textContent = (victoire ? "Victoire" : "Défaite") + " !";
 
-        // Lors du clic sur Rejouer...
-        POPUP_FIN_PARTIE_REJOUER.addEventListener("click", (e) => {
+        // En partie solo uniquement...
+        if (!multijoueur) {
 
-            // Masque le popup
-            POPUP_FIN_PARTIE.style.display = "none";
-            POPUP_DEBUT_PARTIE.style.display = "flex";
+            // Lors du clic sur Rejouer...
+            POPUP_FIN_PARTIE_REJOUER.addEventListener("click", (e) => {
 
-             // Si un joueur est connecté
-            if (idPartie != 0) {
+                // Masque le popup
+                POPUP_FIN_PARTIE.style.display = "none";
+                POPUP_DEBUT_PARTIE.style.display = "flex";
 
-                // Retire les éléments ajoutés au DOM
-                valeur.remove();
-                evolution.remove();
-            }
+                 // Si un joueur est connecté
+                if (idPartie != 0) {
 
-            // Remet le timer à 15 minutes
-            resetTimer();
-        });
+                    // Retire les éléments ajoutés au DOM
+                    valeur.remove();
+                    evolution.remove();
+                }
+
+                // Remet le timer à 15 minutes
+                resetTimer();
+            });
+        }
     }
 }
 
@@ -818,7 +817,7 @@ async function updateStats(victoire) {
 
 // Remet le timer à 15 minutes
 function resetTimer() {
-    TIMER.innerHTML = "Temps : 15:00";
+    TIMER.textContent = "Temps : 15:00";
 }
 
 // Force l'attente du sript pendant la durée pasée en paramettres (en milisecondes)

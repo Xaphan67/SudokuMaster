@@ -241,12 +241,8 @@
 
         <div id="fin_partie" class="popup"><!-- popup de fin de partie -->
             <h3></h3>
-            <p></p>
+            <p>Vous avez correctement teminé la grille</p>
             <p class="score_global">Score global</p>
-            <div class="bouton">
-                <img src="view/assets/svg/Rejouer.svg" alt="">
-                <p>Rejouer</p>
-            </div>
             <a href="index.php?controller=partie&action=lobby" class="bouton boutonPrincipal boutonLarge">Retour au salon</a>
         </div>
 
