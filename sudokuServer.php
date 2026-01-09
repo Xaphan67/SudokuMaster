@@ -69,20 +69,7 @@ class SudokuServer implements MessageComponentInterface {
                     $from->send(json_encode(["commande" => "infos_salle", "mode" => $salleExiste["mode"], "difficulte" => $salleExiste["difficulte"], "hoteId" => $salleExiste["id"]]));
 
                     // Notifie l'arrivée de cette connexion à l'autre connexion déjà dans la salle
-                    $destId = null;
-                    foreach ($this->salles as $clientId => $infos) {
-                        if ($clientId != $from->resourceId && $infos["numero"] == $message->salle) {
-                            $destId = $clientId;
-                            break;
-                        }
-                    }
-
-                    foreach($this->clients as $client) {
-                        if ($client->resourceId == $destId) {
-                            $client->send(json_encode(["commande" => "joueur_rejoint", "joueur" => $message->utilisateur]));
-                            break;
-                        }
-                    }
+                    $this->msgOtherPlayer($from, $message->salle, ["commande" => "joueur_rejoint", "joueur" => $message->utilisateur]);
 
                     echo "Le joueur " . $message->utilisateur . " à rejoint la salle " . $message->salle . "\n";
                 }
@@ -97,20 +84,7 @@ class SudokuServer implements MessageComponentInterface {
             case "partie_prete":
 
                 // Envoie les informations de la partie au 2eme joueur
-                $destId = null;
-                foreach ($this->salles as $clientId => $infos) {
-                    if ($clientId != $from->resourceId && $infos["numero"] == $message->salle) {
-                        $destId = $clientId;
-                        break;
-                    }
-                }
-
-                foreach($this->clients as $client) {
-                    if ($client->resourceId == $destId) {
-                        $client->send(json_encode(["commande" => "partie_prete", "idPartie" => $message->idPartie, "grille" => $message->grille, "solution" => $message->solution]));
-                        break;
-                    }
-                }
+                $this->msgOtherPlayer($from, $message->salle, ["commande" => "partie_prete", "idPartie" => $message->idPartie, "grille" => $message->grille, "solution" => $message->solution]);
                 break;
 
             // Un joueur est prêt
@@ -127,20 +101,7 @@ class SudokuServer implements MessageComponentInterface {
                 }
 
                 // Informe le 2eme joueur que le joueur est prêt
-                $destId = null;
-                foreach ($this->salles as $clientId => $infos) {
-                    if ($clientId != $from->resourceId && $infos["numero"] == $message->salle) {
-                        $destId = $clientId;
-                        break;
-                    }
-                }
-
-                foreach($this->clients as $client) {
-                    if ($client->resourceId == $destId) {
-                        $client->send(json_encode(["commande" => "joueur_pret"]));
-                        break;
-                    }
-                }
+                $this->msgOtherPlayer($from, $message->salle, ["commande" => "joueur_pret"]);
 
                 // Si les deux joueurs de la salle sont prêts
                 // Informe les deux joueurs de démarrer la partie
@@ -170,40 +131,14 @@ class SudokuServer implements MessageComponentInterface {
 
                 // Envoie les informations de la case changée au 2eme joueur
                 $destId = null;
-                foreach ($this->salles as $clientId => $infos) {
-                    if ($clientId != $from->resourceId && $infos["numero"] == $message->salle) {
-                        $destId = $clientId;
-                        break;
-                    }
-                }
-
-                foreach($this->clients as $client) {
-                    if ($client->resourceId == $destId) {
-                        $client->send(json_encode(["commande" => "changer_case", "Y" => $message->Y, "X" => $message->X, "valeur" => $message->valeur]));
-                        break;
-                    }
-                }
+                $this->msgOtherPlayer($from, $message->salle, ["commande" => "changer_case", "Y" => $message->Y, "X" => $message->X, "valeur" => $message->valeur]);
                 break;
 
             // Un joueur à terminé la partie
             case "fin_partie":
 
                 // Envoie l'information au 2eme joueur que la partie est terminée
-                $destId = null;
-                foreach ($this->salles as $clientId => $infos) {
-                    if ($clientId != $from->resourceId && $infos["numero"] == $message->salle) {
-                        $destId = $clientId;
-                        break;
-                    }
-                }
-
-                foreach($this->clients as $client) {
-                    if ($client->resourceId == $destId) {
-                        $client->send(json_encode(["commande" => "fin_partie", "mode" => $message->mode]));
-                        break;
-                    }
-                }
-                break;
+                $this->msgOtherPlayer($from, $message->salle, ["commande" => "fin_partie", "mode" => $message->mode]);
                 break;
         }
     }
@@ -229,5 +164,22 @@ class SudokuServer implements MessageComponentInterface {
 
         // Déconnecte la connection en erreur
         $conn->close();
+    }
+
+    public function msgOtherPlayer(ConnectionInterface $from, $salle, $message) {
+        $destId = null;
+        foreach ($this->salles as $clientId => $infos) {
+            if ($clientId != $from->resourceId && $infos["numero"] == $salle) {
+                $destId = $clientId;
+                break;
+            }
+        }
+
+        foreach($this->clients as $client) {
+            if ($client->resourceId == $destId) {
+                $client->send(json_encode($message));
+                break;
+            }
+        }
     }
 }
