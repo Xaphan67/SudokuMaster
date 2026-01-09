@@ -8,7 +8,7 @@ use Xaphan67\SudokuMaster\Models\ModeDeJeuModel;
 
 class ClasserController extends Controller {
 
-    // Affiche la page d'accueil
+    // Récupérer les statistiques d'un joueur
     public function getPlayerStats() {
 
         // Si un utilisateur est connecté
