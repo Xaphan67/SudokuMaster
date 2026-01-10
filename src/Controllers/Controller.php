@@ -22,7 +22,7 @@ abstract class Controller {
         require_once("view/partials/footer.php");
     }
 
-    // Redirection vers la page erreur 404 en cas de page non trouvée
+    // Affiche la page erreur 404 en cas de page non trouvée
     protected function _notFound() {
 
         // Indique à la vue les variables nécessaires
@@ -31,6 +31,18 @@ abstract class Controller {
         $this->_donnees["image"] = "404";
 
         // Affiche la vue erreurs
-        $this->display("erreur/erreurs");
+        $this->display("main/erreurs");
+    }
+
+    // Affiche la page erreur 403 en cas de page non autorisée
+    protected function _forbidden() {
+
+        // Indique à la vue les variables nécessaires
+        $this->_donnees["titre"] = "Vous n'avez pas accès à cette page";
+        $this->_donnees["texte"] = "Cette page est accessible uniquement aux utilisateurs connectés";
+        $this->_donnees["image"] = "403";
+
+        // Affiche la vue erreurs
+        $this->display("main/erreurs");
     }
 }

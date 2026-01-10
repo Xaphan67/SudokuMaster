@@ -46,8 +46,8 @@
     // si un des éléments non trouvé => redirection vers page 404
     if ($bool404) {
 
-        // Appelle le controller Erreur, l'instancie et appèlle sa méthode erreur404()
-        $controllerName = 'Xaphan67\\SudokuMaster\\Controllers\\ErreurController';
+        // Appelle le controller Main, l'instancie et appèlle sa méthode erreur404()
+        $controllerName = 'Xaphan67\\SudokuMaster\\Controllers\\MainController';
         $controller = new $controllerName();
         $controller->erreur404();
     }
