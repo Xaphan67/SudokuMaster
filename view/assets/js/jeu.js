@@ -150,7 +150,7 @@ function joinRoom() {
                             'Content-Type': 'application/json', // Indique qu'on envoie du JSON
                             'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
                         },
-                        body: JSON.stringify({ modeDeJeu: infosSalle.mode, idJoueur: infosSalle.hoteId}) // Objet JS converti en chaîne JSON
+                        body: JSON.stringify({ modeDeJeu: infosSalle.mode, difficulte: infosSalle.difficulte, idJoueur: infosSalle.hoteId}) // Objet JS converti en chaîne JSON
                 });
                 statsJoueur = await RES_STATS_HOTE.json();
 
@@ -172,7 +172,7 @@ function joinRoom() {
                             'Content-Type': 'application/json', // Indique qu'on envoie du JSON
                             'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
                         },
-                        body: JSON.stringify({ modeDeJeu: infosSalle.mode, idJoueur: infosSalle.joueur}) // Objet JS converti en chaîne JSON
+                        body: JSON.stringify({ modeDeJeu: infosSalle.mode, difficulte: infosSalle.difficulte, idJoueur: infosSalle.joueur}) // Objet JS converti en chaîne JSON
                 });
                 statsJoueur = await RES_STATS_REJOINT.json();
 
