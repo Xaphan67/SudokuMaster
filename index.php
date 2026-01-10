@@ -19,7 +19,7 @@
 
     // Flag sur la présence de la page
     $bool404 = false;
-    
+
     // Création du chemin vers le controller
     $controllerName = 'Xaphan67\\SudokuMaster\\Controllers\\' . ucfirst($controllerCall).'Controller';
 
@@ -28,7 +28,6 @@
 
         // Instanciation du controller
         $controller = new $controllerName();
-
 
         // Test sur la présence de la méthode dans le controller
         if (method_exists($controller, $actionCall)) {
@@ -43,10 +42,13 @@
     }else{
         $bool404 = true;
     }
-    
+
     // si un des éléments non trouvé => redirection vers page 404
-    /*if ($bool404) {
-        header("Location:index.php?controller=errors&action=error_404");
-        exit();
-    }*/
+    if ($bool404) {
+
+        // Appelle le controller Erreur, l'instancie et appèlle sa méthode erreur404()
+        $controllerName = 'Xaphan67\\SudokuMaster\\Controllers\\ErreurController';
+        $controller = new $controllerName();
+        $controller->erreur404();
+    }
 ?>

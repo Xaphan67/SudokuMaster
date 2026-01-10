@@ -31,7 +31,7 @@ class MainController extends Controller {
             $classements[$mode] = $donneesClasser;
         }
 
-        // Indique à la vue le tableau classement
+        // Indique à la vue les variables nécessaires
         $this->_donnees["classements"] = $classements;
 
         // Affiche la vue classements
