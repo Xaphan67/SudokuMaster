@@ -159,7 +159,6 @@
                         <td></td>
                     </tr>
                 </tbody>
-
             </table>
 
             <table class="grille" id="grille">
@@ -203,8 +202,8 @@
 
         <div id="verif_joueur_pret" class="popup popup_large"><!-- popup de vérification joueur prêt -->
             <h3>Êtes-vous prêt ?</h3>
-            <p>Cliquez sur le bouton "Je suis prêt" dès que vous êtes prêt à commencer la partie.</p>
-            <p>La partie débutera dès que les deux joueurs sont prêts.</p>
+            <p>Cliquez sur le bouton "Je suis prêt" dès que vous êtes prêt à commencer la partie</p>
+            <p>La partie débutera dès que les deux joueurs sont prêts</p>
             <div id="joueurs">
                 <div>
                     <div>
@@ -249,8 +248,8 @@
         <div id="erreur" class="popup"><!-- popup d'erreur de grille -->
             <h3>Une erreur est survenue</h3>
             <p>
-                Impossible de récupérer une grille actuellement.<br>
-                Veuillez réessayer plus tard.
+                Impossible de récupérer une grille actuellement<br>
+                Veuillez réessayer plus tard
             </p>
             <a href="index.php" class="bouton boutonPrincipal boutonLarge">Retour à l'accueil</a>
         </div>
@@ -258,8 +257,8 @@
         <div id="erreur_salle" class="popup popup_large"><!-- popup d'erreur de salle -->
             <h3>Une erreur est survenue</h3>
             <p>
-                La salle demandée n'existe pas.<br>
-                Veuillez réessayer.
+                La salle demandée n'existe pas<br>
+                Veuillez réessayer
             </p>
             <a href="index.php?controller=partie&action=lobby" class="bouton boutonPrincipal boutonLarge">Retour au salon</a>
         </div>
@@ -267,8 +266,8 @@
         <div id="erreur_serveur" class="popup popup_large"><!-- popup d'erreur de connexion au serveur WebSocket -->
             <h3>Une erreur est survenue</h3>
             <p>
-                Impossible de contacter le serveur de parties.<br>
-                Veuillez réessayer plus tard.
+                Impossible de contacter le serveur de parties<br>
+                Veuillez réessayer plus tard
             </p>
             <a href="index.php?controller=partie&action=lobby" class="bouton boutonPrincipal boutonLarge">Retour au salon</a>
         </div>

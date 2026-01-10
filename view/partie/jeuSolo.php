@@ -105,7 +105,6 @@
                         <td></td>
                     </tr>
                 </tbody>
-
             </table>
 
             <table class="grille" id="grille">
@@ -189,8 +188,8 @@
         <div id="erreur" class="popup"><!-- popup d'erreur de grille -->
             <h3>Une erreur est survenue</h3>
             <p>
-                Impossible de récupérer une grille actuellement.<br>
-                Veuillez réessayer plus tard.
+                Impossible de récupérer une grille actuellement<br>
+                Veuillez réessayer plus tard
             </p>
             <a href="index.php" class="bouton boutonPrincipal boutonLarge">Retour à l'accueil</a>
         </div>
