@@ -207,7 +207,7 @@ header>div {
   align-items: center;
   margin: 0 auto;
   max-width: 1200px;
-  height: 80px;
+  height: 60px;
 }
 
 .logo {
@@ -229,7 +229,7 @@ nav {
   display: flex;
   align-items: center;
   gap: 20px;
-  height: 80px;
+  height: 60px;
 }
 
 #menu_utilisateur {
@@ -237,7 +237,7 @@ nav {
   position: absolute;
   gap: 7px;
   right: 0px;
-  top: 80px;
+  top: 60px;
   min-width: 280px;
   font-size: 24px;
   background-color: var(--CrimsonViolet);
@@ -280,7 +280,7 @@ footer>div {
   align-items: center;
   margin: 0 auto;
   max-width: 1200px;
-  height: 64px;
+  height: 60px;
 }
 
 footer>div div {
@@ -303,7 +303,7 @@ footer div:last-child {
   justify-content: space-between;
   align-self: center;
   padding: 40px;
-  margin: 40px auto auto auto;
+  margin: 10px auto auto auto;
   background-color: var(--WisteriaBlue25pourcent);
   border-radius: 20px;
 }
@@ -407,7 +407,7 @@ footer div:last-child {
 }
 
 .separateur_haut {
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 }
 
 #conteneur_jeu {
@@ -454,8 +454,8 @@ footer div:last-child {
 
 .grille td {
   position: relative;
-  height: 80px;
-  width: 80px;
+  height: 76px;
+  width: 76px;
   border: 1px solid var(--CrimsonViolet);
   text-align: center;
 }
@@ -702,7 +702,7 @@ margin-bottom: 11px;
 #classements {
   display: flex;
   justify-content: space-between;
-  margin-top: 40px;
+  margin-top: 10px;
 }
 
 #classements>div {
@@ -878,7 +878,7 @@ margin-bottom: 11px;
 
 #accueil_haut {
   justify-content: space-between;
-  margin-top: 40px;
+  margin-top: 10px;
   margin-bottom: 20px;
 }
 
@@ -1061,7 +1061,7 @@ margin-bottom: 11px;
 /* -------------------------------------------------- Règles  --------------------------------------------------*/
 
 #regles {
-  margin-top: 40px;
+  margin-top: 10px;
   min-height: 680px;
 }
 
@@ -1125,8 +1125,8 @@ main {
   justify-content: center;
   flex-direction: column;
   max-width: 1200px;
-  min-height: calc(100vh - 146px);
-  padding: 40px 0 40px 0;
+  min-height: calc(100vh - 122px);
+  padding: 10px 0px;
   margin: 0 auto;
 }
 
