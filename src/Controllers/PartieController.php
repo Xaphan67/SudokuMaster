@@ -33,33 +33,76 @@ class PartieController extends Controller {
 
         // Affiche la vue salon
         $this->display("partie/salon");
+
+        // Efface les erreurs et saisies relatives aux formulaires stockées en session
+        unset($_SESSION["erreurs"]);
+        unset($_SESSION["saisie"]["salle"]);
     }
 
     // Afficher l'écran de partie multijoueur
     public function multiBoard() {
 
-        // Si le formulaire "Créer une salle" est soumis
-        if (isset($_POST["creer_salle"])) {
+        // Si l'utilisateur est connecté
+        if (isset($_SESSION["utilisateur"])) {
 
-            // Stocke en session le fait que le joueur est hote de la partie
-            // et les informations de la partie
-            $_SESSION["partie"]["hote"] = true;
-            $_SESSION["partie"]["mode"] = $_POST["mode"];
-            $_SESSION["partie"]["difficulte"] =  $_POST["difficulte"];
+            // Crée un tableau pour gérer les erreurs
+            $erreurs = [];
+
+            // Si le formulaire "Créer une salle" est soumis
+            if (isset($_POST["creer_salle"])) {
+
+                // Stocke en session le fait que le joueur est hote de la partie
+                // et les informations de la partie
+                $_SESSION["partie"]["hote"] = true;
+                $_SESSION["partie"]["mode"] = $_POST["mode"];
+                $_SESSION["partie"]["difficulte"] =  $_POST["difficulte"];
+            }
+
+            // Si le formulaire "Rejoindre une salle" est soumis
+            if (isset($_POST["rejoindre_salle"])) {
+
+                // Filtrage des données
+                // Protège contre la faille XSS
+                $salle = trim(filter_input(INPUT_POST, "salle", FILTER_SANITIZE_SPECIAL_CHARS));
+
+                // Test des données
+                if (!$salle) {
+                    $erreurs["salle"] = "Ce champ est obligatoire";
+                }
+                else if (preg_match("/([^0-9])/",($salle))) {
+                    $erreurs["salle"] = "L'ID de la salle ne peut contenir que des chiffres";
+                }
+
+                // Si il n'y à aucune erreur
+                if (count($erreurs) == 0) {
+                    $_SESSION["partie"]["hote"] = false;
+                    $_SESSION["partie"]["salle"] = $salle;
+                }
+                else {
+
+                    // Stocke les erreurs en session
+                    $_SESSION["erreurs"] = $erreurs;
+
+                    // Stocke les données saisies par l'utilisateur
+                    // pour les afficher au chargement de la page salon
+                    $_SESSION["saisie"]["salle"] = $_POST["salle"];
+
+                    // Redirige l'utilisateur vers la page salon
+                    header("Location:index.php?controller=partie&action=lobby");
+                }
+            }
+
+            // Indique à la vue les variables nécessaires
+            $script = ["jeu.js", "api.js"];
+            $this->_donnees["script"] = $script;
+
+            // Affiche la vue multijoueur
+            $this->display("partie/multijoueur");
+        } else {
+
+            // Redirige l'utilisateur vers la page d'accueil
+            header("Location:index.php");
         }
-
-        // Si le formulaire "Rejoindre une salle" est soumis
-        if (isset($_POST["rejoindre_salle"])) {
-            $_SESSION["partie"]["hote"] = false;
-            $_SESSION["partie"]["salle"] = $_POST["salle"];
-        }
-
-        // Indique à la vue les variables nécessaires
-        $script = ["jeu.js", "api.js"];
-        $this->_donnees["script"] = $script;
-
-        // Affiche la vue multijoueur
-        $this->display("partie/multijoueur");
     }
 
     // Retourne si l'utilisateur est l'hôte de la partie multijoueur

@@ -662,6 +662,7 @@ td:not(.celluleFixe, .selected_highlight) li {
 #salon>section {
   display: flex;
   flex-direction: column;
+  width: 440px;
 }
 
 #salon form {

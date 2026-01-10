@@ -37,9 +37,10 @@
                             name="salle"
                             type="text"
                             placeholder="948561"
+                            <?php echo 'value="' . (isset($_SESSION["saisie"]["salle"]) ? $_SESSION["saisie"]["salle"] : "") . '"' ?>
                             required
                         />
-                        <?php if (isset($erreurs["salle"])) { echo '<p>' . $erreurs["salle"] . '</p>'; } ?>
+                        <?php if (isset($_SESSION["erreurs"]["salle"])) { echo '<p>' . $_SESSION["erreurs"]["salle"] . '</p>'; } ?>
                     </div>
                     <input type="submit" name="rejoindre_salle" class="bouton boutonPrincipal boutonDefaut" value="Rejoindre" />
                 </form>
