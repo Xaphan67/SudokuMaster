@@ -679,6 +679,10 @@ font-weight: bold;
 margin-bottom: 11px;
 }
 
+#salon p {
+  text-align: center;
+}
+
 #salon h2 {
   text-align: center;
 }
@@ -971,7 +975,7 @@ margin-bottom: 11px;
   display: none;
 }
 
-#modifier_compte p {
+#modifier_compte p, #supprimer_compte p {
   text-align: center;
 }
 

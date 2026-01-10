@@ -225,6 +225,9 @@ class UtilisateurController extends Controller {
                 $utilisateur = new Utilisateur;
                 $utilisateur->hydrate($utilisateurModel->findById($_SESSION["utilisateur"]["id_utilisateur"]));
 
+                // Récupère le hash du mot de passe de l'utilisateur via son email
+                $mdpHash = $utilisateurModel->getPasswordHash($_SESSION["utilisateur"]["email_utilisateur"]);
+
                 // Filtrage des données
                 // Protège contre la faille XSS
                 $pseudo = trim(filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_SPECIAL_CHARS));
@@ -257,6 +260,9 @@ class UtilisateurController extends Controller {
 
                 if (empty($_POST["mdp_check"])) {
                     $erreurs["mdp_check"] = "Ce champ est obligatoire";
+                }
+                else if (!password_verify($_POST["mdp_check"], $mdpHash["mdp_utilisateur"])) {
+                    $erreurs["mdp_check"] = "Mot de passe incorrect";
                 }
 
                 // Si il n'y à aucune erreur
@@ -296,8 +302,8 @@ class UtilisateurController extends Controller {
 
                     // Stocke les données saisies par l'utilisateur
                     // Pour les afficher à la place de celles en session
-                    $pseudoSaisi = $_POST["pseudo"];
-                    $emailSaisi = $_POST["email"];
+                    $this->_donnees["pseudoSaisi"] = $_POST["pseudo"];
+                    $this->_donnees["emailSaisi"] = $_POST["email"];
                 }
             }
 
@@ -307,9 +313,19 @@ class UtilisateurController extends Controller {
                 // Crée une instance du modèle Utilisateur
                 $utilisateurModel = new UtilisateurModel;
 
+                // Récupère le hash du mot de passe de l'utilisateur via son email
+                $mdpHash = $utilisateurModel->getPasswordHash($_SESSION["utilisateur"]["email_utilisateur"]);
+
                 // Test des données
                 if (empty($_POST["mdp_check"])) {
                     $erreurs["mdp_check"] = "Ce champ est obligatoire";
+                }
+
+                if (empty($_POST["mdp_check"])) {
+                    $erreurs["mdp_check"] = "Ce champ est obligatoire";
+                }
+                else if (!password_verify($_POST["mdp_check"], $mdpHash["mdp_utilisateur"])) {
+                    $erreurs["mdp_check"] = "Mot de passe incorrect";
                 }
 
                 // Si il n'y à aucune erreur

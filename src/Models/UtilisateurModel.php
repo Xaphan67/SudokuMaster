@@ -96,7 +96,7 @@ class UtilisateurModel extends Model {
 
         // Requête préparée pour récupérer les informations de l'utilisateur
         $query =
-            "SELECT id_utilisateur, pseudo_utilisateur, email_utilisateur  FROM utilisateur
+            "SELECT id_utilisateur, pseudo_utilisateur, email_utilisateur FROM utilisateur
             WHERE email_utilisateur=:email_utilisateur";
 
         $prepare = $this->_db->prepare($query);
