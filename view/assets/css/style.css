@@ -690,7 +690,7 @@ margin-bottom: 11px;
 #salon_instructions {
   max-width: 725px;
   text-align: center;
-  margin: 40px auto;
+  margin: 10px auto 40px auto;
 }
 
 .salon_inactif {
