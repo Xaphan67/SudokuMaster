@@ -42,7 +42,7 @@ class ClasserController extends Controller {
         $statistiquesJ1 = $classerModel->findByUserAndMode($_SESSION["utilisateur"]["id_utilisateur"], $modeDeJeu->getId(), true);
         $statistiquesJ2 = $classerModel->findByUserAndMode($dataJS["idJoueur"], $modeDeJeu->getId(), true);
 
-        // Si aucune statistiques enregistrée en base de donnée
+        // Si aucune statistiques enregistrée en base de donnée pour l'un des joueurs
         if (!$statistiquesJ1 || !$statistiquesJ2) {
 
             // Crée une instance du modèle Utilisateur

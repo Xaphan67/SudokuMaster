@@ -16,10 +16,10 @@ abstract class Controller {
         }
 
         // Appelle les partials et la vue
-        require_once("view/partials/head.php");
-        require_once("view/partials/header.php");
+        require_once("view/_partials/head.php");
+        require_once("view/_partials/header.php");
         include("view/" . $vue . ".php");
-        require_once("view/partials/footer.php");
+        require_once("view/_partials/footer.php");
     }
 
     // Affiche la page erreur 404 en cas de page non trouvée
