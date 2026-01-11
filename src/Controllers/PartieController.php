@@ -31,6 +31,9 @@ class PartieController extends Controller {
     // Afficher l'écran de lobby pour partie multijoueur
     public function lobby() {
 
+        // Indique à la vue les variables nécessaires
+        $this->_donnees ["utilisateurConnecte"] = isset($_SESSION["utilisateur"]);
+
         // Affiche la vue salon
         $this->display("partie/salon");
 

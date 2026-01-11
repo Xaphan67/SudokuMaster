@@ -1,7 +1,3 @@
-<?php
-    $utilisateurConnecte = isset($_SESSION["utilisateur"]);
-?>
-
 <main>
     <div id="conteneur_principal" <?php echo 'class="vertical ' . (!$utilisateurConnecte ? 'salon_inactif" inert' : '"') ?>>
         <h1>Multijoueur</h1>
