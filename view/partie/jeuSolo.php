@@ -1,7 +1,6 @@
 <main>
-
-    <h2 id="titre_jeu" class="separateur_haut">Jeu solo</h2>
-    <div id="conteneur_principal">
+    <div id="conteneur_principal" class="vertical">
+        <h2 id="titre_jeu" class="separateur_haut">Jeu solo</h2>
         <div id="conteneur_jeu" inert>
             <table class="grille" id="grille_vide" inert>
                 <tbody>
