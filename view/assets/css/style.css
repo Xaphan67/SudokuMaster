@@ -156,6 +156,35 @@ nav {
   display: none;
 }
 
+/* Footer */
+
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 1200px;
+  height: 100px;
+}
+
+footer div {
+  display: flex;
+}
+
+footer img {
+  height: 30px;
+}
+
+footer div:first-child {
+  gap: 20px;
+}
+
+footer div:last-child {
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
 /* Téléphones mode protrait et plus grand */
 @media (min-width: 576px) {
 
@@ -345,28 +374,22 @@ nav {
   /* --------------------------------------------------  Footer  --------------------------------------------------*/
 
   footer {
-    border-top: 1px solid var(--CrimsonViolet50pourcent);
-    box-shadow: 0px 0px 4px var(--CrimsonViolet50pourcent);
-  }
-
-  footer>div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 auto;
-    max-width: 1200px;
     height: 60px;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: auto;
   }
 
-  footer>div div {
+  footer div {
     display: flex;
   }
 
-  footer div:first-child {
-    gap: 20px;
+  footer img {
+    height: unset;
   }
 
   footer div:last-child {
+    flex-direction: row;
     gap: 27px;
   }
 
@@ -1227,7 +1250,8 @@ nav {
 
 main {
   border-top: 1px solid var(--CrimsonViolet50pourcent);
-  box-shadow: inset 0px 4px 4px var(--CrimsonViolet50pourcent);
+  border-bottom: 1px solid var(--CrimsonViolet50pourcent);
+  box-shadow: inset 0px 4px 4px var(--CrimsonViolet50pourcent), inset 0px 0px 4px var(--CrimsonViolet50pourcent);
   display: flex;
   justify-content: center;
   flex-direction: column;
