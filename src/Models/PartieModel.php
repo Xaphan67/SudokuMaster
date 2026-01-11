@@ -36,49 +36,18 @@ class PartieModel extends Model {
         }
     }
 
-    function edit(Partie $partie) : bool {
+    function setTime(Partie $partie) : bool {
 
-        // Requête préparée pour modifier la partie
+        // Requête préparée pour modifier la durée de la partie
         $query =
-            "UPDATE partie SET";
-
-        $multiple = false;
-
-        if (!empty($partie->getDuree())) {
-            $query .= " duree_partie = :duree_partie";
-            $multiple = true;
-        }
-
-        if (!empty($partie->getGagnant())) {
-            $query .= $multiple ? "," : "";
-            $query .= " gagnant_partie = :gagnant_partie";
-            $multiple = true;
-        }
-
-        if (!empty($partie->getCo_gagnant())) {
-            $query .= $multiple ? "," : "";
-            $query .= " co_gagnant_partie = :co_gagnant_partie";
-        }
-
-        $query .= " WHERE id_partie = :id_partie";
+            "UPDATE partie SET duree_partie = :duree_partie
+             WHERE id_partie = :id_partie";
 
         $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
-        if (!empty($partie->getDuree())) {
-            $prepare->bindValue(":duree_partie", $partie->getDuree(), PDO::PARAM_STR);
-        }
-
-        if (!empty($partie->getGagnant())) {
-            $prepare->bindValue(":gagnant_partie", $partie->getGagnant(), PDO::PARAM_INT);
-        }
-
-        if (!empty($partie->getCo_gagnant())) {
-            $prepare->bindValue(":co_gagnant_partie", $partie->getCo_gagnant(), PDO::PARAM_INT);
-        }
-
+        $prepare->bindValue(":duree_partie", $partie->getDuree(), PDO::PARAM_STR);
         $prepare->bindValue(":id_partie", $partie->getId(), PDO::PARAM_INT);
-
 
         // Execute la requête. Retourne true (si réussite) ou false (si echec)
         return $prepare->execute();
@@ -88,7 +57,7 @@ class PartieModel extends Model {
 
         // Requête préparée pour récupérer les informations de la partie
         $query =
-            "SELECT id_partie, duree_partie, gagnant_partie, co_gagnant_partie, id_mode_de_jeu, id_difficulte FROM partie
+            "SELECT id_partie, duree_partie, id_mode_de_jeu, id_difficulte FROM partie
             WHERE id_partie=:id_partie";
 
         $prepare = $this->_db->prepare($query);

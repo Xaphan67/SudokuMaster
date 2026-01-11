@@ -380,22 +380,6 @@ class PartieController extends Controller {
         $json_data = file_get_contents('php://input'); // Lit le corps brut de la requête
         $dataJS = json_decode($json_data, true); // Décode le JSON en tableau associatif
 
-        // Crée une instance du modèle Partie et appelle la méthode
-        // pour récupérer la partie en base de données et via son ID
-        $partieModel = new PartieModel;
-        $donneesPartie = $partieModel->findById($dataJS["idPartie"]);
-
-        // Crée un nouvel objet Partie et l'hydrate avec les données
-        $partie = new Partie;
-        $partie->hydrate($donneesPartie);
-
-        // Crée une instance du modèle ModeDeJeu
-        $modeDeJeuModel = new ModeDeJeuModel;
-
-        // Crée un nouvel objet ModeDeJeu et l'hydrate avec les données présentes en base de donnée
-        $modeDeJeu = new ModeDeJeu;
-        $modeDeJeu->hydrate($modeDeJeuModel->findByLabel($dataJS["modeDeJeu"]));
-
         // Crée une instance du modèle Utilisateur
         $utilisateurModel = new UtilisateurModel;
 
@@ -403,23 +387,21 @@ class PartieController extends Controller {
         $utilisateur = new Utilisateur;
         $utilisateur->hydrate($utilisateurModel->findById($_SESSION["utilisateur"]["id_utilisateur"]));
 
+
+        // Crée une instance du modèle Participer et appelle la méthode
+        // pour récupérer la participation en base de données via l'ID de l'utilisateur et de la partie
+        $participerModel = new ParticiperModel;
+        $donneesParticiper = $participerModel->findByUserAndGame($utilisateur->getId(), $dataJS["idPartie"]);
+
+        // Crée un nouvel objet Participer et l'hydrate avec les données
+        $participer = new Participer;
+        $participer->hydrate($donneesParticiper);
+
         // En cas de victoire du joueur
         if ($dataJS["victoire"]) {
 
-            // En partie solo, ou si hôte de la partie multijoueur
-            if ($modeDeJeu->getLibelle() == "Solo" || (($modeDeJeu->getLibelle() != "Solo" && $dataJS["hote"])))
-            {
-
-                // Ajoute le gagnant à l'objet Partie
-                $partie->setGagnant($utilisateur->getId());
-            }
-
-            // En partie multijoueur, si pas hôte
-            else if ($modeDeJeu->getLibelle() != "Solo" && !$dataJS["hote"]) {
-
-                // Ajoute le co-gagnant à l'objet Partie
-                $partie->setCo_gagnant($utilisateur->getId());
-            }
+            // Met à jour les le gagnant de la participation en base de donnée
+            $participerModel->addWinner($participer);
         }
 
         // Calcule le temps de la partie
@@ -432,11 +414,27 @@ class PartieController extends Controller {
             $secondes = 0;
         }
 
+        // Crée une instance du modèle Partie et appelle la méthode
+        // pour récupérer la partie en base de données et via son ID
+        $partieModel = new PartieModel;
+        $donneesPartie = $partieModel->findById($dataJS["idPartie"]);
+
+        // Crée un nouvel objet Partie et l'hydrate avec les données
+        $partie = new Partie;
+        $partie->hydrate($donneesPartie);
+
         // Met à jour le temps dans l'objet Partie
         $partie->setDuree("00:" . ($minutes < 10 ? "0" : "") . $minutes . ":" . ($secondes < 10 ? "0" : "") . $secondes);
 
-        // Met à jour les données de la partie en base de donnée
-        $partieModel->edit($partie);
+        // Met à jour la durée de la partie en base de donnée
+        $partieModel->setTime($partie);
+
+        // Crée une instance du modèle ModeDeJeu
+        $modeDeJeuModel = new ModeDeJeuModel;
+
+        // Crée un nouvel objet ModeDeJeu et l'hydrate avec les données présentes en base de donnée
+        $modeDeJeu = new ModeDeJeu;
+        $modeDeJeu->hydrate($modeDeJeuModel->findByLabel($dataJS["modeDeJeu"]));
 
         // Crée une instance du modèle Classer et appelle la méthode
         // pour récupérer les statistiques en base de donnée

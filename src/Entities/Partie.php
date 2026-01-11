@@ -8,8 +8,6 @@ class Partie extends Entity {
     private int $mode_de_jeu;
     private int $difficulte;
     private ?string $duree;
-    private ?int $gagnant = null;
-    private ?int $co_gagnant;
 
     // Constructeur
 
@@ -36,14 +34,6 @@ class Partie extends Entity {
         return $this->duree;
     }
 
-    public function getGagnant() : ?int {
-        return $this->gagnant;
-    }
-
-    public function getCo_gagnant() : ?int {
-        return $this->co_gagnant;
-    }
-
     // Setters
 
     public function setId($id) {
@@ -60,13 +50,5 @@ class Partie extends Entity {
 
     public function setDuree($duree) {
         $this->duree = $duree;
-    }
-
-    public function setGagnant($gagnant) {
-        $this->gagnant = $gagnant;
-    }
-
-    public function setCo_gagnant($co_gagnant) {
-        $this->co_gagnant = $co_gagnant;
     }
 }

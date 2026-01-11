@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `mode_de_jeu` (
   `id_mode_de_jeu` int NOT NULL,
   `libelle_mode_de_jeu` varchar(50) NOT NULL,
   PRIMARY KEY (`id_mode_de_jeu`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table sudoku_master.mode_de_jeu : ~3 rows (environ)
 INSERT INTO `mode_de_jeu` (`id_mode_de_jeu`, `libelle_mode_de_jeu`) VALUES
@@ -101,8 +101,6 @@ DROP TABLE IF EXISTS `partie`;
 CREATE TABLE IF NOT EXISTS `partie` (
   `id_partie` int NOT NULL AUTO_INCREMENT,
   `duree_partie` time DEFAULT NULL,
-  `gagnant_partie` int DEFAULT NULL,
-  `numero_salle_partie` varchar(10) DEFAULT NULL,
   `id_mode_de_jeu` int NOT NULL,
   `id_difficulte` int NOT NULL,
   PRIMARY KEY (`id_partie`),
@@ -119,6 +117,7 @@ DROP TABLE IF EXISTS `participer`;
 CREATE TABLE IF NOT EXISTS `participer` (
   `Id_utilisateur` int NOT NULL,
   `id_partie` int NOT NULL,
+  `gagnant` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id_utilisateur`,`id_partie`),
   KEY `id_partie` (`id_partie`),
   CONSTRAINT `participer_ibfk_1` FOREIGN KEY (`Id_utilisateur`) REFERENCES `utilisateur` (`Id_utilisateur`),
