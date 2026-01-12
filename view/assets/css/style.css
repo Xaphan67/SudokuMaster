@@ -192,6 +192,44 @@ td {
   padding: 0px 15px;
 }
 
+/* Onglets */
+
+.onglets {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+.onglets>p {
+  height: 40px;
+  line-height: 40px;
+  width: 100%;
+  text-align: center;
+}
+
+.onglet_actif {
+  color: var(--White);
+  background-color: var(--WisteriaBlue);
+  border-radius: 10px;
+  transition: all 0.5s ease;
+}
+
+.onglet_actif:hover {
+  background-color: var(--WisteriaBlue125pourcent);
+}
+
+.onglets>p:not(.onglet_actif) {
+  background-color: var(--WisteriaBlue50pourcent);
+  border-radius: 10px;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.onglets>p:not(.onglet_actif):hover {
+  background-color: var(--WisteriaBlue75pourcent);
+}
+
 /* Formulaires */
 
 select, input[type="text"], input[type="email"], input[type="password"] {
@@ -371,6 +409,60 @@ nav {
   display: none;
 }
 
+/* Règles */
+
+#regles {
+  margin-top: 10px;
+  min-height: 680px;
+}
+
+
+#regles h2 {
+  font-family: "inter";
+  font-size: clamp(1.25rem, 3.125vw, 1.333rem);
+  text-align: left;
+  margin: 15px 0px 0px 0px;
+}
+
+#regles>div:not(:first-child) {
+  margin: auto 0px;
+}
+
+.onglets_regles p {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#regles_generalites {
+  display: flex;
+  flex-direction: column;
+  text-align: justify;
+}
+
+#regles_processus>div:last-child {
+  display: none;
+}
+
+#regles_processus>div>div>div {
+  margin-top: 15px;
+}
+
+#regles_repetez, #regles_processus {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#regles_repetez>img, #regles_processus>div>img {
+  height: min(50vw, 250px);
+  width: min(50vw, 250px);
+  margin: 0px auto 15px auto;
+}
+
+#regles_generalites p, #regles_repetez p, #regles_processus p {
+  margin-top: 15px;
+}
+
 /* Footer */
 
 footer {
@@ -420,6 +512,25 @@ section p {
   #boutons_haut {
     flex-direction: row;
     gap: 15px;
+  }
+
+  /* Règles */
+
+  .onglets_regles {
+    margin-bottom: 15px;
+  }
+
+  #regles_repetez>img, #regles_processus>div>img {
+    height: min(50vw, 350px);
+    width: min(50vw, 350px);
+  }
+
+  #regles_generalites h2:first-child, #regles_repetez p:first-child, #regles_processus p:first-child {
+    margin-top: 0px;
+  }
+
+  #regles_processus>div:last-child {
+    margin-top: 15px;
   }
 }
 
@@ -524,6 +635,37 @@ section p {
     height: min(35vw, 456px);
   }
 
+  /* Regles */
+
+  #regles_processus>div>div>div {
+    display: none;
+  }
+
+  #regles_processus>div:last-child {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #regles_processus>div:last-child {
+    flex: 2;
+  }
+
+  #regles_processus>div:first-child {
+    display: flex;
+  }
+
+  #regles_repetez, #regles_processus>div:first-child {
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+  }
+
+  #regles_repetez>img, #regles_processus>div>img {
+    height: min(41vw, 350px);
+    width: min(41vw, 350px);
+    margin: auto;
+  }
+
   /* Footer */
 
   footer {
@@ -560,6 +702,17 @@ section p {
     min-width: 280px;
   }
 
+  .onglets {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .onglets>p {
+    width: 45%;
+  }
+
   .formulaire {
     max-width: 350px;
     margin: 0px auto 0px 5vw;
@@ -592,6 +745,22 @@ section p {
     margin: 0px auto 30px auto;
   }
 
+  /* Regles */
+
+  #regles_processus>div>div>div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #regles_processus>div:last-child {
+    display: none;
+  }
+
+  #regles_repetez>img, #regles_processus>div>img {
+    height: 400px;
+    width:400px;
+  }
+
   /* Footer */
 
   footer div:last-child {
@@ -609,6 +778,16 @@ section p {
 
   label {
     font-size: 24px;
+  }
+
+  .onglets {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+
+  .onglets>p {
+    width: 33%;
   }
 
   .formulaire {

@@ -22,10 +22,18 @@
                 </div>
             </div>
             <div id="regles_processus">
-                <img src="view/assets/img/Regles2.webp" alt="">
                 <div>
-                    <p>Que signifie exactement le « processus d'élimination » dans le Sudoku ? Prenons un exemple. Dans la grille illustrée ci-dessous, la colonne située à l'extrême gauche (encerclée en bleu) ne comporte plus que trois chiffres manquants : le 1, le 5 et le 6.</p>
-                    <p>Pour déterminer quel chiffre peut être placé dans chaque case, il est possible d'appliquer le processus d'élimination en observant les chiffres déjà présents dans les carrés, les lignes et les colonnes adjacents. En effet, aucun chiffre de 1 à 9 ne peut apparaître plus d'une fois dans une même ligne, colonne ou sous-grille.</p>
+                    <img src="view/assets/img/Regles2.webp" alt="">
+                    <div>
+                        <p>Que signifie exactement le « processus d'élimination » dans le Sudoku ? Prenons un exemple. Dans la grille illustrée ci-dessous, la colonne située à l'extrême gauche (encerclée en bleu) ne comporte plus que trois chiffres manquants : le 1, le 5 et le 6.</p>
+                        <p>Pour déterminer quel chiffre peut être placé dans chaque case, il est possible d'appliquer le processus d'élimination en observant les chiffres déjà présents dans les carrés, les lignes et les colonnes adjacents. En effet, aucun chiffre de 1 à 9 ne peut apparaître plus d'une fois dans une même ligne, colonne ou sous-grille.</p>
+                        <div>
+                            <p>Dans cet exemple, le chiffre 1 étant déjà présent dans les carrés supérieur gauche et central gauche (encerclés en rouge), une seule case de la colonne de gauche peut l'accueillir : celle entourée en vert. Ce raisonnement illustre le processus d'élimination du Sudoku, qui consiste à identifier les chiffres manquants et à déduire leur emplacement possible.</p>
+                            <p>Bien que ses règles soient simples, le Sudoku propose une grande variété de grilles et de niveaux de difficulté, reposant sur des principes fondamentaux : l'utilisation des chiffres de 1 à 9, le raisonnement déductif et l'absence de répétition dans chaque ligne, colonne et carré.</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
                     <p>Dans cet exemple, le chiffre 1 étant déjà présent dans les carrés supérieur gauche et central gauche (encerclés en rouge), une seule case de la colonne de gauche peut l'accueillir : celle entourée en vert. Ce raisonnement illustre le processus d'élimination du Sudoku, qui consiste à identifier les chiffres manquants et à déduire leur emplacement possible.</p>
                     <p>Bien que ses règles soient simples, le Sudoku propose une grande variété de grilles et de niveaux de difficulté, reposant sur des principes fondamentaux : l'utilisation des chiffres de 1 à 9, le raisonnement déductif et l'absence de répétition dans chaque ligne, colonne et carré.</p>
                 </div>
