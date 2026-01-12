@@ -243,6 +243,16 @@ select, input[type="text"], input[type="email"], input[type="password"] {
   cursor: text;
 }
 
+select {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path fill="%23000000" d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px top 9px;
+  cursor: default;
+  appearance:none;
+  -moz-appearance:none; /* Firefox */
+  -webkit-appearance:none; /* Safari et Chrome */
+}
+
 input[type="submit"] {
   border: transparent;
   margin: 15px auto 0px auto;
@@ -409,13 +419,31 @@ nav {
   display: none;
 }
 
+/* Salon */
+
+#salon_instructions {
+  margin: 10px auto;
+  text-align: center;
+  max-width: 725px
+}
+
+#salon {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.salon_inactif {
+  filter: opacity(0.40);
+}
+
+
 /* Règles */
 
 #regles {
   margin-top: 10px;
   min-height: 680px;
 }
-
 
 #regles h2 {
   font-family: "inter";
@@ -490,6 +518,34 @@ footer div:last-child {
   flex-direction: column;
   align-items: center;
   gap: 3px;
+}
+
+/* Popups */
+
+.popup {
+  position: absolute;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+  top : 50%;
+  left : 50%;
+  width: calc(100vw - 50px);
+  max-width: 550px;
+  border-radius: 15px;
+  background-color: var(--WisteriaBlue25pourcent);
+  box-shadow: 0px 4px 4px 0px #686868;
+  text-align: center;
+}
+
+.popup h3 {
+  font-size: clamp(1.5rem, 3.75vw, 1.6rem);
+}
+
+#debut_partie, #fin_partie, #modifier_compte, #supprimer_compte,
+#compte_requis, #verif_joueur_pret, #abandon_autre_joueur_partie,
+#abandon_partie, #erreur, #erreur_salle, #erreur_serveur {
+  display: flex;
+  transform: translateX(-50%) translateY(-50%);
 }
 
 /* Settings généraux */
@@ -633,6 +689,30 @@ section p {
     margin: auto;
     width: min(35vw, 456px);
     height: min(35vw, 456px);
+  }
+
+  /* Salon */
+
+  #salon {
+    flex-direction: row;
+    justify-content: space-around;
+    align-self: center;
+  }
+
+  #salon section {
+    width: 45%;
+    margin: unset;
+  }
+
+  #salon h2 {
+    text-align: center;
+  }
+
+  #salon form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
   }
 
   /* Regles */
