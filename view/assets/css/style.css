@@ -111,6 +111,17 @@ sup {
   line-height: 0px;
 }
 
+section {
+  display: flex;
+  flex-direction: column;
+  width: calc(100vw - 50px);
+  padding: 30px;
+  margin: 0px 25px;
+  border-radius: 20px;
+  background-color: var(--WisteriaBlue25pourcent);
+  max-width: 100%;
+}
+
 /* Texte */
 
 a, a:visited:not(.bouton) {
@@ -124,6 +135,22 @@ p {
   padding: 0;
   color: var(--MidnightViolet);
   cursor: inherit;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: bold;
+  text-align: center;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3.75vw, 1.6rem);
+  text-align: center;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 3.125vw, 1.333rem);
+  text-align: center;
 }
 
 /* Images */
@@ -156,6 +183,64 @@ td {
   line-height: 40px;
   min-width: 240px;
   padding: 0px 15px;
+}
+
+.boutonDefaut {
+  height: 40px;
+  line-height: 40px;
+  min-width: 140px;
+  padding: 0px 15px;
+}
+
+/* Formulaires */
+
+select, input[type="text"], input[type="email"], input[type="password"] {
+  width: 100%;
+  height: 40px;
+  font-size: 14px;
+  padding: 0px 10px;
+  border: 2px solid var(--MidnightViolet);
+  border-radius: 5px;
+  margin-top: 11px;
+  cursor: text;
+}
+
+input[type="submit"] {
+  border: transparent;
+  margin: 15px auto 0px auto;
+}
+
+label {
+  font-weight: bold;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+form p {
+  text-align: left;
+}
+
+hr {
+  border-top: 1px solid var(--MidnightViolet);
+  width: 80%;
+  margin: 30px auto;
+}
+
+.formulaire a {
+  text-align: center;
+}
+
+.formulaire a:last-child {
+  margin-top: 15px;
+}
+
+.formulaire h1 {
+  font-size: 32px;
 }
 
 /* ----------------------------------------------  MOBILE (<= 575px)  ----------------------------------------------*/
@@ -276,6 +361,16 @@ nav {
   margin: 30px 0px;
 }
 
+/* Connexion / Inscription */
+
+#conteneur_principal>img {
+  display: none;
+}
+
+.formulaire img {
+  display: none;
+}
+
 /* Footer */
 
 footer {
@@ -307,32 +402,8 @@ footer div:last-child {
 
 /* Settings généraux */
 
-h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: bold;
-  text-align: center;
-}
-
-h2 {
-  font-size: clamp(1.5rem, 3.75vw, 1.6rem);
-  text-align: center;
-}
-
-h3 {
-  font-size: clamp(1.25rem, 3.125vw, 1.333rem);
-  text-align: center;
-}
-
-section {
-  display: flex;
-  flex-direction: column;
-  width: calc(100vw - 50px);
-  padding: 30px;
-  margin: 0px 25px;
-  border-radius: 20px;
-  background-color: var(--WisteriaBlue25pourcent);
+section p {
   text-align: justify;
-  max-width: 100%;
 }
 
 .bouton {
@@ -444,6 +515,15 @@ section {
     margin-bottom: 20px;
   }
 
+  /* Connexion / Inscription */
+
+  #conteneur_principal>img {
+    display: block;
+    margin: auto;
+    width: min(35vw, 456px);
+    height: min(35vw, 456px);
+  }
+
   /* Footer */
 
   footer {
@@ -475,6 +555,15 @@ section {
   .bouton {
     border-radius: 15px;
   }
+
+  .boutonDefaut {
+    min-width: 280px;
+  }
+
+  .formulaire {
+    max-width: 350px;
+    margin: 0px auto 0px 5vw;
+  }
 }
 
 /* --------------------------------  ORDINATEUR BUREAU ET PLUS GRAND (<= 1199 px)  ---------------------------------*/
@@ -495,10 +584,44 @@ section {
     width: 49px;
   }
 
+  /* Connexion / Inscription */
+
+  .formulaire img {
+    display: block;
+    width: 271px;
+    margin: 0px auto 30px auto;
+  }
+
   /* Footer */
 
   footer div:last-child {
     gap: 27px;
+  }
+
+  /* Settings généraux */
+
+  select, input[type="text"], input[type="email"], input[type="password"] {
+    height: 53px;
+    font-size: 24px;
+    padding: 0px 20px;
+    border-radius: 10px;
+  }
+
+  label {
+    font-size: 24px;
+  }
+
+  .formulaire {
+    max-width: 435px;
+    margin: 0px auto 0px 5vw;
+  }
+
+  .formulaire form {
+    margin: 30px auto 0px auto;
+  }
+
+  .formulaire form div {
+    width: 360px;
   }
 }
 
@@ -525,5 +648,9 @@ section {
   section {
     max-width: 1200px;
     margin: auto;
+  }
+
+  .formulaire {
+    max-width: 520px;
   }
 }

@@ -1,10 +1,8 @@
 <main>
     <div id="conteneur_principal">
-        <div class="formulaire_image">
-            <img src="view/assets/img/Grille.webp" alt="">
-        </div>
+        <img src="view/assets/img/Grille.webp" alt="">
         <section class="formulaire">
-            <h2>Créer un compte</h2>
+            <h1>Créer un compte</h1>
             <form method="post">
                 <div>
                     <label for="pseudo">Pseudo</label>

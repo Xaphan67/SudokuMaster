@@ -1,8 +1,6 @@
 <main>
     <div id="conteneur_principal">
-        <div class="formulaire_image">
-            <img src="view/assets/img/Grille.webp" alt="">
-        </div>
+        <img src="view/assets/img/Grille.webp" alt="">
         <section class="formulaire">
             <img src="view/assets/img/SudokuMaster.png" alt="">
             <h1>Connexion au compte</h1>
