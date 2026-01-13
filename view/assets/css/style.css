@@ -562,6 +562,186 @@ nav {
   filter: opacity(0.40);
 }
 
+/* Classements */
+
+#classements {
+  margin-top: 10px;
+}
+
+#classements section {
+  min-height: 680px;
+}
+
+#classements>section:not(:first-child), #classements_cooperatif, #classements_competitif {
+  display: none;
+}
+
+#classements>section:first-child {
+  max-width: 360px;
+}
+
+.onglets_classements {
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.onglets_classements p img {
+  margin: auto;
+}
+
+.top_3 {
+  position: relative;
+  text-align: center;
+  height: 184px;
+  background-color: var(--WisteriaBlue50pourcent);
+  border-radius: 15px;
+}
+
+.top_3>div {
+  position: relative;
+  width: 95px;
+}
+
+.info_joueur {
+  position: absolute;
+  display: none;
+  width: 400px;
+  padding: 20px 40px;
+  color: var(--MidnightViolet);
+  background-color: var(--WisteriaBlue25pourcent);
+  box-shadow: 0px 4px 4px 0px #686868;
+  border-radius: 15px;
+  z-index: 10;
+}
+
+.info_joueur_haut {
+  left: calc(50% - 200px);
+  bottom: calc(100% + 15px);
+}
+
+.info_joueur_bas {
+  left: calc(50% - 200px);
+  top: calc(100% + 15px);
+}
+
+.info_joueur>div {
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.info_joueur>div>div:last-child {
+  text-align: right;
+}
+
+.top_3>div:hover .info_joueur, .top_10>div:hover .info_joueur {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.info_joueur>img {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+}
+
+.info_joueur_haut>img {
+  left: calc(50% - 20px);
+  bottom: calc(-20px);
+  transform: scaleY(-1);
+}
+
+.info_joueur_bas>img {
+  left: calc(50% - 20px);
+  top: calc(-20px);
+}
+
+.top_3>div>img {
+  position: relative;
+  margin: auto;
+  z-index: 2;
+}
+
+.top_3>div:first-child {
+  position: absolute;
+  height: calc(62px + 28px + 28px);
+  transform: translateX(-50%);
+  left: 50%;
+  top: 5px;
+}
+
+.top_3>div:nth-child(2) {
+  position: absolute;
+  height: calc(47px + 28px + 28px);
+  transform: translateX(-50%);
+  left: 25%;
+  bottom: 15px;
+}
+
+.top_3>div:nth-child(3) {
+  position: absolute;
+  height: calc(47px + 28px + 28px);
+  transform: translateX(-50%);
+  left: 75%;
+  bottom: 15px;
+}
+
+.top_3>div:first-child>p:last-child {
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  top: calc(62px + 23px);
+  white-space: nowrap;
+}
+
+.top_3>div:not(:first-child)>p:last-child {
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  top: calc(47px + 28px);
+  white-space: nowrap;
+}
+
+.score_top {
+  position: absolute;
+  transform: translateX(-50%);
+  height: 33px;
+  line-height: 33px;
+  width: 65px;
+  text-align: center;
+  left: 50%;
+  top: calc(47px - 5px);
+  z-index: 1;
+}
+
+.score_top_1 {
+  top: calc(62px - 10px);
+}
+
+.score {
+  height: 30px;
+  line-height: 30px;
+  width: 80px;
+  text-align: center;
+}
+
+.top_10 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 10px;
+  height: 375px;
+}
+
+.top_10>div {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* Règles */
 
 #regles {
@@ -757,6 +937,12 @@ section p {
     min-width: 110px;
   }
 
+  /* Classements */
+
+  .onglets.onglets_classements {
+    flex-wrap: nowrap;
+  }
+
   /* Règles */
 
   .onglets_regles {
@@ -932,6 +1118,40 @@ section p {
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+  }
+
+  /* Classements */
+
+  #classements {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    width: calc(100vw - 50px);
+    max-width: 1200px;
+  }
+
+  #classements>section:first-child {
+    display: none;
+  }
+
+  #classements>section:not(:first-child) {
+    display: flex;
+    margin: unset;
+    max-width: 360px;
+    padding: clamp(15px, 2vw, 30px);
+  }
+
+  #classements>section:not(:first-child)>div:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .top_10 {
+    height: 374px;
   }
 
   /* Regles */

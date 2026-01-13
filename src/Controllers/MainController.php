@@ -32,6 +32,8 @@ class MainController extends Controller {
         }
 
         // Indique à la vue les variables nécessaires
+        $script = ["classements.js"];
+        $this->_donnees["script"] = $script;
         $this->_donnees["classements"] = $classements;
 
         // Affiche la vue classements
