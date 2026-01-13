@@ -84,15 +84,15 @@ p {
 }
 
 main {
-  border-top: 1px solid var(--CrimsonViolet50pourcent);
-  border-bottom: 1px solid var(--CrimsonViolet50pourcent);
-  box-shadow: inset 0px 4px 4px var(--CrimsonViolet50pourcent), inset 0px 0px 4px var(--CrimsonViolet50pourcent);
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  min-height: calc(100vh - 122px);
+  justify-content: center;
+  min-height: calc(100vh - 120px);
   padding: 10px 0px;
   margin: 0 auto;
+  background-image: url("../img/DegradeHaut.webp"), url("../img/DegradeBas.webp");
+  background-position: top, bottom;
+  background-repeat: repeat-x;
 }
 
 #conteneur_principal {
