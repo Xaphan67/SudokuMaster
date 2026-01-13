@@ -1,7 +1,7 @@
 <main>
     <div id="conteneur_principal" class="vertical">
         <h1>Informations de compte</h1>
-        <div id="infos_compte">
+        <section id="infos_compte">
             <div>
                 <div>
                     <p>Pseudo :</p>
@@ -15,6 +15,14 @@
                 </div>
             </div>
             <div>
+                <p>Pseudo</p>
+                <p><?php echo $_SESSION["utilisateur"]["pseudo_utilisateur"]?></p>
+                <p>Adresse mail</p>
+                <p><?php echo $_SESSION["utilisateur"]["email_utilisateur"]?></p>
+                <p>Mot de passe</p>
+                <p>*********</p>
+            </div>
+            <div>
                 <div id="bouton_modifier" class="bouton boutonPrincipal boutonProfil">
                     <img src="view/assets/svg/Modifier.svg" alt="">
                     <p>Modifier</p>
@@ -24,81 +32,93 @@
                     <p>Supprimer</p>
                 </div>
             </div>
-        </div>
-        <div id="statistiques">
+        </section>
+        <section id="statistiques">
             <h2>Statistiques Personnelles</h2>
             <div class="onglets onglets_stats">
                 <p class="onglet_actif">Solo</p>
                 <p>Coopératif</p>
                 <p>Compétitif</p>
             </div>
-            <div id="statistiques_solo" class="statistiques contenu_onglet_actif">
+            <div id="statistiques_solo" class="statistiques">
                 <p>Score global</p>
                 <p class="score_principal score_large"><?php echo isset($statistiques[1]) ? $statistiques[1]->getScore_global() : "1000" ?></p>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Grilles jouées</th>
-                            <th>Grilles résolues</th>
-                            <th>Temps moyen</th>
-                            <th>Meilleur temps</th>
-                            <th>Série de victoires</th>
-                        </tr>
-                        <tr>
-                            <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getGrilles_jouees() : "0" ?></td>
-                            <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getGrilles_resolues() : "0" ?></td>
-                            <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getTemps_moyen() : "00:00" ?></td>
-                            <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getMeilleur_temps() : "00:00" ?></td>
-                            <td><?php echo isset($statistiques[1]) ? $statistiques[1]->getSerie_victoires() : "0" ?></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div>
+                    <div>
+                        <p>Grilles jouées</p>
+                        <p><?php echo isset($statistiques[1]) ? $statistiques[1]->getGrilles_jouees() : "0" ?></p>
+                    </div>
+                    <div>
+                        <p>Grilles résolue</p>
+                        <p><?php echo isset($statistiques[1]) ? $statistiques[1]->getGrilles_resolues() : "0" ?></p>
+                    </div>
+                    <div>
+                        <p>Temps moyen</p>
+                        <p><?php echo isset($statistiques[1]) ? $statistiques[1]->getTemps_moyen() : "00:00" ?></p>
+                    </div>
+                    <div>
+                        <p>Meilleur temps</p>
+                        <p><?php echo isset($statistiques[1]) ? $statistiques[1]->getMeilleur_temps() : "00:00" ?></p>
+                    </div>
+                    <div>
+                        <p>Série de victoires</p>
+                        <p><?php echo isset($statistiques[1]) ? $statistiques[1]->getSerie_victoires() : "0" ?></p>
+                    </div>
+                </div>
             </div>
             <div id="statistiques_cooperatif" class="statistiques">
                 <p>Score global</p>
                 <p class="score_principal score_large"><?php echo isset($statistiques[2]) ? $statistiques[2]->getScore_global() : "1000" ?></p>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Grilles jouées</th>
-                            <th>Grilles résolues</th>
-                            <th>Temps moyen</th>
-                            <th>Meilleur temps</th>
-                            <th>Série de victoires</th>
-                        </tr>
-                        <tr>
-                            <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getGrilles_jouees() : "0" ?></td>
-                            <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getGrilles_resolues() : "0" ?></td>
-                            <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getTemps_moyen() : "00:00" ?></td>
-                            <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getMeilleur_temps() : "00:00" ?></td>
-                            <td><?php echo isset($statistiques[2]) ? $statistiques[2]->getSerie_victoires() : "0" ?></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div>
+                    <div>
+                        <p>Grilles jouées</p>
+                        <p><?php echo isset($statistiques[3]) ? $statistiques[3]->getGrilles_jouees() : "0" ?></p>
+                    </div>
+                    <div>
+                        <p>Grilles résolue</p>
+                        <p><?php echo isset($statistiques[3]) ? $statistiques[3]->getGrilles_resolues() : "0" ?></p>
+                    </div>
+                    <div>
+                        <p>Temps moyen</p>
+                        <p><?php echo isset($statistiques[3]) ? $statistiques[3]->getTemps_moyen() : "00:00" ?></p>
+                    </div>
+                    <div>
+                        <p>Meilleur temps</p>
+                        <p><?php echo isset($statistiques[3]) ? $statistiques[3]->getMeilleur_temps() : "00:00" ?></p>
+                    </div>
+                    <div>
+                        <p>Série de victoires</p>
+                        <p><?php echo isset($statistiques[3]) ? $statistiques[3]->getSerie_victoires() : "0" ?></p>
+                    </div>
+                </div>
             </div>
             <div id="statistiques_competitif" class="statistiques">
                 <p>Score global</p>
                 <p class="score_principal score_large"><?php echo isset($statistiques[3]) ? $statistiques[3]->getScore_global() : "1000" ?></p>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Grilles jouées</th>
-                            <th>Grilles résolues</th>
-                            <th>Temps moyen</th>
-                            <th>Meilleur temps</th>
-                            <th>Série de victoires</th>
-                        </tr>
-                        <tr>
-                            <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getGrilles_jouees() : "0" ?></td>
-                            <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getGrilles_resolues() : "0" ?></td>
-                            <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getTemps_moyen() : "00:00" ?></td>
-                            <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getMeilleur_temps() : "00:00" ?></td>
-                            <td><?php echo isset($statistiques[3]) ? $statistiques[3]->getSerie_victoires() : "0" ?></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div>
+                    <div>
+                        <p>Grilles jouées</p>
+                        <p><?php echo isset($statistiques[2]) ? $statistiques[2]->getGrilles_jouees() : "0" ?></p>
+                    </div>
+                    <div>
+                        <p>Grilles résolue</p>
+                        <p><?php echo isset($statistiques[2]) ? $statistiques[2]->getGrilles_resolues() : "0" ?></p>
+                    </div>
+                    <div>
+                        <p>Temps moyen</p>
+                        <p><?php echo isset($statistiques[2]) ? $statistiques[2]->getTemps_moyen() : "00:00" ?></p>
+                    </div>
+                    <div>
+                        <p>Meilleur temps</p>
+                        <p><?php echo isset($statistiques[2]) ? $statistiques[2]->getMeilleur_temps() : "00:00" ?></p>
+                    </div>
+                    <div>
+                        <p>Série de victoires</p>
+                        <p><?php echo isset($statistiques[2]) ? $statistiques[2]->getSerie_victoires() : "0" ?></p>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
     </div>
     <div id="modifier_compte" class="popup popup_large"> <!-- popup modification des données du compte -->
         <h3>Modifier vos informations personelles</h3>
@@ -171,7 +191,7 @@
                 <?php if (isset($erreurs["mdp_check"])) { echo '<p class="erreur">' . $erreurs["mdp_check"] . '</p>'; } ?>
             </div>
             <div class="actions">
-                <input type="submit" name="modifier_compte" class="bouton boutonPrincipal boutonDefaut" value="Modifier mes informations" />
+                <input type="submit" name="modifier_compte" class="bouton boutonPrincipal boutonDefaut" value="Modifier" />
                 <div id="bouton_annuler_modifier" class="bouton boutonPrincipal boutonDefaut">Annuler</div>
             </div>
         </form>
@@ -196,7 +216,7 @@
                 <?php if (isset($erreurs["mdp_check"])) { echo '<p class="erreur">' . $erreurs["mdp_check"] . '</p>'; } ?>
             </div>
             <div class="actions">
-                <input type="submit" name="supprimer_compte" class="bouton boutonPrincipal boutonDefaut" value="Supprimer mon compte" />
+                <input type="submit" name="supprimer_compte" class="bouton boutonPrincipal boutonDefaut" value="Supprimer" />
                 <div id="bouton_annuler_supprimer" class="bouton boutonPrincipal boutonDefaut">Annuler</div>
             </div>
         </form>

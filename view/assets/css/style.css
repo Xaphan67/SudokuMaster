@@ -205,6 +205,8 @@ td {
   height: 40px;
   line-height: 40px;
   width: 100%;
+  font-size: 20px;
+  font-weight: bold;
   text-align: center;
 }
 
@@ -419,6 +421,129 @@ nav {
   display: none;
 }
 
+/* Profil */
+
+#infos_compte {
+  margin: 10px auto 0px auto;
+  max-width: 400px;
+}
+
+#infos_compte>div:first-child {
+  display: none;
+}
+
+#infos_compte>div:nth-child(2) p {
+  line-height: 25px;
+  text-align: center;
+}
+
+#infos_compte>div:last-child {
+  display: flex;
+  justify-content: space-around;
+}
+
+#infos_compte>div>p:nth-child(odd) {
+  font-weight: bold;
+}
+
+#infos_compte p {
+  text-align: left;
+}
+
+#statistiques {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+
+#statistiques table {
+  text-align: center;
+  width: min(1120px, calc(100vw - 80px))
+}
+
+#statistiques td, #statistiques tr {
+  cursor: auto;
+  width: 20%;
+  height: 54px;
+}
+
+#statistiques_solo {
+  display: flex;
+}
+
+#statistiques_cooperatif, #statistiques_competitif {
+  display: none;
+}
+
+.statistiques {
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 35px;
+}
+
+.statistiques p {
+  font-size: clamp(1rem, 2.125vw, 1.333rem);
+}
+
+.statistiques>p:first-child {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.statistiques p:nth-child(odd) {
+  font-weight: bold;
+}
+
+.statistiques>div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  margin-top: 35px;
+}
+
+.statistiques>div>div p {
+  text-align: center;
+}
+
+.statistiques>div>div p:first-child {
+  line-height: 25px;
+  height: 25px;
+}
+
+.statistiques>div>div p:last-child {
+  line-height: 40px;
+  height: 40px;
+}
+
+.statistiques>div div {
+  width: 50%;
+}
+
+.statistiques>div div:last-child {
+  flex-grow: 2;
+}
+
+.onglets_stats {
+  margin-top: 10px;
+  max-width: 840px;
+}
+
+.score_principal {
+  border-radius: 25px;
+  background-color: var(--Red);
+  color: var(--White);
+  padding: 0 10px;
+}
+
+.score_large {
+  line-height: 25px;
+  min-width: 100px;
+  text-align: center;
+}
+
 /* Salon */
 
 #salon_instructions {
@@ -437,7 +562,6 @@ nav {
   filter: opacity(0.40);
 }
 
-
 /* Règles */
 
 #regles {
@@ -454,11 +578,6 @@ nav {
 
 #regles>div:not(:first-child) {
   margin: auto 0px;
-}
-
-.onglets_regles p {
-  font-size: 20px;
-  font-weight: bold;
 }
 
 #regles_generalites {
@@ -526,7 +645,7 @@ footer div:last-child {
   position: absolute;
   flex-direction: column;
   padding: 20px;
-  gap: 20px;
+  gap: 10px;
   top : 50%;
   left : 50%;
   width: calc(100vw - 50px);
@@ -534,11 +653,33 @@ footer div:last-child {
   border-radius: 15px;
   background-color: var(--WisteriaBlue25pourcent);
   box-shadow: 0px 4px 4px 0px #686868;
-  text-align: center;
 }
 
 .popup h3 {
   font-size: clamp(1.5rem, 3.75vw, 1.6rem);
+}
+
+.popup form {
+  margin-top: unset;
+  gap: 10px;
+}
+
+.popup .bouton {
+  margin: unset;
+}
+
+.champs_doubles>div>div:not(:first-child) {
+  margin-top: 5px;
+}
+
+.popup p {
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
 #debut_partie, #fin_partie, #modifier_compte, #supprimer_compte,
@@ -546,6 +687,24 @@ footer div:last-child {
 #abandon_partie, #erreur, #erreur_salle, #erreur_serveur {
   display: flex;
   transform: translateX(-50%) translateY(-50%);
+}
+
+#modifier_compte, #supprimer_compte, #verif_joueur_pret,
+#abandon_autre_joueur_partie,#abandon_partie, #erreur,
+#erreur_salle, #erreur_serveur {
+  display: none;
+}
+
+#modifier_compte, #supprimer_compte {
+  align-items: center;
+}
+
+#modifier_compte p, #supprimer_compte p {
+  text-align: center;
+}
+
+#modifier_compte>p {
+  display:none;
 }
 
 /* Settings généraux */
@@ -559,6 +718,19 @@ section p {
   border-radius: 10px;
 }
 
+.boutonProfil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 125px;
+  padding: 10px;
+}
+
+.boutonProfil p {
+  color: var(--White);
+}
+
 /* --------------------------------  MOBILE MODE PAYSAGE ET PLUS GRAND (<= 767 px)  --------------------------------*/
 
 @media (min-width: 576px) {
@@ -568,6 +740,21 @@ section p {
   #boutons_haut {
     flex-direction: row;
     gap: 15px;
+  }
+
+  /* Profil */
+
+  .statistiques>div div {
+    width: 33%;
+  }
+
+  .statistiques>div div:last-child {
+    flex-grow: 0;
+  }
+
+  .score_large {
+    line-height: 30px;
+    min-width: 110px;
   }
 
   /* Règles */
@@ -641,6 +828,38 @@ section p {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+  }
+
+  /* Profil */
+
+  #infos_compte {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+  }
+
+  #infos_compte>div:first-child {
+    display: flex;
+    line-height: 25px;
+    gap: 20px;
+  }
+
+  #infos_compte>div:last-child {
+    gap: 20px;
+  }
+
+  #infos_compte>div:first-child>div:first-child {
+    font-weight: bold;
+  }
+
+  #infos_compte>div:nth-child(2) p {
+    display: none;
+  }
+
+  .score_large {
+    line-height: 35px;
+    min-width: 120px;
   }
 
   /* Accueil */
@@ -768,6 +987,12 @@ section p {
     gap: 20px;
   }
 
+  /* Popups */
+
+  .popup .boutonDefaut {
+    min-width: 200px;
+  }
+
   /* Settings généraux */
 
   h2, h3 {
@@ -825,6 +1050,29 @@ section p {
     margin: 0px auto 30px auto;
   }
 
+  /* Profil */
+
+  #modifier_compte>form>div:nth-child(3) {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+  }
+
+  #supprimer_compte>form>div:first-child {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+  }
+
+  .score_large {
+    line-height: 40px;
+    min-width: 130px;
+  }
+
+  .statistiques>div div {
+    width: 20%;
+  }
+
   /* Regles */
 
   #regles_processus>div>div>div {
@@ -847,6 +1095,20 @@ section p {
     gap: 27px;
   }
 
+  /* Popups */
+
+  .popup_large {
+    min-width: 850px;
+  }
+
+  .popup input[type="text"], .popup input[type="email"], .popup input[type="password"]{
+    width: 360px;
+  }
+
+  .popup_large .boutonDefaut {
+    min-width: 280px;
+  }
+
   /* Settings généraux */
 
   select, input[type="text"], input[type="email"], input[type="password"] {
@@ -858,6 +1120,10 @@ section p {
 
   label {
     font-size: 24px;
+  }
+
+  .boutonProfil {
+    width: 150px;
   }
 
   .onglets {
@@ -881,6 +1147,22 @@ section p {
 
   .formulaire form div {
     width: 360px;
+  }
+
+  .champs_doubles{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    text-align: left;
+    margin: auto;
+  }
+
+  .champs_doubles>div {
+    width: 360px;
+  }
+
+  select {
+    background-position: right 18px top 18px;
   }
 }
 
