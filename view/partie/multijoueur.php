@@ -1,6 +1,6 @@
 <main>
     <div id="haut" class="separateur_haut">
-        <h2 id="titre_jeu">Multijoueur</h2>
+        <h2 id="titre_jeu" class="normal">Multijoueur</h2>
         <div id="infos_multijoueur" inert>
             <div>
                 <img src="view/assets/img/TropheeOr.webp" alt ="">

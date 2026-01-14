@@ -546,6 +546,10 @@ nav {
 
 /* Jeu solo */
 
+#titre_jeu {
+  text-align: center;
+}
+
 #menu_partie {
   position: absolute;
   display: none;
@@ -713,7 +717,7 @@ nav {
   display: flex;
   align-items: center;
   gap: 5px;
-  width: clamp(180px, 25vw, 250px);
+  width: clamp(180px, 40vw, 250px);
 }
 
 .boutons_ronds>div {
@@ -742,8 +746,11 @@ nav {
   align-items: center;
   width: clamp(35px, 10vw, 90px);
   height: clamp(35px, 10vw, 90px);
+  max-width: 80px;
+  max-height: 80px;
   font-size: clamp(1rem, 5vw, 2rem);
   margin: 25px 0px;
+  gap: 2px;
 }
 
 #interface_de_jeu>div:last-child {
@@ -820,6 +827,70 @@ td:not(.celluleFixe, .selected_highlight) li {
 
 .salon_inactif {
   filter: opacity(0.40);
+}
+
+/* Multijoueur */
+
+#infos_multijoueur {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px auto;
+  max-width: 400px;
+}
+
+#infos_multijoueur p {
+  font-size: 16px;
+}
+
+#infos_multijoueur>div {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#infos_multijoueur>div:first-child {
+  justify-content: flex-start;
+  padding-left:25px;
+}
+
+#infos_multijoueur>div:last-child {
+  justify-content: flex-end;
+  padding-right:25px;
+}
+
+#infos_multijoueur>div:first-child:hover #joueur_1, #infos_multijoueur>div:last-child:hover #joueur_2 {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+#infos_multijoueur img {
+  width: 40px;
+}
+
+#infos_multijoueur>div>img {
+  position: absolute;
+}
+
+#infos_multijoueur>div>img:first-child {
+  left: 0px;
+}
+
+#infos_multijoueur>div>img:last-child {
+  right: 0px;
+  transform: scaleX(-1);
+}
+
+.score_petit {
+  height: 22px;
+  line-height: 22px;
+  width: 50px;
+  text-align: right;
+}
+
+.score_petit_droite {
+  text-align: left;
 }
 
 /* Classements */
@@ -1215,6 +1286,22 @@ section p {
     min-width: 110px;
   }
 
+  /* Multijoueur */
+
+  #infos_multijoueur {
+    max-width: 500px;
+  }
+
+  #infos_multijoueur p {
+    font-size: 18px;
+  }
+
+  .score_petit {
+    height: 28px;
+    line-height: 28px;
+    width: 60px;
+  }
+
   /* Classements */
 
   .onglets.onglets_classements {
@@ -1551,7 +1638,20 @@ section p {
   /* jeu solo */
 
   .separateur_haut {
-    margin-left: 25px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0px auto;
+  }
+
+  .large {
+    min-width: calc(clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px) + 40vw);
+  }
+
+  #titre_jeu {
+    text-align: left;
+    align-items: start;
   }
 
   #conteneur_jeu {
@@ -1620,6 +1720,8 @@ section p {
     align-items: center;
     width: clamp(90px, 10vw, 120px);
     height: clamp(90px, 10vw, 120px);
+    max-width: 120px;
+    max-height: 120px;
     font-size: 2rem;
     margin: unset;
   }
@@ -1652,6 +1754,17 @@ section p {
 
   .statistiques>div div {
     width: 20%;
+  }
+
+  /* Multijoueur */
+
+  #infos_multijoueur {
+    margin: unset;
+    width: 40vw;
+  }
+
+  .normal {
+     min-width: clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px);
   }
 
   /* Regles */
@@ -1759,10 +1872,6 @@ section p {
   }
 
   /* Jeu solo */
-
-  .separateur_haut {
-    margin-left: unset;
-  }
 
    #conteneur_jeu {
     margin: 10px auto 0px auto;
