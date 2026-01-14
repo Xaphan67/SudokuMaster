@@ -544,6 +544,266 @@ nav {
   text-align: center;
 }
 
+/* Jeu solo */
+
+#menu_partie {
+  position: absolute;
+  display: none;
+  transform: translateX(-50%);
+  top: unset;
+  bottom: 45px;
+}
+
+.boutons_difficulte {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.boutons_difficulte div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  background-color: var(--CrimsonViolet25pourcent);
+  width: 80px;
+  height: 80px;
+  transition: all 0.5s ease;
+}
+
+.boutons_difficulte div img {
+  width: 50px;
+  height: 50px;
+}
+
+.boutons_difficulte div:hover {
+  background-color: var(--CrimsonViolet50pourcent);
+}
+
+.boutons_difficulte div:active {
+  background-color: var(--CrimsonViolet75pourcent);
+  transition: all 0.1s ease;
+}
+
+.grille {
+  margin-top: 10px;
+}
+
+#conteneur_jeu {
+  width: 100%;
+  filter: opacity(0.40);
+}
+
+.grille {
+  border-radius: clamp(10px, 2vw, 20px);
+  border: 6px solid var(--CrimsonViolet);
+  border-spacing: 0px;
+  min-width: clamp(351px, calc(100vw - clamp(20px, 5vw, 40px)), 720px);
+  min-height: clamp(351px, calc(100vw - clamp(20px, 5vw, 40px)), 720px);
+}
+
+#grille {
+  display: none;
+  font-weight: bold;
+}
+
+#grille p {
+  font-size: clamp(1rem, 5vw, 2rem);
+}
+
+#grille ul {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  top: 5%;
+  left: 5%;
+  width: 95%;
+  height: 95%;
+}
+
+#grille li {
+  width: 30%;
+  height: 30%;
+  font-weight: lighter;
+  font-size: clamp(10px, 3.2vw, 20px);
+  line-height: clamp(10px, 3.2vw, 20px);
+}
+
+.grille td {
+  position: relative;
+  height: 35px;
+  width: 35px;
+  border: 1px solid var(--CrimsonViolet);
+  text-align: center;
+}
+
+.grille tr:nth-child(4) td {
+  border-top: 4px solid var(--CrimsonViolet);
+}
+
+.grille tr:nth-child(6) td {
+  border-bottom: 4px solid var(--CrimsonViolet);
+}
+
+.grille tr:first-child td:first-child {
+  border-radius: clamp(5px, 1vw, 10px) 0 0 0;
+}
+
+.grille tr:first-child td:last-child {
+  border-radius:  0 clamp(5px, 1vw, 10px) 0 0;
+}
+
+.grille tr:last-child td:first-child {
+  border-radius:  0 0 0 clamp(5px, 1vw, 10px);
+}
+
+.grille tr:last-child td:last-child {
+  border-radius:  0 0 clamp(5px, 1vw, 10px) 0;
+}
+
+.grille tr td:nth-child(4) {
+  border-left: 4px solid var(--MidnightViolet);
+}
+
+.grille tr td:nth-child(6) {
+  border-right: 4px solid var(--MidnightViolet);
+}
+
+.grille tr:first-child td {
+  border-top: none;
+}
+
+.grille tr:last-child td {
+  border-bottom: none;
+}
+
+.grille tr td:first-child {
+  border-left: none;
+}
+
+.grille tr td:last-child {
+  border-right: none;
+}
+
+.celluleBleue {
+  background-color: var(--WisteriaBlue25pourcent);
+}
+
+.selected {
+  background-color: var(--CrimsonViolet25pourcent) !important;
+}
+
+.selected_highlight, .selected_highlight p {
+  background-color: var(--CrimsonViolet75pourcent) !important;
+  color: var(--White);
+}
+
+.selected_highlight:not(.celluleFixe) {
+  font-weight: normal;
+}
+
+.boutons_haut {
+  display: flex;
+  justify-content:space-around;
+  margin-top: 25px;
+}
+
+.boutons_ronds {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: clamp(180px, 25vw, 250px);
+}
+
+.boutons_ronds>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: clamp(50px, 10vw, 65px);
+  height: clamp(50px, 10vw, 65px);
+  border-radius: 50%;
+}
+
+.boutons_ronds img {
+  width: clamp(30px, 10vw, 37px);
+  height: clamp(30px, 10vw, 37px);
+}
+
+#pave_numerique {
+  display: flex;
+  justify-content: center;
+  width: clamp(351px, calc(100vw - clamp(20px, 5vw, 40px)), 720px);
+}
+
+#pave_numerique p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: clamp(35px, 10vw, 90px);
+  height: clamp(35px, 10vw, 90px);
+  font-size: clamp(1rem, 5vw, 2rem);
+  margin: 25px 0px;
+}
+
+#interface_de_jeu>div:last-child {
+  position: relative;
+}
+
+#bouton_jeu {
+  width: 250px;
+  height: 40px;
+  line-height: 40px;
+  margin: auto;
+}
+
+td, #pave_numerique p, .boutons_difficulte div {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+td:not(.celluleFixe, .selected_highlight) p {
+  color: var(--CrimsonViolet75pourcent);
+  font-weight:normal;
+}
+
+td:not(.celluleFixe, .selected_highlight) li {
+  color: var(--CrimsonViolet75pourcent);
+}
+
+.boutonPave {
+  text-align: center;
+  background-color: var(--WisteriaBlue25pourcent);
+  box-shadow: 0px 2px 2px 0px #686868;
+  transition: filter 0.5s ease;
+  border-radius: 10px;
+}
+
+.boutonPave:hover {
+  filter: brightness(0.94);
+}
+
+.score_global {
+  font-weight: bold;
+}
+
+.score_global_valeur {
+  font-size:50px;
+  line-height: 80px;
+}
+
+.score_golbal_evolution {
+  font-size: 32px;
+}
+
+.victoire {
+  color: green;
+}
+
+.defaite {
+  color: red;
+}
+
 /* Salon */
 
 #salon_instructions {
@@ -824,6 +1084,7 @@ footer div:last-child {
 .popup {
   position: absolute;
   flex-direction: column;
+  align-items: center;
   padding: 20px;
   gap: 10px;
   top : 50%;
@@ -869,7 +1130,7 @@ footer div:last-child {
   transform: translateX(-50%) translateY(-50%);
 }
 
-#modifier_compte, #supprimer_compte, #verif_joueur_pret,
+#fin_partie, #modifier_compte, #supprimer_compte, #verif_joueur_pret,
 #abandon_autre_joueur_partie,#abandon_partie, #erreur,
 #erreur_salle, #erreur_serveur {
   display: none;
@@ -895,6 +1156,9 @@ section p {
 
 .bouton {
   cursor: pointer;
+}
+
+.bouton:not(.boutonPave) {
   border-radius: 10px;
 }
 
@@ -930,6 +1194,20 @@ section p {
 
   .statistiques>div div:last-child {
     flex-grow: 0;
+  }
+
+  /* Jeu solo */
+
+  .boutons_difficulte div {
+    width: 120px;
+    height: 120px;
+    justify-content: center;
+  }
+
+   #menu_partie .boutons_difficulte div {
+    width: 90px;
+    height: 80px;
+    justify-content: center;
   }
 
   .score_large {
@@ -1270,6 +1548,89 @@ section p {
     margin: 0px auto 30px auto;
   }
 
+  /* jeu solo */
+
+  .separateur_haut {
+    margin-left: 25px;
+  }
+
+  #conteneur_jeu {
+    display: flex;
+    margin: 10px 25px 0px 25px;
+  }
+
+  .grille {
+    margin: unset;
+    min-width: clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px);
+    min-height: clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px);
+  }
+
+  #grille p {
+    font-size: clamp(1rem, 3vw, 2rem);
+  }
+
+  #menu_partie {
+    width: 40vw;
+    bottom: 85px;
+  }
+
+  #interface_de_jeu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 40vw;
+  }
+
+  .boutons_haut {
+    justify-content:space-around;
+    margin-top: unset;
+  }
+
+  .boutons_ronds {
+    flex-direction: column;
+    width: unset;
+  }
+
+  .boutons_ronds>div {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+  }
+
+  .boutons_ronds img {
+    width: 50px;
+    height: 50px;
+  }
+
+  #pave_numerique {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 35vw;
+    max-width: 400px;
+    height: 35vw;
+    max-height: 400px;
+    margin: 0px auto;
+  }
+
+  #pave_numerique p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: clamp(90px, 10vw, 120px);
+    height: clamp(90px, 10vw, 120px);
+    font-size: 2rem;
+    margin: unset;
+  }
+
+  #bouton_jeu {
+    height: 80px;
+    width: 352px;
+    line-height: 80px;
+    margin: 0px auto;
+  }
+
   /* Profil */
 
   #modifier_compte>form>div:nth-child(3) {
@@ -1395,6 +1756,21 @@ section p {
   header {
     width: calc(100vw - 50px);
     margin: 0px auto;
+  }
+
+  /* Jeu solo */
+
+  .separateur_haut {
+    margin-left: unset;
+  }
+
+   #conteneur_jeu {
+    margin: 10px auto 0px auto;
+  }
+
+  #menu_partie .boutons_difficulte div {
+    width: 120px;
+    height: 120px;
   }
 
   /* Footer */
