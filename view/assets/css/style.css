@@ -893,6 +893,27 @@ td:not(.celluleFixe, .selected_highlight) li {
   text-align: left;
 }
 
+#joueurs {
+  display: flex;
+  justify-content: center;
+  gap: 20%;
+}
+
+#joueurs>div>div {
+  position: relative;
+}
+
+#joueurs img {
+  margin: auto;
+}
+
+#joueurs>div>div>img:last-child {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: none;
+}
+
 /* Classements */
 
 #classements {
@@ -1197,8 +1218,10 @@ footer div:last-child {
 #debut_partie, #fin_partie, #modifier_compte, #supprimer_compte,
 #compte_requis, #verif_joueur_pret, #abandon_autre_joueur_partie,
 #abandon_partie, #erreur, #erreur_salle, #erreur_serveur {
+  position: fixed;
   display: flex;
   transform: translateX(-50%) translateY(-50%);
+;
 }
 
 #fin_partie, #modifier_compte, #supprimer_compte, #verif_joueur_pret,

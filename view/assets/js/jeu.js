@@ -577,7 +577,7 @@ async function startGame(element) {
         POPUP_JOUEUR_PRET.children[3].children[0].getElementsByTagName("p")[0].textContent = statsJoueur.joueur_1.pseudo_utilisateur;
         POPUP_JOUEUR_PRET.children[3].children[1].getElementsByTagName("p")[0].textContent = statsJoueur.joueur_2.pseudo_utilisateur;
 
-        // Affiche les information du 2eme joueur sur le popup d'avandon de partie
+        // Affiche les information du 2eme joueur sur le popup d'abandon de partie
         const POPUP_JOUEUR_ABANDON_PARTIE = document.getElementById("abandon_autre_joueur_partie");
         POPUP_JOUEUR_ABANDON_PARTIE.getElementsByTagName("h3")[0].textContent = statsJoueur.joueur_2.pseudo_utilisateur + " " + POPUP_JOUEUR_ABANDON_PARTIE.getElementsByTagName("h3")[0].textContent;
     }
@@ -683,7 +683,7 @@ function getPlayerReady() {
     BOUTON_JOUEUR_PRET.addEventListener("click", (e) => {
 
         // Désactive le bouton "Je suis prêt"
-        BOUTON_JOUEUR_PRET.classList.add("inactif");
+        BOUTON_JOUEUR_PRET.style.filter = "opacity(0.40)";
         BOUTON_JOUEUR_PRET.inert = "true";
 
         // Affiche la coche sur l'avatar du joueur
