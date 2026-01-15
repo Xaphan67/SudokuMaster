@@ -469,7 +469,7 @@ BOUTONS.forEach(element => {
                 // Si partie mulijoueur en mode coopératif
                 // on envoie la modification de la valeur de la case au 2eme joueur
                 if (multijoueur && infosSalle.mode == "Cooperatif") {
-                    connexion.send(JSON.stringify({commande: "changer_case", salle: infosSalle.salle, Y: selectionY, X: selectionX, valeur: this.textContent}));
+                    connexion.send(JSON.stringify({commande: "changer_case", salle: infosSalle.salle, Y: selectionY, X: selectionX, valeur: this.textContent, hote: infosSalle.hote}));
                 }
 
                 // Si la grille est terminée, met fin à la partie
@@ -691,7 +691,7 @@ function getPlayerReady() {
         AVATARS_JOUEURS.children[0].children[0].getElementsByTagName("img")[1].style.display="block";
 
         // Indique au serveur que le joueur est prêt
-        connexion.send(JSON.stringify({commande: "joueur_pret", salle:infosSalle.salle}));
+        connexion.send(JSON.stringify({commande: "joueur_pret", salle:infosSalle.salle, hote: infosSalle.hote, utilisateur: infosSalle.utilisateur}));
     });
 }
 
@@ -716,7 +716,7 @@ async function endGame(popup = true) {
 
     // Si partie multijoueur, informe le 2eme joueur que la partie est terminée
     if (multijoueur && partieEnCours) {
-        connexion.send(JSON.stringify({commande: "fin_partie", salle: infosSalle.salle}));
+        connexion.send(JSON.stringify({commande: "fin_partie", salle: infosSalle.salle, hote: infosSalle.hote}));
     }
 
     // Déclare la partie comme terminée
