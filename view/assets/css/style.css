@@ -296,7 +296,16 @@ hr {
 
 header {
   position: fixed;
+  display: flex;
   overflow: visible;
+  justify-content: center;
+  width: 100%;
+  background-color: var(--White);
+  box-shadow: 0px 4px 4px var(--CrimsonViolet50pourcent);
+  z-index: 1;
+}
+
+header>div {
   display: flex;
   justify-content: space-between;
   justify-self: center;
@@ -306,8 +315,6 @@ header {
   max-width: 1200px;
   height: 60px;
   background-color: var(--White);
-  box-shadow: 0px 4px 4px var(--CrimsonViolet50pourcent);
-  z-index: 1;
 }
 
 nav {
@@ -354,9 +361,8 @@ nav {
   top: 60px;
   min-width: 100vw;
   background-color: var(--White);
-  padding: 15px 25px;
-  border-top: 1px solid var(--CrimsonViolet50pourcent);
-  box-shadow: inset 0px 4px 4px var(--CrimsonViolet50pourcent);
+  padding: 0px 25px;
+  box-shadow: inset 0px 4px 4px var(--CrimsonViolet50pourcent), 0px 4px 4px var(--CrimsonViolet50pourcent);
   z-index: 2;
 }
 
@@ -1369,6 +1375,11 @@ section p {
 @media (min-width: 768px) {
 
   /* Header */
+
+  header>div {
+    padding: unset;
+    margin: auto 25px;
+  }
 
   nav {
     display: flex;
