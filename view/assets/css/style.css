@@ -87,12 +87,9 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: calc(100vh - 120px);
+  min-height: calc(100dvh - 100px);
   padding: 10px 0px;
-  margin: 60px auto 0px auto;
-  background-image: url("../img/DegradeBas.webp");
-  background-position: bottom;
-  background-repeat: repeat-x;
+  margin: 60px auto 40px auto;
 }
 
 #conteneur_principal {
@@ -1151,30 +1148,40 @@ td:not(.celluleFixe, .selected_highlight) li {
 /* Footer */
 
 footer {
+  position: fixed;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  max-width: 1200px;
-  height: 100px;
+  width: 100%;
+  background-color: var(--White);
+  box-shadow: 0px 0px 4px var(--CrimsonViolet50pourcent);
+  z-index: 1;
+  bottom: 0px;
 }
 
-footer div {
+footer>div {
   display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  justify-self: center;
+  padding: 0px 25px;
+  width: 100vw;
+  max-width: 1200px;
+  height: 40px;
+}
+
+footer>div div {
+  display: flex;
+  gap: 10px;
 }
 
 footer img {
   height: 30px;
 }
 
-footer div:first-child {
-  gap: 20px;
-}
-
-footer div:last-child {
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
+footer a {
+    font-size: 14px;
 }
 
 /* Popups */
@@ -1581,24 +1588,18 @@ section p {
 
   /* Footer */
 
-  footer {
+  footer>div {
     height: 60px;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: auto 20px;
+    padding: unset;
+    margin: auto 25px;
   }
 
-  footer div {
-    display: flex;
+  footer a {
+    font-size: 18px;
   }
 
   footer img {
     height: unset;
-  }
-
-  footer div:last-child {
-    flex-direction: row;
-    gap: 20px;
   }
 
   /* Popups */
@@ -1812,12 +1813,6 @@ section p {
     width:400px;
   }
 
-  /* Footer */
-
-  footer div:last-child {
-    gap: 27px;
-  }
-
   /* Popups */
 
   .popup_large {
@@ -1907,8 +1902,7 @@ section p {
   /* Footer */
 
   footer {
-    width: calc(100vw - 50px);
-    margin: 0px auto;
+    margin: auto;
   }
 
   /* Settings généraux */

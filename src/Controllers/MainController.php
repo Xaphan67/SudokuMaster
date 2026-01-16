@@ -58,13 +58,6 @@ class MainController extends Controller {
         $this->display("main/mentions");
     }
 
-    // Affiche la page des conditions générales d'utilisation
-    public function gcu() {
-
-        // Affiche la vue cgu
-        $this->display("main/cgu");
-    }
-
     // Affiche une erreur 404
     public function erreur404() {
 
