@@ -347,6 +347,7 @@ nav {
   height: 45px;
   margin: 0px;
   opacity: 0;
+  cursor: pointer;
 }
 
 #menu_burger > input[type = "checkbox"]:checked~.menu_burger {
@@ -1620,6 +1621,11 @@ section p {
   }
 
   /* Settings généraux */
+
+  main {
+    min-height: calc(100dvh - 120px);
+    margin: 60px auto 60px auto;
+  }
 
   h2, h3 {
     text-align: left;
