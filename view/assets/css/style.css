@@ -89,9 +89,9 @@ main {
   justify-content: center;
   min-height: calc(100vh - 120px);
   padding: 10px 0px;
-  margin: 0 auto;
-  background-image: url("../img/DegradeHaut.webp"), url("../img/DegradeBas.webp");
-  background-position: top, bottom;
+  margin: 60px auto 0px auto;
+  background-image: url("../img/DegradeBas.webp");
+  background-position: bottom;
   background-repeat: repeat-x;
 }
 
@@ -298,13 +298,19 @@ hr {
 /* Header */
 
 header {
+  position: fixed;
   overflow: visible;
   display: flex;
   justify-content: space-between;
+  justify-self: center;
   align-items: center;
-  margin: 0px 25px;
+  padding: 0px 25px;
+  width: 100vw;
   max-width: 1200px;
   height: 60px;
+  background-color: var(--White);
+  box-shadow: 0px 4px 4px var(--CrimsonViolet50pourcent);
+  z-index: 1;
 }
 
 nav {
@@ -1886,13 +1892,6 @@ section p {
 /* -----------------------------------------  GRANDS ECRANS (>= 1200 px)  ------------------------------------------*/
 
 @media (min-width: 1200px) {
-
-  /* Header */
-
-  header {
-    width: calc(100vw - 50px);
-    margin: 0px auto;
-  }
 
   /* Jeu solo */
 
