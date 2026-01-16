@@ -719,8 +719,8 @@ nav {
 
 .boutons_haut {
   display: flex;
-  justify-content:space-around;
-  margin-top: 25px;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .boutons_ronds {
@@ -746,8 +746,12 @@ nav {
 
 #pave_numerique {
   display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
   justify-content: center;
-  width: clamp(351px, calc(100vw - clamp(20px, 5vw, 40px)), 720px);
+  /*width: clamp(351px, calc(100vw - clamp(20px, 5vw, 40px)), 720px);*/
+  width: calc(3*(clamp(35px, 10vw, 90px)) + 10px);
+  height: calc(3*(clamp(35px, 10vw, 90px)) + 10px);
 }
 
 #pave_numerique p {
@@ -759,8 +763,20 @@ nav {
   max-width: 80px;
   max-height: 80px;
   font-size: clamp(1rem, 5vw, 2rem);
-  margin: 25px 0px;
   gap: 2px;
+}
+
+#interface_de_jeu {
+    margin-top: 10px;
+}
+
+#interface_de_jeu>div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  height: calc(3*(clamp(35px, 10vw, 90px)) + 10px);
 }
 
 #interface_de_jeu>div:last-child {
@@ -1725,12 +1741,28 @@ section p {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-top: unset;
     width: 40vw;
   }
 
+  #interface_de_jeu>div {
+    flex-direction: column;
+  }
+
+  #interface_de_jeu>div:first-child {
+    justify-content: space-between;
+    height: 100%;
+    margin-bottom: unset;
+  }
+
   .boutons_haut {
+    flex-direction: row;
     justify-content:space-around;
     margin-top: unset;
+  }
+
+  .boutons_haut>div {
+    width: 180px;
   }
 
   .boutons_ronds {
@@ -1758,7 +1790,7 @@ section p {
     max-width: 400px;
     height: 35vw;
     max-height: 400px;
-    margin: 0px auto;
+    margin: auto;
   }
 
   #pave_numerique p {

@@ -105,34 +105,32 @@
                     </tr>
                 </tbody>
             </table>
-
             <table class="grille" id="grille">
             </table>
-
             <div id="interface_de_jeu"> <!-- boutons de jeu -->
-                <div class="boutons_haut"> <!-- notes et temps -->
-                    <div class="boutons_ronds">
-                        <div id="bouton_notes" class="bouton boutonPave"><img src="view/assets/svg/Notes.svg" alt=""></div>
-                        <p id="notes">Notes : OFF</p>
+                <div>
+                    <div class="boutons_haut"> <!-- notes et temps -->
+                        <div class="boutons_ronds">
+                            <div id="bouton_notes" class="bouton boutonPave"><img src="view/assets/svg/Notes.svg" alt=""></div>
+                            <p id="notes">Notes : OFF</p>
+                        </div>
+                        <div class="boutons_ronds">
+                            <div id="bouton_pause" class="bouton boutonPave"><img src="view/assets/svg/Pause.svg" alt=""></div>
+                            <p id="timer">Temps : 15:00</p>
+                        </div>
                     </div>
-                    <div class="boutons_ronds">
-                        <div id="bouton_pause" class="bouton boutonPave"><img src="view/assets/svg/Pause.svg" alt=""></div>
-                        <p id="timer">Temps : 15:00</p>
+                    <div id="pave_numerique"> <!-- pavé numérique -->
+                        <p class="bouton boutonPave">1</p>
+                        <p class="bouton boutonPave">2</p>
+                        <p class="bouton boutonPave">3</p>
+                        <p class="bouton boutonPave">4</p>
+                        <p class="bouton boutonPave">5</p>
+                        <p class="bouton boutonPave">6</p>
+                        <p class="bouton boutonPave">7</p>
+                        <p class="bouton boutonPave">8</p>
+                        <p class="bouton boutonPave">9</p>
                     </div>
                 </div>
-
-                <div id="pave_numerique"> <!-- pavé numérique -->
-                    <p class="bouton boutonPave">1</p>
-                    <p class="bouton boutonPave">2</p>
-                    <p class="bouton boutonPave">3</p>
-                    <p class="bouton boutonPave">4</p>
-                    <p class="bouton boutonPave">5</p>
-                    <p class="bouton boutonPave">6</p>
-                    <p class="bouton boutonPave">7</p>
-                    <p class="bouton boutonPave">8</p>
-                    <p class="bouton boutonPave">9</p>
-                </div>
-
                 <div>
                     <div id="menu_partie" class="popup"><!-- menu -->
                         <h3>Séléctionnez la difficulté</h3>
@@ -156,7 +154,6 @@
                 </div>
             </div>
         </div>
-
         <div id="debut_partie" class="popup"><!-- popup de début de partie -->
             <h3>Séléctionnez la difficulté</h3>
             <p>La partie débutera dès que vous aurez fait votre choix</p>
@@ -176,14 +173,12 @@
                 </div>
             </div>
         </div>
-
         <div id="fin_partie" class="popup"><!-- popup de fin de partie -->
             <h3></h3>
             <p>Vous avez correctement teminé la grille</p>
             <p class="score_global">Score global</p>
             <div id="bouton_rejouer_partie" class="bouton boutonPrincipal boutonDefaut">Rejouer</div>
         </div>
-
         <div id="erreur" class="popup"><!-- popup d'erreur de grille -->
             <h3>Une erreur est survenue</h3>
             <p>
