@@ -1,171 +1,133 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 18 déc. 2025 à 10:07
--- Version du serveur : 9.1.0
--- Version de PHP : 8.3.14
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de données : `sudoku_master`
---
-
+-- --------------------------------------------------------
+-- Hôte:                         127.0.0.1
+-- Version du serveur:           8.0.30 - MySQL Community Server - GPL
+-- SE du serveur:                Win64
+-- HeidiSQL Version:             12.1.0.6537
 -- --------------------------------------------------------
 
---
--- Structure de la table `classer`
---
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
+-- Listage de la structure de la base pour sudoku_master
+DROP DATABASE IF EXISTS `sudoku_master`;
+CREATE DATABASE IF NOT EXISTS `sudoku_master` /*!40100 DEFAULT CHARACTER SET latin1 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `sudoku_master`;
+
+-- Listage de la structure de table sudoku_master. role
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE IF NOT EXISTS `role` (
+  `id_role` int NOT NULL AUTO_INCREMENT,
+  `libelle_role` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_role`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Listage des données de la table sudoku_master.role : ~2 rows (environ)
+INSERT INTO `role` (`id_role`, `libelle_role`) VALUES
+	(1, 'Administrateur'),
+	(2, 'Utilisateur');
+
+-- Listage de la structure de table sudoku_master. utilisateur
+DROP TABLE IF EXISTS `utilisateur`;
+CREATE TABLE IF NOT EXISTS `utilisateur` (
+  `Id_utilisateur` int NOT NULL AUTO_INCREMENT,
+  `pseudo_utilisateur` varchar(50) NOT NULL,
+  `email_utilisateur` varchar(100) NOT NULL,
+  `mdp_utilisateur` varchar(255) NOT NULL,
+  `inactif` tinyint NOT NULL DEFAULT '0',
+  `id_role` int NOT NULL DEFAULT '2',
+  PRIMARY KEY (`Id_utilisateur`),
+  KEY `id_role` (`id_role`),
+  CONSTRAINT `utilisateur_ibfk_1` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Listage des données de la table sudoku_master.utilisateur : ~0 rows (environ)
+
+-- Listage de la structure de table sudoku_master. mode_de_jeu
+DROP TABLE IF EXISTS `mode_de_jeu`;
+CREATE TABLE IF NOT EXISTS `mode_de_jeu` (
+  `id_mode_de_jeu` int NOT NULL,
+  `libelle_mode_de_jeu` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_mode_de_jeu`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Listage des données de la table sudoku_master.mode_de_jeu : ~3 rows (environ)
+INSERT INTO `mode_de_jeu` (`id_mode_de_jeu`, `libelle_mode_de_jeu`) VALUES
+	(1, 'Solo'),
+	(2, 'Coopératif'),
+	(3, 'Compétitif');
+
+-- Listage de la structure de table sudoku_master. classer
 DROP TABLE IF EXISTS `classer`;
 CREATE TABLE IF NOT EXISTS `classer` (
-  `id_classer` int NOT NULL AUTO_INCREMENT,
-  `id_utilisateur` int NOT NULL,
-  `id_mode` int NOT NULL,
+  `Id_utilisateur` int NOT NULL,
+  `id_mode_de_jeu` int NOT NULL,
   `score_global` int NOT NULL,
   `grilles_jouees` int NOT NULL,
   `grilles_resolues` int NOT NULL,
   `temps_moyen` time NOT NULL,
   `meilleur_temps` time NOT NULL,
   `serie_victoires` int NOT NULL,
-  PRIMARY KEY (`id_classer`) USING BTREE,
-  KEY `id_utilisateur` (`id_utilisateur`),
-  KEY `id_mode` (`id_mode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`Id_utilisateur`,`id_mode_de_jeu`),
+  KEY `id_mode_de_jeu` (`id_mode_de_jeu`),
+  CONSTRAINT `classer_ibfk_1` FOREIGN KEY (`Id_utilisateur`) REFERENCES `utilisateur` (`Id_utilisateur`),
+  CONSTRAINT `classer_ibfk_2` FOREIGN KEY (`id_mode_de_jeu`) REFERENCES `mode_de_jeu` (`id_mode_de_jeu`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
+-- Listage des données de la table sudoku_master.classer : ~0 rows (environ)
 
---
--- Structure de la table `difficulte`
---
-
+-- Listage de la structure de table sudoku_master. difficulte
 DROP TABLE IF EXISTS `difficulte`;
 CREATE TABLE IF NOT EXISTS `difficulte` (
   `id_difficulte` int NOT NULL AUTO_INCREMENT,
-  `libelle` varchar(50) NOT NULL,
+  `libelle_difficulte` varchar(50) NOT NULL,
   PRIMARY KEY (`id_difficulte`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
+-- Listage des données de la table sudoku_master.difficulte : ~3 rows (environ)
+INSERT INTO `difficulte` (`id_difficulte`, `libelle_difficulte`) VALUES
+	(1, 'Facile'),
+	(2, 'Moyen'),
+	(3, 'Difficile');
 
---
--- Structure de la table `mode`
---
-
-DROP TABLE IF EXISTS `mode`;
-CREATE TABLE IF NOT EXISTS `mode` (
-  `id_mode` int NOT NULL AUTO_INCREMENT,
-  `libelle` varchar(50) NOT NULL,
-  PRIMARY KEY (`id_mode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `participer`
---
-
-DROP TABLE IF EXISTS `participer`;
-CREATE TABLE IF NOT EXISTS `participer` (
-  `id_participer` int NOT NULL AUTO_INCREMENT,
-  `id_utilisateur` int NOT NULL,
-  `id_partie` int NOT NULL,
-  `numero_salle` varchar(10) NOT NULL,
-  PRIMARY KEY (`id_participer`),
-  KEY `id_utilisateur` (`id_utilisateur`),
-  KEY `id_partie` (`id_partie`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `partie`
---
-
+-- Listage de la structure de table sudoku_master. partie
 DROP TABLE IF EXISTS `partie`;
 CREATE TABLE IF NOT EXISTS `partie` (
   `id_partie` int NOT NULL AUTO_INCREMENT,
-  `id_mode` int NOT NULL,
+  `duree_partie` time DEFAULT NULL,
+  `id_mode_de_jeu` int NOT NULL,
   `id_difficulte` int NOT NULL,
-  `duree` time DEFAULT NULL,
-  `gagnant` int DEFAULT NULL,
   PRIMARY KEY (`id_partie`),
-  KEY `id_mode` (`id_mode`),
-  KEY `id_difficulte` (`id_difficulte`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `id_mode_de_jeu` (`id_mode_de_jeu`),
+  KEY `id_difficulte` (`id_difficulte`),
+  CONSTRAINT `partie_ibfk_1` FOREIGN KEY (`id_mode_de_jeu`) REFERENCES `mode_de_jeu` (`id_mode_de_jeu`),
+  CONSTRAINT `partie_ibfk_2` FOREIGN KEY (`id_difficulte`) REFERENCES `difficulte` (`id_difficulte`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
+-- Listage des données de la table sudoku_master.partie : ~0 rows (environ)
 
---
--- Structure de la table `role`
---
+-- Listage de la structure de table sudoku_master. participer
+DROP TABLE IF EXISTS `participer`;
+CREATE TABLE IF NOT EXISTS `participer` (
+  `Id_utilisateur` int NOT NULL,
+  `id_partie` int NOT NULL,
+  `gagnant` tinyint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`Id_utilisateur`,`id_partie`),
+  KEY `id_partie` (`id_partie`),
+  CONSTRAINT `participer_ibfk_1` FOREIGN KEY (`Id_utilisateur`) REFERENCES `utilisateur` (`Id_utilisateur`),
+  CONSTRAINT `participer_ibfk_2` FOREIGN KEY (`id_partie`) REFERENCES `partie` (`id_partie`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS `role`;
-CREATE TABLE IF NOT EXISTS `role` (
-  `id_role` int NOT NULL AUTO_INCREMENT,
-  `libelle` varchar(50) NOT NULL,
-  PRIMARY KEY (`id_role`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- Listage des données de la table sudoku_master.participer : ~0 rows (environ)
 
--- --------------------------------------------------------
-
---
--- Structure de la table `utilisateur`
---
-
-DROP TABLE IF EXISTS `utilisateur`;
-CREATE TABLE IF NOT EXISTS `utilisateur` (
-  `id_utilisateur` int NOT NULL AUTO_INCREMENT,
-  `id_role` int NOT NULL,
-  `pseudo` varchar(50) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `mdp` varchar(50) NOT NULL,
-  PRIMARY KEY (`id_utilisateur`),
-  KEY `id_role` (`id_role`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Contraintes pour les tables déchargées
---
-
---
--- Contraintes pour la table `classer`
---
-ALTER TABLE `classer`
-  ADD CONSTRAINT `classer_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id_utilisateur`),
-  ADD CONSTRAINT `classer_ibfk_2` FOREIGN KEY (`id_mode`) REFERENCES `mode` (`id_mode`);
-
---
--- Contraintes pour la table `participer`
---
-ALTER TABLE `participer`
-  ADD CONSTRAINT `participer_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id_utilisateur`),
-  ADD CONSTRAINT `participer_ibfk_2` FOREIGN KEY (`id_partie`) REFERENCES `partie` (`id_partie`);
-
---
--- Contraintes pour la table `partie`
---
-ALTER TABLE `partie`
-  ADD CONSTRAINT `partie_ibfk_1` FOREIGN KEY (`id_mode`) REFERENCES `mode` (`id_mode`),
-  ADD CONSTRAINT `partie_ibfk_2` FOREIGN KEY (`id_difficulte`) REFERENCES `difficulte` (`id_difficulte`);
-
---
--- Contraintes pour la table `utilisateur`
---
-ALTER TABLE `utilisateur`
-  ADD CONSTRAINT `utilisateur_ibfk_1` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`);
-COMMIT;
-
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

@@ -1,3 +1,24 @@
+:root {
+  --MidnightViolet : #270211;
+  --CrimsonViolet : #65082D;
+  --CrimsonViolet75pourcent : #8C4662;
+  --CrimsonViolet50pourcent : #B18395;
+  --CrimsonViolet25pourcent : #c3adc2;
+  --WisteriaBlue125pourcent : #6973C5;
+  --WisteriaBlue : #8F95D3;
+  --WisteriaBlue75pourcent : #B3B6E1;
+  --WisteriaBlue50pourcent : #ced0ec;
+  --WisteriaBlue25pourcent : #e3e4f4;
+  --White : #FFFFFF;
+  --Red : #FF0000;
+}
+
+@font-face {
+  font-family: "Berlin";
+  font-weight: 400;
+  src: url("../fonts/berlin-sans-fb-demi/BRLNSDB.TTF") format("truetype");
+}
+
 /* --------------------------------------------------  RESET CSS  --------------------------------------------------*/
 
 /* enlever les marges naturelles + reset du body/html */
@@ -18,6 +39,16 @@ header {
   box-sizing: inherit;
 }
 
+h1, h2, h3, h4, h5, h6, p, a {
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  font-family: "Berlin";
+}
+
+
 /* enlever le style des listes */
 ul,
 ol {
@@ -34,4 +65,1903 @@ canvas,
 svg {
   display: block;
   max-width: 100%;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+/* --------------------------------------------------  GENERAL  --------------------------------------------------*/
+
+/* Principal */
+
+* {
+  font-family: "inter";
+  font-size: 18px;
+  cursor: default;
+  user-select: none;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100dvh - 100px);
+  padding: 10px 0px;
+  margin: 60px auto 40px auto;
+}
+
+#conteneur_principal {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0px auto;
+}
+
+.vertical {
+  flex-direction: column;
+}
+
+sup {
+  line-height: 0px;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  width: calc(100vw - 50px);
+  padding: 30px;
+  margin: 0px 25px;
+  border-radius: 20px;
+  background-color: var(--WisteriaBlue25pourcent);
+  max-width: 100%;
+}
+
+/* Texte */
+
+a, a:visited:not(.bouton) {
+  text-decoration: none;
+  color: var(--MidnightViolet);
+  cursor: pointer;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+  color: var(--MidnightViolet);
+  cursor: inherit;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: bold;
+  text-align: center;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3.75vw, 1.6rem);
+  text-align: center;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 3.125vw, 1.333rem);
+  text-align: center;
+}
+
+/* Images */
+
+img {
+  cursor: inherit;
+}
+
+/* Tableaux */
+
+td {
+  color: var(--MidnightViolet);
+}
+
+/* Boutons */
+
+.boutonPrincipal {
+  background-color: var(--CrimsonViolet);
+  color: var(--White);
+  font-size: clamp(1rem, 2.34vw, 1.33rem);
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0px 4px 4px 0px #686868;
+  transition: all 0.5s ease;
+}
+
+.boutonLarge {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  min-width: 240px;
+  padding: 0px 15px;
+}
+
+.boutonDefaut {
+  height: 40px;
+  line-height: 40px;
+  min-width: 140px;
+  padding: 0px 15px;
+}
+
+/* Onglets */
+
+.onglets {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+.onglets>p {
+  height: 40px;
+  line-height: 40px;
+  width: 100%;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.onglet_actif {
+  color: var(--White);
+  background-color: var(--WisteriaBlue);
+  border-radius: 10px;
+  transition: all 0.5s ease;
+}
+
+.onglet_actif:hover {
+  background-color: var(--WisteriaBlue125pourcent);
+}
+
+.onglets>p:not(.onglet_actif) {
+  background-color: var(--WisteriaBlue50pourcent);
+  border-radius: 10px;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.onglets>p:not(.onglet_actif):hover {
+  background-color: var(--WisteriaBlue75pourcent);
+}
+
+/* Formulaires */
+
+select, input[type="text"], input[type="email"], input[type="password"] {
+  width: 100%;
+  height: 40px;
+  font-size: 14px;
+  padding: 0px 10px;
+  border: 2px solid var(--MidnightViolet);
+  border-radius: 5px;
+  margin-top: 11px;
+  cursor: text;
+}
+
+select {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path fill="%23000000" d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px top 9px;
+  cursor: default;
+  appearance:none;
+  -moz-appearance:none; /* Firefox */
+  -webkit-appearance:none; /* Safari et Chrome */
+}
+
+input[type="submit"] {
+  border: transparent;
+  margin: 15px auto 0px auto;
+}
+
+label {
+  font-weight: bold;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+form p {
+  text-align: left;
+}
+
+hr {
+  border-top: 1px solid var(--MidnightViolet);
+  width: 80%;
+  margin: 30px auto;
+}
+
+.formulaire a {
+  text-align: center;
+}
+
+.formulaire a:last-child {
+  margin-top: 15px;
+}
+
+.formulaire h1 {
+  font-size: 32px;
+}
+
+/* ----------------------------------------------  MOBILE (<= 575px)  ----------------------------------------------*/
+
+/* Header */
+
+header {
+  position: fixed;
+  display: flex;
+  overflow: visible;
+  justify-content: center;
+  width: 100%;
+  background-color: var(--White);
+  box-shadow: 0px 4px 4px var(--CrimsonViolet50pourcent);
+  z-index: 1;
+}
+
+header>div {
+  display: flex;
+  justify-content: space-between;
+  justify-self: center;
+  align-items: center;
+  padding: 0px 25px;
+  width: 100vw;
+  max-width: 1200px;
+  height: 60px;
+  background-color: var(--White);
+}
+
+nav {
+  display: none;
+}
+
+.logo {
+  width: 95px;
+}
+
+#utilisateur {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 60px;
+}
+
+#utilisateur>img {
+  width: 40px;
+}
+
+#menu_burger {
+  margin-left: 5px;
+}
+
+#menu_burger > input[type = "checkbox"] {
+  position: absolute;
+  width: 40px;
+  height: 45px;
+  margin: 0px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+#menu_burger > input[type = "checkbox"]:checked~.menu_burger {
+  display: flex;
+}
+
+.menu_burger {
+  position: fixed;
+  display: none;
+  flex-direction: column;
+  left: 0px;
+  top: 60px;
+  min-width: 100vw;
+  background-color: var(--White);
+  padding: 0px 25px;
+  box-shadow: inset 0px 4px 4px var(--CrimsonViolet50pourcent), 0px 4px 4px var(--CrimsonViolet50pourcent);
+  z-index: 2;
+}
+
+.menu_burger a {
+  height: 55px;
+  line-height: 55px;
+  font-size: 24px;
+  text-align: center;
+  border-bottom: 1px solid var(--WisteriaBlue25pourcent);
+}
+
+.menu_burger a:nth-child(4), .menu_burger a:last-child {
+  border-bottom: none;
+}
+
+.menu_burger a:nth-child(5) {
+  border-top: 1px solid var(--MidnightViolet);
+}
+
+#menu_utilisateur {
+  display: none;
+}
+
+/* Accueil */
+
+#accueil_haut {
+  margin-bottom: 30px;
+}
+
+#accueil_haut>img {
+  display: none;
+}
+
+#accueil_haut img {
+  width: min(41vw, 268px);
+  height: min(41vw, 268px);
+  margin: 0px auto;
+}
+
+#accueil_haut>div, #accueil_bas {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#boutons_centre {
+  display: none;
+}
+
+#boutons_haut {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-self: center;
+  margin: 30px 0px;
+}
+
+/* Connexion / Inscription */
+
+#conteneur_principal>img {
+  display: none;
+}
+
+.formulaire img {
+  display: none;
+}
+
+/* Profil */
+
+#infos_compte {
+  margin: 10px auto 0px auto;
+  max-width: 400px;
+}
+
+#infos_compte>div:first-child {
+  display: none;
+}
+
+#infos_compte>div:nth-child(2) p {
+  line-height: 25px;
+  text-align: center;
+}
+
+#infos_compte>div:last-child {
+  display: flex;
+  justify-content: space-around;
+}
+
+#infos_compte>div>p:nth-child(odd) {
+  font-weight: bold;
+}
+
+#infos_compte p {
+  text-align: left;
+}
+
+#statistiques {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+
+#statistiques table {
+  text-align: center;
+  width: min(1120px, calc(100vw - 80px))
+}
+
+#statistiques td, #statistiques tr {
+  cursor: auto;
+  width: 20%;
+  height: 54px;
+}
+
+#statistiques_solo {
+  display: flex;
+}
+
+#statistiques_cooperatif, #statistiques_competitif {
+  display: none;
+}
+
+.statistiques {
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 35px;
+}
+
+.statistiques p {
+  font-size: clamp(1rem, 2.125vw, 1.333rem);
+}
+
+.statistiques>p:first-child {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.statistiques p:nth-child(odd) {
+  font-weight: bold;
+}
+
+.statistiques>div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  margin-top: 35px;
+}
+
+.statistiques>div>div p {
+  text-align: center;
+}
+
+.statistiques>div>div p:first-child {
+  line-height: 25px;
+  height: 25px;
+}
+
+.statistiques>div>div p:last-child {
+  line-height: 40px;
+  height: 40px;
+}
+
+.statistiques>div div {
+  width: 50%;
+}
+
+.statistiques>div div:last-child {
+  flex-grow: 2;
+}
+
+.onglets_stats {
+  margin-top: 10px;
+  max-width: 840px;
+}
+
+.score_principal {
+  border-radius: 25px;
+  background-color: var(--Red);
+  color: var(--White);
+  padding: 0 10px;
+}
+
+.score_large {
+  line-height: 25px;
+  min-width: 100px;
+  text-align: center;
+}
+
+/* Jeu solo */
+
+#titre_jeu {
+  text-align: center;
+}
+
+#menu_partie {
+  position: absolute;
+  display: none;
+  transform: translateX(-50%);
+  top: unset;
+  bottom: 45px;
+}
+
+.boutons_difficulte {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.boutons_difficulte div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  background-color: var(--CrimsonViolet25pourcent);
+  width: 80px;
+  height: 80px;
+  transition: all 0.5s ease;
+}
+
+.boutons_difficulte div img {
+  width: 50px;
+  height: 50px;
+}
+
+.boutons_difficulte div:hover {
+  background-color: var(--CrimsonViolet50pourcent);
+}
+
+.boutons_difficulte div:active {
+  background-color: var(--CrimsonViolet75pourcent);
+  transition: all 0.1s ease;
+}
+
+.grille {
+  margin-top: 10px;
+}
+
+#conteneur_jeu {
+  width: 100%;
+  filter: opacity(0.40);
+}
+
+.grille {
+  border-radius: clamp(10px, 2vw, 20px);
+  border: 6px solid var(--CrimsonViolet);
+  border-spacing: 0px;
+  min-width: clamp(351px, calc(100vw - clamp(20px, 5vw, 40px)), 720px);
+  min-height: clamp(351px, calc(100vw - clamp(20px, 5vw, 40px)), 720px);
+}
+
+#grille {
+  display: none;
+  font-weight: bold;
+}
+
+#grille p {
+  font-size: clamp(1rem, 5vw, 2rem);
+}
+
+#grille ul {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  top: 5%;
+  left: 5%;
+  width: 95%;
+  height: 95%;
+}
+
+#grille li {
+  width: 30%;
+  height: 30%;
+  font-weight: lighter;
+  font-size: clamp(10px, 3.2vw, 20px);
+  line-height: clamp(10px, 3.2vw, 20px);
+}
+
+.grille td {
+  position: relative;
+  height: 35px;
+  width: 35px;
+  border: 1px solid var(--CrimsonViolet);
+  text-align: center;
+}
+
+.grille tr:nth-child(4) td {
+  border-top: 4px solid var(--CrimsonViolet);
+}
+
+.grille tr:nth-child(6) td {
+  border-bottom: 4px solid var(--CrimsonViolet);
+}
+
+.grille tr:first-child td:first-child {
+  border-radius: clamp(5px, 1vw, 10px) 0 0 0;
+}
+
+.grille tr:first-child td:last-child {
+  border-radius:  0 clamp(5px, 1vw, 10px) 0 0;
+}
+
+.grille tr:last-child td:first-child {
+  border-radius:  0 0 0 clamp(5px, 1vw, 10px);
+}
+
+.grille tr:last-child td:last-child {
+  border-radius:  0 0 clamp(5px, 1vw, 10px) 0;
+}
+
+.grille tr td:nth-child(4) {
+  border-left: 4px solid var(--MidnightViolet);
+}
+
+.grille tr td:nth-child(6) {
+  border-right: 4px solid var(--MidnightViolet);
+}
+
+.grille tr:first-child td {
+  border-top: none;
+}
+
+.grille tr:last-child td {
+  border-bottom: none;
+}
+
+.grille tr td:first-child {
+  border-left: none;
+}
+
+.grille tr td:last-child {
+  border-right: none;
+}
+
+.celluleBleue {
+  background-color: var(--WisteriaBlue25pourcent);
+}
+
+.selected {
+  background-color: var(--CrimsonViolet25pourcent) !important;
+}
+
+.selected_highlight, .selected_highlight p {
+  background-color: var(--CrimsonViolet75pourcent) !important;
+  color: var(--White);
+}
+
+.selected_highlight:not(.celluleFixe) {
+  font-weight: normal;
+}
+
+.boutons_haut {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.boutons_ronds {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: clamp(180px, 40vw, 250px);
+}
+
+.boutons_ronds>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: clamp(50px, 10vw, 65px);
+  height: clamp(50px, 10vw, 65px);
+  border-radius: 50%;
+}
+
+.boutons_ronds img {
+  width: clamp(30px, 10vw, 37px);
+  height: clamp(30px, 10vw, 37px);
+}
+
+#pave_numerique {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: center;
+  /*width: clamp(351px, calc(100vw - clamp(20px, 5vw, 40px)), 720px);*/
+  width: calc(3*(clamp(35px, 10vw, 90px)) + 10px);
+  height: calc(3*(clamp(35px, 10vw, 90px)) + 10px);
+}
+
+#pave_numerique p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: clamp(35px, 10vw, 90px);
+  height: clamp(35px, 10vw, 90px);
+  max-width: 80px;
+  max-height: 80px;
+  font-size: clamp(1rem, 5vw, 2rem);
+  gap: 2px;
+}
+
+#interface_de_jeu {
+    margin-top: 10px;
+}
+
+#interface_de_jeu>div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  height: calc(3*(clamp(35px, 10vw, 90px)) + 10px);
+}
+
+#interface_de_jeu>div:last-child {
+  position: relative;
+}
+
+#bouton_jeu {
+  width: 250px;
+  height: 40px;
+  line-height: 40px;
+  margin: auto;
+}
+
+td, #pave_numerique p, .boutons_difficulte div {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+td:not(.celluleFixe, .selected_highlight) p {
+  color: var(--CrimsonViolet75pourcent);
+  font-weight:normal;
+}
+
+td:not(.celluleFixe, .selected_highlight) li {
+  color: var(--CrimsonViolet75pourcent);
+}
+
+.boutonPave {
+  text-align: center;
+  background-color: var(--WisteriaBlue25pourcent);
+  box-shadow: 0px 2px 2px 0px #686868;
+  transition: filter 0.5s ease;
+  border-radius: 10px;
+}
+
+.boutonPave:hover {
+  filter: brightness(0.94);
+}
+
+.score_global {
+  font-weight: bold;
+}
+
+.score_global_valeur {
+  font-size:50px;
+  line-height: 80px;
+}
+
+.score_golbal_evolution {
+  font-size: 32px;
+}
+
+.victoire {
+  color: green;
+}
+
+.defaite {
+  color: red;
+}
+
+/* Salon */
+
+#salon_instructions {
+  margin: 10px auto;
+  text-align: center;
+  max-width: 725px
+}
+
+#salon {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.salon_inactif {
+  filter: opacity(0.40);
+}
+
+/* Multijoueur */
+
+#infos_multijoueur {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px auto;
+  max-width: 400px;
+}
+
+#infos_multijoueur p {
+  font-size: 16px;
+}
+
+#infos_multijoueur>div {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#infos_multijoueur>div:first-child {
+  justify-content: flex-start;
+  padding-left:25px;
+}
+
+#infos_multijoueur>div:last-child {
+  justify-content: flex-end;
+  padding-right:25px;
+}
+
+#infos_multijoueur>div:first-child:hover #joueur_1, #infos_multijoueur>div:last-child:hover #joueur_2 {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+#infos_multijoueur img {
+  width: 40px;
+}
+
+#infos_multijoueur>div>img {
+  position: absolute;
+}
+
+#infos_multijoueur>div>img:first-child {
+  left: 0px;
+}
+
+#infos_multijoueur>div>img:last-child {
+  right: 0px;
+  transform: scaleX(-1);
+}
+
+.score_petit {
+  height: 22px;
+  line-height: 22px;
+  width: 50px;
+  text-align: right;
+}
+
+.score_petit_droite {
+  text-align: left;
+}
+
+#joueurs {
+  display: flex;
+  justify-content: center;
+  gap: 20%;
+}
+
+#joueurs>div>div {
+  position: relative;
+}
+
+#joueurs img {
+  margin: auto;
+}
+
+#joueurs>div>div>img:last-child {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: none;
+}
+
+/* Classements */
+
+#classements {
+  margin-top: 10px;
+}
+
+#classements section {
+  min-height: 680px;
+}
+
+#classements>section:not(:first-child), #classements_cooperatif, #classements_competitif {
+  display: none;
+}
+
+#classements>section:first-child {
+  max-width: 360px;
+}
+
+.onglets_classements {
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.onglets_classements p img {
+  margin: auto;
+}
+
+.top_3 {
+  position: relative;
+  text-align: center;
+  height: 184px;
+  background-color: var(--WisteriaBlue50pourcent);
+  border-radius: 15px;
+}
+
+.top_3>div {
+  position: relative;
+  width: 95px;
+}
+
+.info_joueur {
+  position: absolute;
+  display: none;
+  width: 400px;
+  padding: 20px 40px;
+  color: var(--MidnightViolet);
+  background-color: var(--WisteriaBlue25pourcent);
+  box-shadow: 0px 4px 4px 0px #686868;
+  border-radius: 15px;
+  z-index: 10;
+}
+
+.info_joueur_haut {
+  left: calc(50% - 200px);
+  bottom: calc(100% + 15px);
+}
+
+.info_joueur_bas {
+  left: calc(50% - 200px);
+  top: calc(100% + 15px);
+}
+
+.info_joueur>div {
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.info_joueur>div>div:last-child {
+  text-align: right;
+}
+
+.top_3>div:hover .info_joueur, .top_10>div:hover .info_joueur {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.info_joueur>img {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+}
+
+.info_joueur_haut>img {
+  left: calc(50% - 20px);
+  bottom: calc(-20px);
+  transform: scaleY(-1);
+}
+
+.info_joueur_bas>img {
+  left: calc(50% - 20px);
+  top: calc(-20px);
+}
+
+.top_3>div>img {
+  position: relative;
+  margin: auto;
+  z-index: 2;
+}
+
+.top_3>div:first-child {
+  position: absolute;
+  height: calc(62px + 28px + 28px);
+  transform: translateX(-50%);
+  left: 50%;
+  top: 5px;
+}
+
+.top_3>div:nth-child(2) {
+  position: absolute;
+  height: calc(47px + 28px + 28px);
+  transform: translateX(-50%);
+  left: 25%;
+  bottom: 15px;
+}
+
+.top_3>div:nth-child(3) {
+  position: absolute;
+  height: calc(47px + 28px + 28px);
+  transform: translateX(-50%);
+  left: 75%;
+  bottom: 15px;
+}
+
+.top_3>div:first-child>p:last-child {
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  top: calc(62px + 23px);
+  white-space: nowrap;
+}
+
+.top_3>div:not(:first-child)>p:last-child {
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  top: calc(47px + 28px);
+  white-space: nowrap;
+}
+
+.score_top {
+  position: absolute;
+  transform: translateX(-50%);
+  height: 33px;
+  line-height: 33px;
+  width: 65px;
+  text-align: center;
+  left: 50%;
+  top: calc(47px - 5px);
+  z-index: 1;
+}
+
+.score_top_1 {
+  top: calc(62px - 10px);
+}
+
+.score {
+  height: 30px;
+  line-height: 30px;
+  width: 80px;
+  text-align: center;
+}
+
+.top_10 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 10px;
+  height: 375px;
+}
+
+.top_10>div {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Règles */
+
+#regles {
+  margin-top: 10px;
+  min-height: 680px;
+}
+
+#regles h2 {
+  font-family: "inter";
+  font-size: clamp(1.25rem, 3.125vw, 1.333rem);
+  text-align: left;
+  margin: 15px 0px 0px 0px;
+}
+
+#regles>div:not(:first-child) {
+  margin: auto 0px;
+}
+
+#regles_generalites {
+  display: flex;
+  flex-direction: column;
+  text-align: justify;
+}
+
+#regles_processus>div:last-child {
+  display: none;
+}
+
+#regles_processus>div>div>div {
+  margin-top: 15px;
+}
+
+#regles_repetez, #regles_processus {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#regles_repetez>img, #regles_processus>div>img {
+  height: min(50vw, 250px);
+  width: min(50vw, 250px);
+  margin: 0px auto 15px auto;
+}
+
+#regles_generalites p, #regles_repetez p, #regles_processus p {
+  margin-top: 15px;
+}
+
+/* Footer */
+
+footer {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: var(--White);
+  box-shadow: 0px 0px 4px var(--CrimsonViolet50pourcent);
+  z-index: 1;
+  bottom: 0px;
+}
+
+footer>div {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  justify-self: center;
+  padding: 0px 25px;
+  width: 100vw;
+  max-width: 1200px;
+  height: 40px;
+}
+
+footer>div div {
+  display: flex;
+  gap: 10px;
+}
+
+footer img {
+  height: 30px;
+}
+
+footer a {
+    font-size: 14px;
+}
+
+/* Popups */
+
+.popup {
+  position: absolute;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  gap: 10px;
+  top : 50%;
+  left : 50%;
+  width: calc(100vw - 50px);
+  max-width: 550px;
+  border-radius: 15px;
+  background-color: var(--WisteriaBlue25pourcent);
+  box-shadow: 0px 4px 4px 0px #686868;
+}
+
+.popup h3 {
+  font-size: clamp(1.5rem, 3.75vw, 1.6rem);
+}
+
+.popup form {
+  margin-top: unset;
+  gap: 10px;
+}
+
+.popup .bouton {
+  margin: unset;
+}
+
+.champs_doubles>div>div:not(:first-child) {
+  margin-top: 5px;
+}
+
+.popup p {
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+#debut_partie, #fin_partie, #modifier_compte, #supprimer_compte,
+#compte_requis, #verif_joueur_pret, #abandon_autre_joueur_partie,
+#abandon_partie, #erreur, #erreur_salle, #erreur_serveur {
+  position: fixed;
+  display: flex;
+  transform: translateX(-50%) translateY(-50%);
+;
+}
+
+#fin_partie, #modifier_compte, #supprimer_compte, #verif_joueur_pret,
+#abandon_autre_joueur_partie,#abandon_partie, #erreur,
+#erreur_salle, #erreur_serveur {
+  display: none;
+}
+
+#modifier_compte, #supprimer_compte {
+  align-items: center;
+}
+
+#modifier_compte p, #supprimer_compte p {
+  text-align: center;
+}
+
+#modifier_compte>p {
+  display:none;
+}
+
+/* Settings généraux */
+
+section p {
+  text-align: justify;
+}
+
+.bouton {
+  cursor: pointer;
+}
+
+.bouton:not(.boutonPave) {
+  border-radius: 10px;
+}
+
+.boutonProfil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 125px;
+  padding: 10px;
+}
+
+.boutonProfil p {
+  color: var(--White);
+}
+
+/* --------------------------------  MOBILE MODE PAYSAGE ET PLUS GRAND (<= 767 px)  --------------------------------*/
+
+@media (min-width: 576px) {
+
+  /* Accueil */
+
+  #boutons_haut {
+    flex-direction: row;
+    gap: 15px;
+  }
+
+  /* Profil */
+
+  .statistiques>div div {
+    width: 33%;
+  }
+
+  .statistiques>div div:last-child {
+    flex-grow: 0;
+  }
+
+  /* Jeu solo */
+
+  .boutons_difficulte div {
+    width: 120px;
+    height: 120px;
+    justify-content: center;
+  }
+
+   #menu_partie .boutons_difficulte div {
+    width: 90px;
+    height: 80px;
+    justify-content: center;
+  }
+
+  .score_large {
+    line-height: 30px;
+    min-width: 110px;
+  }
+
+  /* Multijoueur */
+
+  #infos_multijoueur {
+    max-width: 500px;
+  }
+
+  #infos_multijoueur p {
+    font-size: 18px;
+  }
+
+  .score_petit {
+    height: 28px;
+    line-height: 28px;
+    width: 60px;
+  }
+
+  /* Classements */
+
+  .onglets.onglets_classements {
+    flex-wrap: nowrap;
+  }
+
+  /* Règles */
+
+  .onglets_regles {
+    margin-bottom: 15px;
+  }
+
+  #regles_repetez>img, #regles_processus>div>img {
+    height: min(50vw, 350px);
+    width: min(50vw, 350px);
+  }
+
+  #regles_generalites h2:first-child, #regles_repetez p:first-child, #regles_processus p:first-child {
+    margin-top: 0px;
+  }
+
+  #regles_processus>div:last-child {
+    margin-top: 15px;
+  }
+}
+
+/* -------------------------------------  TABLETTE ET PLUS GRAND (<= 991 px)  --------------------------------------*/
+
+@media (min-width: 768px) {
+
+  /* Header */
+
+  header>div {
+    padding: unset;
+    margin: auto 25px;
+  }
+
+  nav {
+    display: flex;
+    gap: 2.5vw;
+  }
+
+  #utilisateur {
+    gap: 20px;
+  }
+
+  #menu_burger {
+    display: none;
+  }
+
+  #menu_utilisateur {
+    display: none;
+    position: absolute;
+    gap: 7px;
+    right: 0px;
+    top: 60px;
+    min-width: 280px;
+    background-color: var(--CrimsonViolet);
+    border-radius: 10px;
+    padding: 7px 0px 7px 25px;
+    z-index: 2;
+  }
+
+  #menu_utilisateur>div {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: 45px;
+  }
+
+  #menu_utilisateur>div img {
+    margin: auto 0;
+  }
+
+  #menu_utilisateur a {
+    color: var(--White);
+  }
+
+  #utilisateur:hover #menu_utilisateur {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  /* Profil */
+
+  #infos_compte {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+  }
+
+  #infos_compte>div:first-child {
+    display: flex;
+    line-height: 25px;
+    gap: 20px;
+  }
+
+  #infos_compte>div:last-child {
+    gap: 20px;
+  }
+
+  #infos_compte>div:first-child>div:first-child {
+    font-weight: bold;
+  }
+
+  #infos_compte>div:nth-child(2) p {
+    display: none;
+  }
+
+  .score_large {
+    line-height: 35px;
+    min-width: 120px;
+  }
+
+  /* Accueil */
+
+  #accueil_haut img {
+    display: none;
+  }
+
+  #accueil_haut>img {
+    display: block;
+    width: min(41vw, 268px);
+    height: min(41vw, 268px);
+    margin: auto;
+  }
+
+  #accueil_haut {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    gap: 30px;
+  }
+
+  #accueil_haut>div:last-child {
+    display: flex;
+    flex-direction: column;
+    text-align: justify;
+    gap: 15px;
+  }
+
+  #boutons_haut {
+    display: none;
+  }
+
+  #boutons_centre {
+    display: flex;
+    gap: 80px;
+    align-self: center;
+    margin-bottom: 20px;
+  }
+
+  /* Connexion / Inscription */
+
+  #conteneur_principal>img {
+    display: block;
+    margin: auto;
+    width: min(35vw, 456px);
+    height: min(35vw, 456px);
+  }
+
+  /* Salon */
+
+  #salon {
+    flex-direction: row;
+    justify-content: space-around;
+    align-self: center;
+  }
+
+  #salon section {
+    width: 45%;
+    margin: unset;
+  }
+
+  #salon h2 {
+    text-align: center;
+  }
+
+  #salon form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  /* Classements */
+
+  #classements {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    width: calc(100vw - 50px);
+    max-width: 1200px;
+  }
+
+  #classements>section:first-child {
+    display: none;
+  }
+
+  #classements>section:not(:first-child) {
+    display: flex;
+    margin: unset;
+    max-width: 360px;
+    padding: clamp(15px, 2vw, 30px);
+  }
+
+  #classements>section:not(:first-child)>div:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .top_10 {
+    height: 374px;
+  }
+
+  /* Regles */
+
+  #regles_processus>div>div>div {
+    display: none;
+  }
+
+  #regles_processus>div:last-child {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #regles_processus>div:last-child {
+    flex: 2;
+  }
+
+  #regles_processus>div:first-child {
+    display: flex;
+  }
+
+  #regles_repetez, #regles_processus>div:first-child {
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+  }
+
+  #regles_repetez>img, #regles_processus>div>img {
+    height: min(41vw, 350px);
+    width: min(41vw, 350px);
+    margin: auto;
+  }
+
+  /* Footer */
+
+  footer>div {
+    height: 60px;
+    padding: unset;
+    margin: auto 25px;
+  }
+
+  footer a {
+    font-size: 18px;
+  }
+
+  footer img {
+    height: unset;
+  }
+
+  /* Popups */
+
+  .popup .boutonDefaut {
+    min-width: 200px;
+  }
+
+  /* Settings généraux */
+
+  main {
+    min-height: calc(100dvh - 120px);
+    margin: 60px auto 60px auto;
+  }
+
+  h2, h3 {
+    text-align: left;
+  }
+
+  .bouton {
+    border-radius: 15px;
+  }
+
+  .boutonDefaut {
+    min-width: 280px;
+  }
+
+  .onglets {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .onglets>p {
+    width: 45%;
+  }
+
+  .formulaire {
+    max-width: 350px;
+    margin: 0px auto 0px 5vw;
+  }
+}
+
+/* --------------------------------  ORDINATEUR BUREAU ET PLUS GRAND (<= 1199 px)  ---------------------------------*/
+
+@media (min-width: 992px) {
+
+  /* Header */
+
+  header a {
+    font-size: 24px;
+  }
+
+   .logo {
+    width: 135px;
+  }
+
+  #utilisateur>img {
+    width: 49px;
+  }
+
+  /* Connexion / Inscription */
+
+  .formulaire img {
+    display: block;
+    width: 271px;
+    margin: 0px auto 30px auto;
+  }
+
+  /* jeu solo */
+
+  .separateur_haut {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0px auto;
+  }
+
+  .large {
+    min-width: calc(clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px) + 40vw);
+  }
+
+  #titre_jeu {
+    text-align: left;
+    align-items: start;
+  }
+
+  #conteneur_jeu {
+    display: flex;
+    margin: 10px 25px 0px 25px;
+  }
+
+  .grille {
+    margin: unset;
+    min-width: clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px);
+    min-height: clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px);
+  }
+
+  #grille p {
+    font-size: clamp(1rem, 3vw, 2rem);
+  }
+
+  #menu_partie {
+    width: 40vw;
+    bottom: 85px;
+  }
+
+  #interface_de_jeu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: unset;
+    width: 40vw;
+  }
+
+  #interface_de_jeu>div {
+    flex-direction: column;
+  }
+
+  #interface_de_jeu>div:first-child {
+    justify-content: space-between;
+    height: 100%;
+    margin-bottom: unset;
+  }
+
+  .boutons_haut {
+    flex-direction: row;
+    justify-content:space-around;
+    margin-top: unset;
+  }
+
+  .boutons_haut>div {
+    width: 180px;
+  }
+
+  .boutons_ronds {
+    flex-direction: column;
+    width: unset;
+  }
+
+  .boutons_ronds>div {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+  }
+
+  .boutons_ronds img {
+    width: 50px;
+    height: 50px;
+  }
+
+  #pave_numerique {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 35vw;
+    max-width: 400px;
+    height: 35vw;
+    max-height: 400px;
+    margin: auto;
+  }
+
+  #pave_numerique p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: clamp(90px, 10vw, 120px);
+    height: clamp(90px, 10vw, 120px);
+    max-width: 120px;
+    max-height: 120px;
+    font-size: 2rem;
+    margin: unset;
+  }
+
+  #bouton_jeu {
+    height: 80px;
+    width: 352px;
+    line-height: 80px;
+    margin: 0px auto;
+  }
+
+  /* Profil */
+
+  #modifier_compte>form>div:nth-child(3) {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+  }
+
+  #supprimer_compte>form>div:first-child {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+  }
+
+  .score_large {
+    line-height: 40px;
+    min-width: 130px;
+  }
+
+  .statistiques>div div {
+    width: 20%;
+  }
+
+  /* Multijoueur */
+
+  #infos_multijoueur {
+    margin: unset;
+    width: 40vw;
+  }
+
+  .normal {
+     min-width: clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px);
+  }
+
+  /* Regles */
+
+  #regles_processus>div>div>div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #regles_processus>div:last-child {
+    display: none;
+  }
+
+  #regles_repetez>img, #regles_processus>div>img {
+    height: 400px;
+    width:400px;
+  }
+
+  /* Popups */
+
+  .popup_large {
+    min-width: 850px;
+  }
+
+  .popup input[type="text"], .popup input[type="email"], .popup input[type="password"]{
+    width: 360px;
+  }
+
+  .popup_large .boutonDefaut {
+    min-width: 280px;
+  }
+
+  /* Settings généraux */
+
+  select, input[type="text"], input[type="email"], input[type="password"] {
+    height: 53px;
+    font-size: 24px;
+    padding: 0px 20px;
+    border-radius: 10px;
+  }
+
+  label {
+    font-size: 24px;
+  }
+
+  .boutonProfil {
+    width: 150px;
+  }
+
+  .onglets {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+
+  .onglets>p {
+    width: 33%;
+  }
+
+  .formulaire {
+    max-width: 435px;
+    margin: 0px auto 0px 5vw;
+  }
+
+  .formulaire form {
+    margin: 30px auto 0px auto;
+  }
+
+  .formulaire form div {
+    width: 360px;
+  }
+
+  .champs_doubles{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    text-align: left;
+    margin: auto;
+  }
+
+  .champs_doubles>div {
+    width: 360px;
+  }
+
+  select {
+    background-position: right 18px top 18px;
+  }
+}
+
+/* -----------------------------------------  GRANDS ECRANS (>= 1200 px)  ------------------------------------------*/
+
+@media (min-width: 1200px) {
+
+  /* Jeu solo */
+
+   #conteneur_jeu {
+    margin: 10px auto 0px auto;
+  }
+
+  #menu_partie .boutons_difficulte div {
+    width: 120px;
+    height: 120px;
+  }
+
+  /* Footer */
+
+  footer {
+    margin: auto;
+  }
+
+  /* Settings généraux */
+
+  section {
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .formulaire {
+    max-width: 520px;
+  }
 }

@@ -1,0 +1,19 @@
+{
+    "name": "xaphan67/sudoku-master",
+    "description": "Jouez au Sudoku en ligne, seul ou à plusieurs",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Xaphan67\\SudokuMaster\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Xaphan67",
+            "email": "cedric.falda@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}

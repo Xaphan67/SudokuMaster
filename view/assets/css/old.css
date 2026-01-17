@@ -1,0 +1,1060 @@
+td p {
+  font-size: 36px;
+}
+
+#conteneur_principal>img {
+  margin: auto 0;
+}
+
+.inactif {
+  filter: opacity(0.40);
+}
+
+.boutonDefaut {
+  height: 40px;
+  line-height: 40px;
+  min-width: 280px;
+  padding: 0px 15px;
+}
+
+.boutonPrincipal:hover {
+  background-color: #540726;
+}
+
+.boutonPrincipal:active {
+  background-color: #3e051c;
+  transition: filter 0.1s ease;
+}
+
+.boutonPave {
+  text-align: center;
+  background-color: var(--WisteriaBlue25pourcent);
+  box-shadow: 0px 2px 2px 0px #686868;
+  transition: filter 0.5s ease;
+}
+
+.boutonPave:hover {
+  filter: brightness(0.94);
+}
+
+.onglets {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.onglets>p:not(.onglet_actif) {
+  height: 40px;
+  line-height: 40px;
+  background-color: var(--WisteriaBlue50pourcent);
+  border-radius: 15px;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.onglets>p:not(.onglet_actif):hover {
+  background-color: var(--WisteriaBlue75pourcent);
+}
+
+.onglet_actif {
+  min-width: 200px;
+  height: 40px;
+  line-height: 40px;
+  color: var(--White);
+  background-color: var(--WisteriaBlue);
+  border-radius: 15px;
+  transition: all 0.5s ease;
+}
+
+.onglet_actif:hover {
+  background-color: var(--WisteriaBlue125pourcent);
+}
+
+.boutonPave:active, .onglets>p:not(.onglet_actif):active {
+  filter: brightness(0.8);
+  transition: filter 0.1s ease;
+}
+
+.contenu_onglet_actif {
+  display: flex;
+}
+
+.score_principal {
+  border-radius: 25px;
+  background-color: var(--Red);
+  color: var(--White);
+  padding: 0 10px;
+}
+
+/* Téléphones mode protrait et plus grand */
+@media (min-width: 576px) {
+
+  /* General */
+
+  h1 {
+    font-size: 58px;
+  }
+
+  h2 {
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  h3 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  hr {
+    border: 1px solid var(--MidnightViolet);
+    width: 360px;
+    margin: 40px 0px;
+  }
+
+  /* --------------------------------------------------  Formulaires  --------------------------------------------------*/
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 27px;
+  }
+
+  form>div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .formulaire {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 80px;
+    width: 520px;
+    height: 720px;
+  }
+
+  .formulaire>img {
+    margin: 0 auto 32px auto;
+  }
+
+  .formulaire h1 {
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  .formulaire form {
+    margin-top: 35px;
+  }
+
+  .formulaire a:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  .formulaire label {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 11px;
+  }
+
+  .champs_doubles{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    text-align: left;
+  }
+
+  .champs_doubles>div {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .popup label {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  label, form p {
+    text-align: left;
+  }
+
+  select, input[type="text"], input[type="email"], input[type="password"] {
+    width: 360px;
+    height: 53px;
+    font-size: 24px;
+    padding: 0px 20px;
+    border: 2px solid var(--MidnightViolet);
+    border-radius: 10px;
+    cursor: text;
+  }
+
+  select {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path fill="%23000000" d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 18px top 18px;
+    cursor: default;
+    appearance:none;
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari et Chrome */
+  }
+
+  .popup input[type="text"], .popup input[type="email"], .popup input[type="password"] {
+    font-size: 20px;
+    margin-top: 11px;
+  }
+
+  input[type="text"]::placeholder, input[type="email"]::placeholder, input[type="password"]::placeholder {
+    color: var(--CrimsonViolet25pourcent);
+  }
+
+  input[type="submit"] {
+    border: transparent;
+    margin-top: 13px;
+  }
+
+  .actions {
+    gap: 20px;
+  }
+
+  .formulaire_image {
+    position: relative;
+    height: 456px;
+    width: 456px;
+    margin: auto auto auto 0px;
+  }
+
+  .formulaire_image>img {
+    position: absolute;
+    transform: rotate(-10deg);
+    top: 31px;
+    left: 31px;
+  }
+
+  /* --------------------------------------------------  Profil  --------------------------------------------------*/
+
+  #infos_compte {
+    display: flex;
+    width: 900px;
+    justify-content: space-between;
+    align-self: center;
+    padding: 40px;
+    margin: 10px auto auto auto;
+    background-color: var(--WisteriaBlue25pourcent);
+    border-radius: 20px;
+  }
+
+  #infos_compte div {
+    display: flex;
+  }
+
+  #infos_compte>div {
+    display: flex;
+    gap: 30px;
+  }
+
+  #infos_compte>div>div:first-child, #infos_compte>div>div:nth-child(2) {
+    flex-direction: column;
+    justify-content:space-between;
+  }
+
+  .boutonProfil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    padding: 10px;
+  }
+
+  .boutonProfil p {
+    color: var(--White);
+  }
+
+  #statistiques {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    margin-top: 40px;
+    font-size: 24px;
+    background-color: var(--WisteriaBlue25pourcent);
+    border-radius: 20px;
+  }
+
+  #statistiques table {
+    width: 100%;
+    text-align: center;
+  }
+
+  #statistiques td, #statistiques tr {
+    cursor: auto;
+    width: 20%;
+    height: 54px;
+  }
+
+  .statistiques {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 35px;
+  }
+
+  .statistiques p:first-child {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+
+  .statistiques>p:nth-child(2) {
+    margin-bottom: 43px;
+  }
+
+  .onglets_stats {
+    max-width: 840px;
+    margin-top: 35px;
+  }
+
+  .onglets_stats p {
+    min-width: 200px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .score_large {
+    line-height: 50px;
+    font-size: 32px;
+    min-width: 132px;
+    text-align: center;
+  }
+
+  /* --------------------------------------------------  Tableau de jeu  --------------------------------------------------*/
+
+  #haut {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #titre_jeu {
+    line-height: 40px;
+  }
+
+  .separateur_haut {
+    margin-bottom: 10px;
+  }
+
+  #conteneur_jeu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    filter: opacity(0.40);
+    min-width: 100%;
+  }
+
+  #interface_de_jeu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .grille {
+    border-radius: 20px;
+    border: 6px solid var(--CrimsonViolet);
+    border-spacing: 0px;
+    /*border-collapse: collapse;*/
+  }
+
+  #grille {
+    display: none;
+    font-weight: bold;
+  }
+
+  #grille ul {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 20px;
+    top: 8px;
+    left: 8px;
+  }
+
+  #grille li {
+    width: 20px;
+    height: 20px;
+    font-weight: lighter;
+  }
+
+  .grille td {
+    position: relative;
+    height: 76px;
+    width: 76px;
+    border: 1px solid var(--CrimsonViolet);
+    text-align: center;
+  }
+
+  .grille tr:nth-child(4) td {
+    border-top: 4px solid var(--CrimsonViolet);
+  }
+
+  .grille tr:nth-child(6) td {
+    border-bottom: 4px solid var(--CrimsonViolet);
+  }
+
+  .grille tr:first-child td:first-child {
+    border-radius: 12px 0 0 0;
+  }
+
+  .grille tr:first-child td:last-child {
+    border-radius:  0 12px 0 0;
+  }
+
+  .grille tr:last-child td:first-child {
+    border-radius:  0 0 0 12px;
+  }
+
+  .grille tr:last-child td:last-child {
+    border-radius:  0 0 12px 0;
+  }
+
+  .grille tr td:nth-child(4) {
+    border-left: 4px solid var(--MidnightViolet);
+  }
+
+  .grille tr td:nth-child(6) {
+    border-right: 4px solid var(--MidnightViolet);
+  }
+
+  .grille tr:first-child td {
+    border-top: none;
+  }
+
+  .grille tr:last-child td {
+    border-bottom: none;
+  }
+
+  .grille tr td:first-child {
+    border-left: none;
+  }
+
+  .grille tr td:last-child {
+    border-right: none;
+  }
+
+  #interface_de_jeu>div:not(#infos_multijoueur) {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  #interface_de_jeu>div:last-child {
+    position: relative;
+  }
+
+  #infos_multijoueur {
+    display: flex;
+    justify-content: space-between;
+    width: 33%;
+  }
+
+  #infos_multijoueur>div {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: calc(50% - 20px);
+  }
+
+  #infos_multijoueur>div:first-child {
+    justify-content: flex-start;
+    padding-left:25px;
+  }
+
+  #infos_multijoueur>div:last-child {
+    justify-content: flex-end;
+    padding-right:25px;
+  }
+
+  #infos_multijoueur>div:first-child:hover #joueur_1, #infos_multijoueur>div:last-child:hover #joueur_2 {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  #infos_multijoueur img {
+    width: 40px;
+  }
+
+  #infos_multijoueur>div>img {
+    position: absolute;
+  }
+
+  #infos_multijoueur>div>img:first-child {
+    left: 0px;
+  }
+
+  #infos_multijoueur>div>img:last-child {
+    right: 0px;
+    transform: scaleX(-1);
+  }
+
+  .score_petit {
+    height: 24px;
+    line-height: 24px;
+    width: 60px;
+    text-align: right;
+  }
+
+  .score_petit_droite {
+    text-align: left;
+  }
+
+  .boutons_haut {
+    gap:38px;
+  }
+
+  .boutons_ronds {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+  }
+
+  .boutons_ronds>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-bottom: 16px;
+  }
+
+  #pave_numerique {
+    width: 330px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  #pave_numerique p {
+    width: 100px;
+    height: 100px;
+    font-size: 40px;
+    line-height: 100px;
+  }
+
+  #bouton_jeu {
+    height: 80px;
+    width: 352px;
+    line-height: 80px;
+    margin: 0 30px;
+  }
+
+  td, #pave_numerique p, .boutons_difficulte div {
+    pointer-events: all;
+    cursor: pointer;
+  }
+
+  td:not(.celluleFixe, .selected_highlight) p {
+    color: var(--CrimsonViolet75pourcent);
+    font-weight:normal;
+  }
+
+  td:not(.celluleFixe, .selected_highlight) li {
+    color: var(--CrimsonViolet75pourcent);
+  }
+
+  .celluleBleue {
+    background-color: var(--WisteriaBlue25pourcent);
+  }
+
+  .selected {
+    background-color: var(--CrimsonViolet25pourcent) !important;
+  }
+
+  .selected_highlight, .selected_highlight p, .selected_highlight li {
+    background-color: var(--CrimsonViolet75pourcent) !important;
+    color: var(--White);
+  }
+
+  .selected_highlight:not(.celluleFixe) {
+    font-weight: normal;
+  }
+
+  /* --------------------------------------------------  Salon  --------------------------------------------------*/
+
+  #salon {
+    display: flex;
+    justify-content: space-between;
+    align-self: center;
+    width: 980px;
+  }
+
+  #salon>section {
+    display: flex;
+    flex-direction: column;
+    width: 440px;
+  }
+
+  #salon form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    margin-top: 35px;
+  }
+
+  #salon label {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 11px;
+  }
+
+  #salon p {
+    text-align: center;
+  }
+
+  #salon h2 {
+    text-align: center;
+  }
+
+  #salon_instructions {
+    max-width: 725px;
+    text-align: center;
+    margin: 10px auto 40px auto;
+  }
+
+  .salon_inactif {
+    filter: opacity(0.40);
+  }
+
+  /* --------------------------------------------------  Classements  --------------------------------------------------*/
+
+  #classements {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+
+  #classements>div {
+    width: 360px;
+    height: 680px;
+    padding: 17px 40px 40px 40px;
+    background-color: var(--WisteriaBlue25pourcent);
+    border-radius: 20px;
+  }
+
+  #classements>div>div:first-child {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .top_10 {
+    display: flex;
+    flex-direction: column;
+    gap: 27px;
+    justify-content: space-between;
+    margin-top: 25px;
+  }
+
+  .top_10>div {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .top_3 {
+    position: relative;
+    text-align: center;
+    height: 184px;
+    background-color: var(--WisteriaBlue50pourcent);
+    border-radius: 15px;
+  }
+
+  .top_3>div {
+    position: relative;
+    width: 95px;
+  }
+
+  .info_joueur {
+    position: absolute;
+    display: none;
+    width: 400px;
+    padding: 20px 40px;
+    color: var(--MidnightViolet);
+    background-color: var(--WisteriaBlue25pourcent);
+    box-shadow: 0px 4px 4px 0px #686868;
+    border-radius: 15px;
+    z-index: 10;
+  }
+
+  .info_joueur_haut {
+    left: calc(50% - 200px);
+    bottom: calc(100% + 15px);
+  }
+
+  .info_joueur_bas {
+    left: calc(50% - 200px);
+    top: calc(100% + 15px);
+  }
+
+  .info_joueur>div {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    margin-top: 20px;
+  }
+
+  .info_joueur>div>div:last-child {
+    text-align: right;
+  }
+
+  .top_3>div:hover .info_joueur, .top_10>div:hover .info_joueur {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .info_joueur>img {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+  }
+
+  .info_joueur_haut>img {
+    left: calc(50% - 20px);
+    bottom: calc(-20px);
+    transform: scaleY(-1);
+  }
+
+  .info_joueur_bas>img {
+    left: calc(50% - 20px);
+    top: calc(-20px);
+  }
+
+  .top_3>div>img {
+    position: relative;
+    margin: auto;
+    z-index: 2;
+  }
+
+  .top_3>div:first-child {
+    position: absolute;
+    height: calc(62px + 28px + 28px);
+    transform: translateX(-50%);
+    left: 50%;
+    top: 5px;
+  }
+
+  .top_3>div:nth-child(2) {
+    position: absolute;
+    height: calc(47px + 28px + 28px);
+    transform: translateX(-50%);
+    left: 25%;
+    bottom: 15px;
+  }
+
+  .top_3>div:nth-child(3) {
+    position: absolute;
+    height: calc(47px + 28px + 28px);
+    transform: translateX(-50%);
+    left: 75%;
+    bottom: 15px;
+  }
+
+  .top_3>div:first-child>p:last-child {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    top: calc(62px + 23px);
+    white-space: nowrap;
+  }
+
+  .top_3>div:not(:first-child)>p:last-child {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    top: calc(47px + 28px);
+    white-space: nowrap;
+  }
+
+  .score_top {
+    position: absolute;
+    transform: translateX(-50%);
+    height: 33px;
+    line-height: 33px;
+    width: 65px;
+    text-align: center;
+    left: 50%;
+    top: calc(47px - 5px);
+    z-index: 1;
+  }
+
+  .score_top_1 {
+    top: calc(62px - 10px);
+  }
+
+  .score {
+    height: 30px;
+    line-height: 30px;
+    width: 80px;
+    text-align: center;
+  }
+
+  /* --------------------------------------------------  Accueil  --------------------------------------------------*/
+
+
+
+
+
+  #accueil_haut>div>h3 {
+    margin-top: 10px;
+    font-family: "Berlin";
+    font-weight: bold;
+    font-size: 24px;
+  }
+
+
+
+  #accueil_bas {
+    margin-top: 20px;
+    text-align: justify;
+    gap: 16px;
+  }
+
+  #accueil_bas>h3 {
+    font-family: "Berlin";
+    font-weight: bold;
+    font-size: 24px;
+  }
+
+  /* --------------------------------------------------  Erreurs  --------------------------------------------------*/
+
+  #section_erreur {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+  }
+
+  #section_erreur img {
+    width: 403px;
+  }
+
+  /* --------------------------------------------------  Popups  --------------------------------------------------*/
+
+  .popup {
+    position: absolute;
+    flex-direction: column;
+    padding: 40px;
+    gap: 20px;
+    top : 50%;
+    left : 50%;
+    width: 550px;
+    border-radius: 15px;
+    background-color: var(--WisteriaBlue25pourcent);
+    box-shadow: 0px 4px 4px 0px #686868;
+    text-align: center;
+  }
+
+  .popup img {
+    margin: auto;
+  }
+
+  .popup_large {
+    width: 850px;
+  }
+
+  .popup p:not(.score_global_valeur) {
+    font-size: 18px;
+  }
+
+  .popup h3 {
+    font-size: 36px;
+  }
+
+  #debut_partie, #fin_partie, #modifier_compte, #supprimer_compte,
+  #compte_requis, #verif_joueur_pret, #abandon_autre_joueur_partie,
+  #abandon_partie, #erreur, #erreur_salle, #erreur_serveur {
+    display: flex;
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  #modifier_compte, #supprimer_compte, #verif_joueur_pret,
+  #abandon_autre_joueur_partie,#abandon_partie, #erreur,
+  #erreur_salle, #erreur_serveur {
+    display: none;
+  }
+
+  #modifier_compte p, #supprimer_compte p {
+    text-align: center;
+  }
+
+  #menu_partie {
+    display: none;
+    transform: translateX(-50%) translateY(calc(-100% - 70px));
+  }
+
+  #joueurs {
+    display: flex;
+    justify-content: center;
+    gap: 20%;
+  }
+
+  #joueurs>div>div {
+    position: relative;
+  }
+
+  #joueurs>div>div>img:last-child {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: none;
+  }
+
+  #fin_partie {
+    display: none;
+    align-items: center;
+  }
+
+  .score_global {
+    font-weight: bold;
+  }
+
+  .score_global_valeur {
+    font-size:50px;
+    line-height: 80px;
+  }
+
+  .score_golbal_evolution {
+    font-size: 32px;
+  }
+
+  .victoire {
+    color: green;
+  }
+
+  .defaite {
+    color: red;
+  }
+
+  .boutons_difficulte {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .boutons_difficulte div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: var(--CrimsonViolet25pourcent);
+    width: 120px;
+    height: 120px;
+    transition: all 0.5s ease;
+  }
+
+  .boutons_difficulte div img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .boutons_difficulte div:hover {
+    background-color: var(--CrimsonViolet50pourcent);
+  }
+
+  .boutons_difficulte div:active {
+    background-color: var(--CrimsonViolet75pourcent);
+    transition: all 0.1s ease;
+  }
+
+  /* -------------------------------------------------- Règles  --------------------------------------------------*/
+
+  #regles {
+    margin-top: 10px;
+    min-height: 680px;
+  }
+
+  #regles>div:not(:first-child) {
+    margin: auto 40px;
+  }
+
+  #regles h2 {
+    margin-bottom: 34px;
+  }
+
+  .onglets_regles {
+    width: 1140px;
+  }
+
+  .onglets_regles p {
+    min-width: 320px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  #regles_generalites {
+    display: flex;
+    flex-direction: column;
+    text-align: justify;
+  }
+
+  #regles_generalites>h2:not(:first-child) {
+    margin-top: 63px;
+  }
+
+  #regles_repetez, #regles_processus {
+    display: none;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  #regles_repetez>img, #regles_processus>img {
+    margin: auto;
+  }
+
+  #regles_repetez>div, #regles_processus>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    text-align: justify;
+  }
+
+  /* Settings généraux */
+
+  section {
+    flex-direction: row;
+    padding: 40px;
+  }
+}
+
+/* Tablettes et plus grand */
+@media (min-width: 768px) {
+
+}
+
+/* Ordinateur de bureau et plus grad */
+@media (min-width: 992px) {
+
+}
+
+/* Grands écrans */
+@media (min-width: 1200px) {
+
+}
