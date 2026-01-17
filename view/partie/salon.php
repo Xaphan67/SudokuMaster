@@ -5,7 +5,7 @@
         <div id="salon">
             <section>
                 <h2>Créer une salle</h2>
-                <form method="post" action ="index.php?controller=partie&action=multiBoard">
+                <form method="post" action ="multijoueur">
                     <div>
                         <label for="mode">Mode de jeu</label>
                         <select name="mode" id="mode" required>
@@ -26,7 +26,7 @@
             </section>
             <section>
                 <h2>Rejoindre une salle</h2>
-                <form method="post" action ="index.php?controller=partie&action=multiBoard">
+                <form method="post" action ="multijoueur">
                     <div>
                         <label for="salle">ID de la salle</label>
                         <input id="salle"
@@ -50,8 +50,8 @@
                 <h3>Compte requis</h3>
                 <p>Pour jouer en multijoueur, vous devez vous connecter avec votre compte</p>
                 <p>Vous n'avez pas de compte ? Créez-en un facilement en cliquant sur le bouton çi-dessous</p>
-                <a href="index.php?controller=utilisateur&action=signUp&from=partie:lobby" class="bouton boutonPrincipal boutonLarge">Créer un compte</a>
-                <a href="index.php?controller=utilisateur&action=login&from=partie:lobby" class="bouton boutonPrincipal boutonLarge">Se connecter</a>
+                <a href="inscription&from=partie:lobby" class="bouton boutonPrincipal boutonLarge">Créer un compte</a>
+                <a href="connexion&from=partie:lobby" class="bouton boutonPrincipal boutonLarge">Se connecter</a>
             </div>
     <?php
         };

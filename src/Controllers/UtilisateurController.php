@@ -16,7 +16,7 @@ class UtilisateurController extends Controller {
         if (isset($_SESSION["utilisateur"])) {
 
             // Redirige l'utilisateur vers la page de son profil
-            header("Location:index.php?controller=utilisateur&action=profil&utilisateur_id=" . $_SESSION["utilisateur"]["id_utilisateur"]);
+            header("Location:profil&utilisateur_id=" . $_SESSION["utilisateur"]["id_utilisateur"]);
             exit();
         }
 
@@ -90,7 +90,7 @@ class UtilisateurController extends Controller {
                     else {
 
                         // Redirige l'utilisateur vers la page de connexion
-                        header("Location:index.php?controller=utilisateur&action=login");
+                        header("Location:connexion");
                     }
                 }
             }
@@ -110,7 +110,7 @@ class UtilisateurController extends Controller {
         if (isset($_SESSION["utilisateur"])) {
 
             // Redirige l'utilisateur vers la page de son profil
-            header("Location:index.php?controller=utilisateur&action=profil&utilisateur_id=" . $_SESSION["utilisateur"]["id_utilisateur"]);
+            header("Location:profil&utilisateur_id=" . $_SESSION["utilisateur"]["id_utilisateur"]);
             exit();
         }
 
@@ -294,7 +294,7 @@ class UtilisateurController extends Controller {
                     $_SESSION["utilisateur"]["email_utilisateur"] = $utilisateur->getEmail();
 
                     // Redirige l'utilisateur vers la page de son profil
-                    header("Location:index.php?controller=utilisateur&action=profil&utilisateur_id=" . $utilisateur->getId());
+                    header("Location:profil&utilisateur_id=" . $utilisateur->getId());
                 }
             }
             else {

@@ -32,7 +32,7 @@
                 <input type="submit" class="bouton boutonPrincipal boutonDefaut" value="Se connecter" />
             </form>
             <hr />
-            <a href="index.php?controller=utilisateur&action=signUp">Créer un compte Sudoku Master gratuit</a>
+            <a href="inscription">Créer un compte Sudoku Master gratuit</a>
             <a href="#">Vous avez oublié votre mot de passe ?</a>
         </section>
     </div>

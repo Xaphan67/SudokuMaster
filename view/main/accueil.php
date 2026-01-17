@@ -2,8 +2,8 @@
     <div id="conteneur_principal" class="vertical">
         <h1>SUDOKU MASTER</h1>
         <div id="boutons_haut">
-            <a href="index.php?controller=partie&action=soloBoard" class="bouton boutonPrincipal boutonLarge">Jouer seul</a>
-            <a href="index.php?controller=partie&action=lobby" class="bouton boutonPrincipal boutonLarge">Jouer à plusieurs</a>
+            <a href="solo" class="bouton boutonPrincipal boutonLarge">Jouer seul</a>
+            <a href="salon" class="bouton boutonPrincipal boutonLarge">Jouer à plusieurs</a>
         </div>
         <section id="accueil_haut">
             <img src="view/assets/img/Grille.webp" alt="">
@@ -19,8 +19,8 @@
             </div>
         </section>
         <div id="boutons_centre">
-            <a href="index.php?controller=partie&action=soloBoard" class="bouton boutonPrincipal boutonLarge">Jouer seul</a>
-            <a href="index.php?controller=partie&action=lobby" class="bouton boutonPrincipal boutonLarge">Jouer à plusieurs</a>
+            <a href="solo" class="bouton boutonPrincipal boutonLarge">Jouer seul</a>
+            <a href="salon" class="bouton boutonPrincipal boutonLarge">Jouer à plusieurs</a>
         </div>
         <section id="accueil_bas" class="vertical">
             <h3>Comment jouer au Sudoku</h3>

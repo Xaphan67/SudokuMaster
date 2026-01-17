@@ -57,11 +57,4 @@ class MainController extends Controller {
         // Affiche la vue mentions
         $this->display("main/mentions");
     }
-
-    // Affiche une erreur 404
-    public function erreur404() {
-
-        // Appèle la fonction _notFound() du controller mère
-        $this->_notFound();
-    }
 }

@@ -17,9 +17,6 @@
     $controllerCall = $_GET["controller"] ?? "main";
     $actionCall = $_GET["action"] ?? "home";
 
-    // Flag sur la présence de la page
-    $bool404 = false;
-
     // Création du chemin vers le controller
     $controllerName = 'Xaphan67\\SudokuMaster\\Controllers\\' . ucfirst($controllerCall).'Controller';
 
@@ -34,21 +31,6 @@
 
             // Appel à la méthode
             $controller->$actionCall();
-
-        }else{
-            $bool404 = true;
         }
-
-    }else{
-        $bool404 = true;
-    }
-
-    // si un des éléments non trouvé => redirection vers page 404
-    if ($bool404) {
-
-        // Appelle le controller Main, l'instancie et appèlle sa méthode erreur404()
-        $controllerName = 'Xaphan67\\SudokuMaster\\Controllers\\MainController';
-        $controller = new $controllerName();
-        $controller->erreur404();
     }
 ?>

@@ -45,4 +45,11 @@ abstract class Controller {
         // Affiche la vue erreurs
         $this->display("main/erreurs");
     }
+
+    // Affiche une erreur 404
+    public function erreur404() {
+
+        // Appèle la fonction _notFound() du controller mère
+        $this->_notFound();
+    }
 }

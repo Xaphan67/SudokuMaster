@@ -95,7 +95,7 @@ class PartieController extends Controller {
                 $_SESSION["saisie"]["salle"] = $_POST["salle"];
 
                 // Redirige l'utilisateur vers la page salon
-                header("Location:index.php?controller=partie&action=lobby");
+                header("Location:salon");
             }
         }
 

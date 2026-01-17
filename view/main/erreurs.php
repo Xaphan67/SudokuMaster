@@ -6,7 +6,7 @@
             <p><?php echo $texte ?></p>
             <img src="view/assets/img/<?php echo $image ?>.webp" alt="">
             <p>Pourquoi ne pas se détendre en jouant une partie rapide ?</p>
-            <a href="index.php?controller=partie&action=soloBoard" class="bouton boutonPrincipal boutonLarge">Jouer seul</a>
+            <a href="solo" class="bouton boutonPrincipal boutonLarge">Jouer seul</a>
         </section>
     </div>
 </main>
