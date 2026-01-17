@@ -32,6 +32,7 @@ abstract class Controller {
 
         // Affiche la vue erreurs
         $this->display("main/erreurs");
+        exit;
     }
 
     // Affiche la page erreur 403 en cas de page non autorisée
@@ -44,6 +45,7 @@ abstract class Controller {
 
         // Affiche la vue erreurs
         $this->display("main/erreurs");
+        exit;
     }
 
     // Affiche une erreur 404
