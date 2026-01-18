@@ -48,4 +48,5 @@
     />
 
     <link href="view/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <script src="view/assets/js/commun.js"></script>
   </head>

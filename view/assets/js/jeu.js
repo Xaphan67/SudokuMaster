@@ -194,7 +194,7 @@ function joinRoom() {
 
                 // Affiche la coche sur l'avatar du joueur
                 const AVATARS_JOUEURS = document.getElementById("joueurs");
-                AVATARS_JOUEURS.children[1].children[0].getElementsByTagName("img")[1].style.display="block";
+                AVATARS_JOUEURS.children[1].children[0].getElementsByTagName("img")[0].style.display="block";
                 break;
 
             // Le serveur indique que la partie doit commencer (Lesdeux joueurs sont prêts)
@@ -688,7 +688,7 @@ function getPlayerReady() {
 
         // Affiche la coche sur l'avatar du joueur
         const AVATARS_JOUEURS = document.getElementById("joueurs");
-        AVATARS_JOUEURS.children[0].children[0].getElementsByTagName("img")[1].style.display="block";
+        AVATARS_JOUEURS.children[0].children[0].getElementsByTagName("img")[0].style.display="block";
 
         // Indique au serveur que le joueur est prêt
         connexion.send(JSON.stringify({commande: "joueur_pret", salle:infosSalle.salle, hote: infosSalle.hote, utilisateur: infosSalle.utilisateur}));

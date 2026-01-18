@@ -1,17 +1,60 @@
-:root {
-  --MidnightViolet : #270211;
-  --CrimsonViolet : #65082D;
-  --CrimsonViolet75pourcent : #8C4662;
-  --CrimsonViolet50pourcent : #B18395;
-  --CrimsonViolet25pourcent : #c3adc2;
-  --WisteriaBlue125pourcent : #6973C5;
-  --WisteriaBlue : #8F95D3;
-  --WisteriaBlue75pourcent : #B3B6E1;
-  --WisteriaBlue50pourcent : #ced0ec;
-  --WisteriaBlue25pourcent : #e3e4f4;
-  --White : #FFFFFF;
-  --Red : #FF0000;
+/* Themes */
+
+html {
+  --arrierePlan : #FFFFFF;
+  --bouton : #65082D;
+  --boutonActif: #3e051c;
+  --boutonSurvol: #540726;
+  --caseIdentique : #c3adc2;
+  --caseSelectionnee : #8C4662;
+  --grille : #65082D;
+  --menuUtilisateur : #65082D;
+  --ombrePopup : #686868;
+  --ombrePrincipal : #B18395;
+  --onglet : #ced0ec;
+  --ongletActif : #8F95D3;
+  --ongletActifSurvol : #6973C5;
+  --ongletSurvol : #B3B6E1;
+  --score : #dd2a2a;
+  --sectionArrierePlan : #e3e4f4;
+  --svgDefaut : #270211;
+  --svgMenu : #FFFFFF;
+  --texteBouton : #FFFFFF;
+  --texteCaseModifiee : #8C4662;
+  --texteMenu : #FFFFFF;
+  --texteNormal : #270211;
+  --texteScore : #FFFFFF;
+  transition: all 0.3s;
 }
+
+html.sombre {
+  --arrierePlan: #12060B;
+  --bouton : #7a8ca7;
+  --boutonActif: #3b434e;
+  --boutonSurvol: #535f70;
+  --caseIdentique: #4D1E33;
+  --caseSelectionnee: #702841;
+  --grille : #7a8ca7;
+  --menuUtilisateur : #7a8ca7;
+  --ombrePopup : #272727;
+  --ombrePrincipal: #6973C5;
+  --onglet: #5F649E;
+  --ongletActif: #9FA5E6;
+  --ongletActifSurvol: #AEB4FF;
+  --ongletSurvol: #7F85C4;
+  --score : #ab1717;
+  --sectionArrierePlan: #3F4268;
+  --svgDefaut : #F5F5F5;
+  --svgMenu : #F5F5F5;
+  --texteBouton : #F5F5F5;
+  --texteCaseModifiee : #b65678;
+  --texteMenu : #F5F5F5;
+  --texteNormal: #F5F5F5;
+  --texteScore : #F5F5F5;
+  transition: all 0.3s;
+}
+
+/* Polices */
 
 @font-face {
   font-family: "Berlin";
@@ -90,6 +133,7 @@ main {
   min-height: calc(100dvh - 100px);
   padding: 10px 0px;
   margin: 60px auto 40px auto;
+  background-color: var(--arrierePlan);
 }
 
 #conteneur_principal {
@@ -115,22 +159,26 @@ section {
   padding: 30px;
   margin: 0px 25px;
   border-radius: 20px;
-  background-color: var(--WisteriaBlue25pourcent);
+  background-color: var(--sectionArrierePlan);
   max-width: 100%;
+}
+
+svg {
+  fill: var(--svgDefaut);
 }
 
 /* Texte */
 
 a, a:visited:not(.bouton) {
   text-decoration: none;
-  color: var(--MidnightViolet);
+  color: var(--texteNormal);
   cursor: pointer;
 }
 
 p {
   margin: 0;
   padding: 0;
-  color: var(--MidnightViolet);
+  color: var(--texteNormal);
   cursor: inherit;
 }
 
@@ -150,6 +198,10 @@ h3 {
   text-align: center;
 }
 
+h1, h2, h3, label {
+  color: var(--texteNormal);
+}
+
 /* Images */
 
 img {
@@ -159,19 +211,28 @@ img {
 /* Tableaux */
 
 td {
-  color: var(--MidnightViolet);
+  color: var(--texteNormal);
 }
 
 /* Boutons */
 
 .boutonPrincipal {
-  background-color: var(--CrimsonViolet);
-  color: var(--White);
+  background-color: var(--bouton);
+  color: var(--texteBouton);
   font-size: clamp(1rem, 2.34vw, 1.33rem);
   font-weight: bold;
   text-align: center;
-  box-shadow: 0px 4px 4px 0px #686868;
+  box-shadow: 0px 4px 4px 0px var(--ombrePopup);
   transition: all 0.5s ease;
+}
+
+.boutonPrincipal:hover {
+  background-color: var(--boutonSurvol)
+}
+
+.boutonPrincipal:active {
+  background-color: var(--boutonActif);
+  transition: filter 0.1s ease;
 }
 
 .boutonLarge {
@@ -208,25 +269,25 @@ td {
 }
 
 .onglet_actif {
-  color: var(--White);
-  background-color: var(--WisteriaBlue);
+  color: var(--arrierePlan);
+  background-color: var(--ongletActif);
   border-radius: 10px;
   transition: all 0.5s ease;
 }
 
 .onglet_actif:hover {
-  background-color: var(--WisteriaBlue125pourcent);
+  background-color: var(--ongletActifSurvol);
 }
 
 .onglets>p:not(.onglet_actif) {
-  background-color: var(--WisteriaBlue50pourcent);
+  background-color: var(--onglet);
   border-radius: 10px;
   transition: all 0.5s ease;
   cursor: pointer;
 }
 
 .onglets>p:not(.onglet_actif):hover {
-  background-color: var(--WisteriaBlue75pourcent);
+  background-color: var(--ongletSurvol);
 }
 
 /* Formulaires */
@@ -236,10 +297,12 @@ select, input[type="text"], input[type="email"], input[type="password"] {
   height: 40px;
   font-size: 14px;
   padding: 0px 10px;
-  border: 2px solid var(--MidnightViolet);
+  border: 2px solid var(--texteNormal);
   border-radius: 5px;
   margin-top: 11px;
   cursor: text;
+  background-color: var(--arrierePlan);
+  color: var(--texteNormal);
 }
 
 select {
@@ -273,7 +336,7 @@ form p {
 }
 
 hr {
-  border-top: 1px solid var(--MidnightViolet);
+  border-top: 1px solid var(--texteNormal);
   width: 80%;
   margin: 30px auto;
 }
@@ -300,8 +363,8 @@ header {
   overflow: visible;
   justify-content: center;
   width: 100%;
-  background-color: var(--White);
-  box-shadow: 0px 4px 4px var(--CrimsonViolet50pourcent);
+  background-color: var(--arrierePlan);
+  box-shadow: 0px 4px 4px var(--ombrePrincipal);
   z-index: 1;
 }
 
@@ -314,7 +377,7 @@ header>div {
   width: 100vw;
   max-width: 1200px;
   height: 60px;
-  background-color: var(--White);
+  background-color: var(--arrierePlan);
 }
 
 nav {
@@ -333,8 +396,11 @@ nav {
   height: 60px;
 }
 
-#utilisateur>img {
-  width: 40px;
+#utilisateur svg {
+  width: 49px;
+  height: 49px;
+  min-width: 49px;
+  min-height: 49px;
 }
 
 #menu_burger {
@@ -343,8 +409,8 @@ nav {
 
 #menu_burger > input[type = "checkbox"] {
   position: absolute;
-  width: 40px;
-  height: 45px;
+  width: 49px;
+  height: 49px;
   margin: 0px;
   opacity: 0;
   cursor: pointer;
@@ -361,9 +427,9 @@ nav {
   left: 0px;
   top: 60px;
   min-width: 100vw;
-  background-color: var(--White);
+  background-color: var(--arrierePlan);
   padding: 0px 25px;
-  box-shadow: inset 0px 4px 4px var(--CrimsonViolet50pourcent), 0px 4px 4px var(--CrimsonViolet50pourcent);
+  box-shadow: inset 0px 4px 4px var(--ombrePrincipal), 0px 4px 4px var(--ombrePrincipal);
   z-index: 2;
 }
 
@@ -372,7 +438,13 @@ nav {
   line-height: 55px;
   font-size: 24px;
   text-align: center;
-  border-bottom: 1px solid var(--WisteriaBlue25pourcent);
+  border-bottom: 1px solid var(--sectionArrierePlan);
+}
+
+.menu_burger p {
+  height: 55px;
+  line-height: 55px;
+  font-size: 24px;
 }
 
 .menu_burger a:nth-child(4), .menu_burger a:last-child {
@@ -380,11 +452,54 @@ nav {
 }
 
 .menu_burger a:nth-child(5) {
-  border-top: 1px solid var(--MidnightViolet);
+  border-top: 1px solid var(--texteNormal);
 }
 
 #menu_utilisateur {
   display: none;
+}
+
+.mode_sombre {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--sectionArrierePlan);
+}
+
+.mode_sombre p {
+  width: 215px;
+}
+
+.mode_sombre_input {
+  display: none;
+}
+
+.label_mode_sombre {
+  display: inline-block;
+  height: 36px;
+  width: 90px;
+  margin: 0px 10px;
+  background-color: var(--texteNormal);
+  position: relative;
+  transition: all 0.3s;
+  border-radius: 18px;
+  cursor: pointer;
+}
+
+.label_mode_sombre:after {
+  content: "";
+  height: 26px;
+  width: 26px;
+  background-color: var(--arrierePlan);
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  transition: all 0.3s;
+  border-radius: 50%;
+}
+
+.mode_sombre_input:checked+.label_mode_sombre:after {
+  transform: translateX(54px);
 }
 
 /* Accueil */
@@ -450,6 +565,14 @@ nav {
 #infos_compte>div:last-child {
   display: flex;
   justify-content: space-around;
+}
+
+#infos_compte>div:last-child svg {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  max-width: 40px;
+  fill: var(--texteBouton);
 }
 
 #infos_compte>div>p:nth-child(odd) {
@@ -543,8 +666,8 @@ nav {
 
 .score_principal {
   border-radius: 25px;
-  background-color: var(--Red);
-  color: var(--White);
+  background-color: var(--score);
+  color: var(--texteScore);
   padding: 0 10px;
 }
 
@@ -580,23 +703,25 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding: 5px;
-  background-color: var(--CrimsonViolet25pourcent);
+  background-color: var(--caseIdentique);
   width: 80px;
   height: 80px;
   transition: all 0.5s ease;
 }
 
-.boutons_difficulte div img {
+.boutons_difficulte div svg {
   width: 50px;
   height: 50px;
+  min-width: 50px;
+  min-height: 50px;
 }
 
 .boutons_difficulte div:hover {
-  background-color: var(--CrimsonViolet50pourcent);
+  background-color: var(--ombrePrincipal);
 }
 
 .boutons_difficulte div:active {
-  background-color: var(--CrimsonViolet75pourcent);
+  background-color: var(--caseSelectionnee);
   transition: all 0.1s ease;
 }
 
@@ -611,7 +736,7 @@ nav {
 
 .grille {
   border-radius: clamp(10px, 2vw, 20px);
-  border: 6px solid var(--CrimsonViolet);
+  border: 6px solid var(--grille);
   border-spacing: 0px;
   min-width: clamp(351px, calc(100vw - clamp(20px, 5vw, 40px)), 720px);
   min-height: clamp(351px, calc(100vw - clamp(20px, 5vw, 40px)), 720px);
@@ -648,16 +773,16 @@ nav {
   position: relative;
   height: 35px;
   width: 35px;
-  border: 1px solid var(--CrimsonViolet);
+  border: 1px solid var(--grille);
   text-align: center;
 }
 
 .grille tr:nth-child(4) td {
-  border-top: 4px solid var(--CrimsonViolet);
+  border-top: 4px solid var(--grille);
 }
 
 .grille tr:nth-child(6) td {
-  border-bottom: 4px solid var(--CrimsonViolet);
+  border-bottom: 4px solid var(--grille);
 }
 
 .grille tr:first-child td:first-child {
@@ -677,11 +802,11 @@ nav {
 }
 
 .grille tr td:nth-child(4) {
-  border-left: 4px solid var(--MidnightViolet);
+  border-left: 4px solid var(--grille);
 }
 
 .grille tr td:nth-child(6) {
-  border-right: 4px solid var(--MidnightViolet);
+  border-right: 4px solid var(--grille);
 }
 
 .grille tr:first-child td {
@@ -701,16 +826,16 @@ nav {
 }
 
 .celluleBleue {
-  background-color: var(--WisteriaBlue25pourcent);
+  background-color: var(--sectionArrierePlan);
 }
 
 .selected {
-  background-color: var(--CrimsonViolet25pourcent) !important;
+  background-color: var(--caseIdentique) !important;
 }
 
 .selected_highlight, .selected_highlight p {
-  background-color: var(--CrimsonViolet75pourcent) !important;
-  color: var(--White);
+  background-color: var(--caseSelectionnee) !important;
+  color: var(--arrierePlan);
 }
 
 .selected_highlight:not(.celluleFixe) {
@@ -739,9 +864,11 @@ nav {
   border-radius: 50%;
 }
 
-.boutons_ronds img {
+.boutons_ronds svg {
   width: clamp(30px, 10vw, 37px);
   height: clamp(30px, 10vw, 37px);
+  min-width: clamp(30px, 10vw, 37px);
+  min-height: clamp(30px, 10vw, 37px);
 }
 
 #pave_numerique {
@@ -795,18 +922,18 @@ td, #pave_numerique p, .boutons_difficulte div {
 }
 
 td:not(.celluleFixe, .selected_highlight) p {
-  color: var(--CrimsonViolet75pourcent);
+  color: var(--texteCaseModifiee);
   font-weight:normal;
 }
 
 td:not(.celluleFixe, .selected_highlight) li {
-  color: var(--CrimsonViolet75pourcent);
+  color: var(--texteCaseModifiee);
 }
 
 .boutonPave {
   text-align: center;
-  background-color: var(--WisteriaBlue25pourcent);
-  box-shadow: 0px 2px 2px 0px #686868;
+  background-color: var(--sectionArrierePlan);
+  box-shadow: 0px 2px 2px 0px var(--ombrePopup);
   transition: filter 0.5s ease;
   border-radius: 10px;
 }
@@ -833,7 +960,7 @@ td:not(.celluleFixe, .selected_highlight) li {
 }
 
 .defaite {
-  color: red;
+  color: score;
 }
 
 /* Salon */
@@ -890,8 +1017,11 @@ td:not(.celluleFixe, .selected_highlight) li {
   text-align: center;
 }
 
-#infos_multijoueur img {
+#infos_multijoueur svg {
   width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
 }
 
 #infos_multijoueur>div>img {
@@ -928,11 +1058,18 @@ td:not(.celluleFixe, .selected_highlight) li {
   position: relative;
 }
 
-#joueurs img {
+#joueurs img, #joueurs svg {
   margin: auto;
 }
 
-#joueurs>div>div>img:last-child {
+ #joueurs svg {
+  width: 70px;
+  height: 70px;
+  min-width: 70px;
+  min-height: 70px;
+ }
+
+#joueurs>div>div>img {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -962,15 +1099,19 @@ td:not(.celluleFixe, .selected_highlight) li {
   margin-bottom: 10px;
 }
 
-.onglets_classements p img {
-  margin: auto;
+.onglets_classements p svg {
+  margin: 2px auto;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
 }
 
 .top_3 {
   position: relative;
   text-align: center;
   height: 184px;
-  background-color: var(--WisteriaBlue50pourcent);
+  background-color: var(--onglet);
   border-radius: 15px;
 }
 
@@ -984,11 +1125,15 @@ td:not(.celluleFixe, .selected_highlight) li {
   display: none;
   width: 400px;
   padding: 20px 40px;
-  color: var(--MidnightViolet);
-  background-color: var(--WisteriaBlue25pourcent);
-  box-shadow: 0px 4px 4px 0px #686868;
+  color: var(--texteNormal);
+  background-color: var(--sectionArrierePlan);
+  box-shadow: 0px 4px 4px 0px var(--ombrePopup);
   border-radius: 15px;
   z-index: 10;
+}
+
+.info_joueur h3 {
+  text-align: center;
 }
 
 .info_joueur_haut {
@@ -1018,21 +1163,22 @@ td:not(.celluleFixe, .selected_highlight) li {
   text-align: center;
 }
 
-.info_joueur>img {
+.info_joueur>svg {
   position: absolute;
   width: 40px;
   height: 40px;
+  fill: var(--sectionArrierePlan);
 }
 
-.info_joueur_haut>img {
+.info_joueur_haut>svg {
   left: calc(50% - 20px);
   bottom: calc(-20px);
-  transform: scaleY(-1);
 }
 
-.info_joueur_bas>img {
+.info_joueur_bas>svg {
   left: calc(50% - 20px);
   top: calc(-20px);
+  transform: scaleY(-1);
 }
 
 .top_3>div>img {
@@ -1174,8 +1320,8 @@ footer {
   display: flex;
   justify-content: center;
   width: 100%;
-  background-color: var(--White);
-  box-shadow: 0px 0px 4px var(--CrimsonViolet50pourcent);
+  background-color: var(--arrierePlan);
+  box-shadow: 0px 0px 4px var(--ombrePrincipal);
   z-index: 1;
   bottom: 0px;
 }
@@ -1219,8 +1365,8 @@ footer a {
   width: calc(100vw - 50px);
   max-width: 550px;
   border-radius: 15px;
-  background-color: var(--WisteriaBlue25pourcent);
-  box-shadow: 0px 4px 4px 0px #686868;
+  background-color: var(--sectionArrierePlan);
+  box-shadow: 0px 4px 4px 0px var(--ombrePopup);
 }
 
 .popup h3 {
@@ -1303,6 +1449,10 @@ dt {
   font-weight: bold;
 }
 
+.sections_mentions li, dd, dt {
+  color: var(--texteNormal);
+}
+
 /* Settings généraux */
 
 section p {
@@ -1327,7 +1477,7 @@ section p {
 }
 
 .boutonProfil p {
-  color: var(--White);
+  color: var(--texteBouton);
 }
 
 /* Erreurs */
@@ -1457,7 +1607,7 @@ section p {
     right: 0px;
     top: 60px;
     min-width: 280px;
-    background-color: var(--CrimsonViolet);
+    background-color: var(--menuUtilisateur);
     border-radius: 10px;
     padding: 7px 0px 7px 25px;
     z-index: 2;
@@ -1470,18 +1620,63 @@ section p {
     height: 45px;
   }
 
-  #menu_utilisateur>div img {
+  #menu_utilisateur>div svg {
+    fill: var(--svgMenu);
     margin: auto 0;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
   }
 
-  #menu_utilisateur a {
-    color: var(--White);
+  #menu_utilisateur a, #menu_utilisateur p {
+    color: var(--texteMenu);
   }
 
   #utilisateur:hover #menu_utilisateur {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+  }
+
+  .mode_sombre {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: none;
+    width: 300px;
+    margin-right: 25px;
+  }
+
+  .mode_sombre p {
+    width: unset;
+  }
+
+  .mode_sombre_input {
+    display: none;
+  }
+
+  .label_mode_sombre {
+    display: inline-block;
+    height: 36px;
+    width: 90px;
+    margin: unset;
+    background-color: var(--texteNormal);
+    position: relative;
+    transition: all 0.3s;
+    border-radius: 18px;
+  }
+
+  .label_mode_sombre:after {
+    content: "";
+    height: 26px;
+    width: 26px;
+    background-color: var(--arrierePlan);
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    transition: all 0.3s;
+    border-radius: 50%;
   }
 
   /* Profil */
@@ -1618,6 +1813,13 @@ section p {
     margin-bottom: 10px;
   }
 
+  #classements svg {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+  }
+
   .top_10 {
     height: 374px;
   }
@@ -1717,7 +1919,7 @@ section p {
 
   /* Header */
 
-  header a {
+  header a, header p {
     font-size: 24px;
   }
 
@@ -1815,7 +2017,7 @@ section p {
     border-radius: 50%;
   }
 
-  .boutons_ronds img {
+  .boutons_ronds svg {
     width: 50px;
     height: 50px;
   }
