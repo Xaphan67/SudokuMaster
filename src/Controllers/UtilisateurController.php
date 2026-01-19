@@ -77,21 +77,8 @@ class UtilisateurController extends Controller {
                 // Si l'utilisateur à été ajouté correctement en base de données
                 if ($utilisateurAjoute) {
 
-                    // Si l'utilisateur à été redirigé par une autre page
-                    // on le renvoie vers cette page
-                    if (isset($_GET["from"])) {
-
-                        // Récupère le contrôleur et la méthode à appeler
-                        $infos = explode(':',$_GET["from"]);
-
-                        // Redirige l'utilisateur
-                        header("Location:index.php?controller=" . $infos[0] . "&action=" . $infos[1]);
-                    }
-                    else {
-
-                        // Redirige l'utilisateur vers la page de connexion
-                        header("Location:connexion");
-                    }
+                    // Redirige l'utilisateur vers la page de connexion
+                    header("Location:connexion");
                 }
             }
         }
@@ -160,13 +147,11 @@ class UtilisateurController extends Controller {
 
                         // Si l'utilisateur à été redirigé par une autre page
                         // on le renvoie vers cette page
-                        if (isset($_GET["from"])) {
-
-                            // Récupère le contrôleur et la méthode à appeler
-                            $infos = explode(':',$_GET["from"]);
+                        $page = strpos($_SERVER["HTTP_REFERER"], "from=");
+                        if ($page) {
 
                             // Redirige l'utilisateur
-                            header("Location:index.php?controller=" . $infos[0] . "&action=" . $infos[1]);
+                            header("Location:" . substr($_SERVER["HTTP_REFERER"], $page + 5));
                         }
                         else {
 

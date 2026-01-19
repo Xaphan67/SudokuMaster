@@ -9,9 +9,9 @@ RewriteRule ^classements$ index.php?action=leaderboard [L]
 RewriteRule ^regles$ index.php?action=rules [L]
 RewriteRule ^mentions$ index.php?action=legals [L]
 
-RewriteRule ^connexion$ index.php?controller=utilisateur&action=login [L]
+RewriteRule ^connexion(.*)?$ index.php?controller=utilisateur&action=login [L,QSA]
 RewriteRule ^deconnexion$ index.php?controller=utilisateur&action=logout [L]
-RewriteRule ^inscription$ index.php?controller=utilisateur&action=signUp [L]
-RewriteRule ^profil index.php?controller=utilisateur&action=profil [L]
+RewriteRule ^inscription$ index.php?controller=utilisateur&action=signUp [L,QSA]
+RewriteRule ^profil(.*)?$ index.php?controller=utilisateur&action=profil [L]
 
 ErrorDocument 404 /index.php?action=erreur404

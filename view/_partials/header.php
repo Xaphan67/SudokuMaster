@@ -11,7 +11,7 @@
             <div id="utilisateur">
                 <?php
                     if (isset($_SESSION["utilisateur"])) {
-                        echo '<a href="profil&utilisateurId=' . $_SESSION["utilisateur"]["id_utilisateur"] . '">' . $_SESSION["utilisateur"]["pseudo_utilisateur"] .' </a>';
+                        echo '<a href="profil">' . $_SESSION["utilisateur"]["pseudo_utilisateur"] .' </a>';
                     }
                     else {
                         echo '<a href="connexion">Connexion</a>';
@@ -33,7 +33,7 @@
                          <?php
                             if(isset($_SESSION["utilisateur"])) {
                         ?>
-                                <a href="profil&utilisateurId=<?php echo $_SESSION["utilisateur"]["id_utilisateur"]; ?>">Profil</a>
+                                <a href="profil">Profil</a>
                                 <div class="mode_sombre">
                                     <p>Mode sombre</p>
                                     <input type="checkbox" id="mode_sombre_mobile" class="mode_sombre_input">
@@ -53,7 +53,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
                             <path d="M229.19 213c-15.81-27.32-40.63-46.49-69.47-54.62a70 70 0 1 0-63.44 0C67.44 166.5 42.62 185.67 26.81 213a6 6 0 1 0 10.38 6c19.21-33.19 53.15-53 90.81-53s71.6 19.81 90.81 53a6 6 0 1 0 10.38-6ZM70 96a58 58 0 1 1 58 58a58.07 58.07 0 0 1-58-58Z"/>
                         </svg>
-                        <a href="profil&utilisateurId=<?php echo $_SESSION["utilisateur"]["id_utilisateur"]; ?>">Profil</a>
+                        <a href="profil">Profil</a>
                     </div>
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
