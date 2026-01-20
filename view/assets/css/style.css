@@ -62,6 +62,12 @@ html.sombre {
   src: url("../fonts/berlin-sans-fb-demi/BRLNSDB.TTF") format("truetype");
 }
 
+@font-face {
+  font-family: "OpenDyslexic";
+  font-weight: 400;
+  src: url("../fonts/open_dyslexic/OpenDyslexic-Regular.otf") format("opentype");
+}
+
 /* --------------------------------------------------  RESET CSS  --------------------------------------------------*/
 
 /* enlever les marges naturelles + reset du body/html */
@@ -357,6 +363,13 @@ hr {
   font-size: 32px;
 }
 
+/* ------------------------------------------------  ACCESSIBILITE  ------------------------------------------------*/
+
+.dyslexique *, .dyslexique h1, .dyslexique h2, .dyslexique #regles h2, .dyslexique h3 {
+  font-family:"OpenDyslexic";
+  font-size-adjust: 0.4;
+}
+
 /* ----------------------------------------------  MOBILE (<= 575px)  ----------------------------------------------*/
 
 /* Header */
@@ -463,22 +476,22 @@ nav {
   display: none;
 }
 
-.mode_sombre {
+.switch {
   display: flex;
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid var(--sectionArrierePlan);
 }
 
-.mode_sombre p {
+.switch p {
   width: 215px;
 }
 
-.mode_sombre_input {
+.switch_input {
   display: none;
 }
 
-.label_mode_sombre {
+.switch_label {
   display: inline-block;
   height: 36px;
   width: 90px;
@@ -490,7 +503,7 @@ nav {
   cursor: pointer;
 }
 
-.label_mode_sombre:after {
+.switch_label:after {
   content: "";
   height: 26px;
   width: 26px;
@@ -502,7 +515,7 @@ nav {
   border-radius: 50%;
 }
 
-.mode_sombre_input:checked+.label_mode_sombre:after {
+.switch_input:checked+.switch_label:after {
   transform: translateX(54px);
 }
 
@@ -1607,7 +1620,7 @@ section p {
     gap: 7px;
     right: 0px;
     top: 60px;
-    min-width: 280px;
+    min-width: 440px;
     background-color: var(--menuUtilisateur);
     border-radius: 10px;
     padding: 7px 0px 7px 25px;
@@ -1640,24 +1653,24 @@ section p {
     justify-content: flex-start;
   }
 
-  .mode_sombre {
+  .switch {
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: none;
-    width: 300px;
+    width: 100%;
     margin-right: 25px;
   }
 
-  .mode_sombre p {
+  .switch p {
     width: unset;
   }
 
-  .mode_sombre_input {
+  .switch_input {
     display: none;
   }
 
-  .label_mode_sombre {
+  .switch_label {
     display: inline-block;
     height: 36px;
     width: 90px;
@@ -1668,7 +1681,7 @@ section p {
     border-radius: 18px;
   }
 
-  .label_mode_sombre:after {
+  .switch_label:after {
     content: "";
     height: 26px;
     width: 26px;

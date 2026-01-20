@@ -1,6 +1,7 @@
 // Constantes
 const HTML = document.documentElement;
-const SWITCHES_MODE_SOMBRE = document.getElementsByClassName("mode_sombre_input");
+const SWITCHES_MODE_SOMBRE = document.getElementsByClassName("mode_sombre");
+const SWITCHES_MODE_DYSLEXIQUE = document.getElementsByClassName("mode_dyslexique");
 const LOGOS = document.getElementsByClassName("logo");
 
 // Mode sombre
@@ -32,6 +33,33 @@ document.addEventListener("DOMContentLoaded", () => {
              else {
                 setThemeClair(LOGOS_SRC);
                 localStorage.setItem("theme", "clair");
+            }
+
+            // Retire l'attribut "class" si aucune classe restante
+            if (HTML.classList.length == 0) {
+                HTML.removeAttribute("class");
+            }
+        });
+    }
+
+    // Applique la police dyslexique enregistrée par l'utilisateur dans le local storage
+    const DYSLEXIQUE_LOCAL_STORAGE = localStorage.getItem("dyslexique");
+    if (DYSLEXIQUE_LOCAL_STORAGE == "dyslexique") {
+         setPoliceDyslexique();
+    }
+
+    // Pour les deux switches du mode dyslexique (normal + mobile)
+    for (let element of SWITCHES_MODE_DYSLEXIQUE) {
+
+        // Quand on clique sur le switch, ajoute ou retire la classe "dyslexique"
+        element.addEventListener("change", (e) => {
+            if (!HTML.classList.contains("dyslexique")) {
+                setPoliceDyslexique();
+                localStorage.setItem("dyslexique", "dyslexique");
+            }
+             else {
+                setPoliceNormal();
+                localStorage.setItem("dyslexique", "normal");
             }
 
             // Retire l'attribut "class" si aucune classe restante
@@ -72,5 +100,27 @@ function setThemeClair(logoSrc) {
     // Change les logos
     for (let logo of LOGOS) {
         logo.src  = logoSrc;
+    }
+}
+
+function setPoliceDyslexique() {
+
+    // Ajoute la classe dyslexique et check les autres switches pour les metre à jour
+    HTML.classList.add("dyslexique");
+    for (let element of SWITCHES_MODE_DYSLEXIQUE) {
+        if (!element.checked) {
+            element.checked = true;
+        }
+    }
+}
+
+function setPoliceNormal() {
+
+    // Retire la classe dyslexique et check les autres switches pour les metre à jour
+    HTML.classList.remove("dyslexique");
+    for (let element of SWITCHES_MODE_DYSLEXIQUE) {
+        if (element.checked) {
+            element.checked = false;
+        }
     }
 }
