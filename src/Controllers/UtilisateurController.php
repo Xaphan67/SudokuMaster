@@ -458,6 +458,8 @@ class UtilisateurController extends Controller {
         }
 
         // Indique à la vue les variables nécessaires
+        $script = ["oubliMdp.js"];
+        $this->_donnees["script"] = $script;
         $this->_donnees["emailEnvoye"] = $emailEnvoye;
         $this->_donnees["erreurs"] = $erreurs;
 

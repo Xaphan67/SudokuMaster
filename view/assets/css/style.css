@@ -126,6 +126,10 @@ p {
   user-select: none;
 }
 
+.inactif {
+  filter: opacity(0.40);
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -977,10 +981,6 @@ td:not(.celluleFixe, .selected_highlight) li {
   gap: 15px;
 }
 
-.salon_inactif {
-  filter: opacity(0.40);
-}
-
 /* Multijoueur */
 
 #infos_multijoueur {
@@ -1398,7 +1398,8 @@ footer a {
 
 #debut_partie, #fin_partie, #modifier_compte, #supprimer_compte,
 #compte_requis, #verif_joueur_pret, #abandon_autre_joueur_partie,
-#abandon_partie, #erreur, #erreur_salle, #erreur_serveur {
+#abandon_partie, #erreur, #erreur_salle, #erreur_serveur,
+#mail_envoye, #token_invalide, #mdp_reinitialise {
   position: fixed;
   display: flex;
   transform: translateX(-50%) translateY(-50%);
