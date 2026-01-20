@@ -111,7 +111,7 @@ class UtilisateurModel extends Model {
 
     function getPasswordHash(string $email) {
 
-        // Requête préparée pour trouver le hash du mort de passe de l'utilisateur
+        // Requête préparée pour trouver le hash du mot de passe de l'utilisateur
         $query =
             "SELECT mdp_utilisateur FROM utilisateur
             WHERE email_utilisateur=:email_utilisateur";
@@ -124,5 +124,59 @@ class UtilisateurModel extends Model {
         // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
         $prepare->execute();
         return $prepare->fetch();
+    }
+
+    function setToken(string $email, string $tokenHash, string $tokenDateExpiration) {
+
+        // Requête préparée pour stocker le token de changement de mot de passe de l'utilisateur
+        $query =
+            "UPDATE utilisateur
+            SET reset_token_hash = :reset_token_hash, reset_token_date_expiration = :reset_token_date_expiration
+            WHERE email_utilisateur=:email_utilisateur";
+
+        $prepare = $this->_db->prepare($query);
+
+        // Définition des paramettres de la requête préparée
+        $prepare->bindValue(":reset_token_hash", $tokenHash, PDO::PARAM_STR);
+        $prepare->bindValue(":reset_token_date_expiration", $tokenDateExpiration, PDO::PARAM_STR);
+        $prepare->bindValue(":email_utilisateur", $email, PDO::PARAM_STR);
+
+        // Execute la requête. Retourne true (si réussite) ou false (si echec)
+        return $prepare->execute();
+    }
+
+    function findToken(string $tokenHash) {
+
+        // Requête préparée pour trouver le token de l'utilisateur
+        $query =
+            "SELECT reset_token_hash, reset_token_date_expiration FROM utilisateur
+            WHERE reset_token_hash=:reset_token_hash";
+
+        $prepare = $this->_db->prepare($query);
+
+        // Définition des paramettres de la requête préparée
+        $prepare->bindValue(":reset_token_hash", $tokenHash, PDO::PARAM_STR);
+
+        // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
+        $prepare->execute();
+        return $prepare->fetch();
+    }
+
+    function resetPassword(string $tokenHash, $mdp) : bool {
+
+        // Requête préparée pour modifier l'utilisateur
+        $query =
+            "UPDATE utilisateur
+            SET mdp_utilisateur = :mdp_utilisateur, reset_token_hash = NULL, reset_token_date_expiration = NULL
+            WHERE reset_token_hash = :reset_token_hash";
+
+        $prepare = $this->_db->prepare($query);
+
+        // Définition des paramettres de la requête préparée
+        $prepare->bindValue(":mdp_utilisateur", $mdp, PDO::PARAM_STR);
+        $prepare->bindValue(":reset_token_hash", $tokenHash, PDO::PARAM_STR);
+
+        // Execute la requête. Retourne true (si réussite) ou false (si echec)
+        return $prepare->execute();
     }
 }

@@ -1,8 +1,8 @@
 Options +FollowSymlinks
 RewriteEngine on
 
-RewriteRule ^solo$ index.php?controller=partie&action=soloBoard [L]
 RewriteRule ^salon$ index.php?controller=partie&action=lobby [L]
+RewriteRule ^solo$ index.php?controller=partie&action=soloBoard [L]
 RewriteRule ^multijoueur$ index.php?controller=partie&action=multiBoard [L]
 
 RewriteRule ^classements$ index.php?action=leaderboard [L]
@@ -12,6 +12,8 @@ RewriteRule ^mentions$ index.php?action=legals [L]
 RewriteRule ^connexion(.*)?$ index.php?controller=utilisateur&action=login [L,QSA]
 RewriteRule ^deconnexion$ index.php?controller=utilisateur&action=logout [L]
 RewriteRule ^inscription$ index.php?controller=utilisateur&action=signUp [L]
+RewriteRule ^oubliMdp$ index.php?controller=utilisateur&action=forgotPassword [L]
 RewriteRule ^profil$ index.php?controller=utilisateur&action=profil [L]
+RewriteRule ^reinitialisationMdp(.*)?$ index.php?controller=utilisateur&action=resetPassword [L,QSA]
 
 ErrorDocument 404 /index.php?action=erreur404

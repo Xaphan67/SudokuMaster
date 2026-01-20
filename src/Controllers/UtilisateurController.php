@@ -378,4 +378,171 @@ class UtilisateurController extends Controller {
         // Affiche la vue profil
         $this->display("utilisateur/profil");
     }
+
+    // Afficher la page de mot de passe oublié
+    public function forgotPassword() {
+
+        // Si l'utilisateur est connecté
+        if (isset($_SESSION["utilisateur"])) {
+
+            // Redirige l'utilisateur vers la page de son profil
+            header("Location:profil&utilisateur_id=" . $_SESSION["utilisateur"]["id_utilisateur"]);
+            exit();
+        }
+
+        // Crée un tableau pour gérer les erreurs
+        $erreurs = [];
+
+        // Déclare une variable pour indiquer à la vue si un email à été envoyé
+        $emailEnvoye = false;
+
+        // Si le formulaire est soumis
+        if (count($_POST) > 0) {
+
+            // Filtrage des données
+            // Protège contre la faille XSS
+            $email = trim(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
+
+            // Test si l'email est dans un format valide
+            $emailValide = filter_var($email, FILTER_VALIDATE_EMAIL);
+
+            // Test des données
+            if (!$email) {
+                $erreurs["email"] = "Ce champ est obligatoire";
+            }
+            else if (!$emailValide) {
+                $erreurs["email"] = "Adresse mail invalide";
+            }
+
+            // Si il n'y à aucune erreur
+            if (count($erreurs) == 0) {
+
+                // Génère un token aléatoire
+                $token = bin2hex(random_bytes(16));
+                $tokenHash = hash("sha256", $token);
+                $tokenDateExpiration = date("Y-m-d H:i:s", time() + 30 * 60); // Heure actuelle + 30 minutes (30 * 60 secondes)
+
+                // Crée une instance du modèle Utilisateur et appelle la méthode
+                // pour insérer le token de l'utilisateur en base de données
+                $utilisateurModel = new UtilisateurModel;
+                $tokenAjoute = $utilisateurModel->setToken($email, $tokenHash, $tokenDateExpiration);
+
+                // Si le tocken à bien été ajouté en base de donnée,
+                // appelle le mailer pour envoyer un email à l'utilisateur
+                if ($tokenAjoute) {
+
+                    // Ajoute l'adresse mail saisie en tant que destinataire
+                    $this->_mailer->addAddress($email);
+
+                    // Ajoute un sujet à l'email
+                    $this->_mailer->Subject = "Sudoku Master - Réinitialisation de votre mot de passe";
+
+                    // Ajoute le corps de l'email
+                    $this->_mailer->Body = 'Bonjour, Vous avez demandé la réinitialisation de votre mot de passe Sudoku Master.
+                    Pour ce faire, merci de cliquer sur <a href="' . $_ENV["DOMAIN_NAME"] . '/reinitialisationMdp?token=' . $token . '">ce lien</a>';
+
+                    // Envoie l'email
+                    try {
+                        $this->_mailer->send();
+                    }
+                    catch (\Exception $e) {
+                        echo "Erreur d'envoi : " . $this->_mailer->ErrorInfo;
+                    }
+
+                }
+
+                // Indiquer à la vue qu'un email à été envoyé
+                // (même si aucun envoi, par sécurité)
+                $emailEnvoye = true;
+            }
+        }
+
+        // Indique à la vue les variables nécessaires
+        $this->_donnees["emailEnvoye"] = $emailEnvoye;
+        $this->_donnees["erreurs"] = $erreurs;
+
+        // Affiche la vue mot de passe oublié
+        $this->display("utilisateur/oubliMdp");
+    }
+
+    // Afficher la page réinitialisation du mot de passe
+    public function resetPassword() {
+
+        // Si l'utilisateur est connecté
+        if (isset($_SESSION["utilisateur"])) {
+
+            // Redirige l'utilisateur vers la page de son profil
+            header("Location:profil&utilisateur_id=" . $_SESSION["utilisateur"]["id_utilisateur"]);
+            exit();
+        }
+
+        // Déclare une variable qui indiquera si le token est valide (existe, non expiré)
+        $tokenValide = false;
+
+        // Récupère le token via l'URL, ou dans le post si le formulaire est soumis
+        $token = count($_POST) > 0 ? $_POST["token"] : $_GET["token"];
+        $tokenHash = hash("sha256", $token);
+
+        // Crée une instance du modèle Utilisateur et appelle la méthode
+        // pour récupérer le token de l'utilisateur en base de données
+        $utilisateurModel = new UtilisateurModel;
+        $donneesToken = $utilisateurModel->findToken($tokenHash);
+
+        // Si le token existe
+        if ($donneesToken) {
+
+            // Vérifie si le token a expiré
+            if (strtotime($donneesToken["reset_token_date_expiration"]) > time()) {
+                $tokenValide = true;
+            }
+        }
+
+        // Déclare une variable qui indiquera si l'utilisateur à réinitialisé son mot de passe
+        $mdpReinitialise = false;
+
+        // Crée un tableau pour gérer les erreurs
+        $erreurs = [];
+
+        // Si le formulaire est soumis et que le token est valide
+        if (count($_POST) > 0 && $tokenValide) {
+
+            // Test des données
+            if (empty($_POST["mdp"])) {
+                $erreurs["mdp"] = "Ce champ est obligatoire";
+            }
+
+            if (empty($_POST["mdp_confirm"])) {
+                $erreurs["mdp_confirm"] = "Ce champ est obligatoire";
+            }
+            else if ($_POST["mdp"] != $_POST["mdp_confirm"]) {
+                $erreurs["mdp_confirm"] = "Les mots de passe ne sont pas identiques";
+            }
+
+            if (count($erreurs) == 0) {
+
+                 // Hashe le mot de passe de l'utilisateur
+                $mdp = password_hash($_POST["mdp"], PASSWORD_DEFAULT);
+
+                // Modifie l'utilisateur en base de données
+                // Et supprime les informations de son token
+                $utilisateurModifie = $utilisateurModel->resetPassword($tokenHash, $mdp);
+
+                // Si l'utilisateur à été modifié correctement en base de données
+                if ($utilisateurModifie) {
+
+                    // Indique que le mot de passe à été réinitialisé
+                    $mdpReinitialise = true;
+                }
+            }
+        }
+
+        // Indique à la vue les variables nécessaires
+        $this->_donnees["token"] = $token;
+        $this->_donnees["tokenValide"] = $tokenValide;
+        $this->_donnees["mdpReinitialise"] = $mdpReinitialise;
+        $this->_donnees["erreurs"] = $erreurs;
+
+        // Affiche la vue réinitialisation du mot de passe
+        $this->display("utilisateur/reinitialisationMdp");
+    }
 }

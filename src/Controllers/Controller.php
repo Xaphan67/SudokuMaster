@@ -2,9 +2,42 @@
 
 namespace Xaphan67\SudokuMaster\Controllers;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 abstract class Controller {
 
     protected array $_donnees = [];
+
+    protected object $_mailer;
+    private static ?PHPMailer $_mailerInstance = null;
+
+    public function __construct() {
+
+        // Récupère ou crée la connexion (singleton)
+         if (self::$_mailerInstance === null) {
+            try{
+                self::$_mailerInstance = new PHPMailer();
+                self::$_mailerInstance->IsSMTP();
+                self::$_mailerInstance->CharSet = PHPMailer::CHARSET_UTF8;
+                self::$_mailerInstance->Mailer = "smtp";
+                self::$_mailerInstance->SMTPDebug = 0;
+                self::$_mailerInstance->SMTPAuth = true;
+                self::$_mailerInstance->SMTPSecure = "tls";
+                self::$_mailerInstance->Port = $_ENV["MAILER_PORT"];
+                self::$_mailerInstance->Host = $_ENV["MAILER_HOST"];
+                self::$_mailerInstance->Username = $_ENV["MAILER_USER"];
+                self::$_mailerInstance->Password = $_ENV["MAILER_PASS"];
+                self::$_mailerInstance->isHTML(true);
+                self::$_mailerInstance->setFrom($_ENV['MAILER_FROM_ADDRESS'], $_ENV['MAILER_FROM_NAME']);
+            } catch(Exception $e) {
+                echo "Échec : " . $e->getMessage();
+            }
+        }
+
+        // Assigne la connexion
+        $this->_mailer = self::$_mailerInstance;
+    }
 
     // Appelle la vue demandée
     protected function display($vue) {
