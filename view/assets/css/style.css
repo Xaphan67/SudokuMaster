@@ -440,7 +440,6 @@ nav {
   display: flex;
   align-items: center;
   gap: 10px;
-  height: 60px;
 }
 
 #utilisateur svg {
@@ -494,11 +493,11 @@ nav {
   font-size: 24px;
 }
 
-.menu_burger a:nth-child(4), .menu_burger a:last-child {
+.menu_burger a.menu_burger_sans_bord, .menu_burger a:last-child {
   border-bottom: none;
 }
 
-.menu_burger a:nth-child(5) {
+.menu_burger>div:first-of-type {
   border-top: 1px solid var(--texteNormal);
 }
 
@@ -1639,6 +1638,39 @@ section p {
 
   #utilisateur {
     gap: 20px;
+    padding: 0px 10px;;
+    right: -10px;
+    margin: 10px 0px;
+  }
+
+  #utilisateur:hover {
+    background-color: var(--menuUtilisateur);
+    border-radius: 10px 10px 0px 0px;
+  }
+
+  #utilisateur:hover a {
+    color: var(--texteMenu);
+  }
+
+  #utilisateur:hover svg {
+    fill: var(--texteMenu);
+  }
+
+  #utilisateur:hover:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-image:radial-gradient(circle at 0% 0%, transparent 15px, var(--menuUtilisateur) 15px);
+    left: -15px;
+    bottom: 0px;
+  }
+
+  #utilisateur:hover #menu_utilisateur {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
   }
 
   #menu_burger {
@@ -1650,11 +1682,11 @@ section p {
     position: absolute;
     gap: 7px;
     right: 0px;
-    top: 60px;
-    min-width: 440px;
+    top: 49px;
+    min-width: 410px;
     background-color: var(--menuUtilisateur);
-    border-radius: 10px;
-    padding: 7px 0px 7px 25px;
+    border-radius: 10px 0px 10px 10px;
+    padding: 10px 10px;
     z-index: 2;
   }
 
@@ -1663,6 +1695,7 @@ section p {
     align-items: center;
     gap: 16px;
     height: 45px;
+    padding: 0px 5px;
   }
 
   #menu_utilisateur>div svg {
@@ -1678,10 +1711,9 @@ section p {
     color: var(--texteMenu);
   }
 
-  #utilisateur:hover #menu_utilisateur {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+  #menu_utilisateur div:hover {
+    background-color: var(--boutonSurvol);
+    border-radius: 10px;
   }
 
   .switch {
@@ -1690,7 +1722,6 @@ section p {
     justify-content: space-between;
     border-bottom: none;
     width: 100%;
-    margin-right: 25px;
   }
 
   .switch p {
