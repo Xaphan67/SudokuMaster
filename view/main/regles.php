@@ -29,13 +29,11 @@
                         <p>Pour déterminer quel chiffre peut être placé dans chaque case, il est possible d'appliquer le processus d'élimination en observant les chiffres déjà présents dans les carrés, les lignes et les colonnes adjacents. En effet, aucun chiffre de 1 à 9 ne peut apparaître plus d'une fois dans une même ligne, colonne ou sous-grille.</p>
                         <div>
                             <p>Dans cet exemple, le chiffre 1 étant déjà présent dans les carrés supérieur gauche et central gauche (encerclés en rouge), une seule case de la colonne de gauche peut l'accueillir : celle entourée en vert. Ce raisonnement illustre le processus d'élimination du Sudoku, qui consiste à identifier les chiffres manquants et à déduire leur emplacement possible.</p>
-                            <p>Bien que ses règles soient simples, le Sudoku propose une grande variété de grilles et de niveaux de difficulté, reposant sur des principes fondamentaux : l'utilisation des chiffres de 1 à 9, le raisonnement déductif et l'absence de répétition dans chaque ligne, colonne et carré.</p>
                         </div>
                     </div>
                 </div>
                 <div>
                     <p>Dans cet exemple, le chiffre 1 étant déjà présent dans les carrés supérieur gauche et central gauche (encerclés en rouge), une seule case de la colonne de gauche peut l'accueillir : celle entourée en vert. Ce raisonnement illustre le processus d'élimination du Sudoku, qui consiste à identifier les chiffres manquants et à déduire leur emplacement possible.</p>
-                    <p>Bien que ses règles soient simples, le Sudoku propose une grande variété de grilles et de niveaux de difficulté, reposant sur des principes fondamentaux : l'utilisation des chiffres de 1 à 9, le raisonnement déductif et l'absence de répétition dans chaque ligne, colonne et carré.</p>
                 </div>
             </div>
         </section>

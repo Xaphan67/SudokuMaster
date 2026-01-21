@@ -166,7 +166,7 @@ section {
   display: flex;
   flex-direction: column;
   width: calc(100vw - 50px);
-  padding: 30px;
+  padding: 20px;
   margin: 0px 25px;
   border-radius: 20px;
   background-color: var(--sectionArrierePlan);
@@ -1126,7 +1126,7 @@ td:not(.celluleFixe, .selected_highlight) li {
 }
 
 #classements section {
-  min-height: 680px;
+  min-height: min(680px, calc(100vh - 240px));
 }
 
 #classements>section:not(:first-child), #classements_cooperatif, #classements_competitif {
@@ -1153,7 +1153,7 @@ td:not(.celluleFixe, .selected_highlight) li {
 .top_3 {
   position: relative;
   text-align: center;
-  height: 184px;
+  min-height: 184px;
   background-color: var(--onglet);
   border-radius: 15px;
 }
@@ -1242,16 +1242,16 @@ td:not(.celluleFixe, .selected_highlight) li {
   position: absolute;
   height: calc(47px + 28px + 28px);
   transform: translateX(-50%);
-  left: 25%;
-  bottom: 15px;
+  left: 20%;
+  bottom: 5px;
 }
 
 .top_3>div:nth-child(3) {
   position: absolute;
   height: calc(47px + 28px + 28px);
   transform: translateX(-50%);
-  left: 75%;
-  bottom: 15px;
+  left: 80%;
+  bottom: 5px;
 }
 
 .top_3>div:first-child>p:last-child {
@@ -1295,10 +1295,10 @@ td:not(.celluleFixe, .selected_highlight) li {
 
 .top_10 {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
   justify-content: space-between;
   margin-top: 10px;
-  height: 375px;
+  min-height: 250px;
 }
 
 .top_10>div {
@@ -1312,7 +1312,7 @@ td:not(.celluleFixe, .selected_highlight) li {
 
 #regles {
   margin-top: 10px;
-  min-height: 680px;
+  min-height: min(680px, calc(100vh - 230px));
 }
 
 #regles h2 {
