@@ -385,7 +385,7 @@ hr {
   content: "";
   position: absolute;
   inset: 0;
-  background: conic-gradient(#0000 35%, var(--score),#0000 65%);
+  background: conic-gradient(#0000 35%, var(--texteCaseModifiee),#0000 65%);
   animation: frame 0.35s linear infinite;
 }
 
@@ -2252,11 +2252,11 @@ section p {
   }
 
   .chargement {
-    min-width: min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px) * 0.6);
-    min-height: min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px) * 0.6);
+    min-width: calc(min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) * 0.6);
+    min-height: calc(min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) * 0.6);
     margin: unset;
-    top: min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px) * 0.2);
-    left: min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px) * 0.2);
+    top: calc(min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) * 0.2);
+    left: calc(min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) * 0.2);
   }
 }
 
