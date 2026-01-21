@@ -2224,7 +2224,8 @@ section p {
 
   .formulaire {
     max-width: 435px;
-    margin: 0px auto 0px 5vw;
+    height: fit-content;
+    margin: auto auto auto 5vw;
   }
 
   .formulaire form {
