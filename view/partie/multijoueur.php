@@ -63,6 +63,7 @@
     </div>
     <div id="conteneur_principal">
         <div id="conteneur_jeu" inert>
+            <div class="chargement"></div>
             <table class="grille" id="grille_vide" inert>
                 <tbody>
                     <tr>

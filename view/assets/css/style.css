@@ -363,6 +363,36 @@ hr {
   font-size: 32px;
 }
 
+/* Chargement grille */
+
+.chargement {
+  display: none;
+  min-width: calc(clamp(351px, calc(100vw - clamp(20px, 5vw, 40px)), 720px) * 0.4);
+  min-height: calc(clamp(351px, calc(100vw - clamp(20px, 5vw, 40px)), 720px) * 0.4);
+  aspect-ratio: 1;
+  padding: 10px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  position: absolute;
+  mask: conic-gradient(#000 0 0) content-box exclude,conic-gradient(#000 0 0);
+  filter: blur(12px);
+  margin: 10px auto auto auto;
+  top: calc(clamp(351px, calc(100vw - clamp(20px, 5vw, 40px)), 720px) * 0.3);
+  left: calc(clamp(351px, calc(100vw - clamp(20px, 5vw, 40px)), 720px) * 0.3);
+}
+
+.chargement:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: conic-gradient(#0000 35%, var(--score),#0000 65%);
+  animation: frame 0.35s linear infinite;
+}
+
+@keyframes frame {
+  to {rotate: 1turn}
+}
+
 /* ------------------------------------------------  ACCESSIBILITE  ------------------------------------------------*/
 
 .dyslexique *, .dyslexique h1, .dyslexique h2, .dyslexique #regles h2, .dyslexique h3 {
@@ -743,6 +773,7 @@ nav {
 }
 
 .grille {
+  position: relative;
   margin-top: 10px;
 }
 
@@ -2187,6 +2218,14 @@ section p {
 
   select {
     background-position: right 18px top 18px;
+  }
+
+  .chargement {
+    min-width: min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px) * 0.6);
+    min-height: min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px) * 0.6);
+    margin: unset;
+    top: min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px) * 0.2);
+    left: min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px) * 0.2);
   }
 }
 

@@ -1,5 +1,6 @@
 // Constantes
 const CONTENEUR_JEU = document.getElementById("conteneur_jeu");
+const CHARGEMENT = document.getElementsByClassName("chargement")[0];
 const TABLE = document.getElementById("grille");
 const TABLE_VIDE = document.getElementById("grille_vide");
 const PAVE = document.getElementById("pave_numerique");
@@ -143,6 +144,9 @@ function joinRoom() {
 
                 infosSalle.hoteId = message.hoteId;
 
+                // Affiche l'animation de chargement
+                CHARGEMENT.style.display = "block";
+
                 // Récupère les statistiques du joueur qui à rejoint
                 const RES_STATS_HOTE = await fetch("index.php?controller=classer&action=getPlayerStats", {
                     method: "POST",
@@ -164,6 +168,9 @@ function joinRoom() {
                 // Masque le popup d'attente d'un joueur
                 POPUP_DEBUT_PARTIE.style.display = "none";
                 infosSalle.joueur = message.joueur;
+
+                // Affiche l'animation de chargement
+                CHARGEMENT.style.display = "block";
 
                 // Récupère les statistiques du joueur qui à rejoint
                 const RES_STATS_REJOINT = await fetch("index.php?controller=classer&action=getPlayerStats", {
@@ -304,6 +311,9 @@ if (!multijoueur) {
         element.onclick= function() {
             // Masque le popup
             POPUP_DEBUT_PARTIE.style.display = "none";
+
+            // Affiche l'animation de chargement
+            CHARGEMENT.style.display = "block";
 
             // Démarre la partie
             startGame(element);
@@ -675,6 +685,9 @@ async function startGame(element) {
 
 function getPlayerReady() {
 
+     // Masque l'animation de chargement
+    CHARGEMENT.style.display = "none";
+
     // Affiche le popup demandant au joueur s'il est prêt
     const POPUP_JOUEUR_PRET = document.getElementById("verif_joueur_pret");
     const BOUTON_JOUEUR_PRET = document.getElementById("bouton_pret");
@@ -698,6 +711,9 @@ function getPlayerReady() {
 function configureGame(resPartie) {
     serieVictoires = resPartie["serie_victoires"];
     scoreGlobal = resPartie["score_global"];
+
+    // Masque l'animation de chargement
+    CHARGEMENT.style.display = "none";
 
     // Permet à l'utilisateur d'intéragir avec le plateau de jeu
     CONTENEUR_JEU.style.filter = "none";
