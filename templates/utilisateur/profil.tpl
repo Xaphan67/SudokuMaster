@@ -11,16 +11,20 @@
                 <p>Mot de passe :</p>
             </div>
             <div>
+                {nocache}
                 <p>{$smarty.session.utilisateur.pseudo_utilisateur}</p>
                 <p>{$smarty.session.utilisateur.email_utilisateur}</p>
+                {/nocache}
                 <p>*********</p>
             </div>
         </div>
         <div>
+            {nocache}
             <p>Pseudo</p>
             <p>{$smarty.session.utilisateur.pseudo_utilisateur}</p>
             <p>Adresse mail</p>
             <p>{$smarty.session.utilisateur.email_utilisateur}</p>
+            {/nocache}
             <p>Mot de passe</p>
             <p>*********</p>
         </div>
@@ -93,7 +97,9 @@
                         type="text"
                         placeholder="{$smarty.session.utilisateur.pseudo_utilisateur}"
                         autocomplete="username"
+                        {nocache}
                         value="{$pseudoSaisi|isset ? $pseudoSaisi : $smarty.session.utilisateur.pseudo_utilisateur}"
+                        {/nocache}
                         required
                     />
                     {if $erreurs["pseudo"]|isset}<p>{$erreurs["pseudo"]}</p>{/if}
@@ -105,7 +111,9 @@
                         type="email"
                         placeholder="{$smarty.session.utilisateur.email_utilisateur}"
                         autocomplete="email"
+                        {nocache}
                         value="{$pseudoSaisi|isset ? $emailSaisi : $smarty.session.utilisateur.email_utilisateur}"
+                        {/nocache}
                         required
                     />
                     {if $erreurs["email"]|isset}<p>{$erreurs["email"]}</p>{/if}

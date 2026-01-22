@@ -60,23 +60,6 @@ abstract class Controller {
         return self::$_smartyInstance;
     }
 
-    // Appelle la vue demandée
-    // (Sera supprimé une fois toutes les vues refactorisées en gabarits Smarty)
-    protected function display($vue) {
-
-        // Pour chaque variable stockée dans le tableau $donnes,
-        // déclare une variable avec la valeur correspondante
-        foreach ($this->_donnees as $variable => $valeur){
-            $$variable = $valeur;
-        }
-
-        // Appelle les partials et la vue
-        require_once("view/_partials/head.php");
-        require_once("view/_partials/header.php");
-        include("view/" . $vue . ".php");
-        require_once("view/_partials/footer.php");
-    }
-
     // Appelle le gabarit Smarty demandé
     protected function _display($gabarit) {
 
