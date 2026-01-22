@@ -106,8 +106,8 @@
                             ?>
                             <a href="deconnexion">Se déconnecter</a>
                             <?php
-                                } 
-                            ?>                   
+                                }
+                            ?>
                     </div>
                 </div>
             </div>

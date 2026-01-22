@@ -2,8 +2,9 @@
 
 namespace Xaphan67\SudokuMaster\Controllers;
 
-use PHPMailer\PHPMailer\PHPMailer;
+use Smarty\Smarty;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
 abstract class Controller {
 
@@ -11,6 +12,7 @@ abstract class Controller {
 
     protected object $_mailer;
     private static ?PHPMailer $_mailerInstance = null;
+    private static ?Smarty $_smartyInstance = null;
 
     public function __construct() {
 
@@ -39,7 +41,27 @@ abstract class Controller {
         $this->_mailer = self::$_mailerInstance;
     }
 
+    protected function getSmarty() : Smarty
+    {
+        // Récupère ou crée l'instance de Smarty (singleton)
+        if(self::$_smartyInstance == null) {
+            self::$_smartyInstance = new Smarty();
+
+            // Définition du chemin des répertoires utilisés
+            // par Smarty (gabarits, gabarits compilés et cache)
+            self::$_smartyInstance->setTemplateDir('templates/');
+            self::$_smartyInstance->setCompileDir('templates_c/');
+            self::$_smartyInstance->setCacheDir('cache/');
+
+            // Activation ou non du cache Smarty
+           self::$_smartyInstance->setCaching($_ENV['SMARTY_CACHE'] ? Smarty::CACHING_LIFETIME_CURRENT : Smarty::CACHING_OFF);
+        }
+
+        return self::$_smartyInstance;
+    }
+
     // Appelle la vue demandée
+    // (Sera supprimé une fois toutes les vues refactorisées en gabarits Smarty)
     protected function display($vue) {
 
         // Pour chaque variable stockée dans le tableau $donnes,
@@ -55,6 +77,19 @@ abstract class Controller {
         require_once("view/_partials/footer.php");
     }
 
+    // Appelle le gabarit Smarty demandé
+    protected function _display($gabarit) {
+
+        // Pour chaque variable stockée dans le tableau $donnes,
+        // déclare une variable avec la valeur correspondante via la fonction assign() de Smarty
+        foreach ($this->_donnees as $variable => $valeur){
+            $this->getSmarty()->assign($variable, $valeur);
+        }
+
+        // Affiche le gabarit
+        $this->getSmarty()->display($gabarit . ".tpl");
+    }
+
     // Affiche la page erreur 404 en cas de page non trouvée
     protected function _notFound() {
 
@@ -63,8 +98,8 @@ abstract class Controller {
         $this->_donnees["texte"] = "On a fait notre possible, mais impossible de retrouver cette page";
         $this->_donnees["image"] = "404";
 
-        // Affiche la vue erreurs
-        $this->display("main/erreurs");
+        // Affiche le gabarit erreurs
+        $this->_display("main/erreurs");
         exit;
     }
 
@@ -76,8 +111,8 @@ abstract class Controller {
         $this->_donnees["texte"] = "Cette page est accessible uniquement aux utilisateurs connectés";
         $this->_donnees["image"] = "403";
 
-        // Affiche la vue erreurs
-        $this->display("main/erreurs");
+        // Affiche le gabarit erreurs
+        $this->_display("main/erreurs");
         exit;
     }
 
