@@ -9,8 +9,8 @@ class MainController extends Controller {
     // Affiche la page d'accueil
     public function home() {
 
-        // Affiche la vue accueil
-        $this->display("main/accueil");
+        // Affiche le gabarit accueil
+        $this->_display("main/accueil");
     }
 
     // Affiche la page des classements
@@ -31,30 +31,30 @@ class MainController extends Controller {
             $classements[$mode] = $donneesClasser;
         }
 
-        // Indique à la vue les variables nécessaires
-        $script = ["classements.js"];
-        $this->_donnees["script"] = $script;
+        // Indique au gabarit les variables nécessaires
+        $scripts = ["classements.js"];
+        $this->_donnees["scripts"] = $scripts;
         $this->_donnees["classements"] = $classements;
 
-        // Affiche la vue classements
-        $this->display("main/classements");
+        // Affiche le gabarit classements
+        $this->_display("main/classements");
     }
 
     // Affiche la page des règles
     public function rules() {
 
-        // Indique à la vue les variables nécessaires
-        $script = ["regles.js"];
-        $this->_donnees["script"] = $script;
+        // Indique au gabarit les variables nécessaires
+        $scripts = ["regles.js"];
+        $this->_donnees["scripts"] = $scripts;
 
-        // Affiche la vue regles
-        $this->display("main/regles");
+        // Affiche le gabarit regles
+        $this->_display("main/regles");
     }
 
     // Affiche la page des mentions légales
     public function legals() {
 
-        // Affiche la vue mentions
-        $this->display("main/mentions");
+        // Affiche le gabarit mentions
+        $this->_display("main/mentions");
     }
 }

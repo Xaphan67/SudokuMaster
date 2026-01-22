@@ -20,22 +20,22 @@ class PartieController extends Controller {
     // Afficher l'écran de partie solo
     public function soloBoard() {
 
-        // Indique à la vue les variables nécessaires
-        $script = ["jeu.js", "api.js"];
-        $this->_donnees["script"] = $script;
+        // Indique au gabarit les variables nécessaires
+        $scripts = ["jeu.js", "api.js"];
+        $this->_donnees["scripts"] = $scripts;
 
-        // Affiche la vue jeuSolo
-        $this->display("partie/jeuSolo");
+        // Affiche le gabarit jeuSolo
+        $this->_display("partie/jeuSolo");
     }
 
     // Afficher l'écran de lobby pour partie multijoueur
     public function lobby() {
 
-        // Indique à la vue les variables nécessaires
+        // Indique au gabarit vue les variables nécessaires
         $this->_donnees ["utilisateurConnecte"] = isset($_SESSION["utilisateur"]);
 
-        // Affiche la vue salon
-        $this->display("partie/salon");
+        // Affiche le gabarit salon
+        $this->_display("partie/salon");
 
         // Efface les erreurs et saisies relatives aux formulaires stockées en session
         unset($_SESSION["erreurs"]);
@@ -99,12 +99,12 @@ class PartieController extends Controller {
             }
         }
 
-        // Indique à la vue les variables nécessaires
-        $script = ["jeu.js", "api.js"];
-        $this->_donnees["script"] = $script;
+        // Indique au gabarit les variables nécessaires
+        $scripts = ["jeu.js", "api.js"];
+        $this->_donnees["scripts"] = $scripts;
 
-        // Affiche la vue multijoueur
-        $this->display("partie/multijoueur");
+        // Affiche le gabarit multijoueur
+        $this->_display("partie/multijoueur");
     }
 
     // Retourne si l'utilisateur est l'hôte de la partie multijoueur
