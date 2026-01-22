@@ -63,6 +63,9 @@ abstract class Controller {
     // Appelle le gabarit Smarty demandé
     protected function _display($gabarit) {
 
+        // Vide le cache de Smarty (Semble poser des problèmes sinon)
+        $this->getSmarty()->clearAllCache();
+
         // Pour chaque variable stockée dans le tableau $donnes,
         // déclare une variable avec la valeur correspondante via la fonction assign() de Smarty
         foreach ($this->_donnees as $variable => $valeur){
