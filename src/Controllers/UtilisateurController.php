@@ -83,11 +83,11 @@ class UtilisateurController extends Controller {
             }
         }
 
-        // Indique à la vue les variables nécessaires
+        // Indique à au gabarit les variables nécessaires
         $this->_donnees["erreurs"] = $erreurs;
 
-        // Affiche la vue inscription
-        $this->display("utilisateur/inscription");
+        // Affiche le gabarit inscription
+        $this->_display("utilisateur/inscription");
     }
 
     // Affiche la page de connexion
@@ -168,11 +168,11 @@ class UtilisateurController extends Controller {
         }
 
 
-        // Indique à la vue les variables nécessaires
+        // Indique au gabarit les variables nécessaires
         $this->_donnees["erreurs"] = $erreurs;
 
-        // Affiche la vue connexion
-        $this->display("utilisateur/connexion");
+        // Affiche le gabarit connexion
+        $this->_display("utilisateur/connexion");
     }
 
     // Déconnecte l'utilisateur
@@ -369,14 +369,14 @@ class UtilisateurController extends Controller {
             }
         };
 
-        // Indique à la vue les variables nécessaires
-        $script = ["profil.js"];
-        $this->_donnees["script"] = $script;
+        // Indique au gabarit les variables nécessaires
+        $scripts = ["profil.js"];
+        $this->_donnees["scripts"] = $scripts;
         $this->_donnees["statistiques"] = $statistiques;
         $this->_donnees["erreurs"] = $erreurs;
 
-        // Affiche la vue profil
-        $this->display("utilisateur/profil");
+        // Affiche le gabarit profil
+        $this->_display("utilisateur/profil");
     }
 
     // Afficher la page de mot de passe oublié
@@ -457,14 +457,14 @@ class UtilisateurController extends Controller {
             }
         }
 
-        // Indique à la vue les variables nécessaires
+        // Indique au gabarit les variables nécessaires
         $script = ["oubliMdp.js"];
         $this->_donnees["script"] = $script;
         $this->_donnees["emailEnvoye"] = $emailEnvoye;
         $this->_donnees["erreurs"] = $erreurs;
 
-        // Affiche la vue mot de passe oublié
-        $this->display("utilisateur/oubliMdp");
+        // Affiche le gabarit mot de passe oublié
+        $this->_display("utilisateur/oubliMdp");
     }
 
     // Afficher la page réinitialisation du mot de passe
@@ -538,13 +538,13 @@ class UtilisateurController extends Controller {
             }
         }
 
-        // Indique à la vue les variables nécessaires
+        // Indique au gabarit les variables nécessaires
         $this->_donnees["token"] = $token;
         $this->_donnees["tokenValide"] = $tokenValide;
         $this->_donnees["mdpReinitialise"] = $mdpReinitialise;
         $this->_donnees["erreurs"] = $erreurs;
 
-        // Affiche la vue réinitialisation du mot de passe
-        $this->display("utilisateur/reinitialisationMdp");
+        // Affiche le gabarit réinitialisation du mot de passe
+        $this->_display("utilisateur/reinitialisationMdp");
     }
 }

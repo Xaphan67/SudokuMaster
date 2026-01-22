@@ -23,7 +23,7 @@
                 </p>
             </div>
             {for $mode = 1 to 3}
-                <div id="classements_{($mode == 1 ? "solo" : ($mode == 2 ? "cooperatif" : "competitif"))}">
+                <div id="classements_{$mode == 1 ? "solo" : ($mode == 2 ? "cooperatif" : "competitif")}">
                     <div class="top_3">
                         {for $place = 0 to 2}
                             {if isset($classements[$mode][$place])}
@@ -50,15 +50,15 @@
                                             <path d="m229.66 141.66l-96 96a8 8 0 0 1-11.32 0l-96-96A8 8 0 0 1 32 128h40V48a16 16 0 0 1 16-16h80a16 16 0 0 1 16 16v80h40a8 8 0 0 1 5.66 13.66Z"/>
                                         </svg>
                                     </div>
-                                    <img src="view/assets/img/Trophee{($place == 0 ? "Or" : ($place == 1 ? "Argent" : "Bronze"))}.webp" alt="">
+                                    <img src="view/assets/img/Trophee{$place == 0 ? "Or" : ($place == 1 ? "Argent" : "Bronze")}.webp" alt="">
                                     <p class="score_principal score_top {$place == 0 ? "score_top_1" : ""}">{$classements[$mode][$place]["score_global"]}</p>
                                     <p>{$classements[$mode][$place]["pseudo_utilisateur"]}</p>
                                 </div>
                             {else}
                                 <div>
-                                    <img src="view/assets/img/Trophee{($place == 0 ? "Or" : ($place == 1 ? "Argent" : "Bronze"))}.webp" alt="">
+                                    <img src="view/assets/img/Trophee{$place == 0 ? "Or" : ($place == 1 ? "Argent" : "Bronze")}.webp" alt="">
                                     <p class="score_principal score_top {$place == 0 ? "score_top_1" : ""}">0</p>
-                                    <p>{$place + 1}<sup>{($place == 0 ? "ère" : "eme")}</sup> place</p>
+                                    <p>{$place + 1}<sup>{$place == 0 ? "ère" : "eme"}</sup> place</p>
                                 </div>
                             {/if}
                         {/for}
@@ -106,7 +106,7 @@
         {for $mode = 1 to 3}
             <section>
                 <div>
-                    <h2>{($mode == 1 ? "Solo" : ($mode == 2 ? "Coopératif" : "Compétitif"))}</h2>
+                    <h2>{$mode == 1 ? "Solo" : ($mode == 2 ? "Coopératif" : "Compétitif")}</h2>
                     {if $mode == 1}
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
                             <path d="M229.19 213c-15.81-27.32-40.63-46.49-69.47-54.62a70 70 0 1 0-63.44 0C67.44 166.5 42.62 185.67 26.81 213a6 6 0 1 0 10.38 6c19.21-33.19 53.15-53 90.81-53s71.6 19.81 90.81 53a6 6 0 1 0 10.38-6ZM70 96a58 58 0 1 1 58 58a58.07 58.07 0 0 1-58-58Z"/>
@@ -147,15 +147,15 @@
                                         <path d="m229.66 141.66l-96 96a8 8 0 0 1-11.32 0l-96-96A8 8 0 0 1 32 128h40V48a16 16 0 0 1 16-16h80a16 16 0 0 1 16 16v80h40a8 8 0 0 1 5.66 13.66Z"/>
                                     </svg>
                                 </div>
-                                <img src="view/assets/img/Trophee{($place == 0 ? "Or" : ($place == 1 ? "Argent" : 'Bronze'))}.webp" alt="">
+                                <img src="view/assets/img/Trophee{$place == 0 ? "Or" : ($place == 1 ? "Argent" : 'Bronze')}.webp" alt="">
                                 <p class="score_principal score_top {$place == 0 ? "score_top_1" : ""}">{$classements[$mode][$place]["score_global"]}</p>
                                 <p>{$classements[$mode][$place]["pseudo_utilisateur"]}</p>
                             </div>
                         {else}
                             <div>
-                                <img src="view/assets/img/Trophee{($place == 0 ? "Or" : ($place == 1 ? "Argent" : "Bronze"))}.webp" alt="">
+                                <img src="view/assets/img/Trophee{$place == 0 ? "Or" : ($place == 1 ? "Argent" : "Bronze")}.webp" alt="">
                                 <p class="score_principal score_top {$place == 0 ? "score_top_1" : ""}">0</p>
-                                <p>{$place + 1}<sup>{($place == 0 ? "ère" : "eme")}</sup> place</p>
+                                <p>{$place + 1}<sup>{$place == 0 ? "ère" : "eme"}</sup> place</p>
                             </div>
                         {/if}
                     {/for}
@@ -187,7 +187,7 @@
                                     </svg>
                                 </div>
                                 <p>{$classements[$mode][$place]["pseudo_utilisateur"]}</p>
-                                <p class="score_principal score">{ $classements[$mode][$place]["score_global"]}</p>
+                                <p class="score_principal score">{$classements[$mode][$place]["score_global"]}</p>
                             </div>
                         {else}
                             <div>
