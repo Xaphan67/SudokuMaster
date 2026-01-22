@@ -6,7 +6,7 @@
     <section id="section_erreur">
         <h2>{$titre}</h2>
         <p>{$texte}</p>
-        <img src="view/assets/img/{$image}.webp" alt="">
+        <img src="assets/img/{$image}.webp" alt="">
         <p>Pourquoi ne pas se détendre en jouant une partie rapide ?</p>
         <a href="solo" class="bouton boutonPrincipal boutonLarge">Jouer seul</a>
     </section>

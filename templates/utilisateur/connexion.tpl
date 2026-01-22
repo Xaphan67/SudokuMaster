@@ -2,9 +2,9 @@
 
 {block contenu}
 <div id="conteneur_principal">
-    <img src="view/assets/img/Grille.webp" alt="">
+    <img src="assets/img/Grille.webp" alt="">
     <section class="formulaire">
-        <img class="logo" src="view/assets/img/SudokuMaster.png" alt="">
+        <img class="logo" src="assets/img/SudokuMaster.png" alt="">
         <h1>Connexion au compte</h1>
         <form method="post">
             <div>

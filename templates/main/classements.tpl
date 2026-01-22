@@ -50,13 +50,13 @@
                                             <path d="m229.66 141.66l-96 96a8 8 0 0 1-11.32 0l-96-96A8 8 0 0 1 32 128h40V48a16 16 0 0 1 16-16h80a16 16 0 0 1 16 16v80h40a8 8 0 0 1 5.66 13.66Z"/>
                                         </svg>
                                     </div>
-                                    <img src="view/assets/img/Trophee{$place == 0 ? "Or" : ($place == 1 ? "Argent" : "Bronze")}.webp" alt="">
+                                    <img src="assets/img/Trophee{$place == 0 ? "Or" : ($place == 1 ? "Argent" : "Bronze")}.webp" alt="">
                                     <p class="score_principal score_top {$place == 0 ? "score_top_1" : ""}">{$classements[$mode][$place]["score_global"]}</p>
                                     <p>{$classements[$mode][$place]["pseudo_utilisateur"]}</p>
                                 </div>
                             {else}
                                 <div>
-                                    <img src="view/assets/img/Trophee{$place == 0 ? "Or" : ($place == 1 ? "Argent" : "Bronze")}.webp" alt="">
+                                    <img src="assets/img/Trophee{$place == 0 ? "Or" : ($place == 1 ? "Argent" : "Bronze")}.webp" alt="">
                                     <p class="score_principal score_top {$place == 0 ? "score_top_1" : ""}">0</p>
                                     <p>{$place + 1}<sup>{$place == 0 ? "ère" : "eme"}</sup> place</p>
                                 </div>
@@ -147,13 +147,13 @@
                                         <path d="m229.66 141.66l-96 96a8 8 0 0 1-11.32 0l-96-96A8 8 0 0 1 32 128h40V48a16 16 0 0 1 16-16h80a16 16 0 0 1 16 16v80h40a8 8 0 0 1 5.66 13.66Z"/>
                                     </svg>
                                 </div>
-                                <img src="view/assets/img/Trophee{$place == 0 ? "Or" : ($place == 1 ? "Argent" : 'Bronze')}.webp" alt="">
+                                <img src="assets/img/Trophee{$place == 0 ? "Or" : ($place == 1 ? "Argent" : 'Bronze')}.webp" alt="">
                                 <p class="score_principal score_top {$place == 0 ? "score_top_1" : ""}">{$classements[$mode][$place]["score_global"]}</p>
                                 <p>{$classements[$mode][$place]["pseudo_utilisateur"]}</p>
                             </div>
                         {else}
                             <div>
-                                <img src="view/assets/img/Trophee{$place == 0 ? "Or" : ($place == 1 ? "Argent" : "Bronze")}.webp" alt="">
+                                <img src="assets/img/Trophee{$place == 0 ? "Or" : ($place == 1 ? "Argent" : "Bronze")}.webp" alt="">
                                 <p class="score_principal score_top {$place == 0 ? "score_top_1" : ""}">0</p>
                                 <p>{$place + 1}<sup>{$place == 0 ? "ère" : "eme"}</sup> place</p>
                             </div>

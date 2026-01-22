@@ -2,7 +2,7 @@
 
 {block contenu}
 <div id="conteneur_principal"{!$tokenValide || $mdpReinitialise ? ' class="inactif" inert' : ""}>
-    <img src="view/assets/img/Grille.webp" alt="">
+    <img src="assets/img/Grille.webp" alt="">
     <section class="formulaire">
         <h1>Réinitialisation de votre mot de passe</h1>
         <p>Merci de saisir un nouveau mot de passe pour votre compte</p>

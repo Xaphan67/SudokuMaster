@@ -1,6 +1,6 @@
 <header>
     <div>
-        <a href="index.php"><img class="logo" src="view/assets/img/SudokuMaster.png" alt=""></a>
+        <a href="index.php"><img class="logo" src="assets/img/SudokuMaster.png" alt=""></a>
         <nav>
             <a href="solo">Jeu Solo</a>
             <a href="salon">Multijoueur</a>

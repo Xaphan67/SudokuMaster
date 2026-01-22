@@ -8,10 +8,10 @@
         <a href="salon" class="bouton boutonPrincipal boutonLarge">Jouer à plusieurs</a>
     </div>
     <section id="accueil_haut">
-        <img src="view/assets/img/Grille.webp" alt="">
+        <img src="assets/img/Grille.webp" alt="">
         <div>
             <h2>Jouez à Sudoku Master gratuitement !</h2>
-            <img src="view/assets/img/Grille.webp" alt="">
+            <img src="assets/img/Grille.webp" alt="">
             <p>
                 Sudoku Master est un jeu de logique dont l'objectif est de compléter une grille en respectant des règles simples, faisant appel à la réflexion, à la concentration et au raisonnement.<br>
                 Pratiqué régulièrement, il contribue à stimuler les fonctions cognitives telles que la mémoire, l'attention et la capacité de résolution de problèmes.

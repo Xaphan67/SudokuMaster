@@ -17,7 +17,7 @@
             <p>Le Sudoku est un jeu de logique et de réflexion : il ne repose pas sur le hasard et ne nécessite aucune supposition. Lorsqu'il n'est pas possible de déterminer immédiatement le chiffre à placer dans une case, il est conseillé d'analyser d'autres zones de la grille jusqu'à repérer une opportunité évidente. Chercher à « forcer » une solution est inutile : le Sudoku récompense la patience, le raisonnement, la reconnaissance de schémas et la méthode, plutôt que la chance ou les approximations.</p>
         </div>
         <div id="regles_repetez">
-            <img src="view/assets/img/Regles1.webp" alt="">
+            <img src="assets/img/Regles1.webp" alt="">
             <div>
                 <p>Comme on peut l'observer, le carré supérieur gauche (encerclé en bleu) comporte déjà 7 cases sur 9 remplies. Les deux chiffres manquants sont le 5 et le 6. En identifiant les chiffres absents dans chaque carré, ligne ou colonne, il est possible d'utiliser un raisonnement déductif basé sur l'élimination pour déterminer la valeur à placer dans chaque case vide.</p>
                 <p>Dans cet exemple précis, bien que l'on sache que le carré supérieur gauche doit contenir un 5 et un 6, l'analyse des lignes et des carrés adjacents ne permet pas encore de déterminer avec certitude lequel placer dans chaque case. Il est donc préférable de laisser cette zone temporairement de côté et de poursuivre la résolution dans d'autres parties de la grille où les choix sont plus évidents.</p>
@@ -25,7 +25,7 @@
         </div>
         <div id="regles_processus">
             <div>
-                <img src="view/assets/img/Regles2.webp" alt="">
+                <img src="assets/img/Regles2.webp" alt="">
                 <div>
                     <p>Que signifie exactement le « processus d'élimination » dans le Sudoku ? Prenons un exemple. Dans la grille illustrée ci-dessous, la colonne située à l'extrême gauche (encerclée en bleu) ne comporte plus que trois chiffres manquants : le 1, le 5 et le 6.</p>
                     <p>Pour déterminer quel chiffre peut être placé dans chaque case, il est possible d'appliquer le processus d'élimination en observant les chiffres déjà présents dans les carrés, les lignes et les colonnes adjacents. En effet, aucun chiffre de 1 à 9 ne peut apparaître plus d'une fois dans une même ligne, colonne ou sous-grille.</p>

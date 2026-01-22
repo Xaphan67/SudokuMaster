@@ -2,7 +2,7 @@
 
 {block contenu}
 <div id="conteneur_principal"{$emailEnvoye ? ' class="inactif" inert' : ""}>
-    <img src="view/assets/img/Grille.webp" alt="">
+    <img src="assets/img/Grille.webp" alt="">
     <section class="formulaire">
         <h1>Mot de passe oublié</h1>
         <p>Si vous avez oublié votre mot de passe, saisissez votre adresse mail pour recevoir un lien vous permettant de le réinitialiser</p>

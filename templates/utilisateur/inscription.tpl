@@ -2,7 +2,7 @@
 
 {block contenu}
 <div id="conteneur_principal">
-    <img src="view/assets/img/Grille.webp" alt="">
+    <img src="assets/img/Grille.webp" alt="">
     <section class="formulaire">
         <h1>Créer un compte</h1>
         <form method="post">

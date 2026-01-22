@@ -45,6 +45,6 @@
 		href="#########insérer_chemin_favicon##########"
 	/>
 
-	<link href="view/assets/css/style.css" rel="stylesheet" type="text/css" />
-	<script src="view/assets/js/commun.js"></script>
+	<link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+	<script src="assets/js/commun.js"></script>
 </head>
