@@ -1126,7 +1126,7 @@ td:not(.celluleFixe, .selected_highlight) li {
 }
 
 #classements section {
-  min-height: min(680px, calc(100vh - 240px));
+  min-height: min(680px, calc(100dvh - 230px));
 }
 
 #classements>section:not(:first-child), #classements_cooperatif, #classements_competitif {
@@ -1298,7 +1298,7 @@ td:not(.celluleFixe, .selected_highlight) li {
   flex-direction: column; 
   justify-content: space-between;
   margin-top: 10px;
-  min-height: 250px;
+  height: calc(min(680px, calc(100dvh - 230px)) - 234px);
 }
 
 .top_10>div {
@@ -1312,7 +1312,7 @@ td:not(.celluleFixe, .selected_highlight) li {
 
 #regles {
   margin-top: 10px;
-  min-height: min(680px, calc(100vh - 230px));
+  min-height: min(680px, calc(100dvh - 230px));
 }
 
 #regles h2 {
@@ -1897,7 +1897,8 @@ section p {
   }
 
   .top_10 {
-    height: 374px;
+    min-height: 260px;
+    height: 100%;
   }
 
   /* Regles */
@@ -2041,8 +2042,8 @@ section p {
 
   .grille {
     margin: unset;
-    min-width: min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px));
-    min-height: min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px));
+    min-width: min(100dvh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px));
+    min-height: min(100dvh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px));
   }
 
   #grille p {
@@ -2105,9 +2106,9 @@ section p {
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
-    width: calc(min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) - 206px);
+    width: calc(min(100dvh - 200px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) - 206px);
     max-width: 400px;
-    height: calc(min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) - 206px);
+    height: calc(min(100dvh - 200px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) - 206px);
     max-height: 400px;
     margin: auto;
   }
@@ -2162,7 +2163,7 @@ section p {
   }
 
   .normal {
-     min-width: min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px));
+     min-width: min(100dvh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px));
   }
 
   /* Regles */
@@ -2253,11 +2254,11 @@ section p {
   }
 
   .chargement {
-    min-width: calc(min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) * 0.6);
-    min-height: calc(min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) * 0.6);
+    min-width: calc(min(100dvh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) * 0.6);
+    min-height: calc(min(100dvh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) * 0.6);
     margin: unset;
-    top: calc(min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) * 0.2);
-    left: calc(min(100vh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) * 0.2);
+    top: calc(min(100dvh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) * 0.2);
+    left: calc(min(100dvh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) * 0.2);
   }
 }
 
