@@ -17,8 +17,15 @@
     $controllerCall = $_GET["controller"] ?? "main";
     $actionCall = $_GET["action"] ?? "home";
 
+    // Détecte si c'est une requête API (préfixe "api-" dans le controller)
+    // Si oui, retire le préfixe "api-" du nom du controller
+    $isApi = str_starts_with($controllerCall, "api-");
+    if ($isApi) {
+        $controllerCall = substr($controllerCall, 4);
+    }
+
     // Création du chemin vers le controller
-    $controllerName = 'Xaphan67\\SudokuMaster\\Controllers\\' . ucfirst($controllerCall).'Controller';
+    $controllerName = "Xaphan67\\SudokuMaster\\" . ($isApi ? "Api" : "Controllers") . "\\" . ucfirst($controllerCall) . ($isApi ? "Api" : "Controller");
 
     // Test sur l'existence du controller
     if (class_exists($controllerName)) {

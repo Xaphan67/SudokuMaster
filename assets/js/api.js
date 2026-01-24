@@ -55,7 +55,7 @@ async function callSudokuAPI(difficulte) {
 async function getGrid() {
     try
     {
-        const RES_GRID = await fetch("api/sudoku.php", {
+        const RES_GRID = await fetch("index.php?controller=api-partie&action=getGrid", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', // Indique qu'on envoie du JSON
