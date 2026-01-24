@@ -91,7 +91,7 @@ function joinRoom() {
 
         // Récupère l'information en PHP si le joueur est hote de la partie
         // ou la salle qu'il souhaite rejoindre
-        const HOTE = await fetch("index.php?controller=partie&action=getRoomInfo", {
+        const HOTE = await fetch("index.php?controller=api-partie&action=getRoomInfo", {
                 method: "POST",
                 headers: {
                         'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
@@ -148,7 +148,7 @@ function joinRoom() {
                 CHARGEMENT.style.display = "block";
 
                 // Récupère les statistiques du joueur qui à rejoint
-                const RES_STATS_HOTE = await fetch("index.php?controller=classer&action=getPlayerStats", {
+                const RES_STATS_HOTE = await fetch("index.php?controller=api-classer&action=getPlayerStats", {
                     method: "POST",
                     headers: {
                             'Content-Type': 'application/json', // Indique qu'on envoie du JSON
@@ -173,7 +173,7 @@ function joinRoom() {
                 CHARGEMENT.style.display = "block";
 
                 // Récupère les statistiques du joueur qui à rejoint
-                const RES_STATS_REJOINT = await fetch("index.php?controller=classer&action=getPlayerStats", {
+                const RES_STATS_REJOINT = await fetch("index.php?controller=api-classer&action=getPlayerStats", {
                     method: "POST",
                     headers: {
                             'Content-Type': 'application/json', // Indique qu'on envoie du JSON
@@ -607,7 +607,7 @@ async function startGame(element) {
 
             // Ajoute la partie dans la base de données
             // Et retourne son ID (ou 0 si aucun utilisateur connecté) et la série de victoire du joueur avant cette partie
-            const RES_PARTIE = await fetch("index.php?controller=partie&action=new", {
+            const RES_PARTIE = await fetch("index.php?controller=api-partie&action=new", {
                 method: "POST",
                 headers: {
                         'Content-Type': 'application/json', // Indique qu'on envoie du JSON
@@ -668,7 +668,7 @@ async function startGame(element) {
 
         // Ajoute le joueur à la partie dans la base de données
         // Et retourne la série de victoire du joueur avant cette partie
-        const RES_PARTIE = await fetch("index.php?controller=partie&action=join", {
+        const RES_PARTIE = await fetch("index.php?controller=api-partie&action=join", {
             method: "POST",
             headers: {
                     'Content-Type': 'application/json', // Indique qu'on envoie du JSON
@@ -819,7 +819,7 @@ async function endGame(popup = true) {
 
 // Met à jour les statistiques du joueur
 async function updateStats(victoire) {
-    const RES_STATS = await fetch("index.php?controller=partie&action=end", {
+    const RES_STATS = await fetch("index.php?controller=api-partie&action=end", {
         method: "POST",
         headers: {
                 'Content-Type': 'application/json', // Indique qu'on envoie du JSON

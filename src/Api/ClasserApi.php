@@ -1,6 +1,6 @@
 <?php
 
-namespace Xaphan67\SudokuMaster\Controllers;
+namespace Xaphan67\SudokuMaster\Api;
 
 use Xaphan67\SudokuMaster\Entities\Classer;
 use Xaphan67\SudokuMaster\Entities\ModeDeJeu;
@@ -11,17 +11,10 @@ use Xaphan67\SudokuMaster\Models\ModeDeJeuModel;
 use Xaphan67\SudokuMaster\Models\DifficulteModel;
 use Xaphan67\SudokuMaster\Models\UtilisateurModel;
 
-class ClasserController extends Controller {
+class ClasserApi {
 
     // Récupérer les statistiques d'un joueur
     public function getPlayerStats() {
-
-        // Si aucun utilisateur n'est connecté
-        if (!isset($_SESSION["utilisateur"])) {
-
-            // Appelle la fonction _forbidden() du controller mère
-             $this->_forbidden();
-        }
 
         // Récupération des données envoyées par JS
         $json_data = file_get_contents('php://input'); // Lit le corps brut de la requête
