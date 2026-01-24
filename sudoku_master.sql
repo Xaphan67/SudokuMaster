@@ -42,7 +42,10 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `mdp_utilisateur` varchar(255) NOT NULL,
   `inactif` tinyint NOT NULL DEFAULT '0',
   `id_role` int NOT NULL DEFAULT '2',
+  `reset_token_hash` varchar(64) DEFAULT NULL,
+  `reset_token_date_expiration` datetime DEFAULT NULL,
   PRIMARY KEY (`Id_utilisateur`),
+  UNIQUE KEY `reset_token` (`reset_token_hash`) USING BTREE,
   KEY `id_role` (`id_role`),
   CONSTRAINT `utilisateur_ibfk_1` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
