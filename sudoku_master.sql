@@ -103,6 +103,7 @@ INSERT INTO `difficulte` (`id_difficulte`, `libelle_difficulte`) VALUES
 DROP TABLE IF EXISTS `partie`;
 CREATE TABLE IF NOT EXISTS `partie` (
   `id_partie` int NOT NULL AUTO_INCREMENT,
+  `date_partie` date DEFAULT NULL,
   `duree_partie` time DEFAULT NULL,
   `id_mode_de_jeu` int NOT NULL,
   `id_difficulte` int NOT NULL,
@@ -121,6 +122,7 @@ CREATE TABLE IF NOT EXISTS `participer` (
   `Id_utilisateur` int NOT NULL,
   `id_partie` int NOT NULL,
   `gagnant` tinyint NOT NULL DEFAULT '0',
+  `score` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id_utilisateur`,`id_partie`),
   KEY `id_partie` (`id_partie`),
   CONSTRAINT `participer_ibfk_1` FOREIGN KEY (`Id_utilisateur`) REFERENCES `utilisateur` (`Id_utilisateur`),

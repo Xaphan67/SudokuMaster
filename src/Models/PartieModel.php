@@ -16,8 +16,8 @@ class PartieModel extends Model {
 
         // Requête préparée pour ajouter la partie
         $query =
-            "INSERT INTO partie (id_mode_de_jeu, id_difficulte, duree_partie)
-            VALUES (:id_mode_de_jeu, :id_difficulte, '00:15:00')";
+            "INSERT INTO partie (id_mode_de_jeu, id_difficulte, duree_partie, date_partie)
+            VALUES (:id_mode_de_jeu, :id_difficulte, '00:15:00', CURRENT_DATE)";
 
         $prepare = $this->_db->prepare($query);
 

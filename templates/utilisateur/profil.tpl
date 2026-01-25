@@ -2,7 +2,7 @@
 
 {block contenu}
 <div id="conteneur_principal" class="vertical">
-    <h1>Informations de compte</h1>
+    <h1>Profil</h1>
     <section id="infos_compte">
         <div>
             <div>
@@ -52,9 +52,9 @@
         </div>
         {for $mode = 1 to 3}
             <div id="statistiques_{$mode == 1 ? "solo" : ($mode == 2 ? "cooperatif" : "competitif")}" class="statistiques">
-                <p>Score global</p>
+                <h3>Score global</h3>
                 <p class="score_principal score_large">{$statistiques[$mode]|isset ? $statistiques[$mode]->getScore_global() : "1000"}</p>
-                <div>
+                <div class="statistiques_mode">
                     <div>
                         <p>Grilles jouées</p>
                         <p>{$statistiques[$mode]|isset ? $statistiques[$mode]->getGrilles_jouees() : "0"}</p>
@@ -75,6 +75,60 @@
                         <p>Série de victoires</p>
                         <p>{$statistiques[$mode]|isset ? $statistiques[$mode]->getSerie_victoires() : "0"}</p>
                     </div>
+                </div>
+                <h3>Dernières parties jouées</h3>
+                <div class="dernieres_parties_mobile">
+                    {if $participationsModes[$mode] != 0}
+                        {foreach from=$participations item=participation}
+                            {if $participation.id_mode_de_jeu == $mode}
+                                <p>Partie jouée le {$participation.date_partie}</p>
+                                <div>
+                                    <div>
+                                        <p>Temps</p>
+                                        <p>{$participation.duree_partie}</p>
+                                    </div>
+                                    <div>
+                                        <p>Difficulté</p>
+                                        <p>{$participation.id_difficulte == 1 ? "Facile" : ($participation.id_difficulte == 2 ? "Moyen" : "Difficile")}</p>
+                                    </div>
+                                    <div>
+                                        <p>Score</p>
+                                        <p class="{$participation.score > 0 ? "victoire" : "defaite"}">{$participation.score > 0 ? "+" : ""}{$participation.score}</p>
+                                    </div>
+                                </div>
+                            {/if}
+                        {/foreach}
+                    {else}
+                        <div class="aucune_partie">
+                            <p>Aucune partie jouée</p>
+                        </div>
+                    {/if}
+                </div>
+                <div class="dernieres_parties">
+                    {if $participationsModes[$mode] != 0}
+                        <div>
+                            <p>Date</p>
+                            <p>Temps</p>
+                            <p>Difficulté</p>
+                            <p>Résultat</p>
+                            <p>Score</p>
+                        </div>
+                        {foreach from=$participations item=participation}
+                            {if $participation.id_mode_de_jeu == $mode}
+                                <div>
+                                    <p>{$participation.date_partie}</p>
+                                    <p>{$participation.duree_partie}</p>
+                                    <p>{$participation.id_difficulte == 1 ? "Facile" : ($participation.id_difficulte == 2 ? "Moyen" : "Difficile")}</p>
+                                    <p>{$participation.gagnant ? "Victoire" : "Défaite"}</p>
+                                    <p class="{$participation.score > 0 ? "victoire" : "defaite"}">{$participation.score > 0 ? "+" : ""}{$participation.score}</p>
+                                </div>
+                            {/if}
+                        {/foreach}
+                    {else}
+                        <div class="aucune_partie">
+                            <p>Aucune partie jouée</p>
+                        </div>
+                    {/if}
                 </div>
             </div>
         {/for}

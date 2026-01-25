@@ -5,6 +5,7 @@ namespace Xaphan67\SudokuMaster\Controllers;
 use Xaphan67\SudokuMaster\Entities\Classer;
 use Xaphan67\SudokuMaster\Entities\Utilisateur;
 use Xaphan67\SudokuMaster\Models\ClasserModel;
+use Xaphan67\SudokuMaster\Models\ParticiperModel;
 use Xaphan67\SudokuMaster\Models\UtilisateurModel;
 
 class UtilisateurController extends Controller {
@@ -369,10 +370,32 @@ class UtilisateurController extends Controller {
             }
         };
 
+        // Crée une instance du modèle Participer et appelle la méthode
+        // pour récupérer les participations en base de donnée
+        $participerModel = new ParticiperModel;
+
+        // Récupère les participations
+        $donneesParticiper = $participerModel->findAllByUser($_SESSION["utilisateur"]["id_utilisateur"]);
+
+        // Retire l'affichage des heures (qui sera toujours 00:) et tronque les millisecondes
+        foreach ($donneesParticiper as $key => $participation) {
+            $participation["duree_partie"] = substr($participation["duree_partie"], 3, 5);
+            $donneesParticiper[$key] = $participation;
+        }
+
+        // Instancie un tableau qui contiendra le nombre de participations par mode
+        $participationsModes = [1 => 0, 2 => 0, 3 => 0];
+
+        foreach ($donneesParticiper as $participation) {
+            $participationsModes[$participation["id_mode_de_jeu"]] ++;
+        }
+
         // Indique au gabarit les variables nécessaires
         $scripts = ["profil.js"];
         $this->_donnees["scripts"] = $scripts;
         $this->_donnees["statistiques"] = $statistiques;
+        $this->_donnees["participations"] = $donneesParticiper;
+        $this->_donnees["participationsModes"] = $participationsModes;
         $this->_donnees["erreurs"] = $erreurs;
 
         // Affiche le gabarit profil

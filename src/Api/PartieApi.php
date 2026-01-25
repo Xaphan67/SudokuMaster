@@ -174,6 +174,7 @@ class PartieApi {
 
             // Insère les statistiques en base de donnée
             $classerModel->add($classer);
+            $participerModel->addScore($participer, $scoreGlobalBase - 1000);
         }
         else {
 
@@ -201,6 +202,7 @@ class PartieApi {
 
             // Met à jour les données en base de donnée
             $classerModel->edit($classer);
+            $participerModel->addScore($participer, $scoreGlobalDefaite - $scoreGlobal);
         }
 
         // Retourne l'ID de la partie insérée pour pouvoir la récupérer en JS plus tard
@@ -265,6 +267,7 @@ class PartieApi {
 
             // Insère les statistiques en base de donnée
             $classerModel->add($classer);
+            $participerModel->addScore($participer, $scoreGlobalBase - 1000);
         }
         else {
 
@@ -292,6 +295,7 @@ class PartieApi {
 
             // Met à jour les données en base de donnée
             $classerModel->edit($classer);
+            $participerModel->addScore($participer, $scoreGlobalDefaite - $scoreGlobal);
         }
 
         // Retourne la série de victoires et le score global du joueur du joueur avant cette partie
@@ -311,7 +315,6 @@ class PartieApi {
         // Crée un nouvel objet Utilisateur et l'hydrate avec les données présentes en base de donnée
         $utilisateur = new Utilisateur;
         $utilisateur->hydrate($utilisateurModel->findById($_SESSION["utilisateur"]["id_utilisateur"]));
-
 
         // Crée une instance du modèle Participer et appelle la méthode
         // pour récupérer la participation en base de données via l'ID de l'utilisateur et de la partie
@@ -397,6 +400,9 @@ class PartieApi {
             $coefficientDifficulte = $dataJS["difficulte"] == "Facile" ? 10 : ($dataJS["difficulte"] == "Moyen" ? 20 : 30);
             $scoreGlobal = (int)($dataJS["scoreGlobal"] + ($coefficientDifficulte * max(0.2, 1 - ($minutes * 60 + $secondes) / 900)) * 1 / (sqrt(1 + $classer->getGrilles_jouees() / 20)));
             $classer->setScore_global($scoreGlobal);
+
+            // Met à jour la quantité de score obtenu
+            $participerModel->addScore($participer, $scoreGlobal - $dataJS["scoreGlobal"]);
         }
         else {
             // Récupère le score global déjà égal à celui d'une defaite
