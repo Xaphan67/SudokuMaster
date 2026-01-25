@@ -61,13 +61,20 @@ class ParticiperModel extends Model {
         return $prepare->execute();
     }
 
-    function findAllByUser(int $utilisateurId, int $limit = 5) {
+    function findAllByUser(int $utilisateurId, int $limit = 5, bool $desc = false) {
 
         // Requête préparée pour récupérer les participations de l'utilisateur
         $query = "SELECT gagnant, score, date_partie, duree_partie, id_mode_de_jeu, id_difficulte
             FROM participer
             INNER JOIN partie ON partie.id_partie = participer.id_partie
-            WHERE id_utilisateur = :id_utilisateur LIMIT :limit";
+            WHERE id_utilisateur = :id_utilisateur
+            ORDER BY partie.id_partie";
+
+        if ($desc) {
+            $query .= " DESC";
+        }
+
+        $query .= " LIMIT :limit";
 
         $prepare = $this->_db->prepare($query);
 
