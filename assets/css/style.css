@@ -661,6 +661,7 @@ nav {
   flex-direction: column;
   align-items: center;
   margin-top: 15px;
+  min-height: calc(100vh - 367px);
 }
 
 #statistiques table {
@@ -766,11 +767,11 @@ nav {
 
 .dernieres_parties, .dernieres_parties_mobile p {
   text-align: center;
-  margin: 10px 0px 5px 0px;
 }
 
 .dernieres_parties_mobile p {
   font-weight: bold;
+  margin: 10px 0px 5px 0px;
 }
 
 .dernieres_parties_mobile div {
@@ -1964,7 +1965,6 @@ section p {
     flex-direction: column;
     text-align: center;
     width: 100%;
-    min-height: 215px;
     margin-top: 0px;
   }
 

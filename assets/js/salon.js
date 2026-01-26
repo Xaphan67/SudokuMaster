@@ -113,7 +113,7 @@ function connect() {
                     else {
 
                         // Affiche un mesage indiquant qu'aucune salle n'est disponible
-                        MESSAGE_SALLES.textContent = "Aucune salle disponible actuellement";
+                        MESSAGE_SALLES.textContent = "Aucune salle publique disponible actuellement";
                         MESSAGE_SALLES.style.display = "flex";
                     }
                     break;

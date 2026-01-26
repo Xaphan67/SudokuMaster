@@ -48,7 +48,7 @@
         <h2>Salles disponibles</h2>
         <div class="chargement-petit"></div>
         <div class="message_salles">
-            <p>Impossible d'obtenir la liste des parties publiques</p>
+            <p>Impossible d'obtenir la liste des salles publiques</p>
             <div class="bouton boutonPrincipal boutonLarge">Réessayer</div>
         </div>
     </section>
