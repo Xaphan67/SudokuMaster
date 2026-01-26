@@ -355,24 +355,8 @@ TABLE.addEventListener("click", (e) => {
         // Met la case en surbrillance
         case_focus.classList.add("selected_highlight");
 
-        // Colorie toutes les cellules autres que celle selectionnée
-        cellules.forEach(cellule => {
-            if (cellule != e.target && e.target != 0) {
-                cellule.classList.remove("selected_highlight");
-
-                // Si la cellule n'a pas le même chiffre que celle selectionné et qu'elle a la classe selected
-                if (cellule.getElementsByTagName("p")[0].textContent != e.target.getElementsByTagName("p")[0].textContent && cellule.classList.contains("selected")) {
-                    //on enlève la classe selected
-                    cellule.classList.remove("selected");
-                }
-
-                // Si la cellule a le même chiffre que celle selectionnée et que ce n'est pas vide
-                if (cellule.getElementsByTagName("p")[0].textContent == e.target.getElementsByTagName("p")[0].textContent && e.target.getElementsByTagName("p")[0].textContent != 0) {
-                    cellule.classList.add("selected");
-                    cellule.classList.remove("selected_highlight");
-                }
-            }
-        });
+        // Colorie les autres cellules contenant le même chiffre que celle selectionnée
+        colorCells(e.target);
     }
 });
 
@@ -471,6 +455,9 @@ BOUTONS.forEach(element => {
                 // Change la valeur de la case dans la variable grille
                 grille[selectionY][selectionX] = this.textContent;
 
+                // Colorie les autres cellules contenant le même chiffre que celle selectionnée
+                colorCells(caseActuelle);
+
                 // Si la case à une liste de notes, on la supprime
                 if (LISTE_NOTES != undefined) {
                     LISTE_NOTES.remove();
@@ -543,6 +530,28 @@ BOUTON_JEU.addEventListener("click", (e) => {
     }
 
 });
+
+// Colorie les cellules ayant le même chiffre que la cellule active
+function colorCells(active) {
+    let cellules = Array.from(TABLE.getElementsByTagName("td"));
+    cellules.forEach(cellule => {
+        if (cellule != active && active != 0) {
+            cellule.classList.remove("selected_highlight");
+
+            // Si la cellule n'a pas le même chiffre que celle selectionné et qu'elle a la classe selected
+            if (cellule.getElementsByTagName("p")[0].textContent != active.getElementsByTagName("p")[0].textContent && cellule.classList.contains("selected")) {
+                //on enlève la classe selected
+                cellule.classList.remove("selected");
+            }
+
+            // Si la cellule a le même chiffre que celle selectionnée et que ce n'est pas vide
+            if (cellule.getElementsByTagName("p")[0].textContent == active.getElementsByTagName("p")[0].textContent && active.getElementsByTagName("p")[0].textContent != 0) {
+                cellule.classList.add("selected");
+                cellule.classList.remove("selected_highlight");
+            }
+        }
+    });
+}
 
 // Début de partie
 async function startGame(element) {
