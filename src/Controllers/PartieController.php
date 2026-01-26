@@ -52,6 +52,7 @@ class PartieController extends Controller {
             $_SESSION["partie"]["hote"] = true;
             $_SESSION["partie"]["mode"] = $_POST["mode"];
             $_SESSION["partie"]["difficulte"] =  $_POST["difficulte"];
+            $_SESSION["partie"]["visibilite"] =  $_POST["visibilite"];
         }
 
         // Si le formulaire "Rejoindre une salle" est soumis

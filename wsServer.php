@@ -86,7 +86,7 @@ while (true) {
                     // Récupère les informations de chaque salle
                     // et les stocke dans le tableau $listeSalles
                     foreach ($salles as $numero => $infos) {
-                        if (!array_key_exists("clos", $infos)) {
+                        if (!array_key_exists("clos", $infos) && $infos["visibilite"] == "publique") {
                             $listeSalles["salles"][] = ["numero" => $numero, "mode" => $infos["mode"], "difficulte" => $infos["difficulte"], "hote" => $infos["hote"]];
                         }
                     }
@@ -104,7 +104,7 @@ while (true) {
                     // Ajoute le joueur à la salle
                     $clients[$message->utilisateur] = $clients["temp"];
                     unset($clients["temp"]);
-                    $salles[$numeroSalle] = ["socket_hote" => $client, "mode" => $message->mode, "difficulte" => $message->difficulte, "hote" => $message->utilisateur, "hote_pret" => "0"];
+                    $salles[$numeroSalle] = ["socket_hote" => $client, "mode" => $message->mode, "difficulte" => $message->difficulte, "visibilite" => $message->visibilite, "hote" => $message->utilisateur, "hote_pret" => "0"];
 
                     // Renvoie le numéro de la salle au client
                     socket_write($client, mask(json_encode(["commande" => "numero_salle", "numero" => $numeroSalle])));

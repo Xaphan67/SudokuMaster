@@ -58,10 +58,11 @@ class PartieApi {
             // Si l'utilisateur est hote...
             if ($_SESSION["partie"]["hote"]) {
 
-                // Ajoute le mode de jeu et la difficulté qu'il à choisie
+                // Ajoute le mode de jeu, la difficulté et la visibilité qu'il à choisie
                 $infos += [
                     "mode" => $_SESSION["partie"]["mode"],
-                    "difficulte" => $_SESSION["partie"]["difficulte"]
+                    "difficulte" => $_SESSION["partie"]["difficulte"],
+                    "visibilite" => $_SESSION["partie"]["visibilite"]
                 ];
             }
             else {
@@ -82,6 +83,7 @@ class PartieApi {
         unset($_SESSION["partie"]["mode"]);
         unset($_SESSION["partie"]["difficulte"]);
         unset($_SESSION["partie"]["salle"]);
+        unset($_SESSION["partie"]["visibilite"]);
     }
 
     // Crée une partie dans la base de données

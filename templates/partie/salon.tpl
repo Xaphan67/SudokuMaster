@@ -23,6 +23,13 @@
                         <option value="difficile">Difficile</option>
                     </select>
                 </div>
+                <div>
+                    <label for="visibilite">Visibilité</label>
+                    <select name="visibilite" id="visibilite" required>
+                        <option value="publique">Publique</option>
+                        <option value="prive">Privée</option>
+                    </select>
+                </div>
                 <input type="submit" name="creer_salle" class="bouton boutonPrincipal boutonDefaut" value="Créer" />
             </form>
         </section>

@@ -107,7 +107,7 @@ function joinRoom() {
             infosSalle.difficulte = infosSalle.difficulte.charAt(0).toUpperCase() + infosSalle.difficulte.slice(1);
 
             // Demande au serveur WebSocket de créer une salle
-            connexion.send(JSON.stringify({commande: "creer_salle", mode: infosSalle.mode, difficulte: infosSalle.difficulte, utilisateur: infosSalle.utilisateur}));
+            connexion.send(JSON.stringify({commande: "creer_salle", mode: infosSalle.mode, difficulte: infosSalle.difficulte, visibilite: infosSalle.visibilite, utilisateur: infosSalle.utilisateur}));
 
             // Affiche le popup d'attente d'un joueur
             POPUP_DEBUT_PARTIE.style.display = "flex";
