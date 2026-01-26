@@ -13,7 +13,24 @@ use Xaphan67\SudokuMaster\Models\UtilisateurModel;
 
 class ClasserApi {
 
-    // Récupérer les statistiques d'un joueur
+    // Récupérer les statistiques de tous les joueurs
+    public function findAll() {
+
+        // Crée une instance du modèle Classer et appelle la méthode
+        // pour récupérer les statistiques des joueurs en base de données
+        $classerModel = new ClasserModel;
+        $statistiques = $classerModel->findAll();
+
+        // Crée une instance du modèle Utilisateur et appèle la méthode
+        // pour récupérer le pseudo de tous les utilisateurs
+        $utilisateurModel = new UtilisateurModel;
+        $pseudos = $utilisateurModel->findAllUsernames();
+
+        // Retourne les statistiques des joueurs pour pouvoir les récupérer en JS plus tard
+        echo json_encode(["pseudos" => $pseudos, "statistiques" => $statistiques]);
+    }
+
+    // Récupérer les statistiques d'un joueur et celle du joueur en faisant la demande
     public function getPlayerStats() {
 
         // Récupération des données envoyées par JS

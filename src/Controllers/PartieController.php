@@ -18,7 +18,9 @@ class PartieController extends Controller {
     // Afficher l'écran de lobby pour partie multijoueur
     public function lobby() {
 
-        // Indique au gabarit vue les variables nécessaires
+        // Indique au gabarit les variables nécessaires
+        $scripts = ["salon.js"];
+        $this->_donnees["scripts"] = $scripts;
         $this->_donnees ["utilisateurConnecte"] = isset($_SESSION["utilisateur"]);
 
         // Affiche le gabarit salon
@@ -80,6 +82,33 @@ class PartieController extends Controller {
                 // Stocke les données saisies par l'utilisateur
                 // pour les afficher au chargement de la page salon
                 $_SESSION["saisie"]["salle"] = $_POST["salle"];
+
+                // Redirige l'utilisateur vers la page salon
+                header("Location:salon");
+            }
+        }
+
+        // Si le joueur rejoint une salle via un bouton rejoindre
+        if (isset($_GET["salle"])) {
+
+            // Filtrage des données
+            // Protège contre la faille XSS
+            $salle = trim($_GET["salle"]);
+
+            // Test des données
+            if (preg_match("/([^0-9])/",($salle))) {
+                $erreurs["salle"] = "L'ID de la salle ne peut contenir que des chiffres";
+            }
+
+            // Si il n'y à aucune erreur
+            if (count($erreurs) == 0) {
+                $_SESSION["partie"]["hote"] = false;
+                $_SESSION["partie"]["salle"] = $salle;
+            }
+            else {
+
+                // Stocke les erreurs en session
+                $_SESSION["erreurs"] = $erreurs;
 
                 // Redirige l'utilisateur vers la page salon
                 header("Location:salon");

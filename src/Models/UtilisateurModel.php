@@ -6,11 +6,6 @@ use PDO;
 use Xaphan67\SudokuMaster\Entities\Utilisateur;
 
 class UtilisateurModel extends Model {
-    function getAll() {
-        $query = "SELECT * FROM utilisateur";
-        $utilisateurs = $this->_db->query($query)->fetchAll();
-        return $utilisateurs;
-    }
 
     function add(Utilisateur $utilisateur) : bool {
 
@@ -73,6 +68,19 @@ class UtilisateurModel extends Model {
 
         // Execute la requête. Retourne true (si réussite) ou false (si echec)
         return $prepare->execute();
+    }
+
+    function findAllUsernames() {
+
+        // Requête préparée pour récupérer l'id et le pseudo de tout les utilisateurs
+        $query =
+            "SELECT id_utilisateur, pseudo_utilisateur FROM utilisateur";
+
+        $prepare = $this->_db->prepare($query);
+
+        // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
+        $prepare->execute();
+        return $prepare->fetchAll();
     }
 
     function findById(int $id) {

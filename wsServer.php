@@ -77,6 +77,24 @@ while (true) {
 
             switch ($message->commande) {
 
+                // Le client demande la liste des salles
+                case "liste_salles":
+
+                    // Crée un tableau pour y stocker la liste des salles à envoyer
+                    $listeSalles = ["commande" => "liste_salles", "salles" => []];
+
+                    // Récupère les informations de chaque salle
+                    // et les stocke dans le tableau $listeSalles
+                    foreach ($salles as $numero => $infos) {
+                        if (!array_key_exists("clos", $infos)) {
+                            $listeSalles["salles"][] = ["numero" => $numero, "mode" => $infos["mode"], "difficulte" => $infos["difficulte"], "hote" => $infos["hote"]];
+                        }
+                    }
+
+                    // Envoie le tableau au client
+                    socket_write($client, mask(json_encode($listeSalles)));
+                    break;
+
                 // Le client veux créer une salle
                 case "creer_salle":
 
@@ -110,7 +128,7 @@ while (true) {
                     if (is_array($salleExiste)) {
 
                         // Ajoute le joueur à la salle
-                        $salles[$message->salle] += ["socket_client" => $client, "client" => $message->utilisateur, "client_pret" => "0"];
+                        $salles[$message->salle] += ["socket_client" => $client, "client" => $message->utilisateur, "client_pret" => "0", "clos" => true];
                         $clients[$message->utilisateur] = $clients["temp"];
                         unset($clients["temp"]);
 

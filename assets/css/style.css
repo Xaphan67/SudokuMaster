@@ -1075,6 +1075,55 @@ td:not(.celluleFixe, .selected_highlight) li {
   gap: 15px;
 }
 
+#salles {
+  margin-top: 15px;
+  align-items: center;
+}
+
+#salles h2 {
+  margin-bottom: 10px;
+}
+
+#salles .score_petit {
+  font-size: 16px;
+  text-align: center;
+  width: 60px;
+  height: 22px;
+  line-height: 22px;
+}
+
+.salle {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+  max-width: 350px;
+}
+
+.salle p {
+  height: 24px;
+  line-height: 24px;
+}
+
+.salle>div {
+  width: 100%;
+  margin: 2px 0px;
+}
+
+.salle>div>div {
+  display: flex;
+  gap: 10px;
+}
+
+.salle>div>div p:first-child {
+  width: 100px;
+}
+
+.salle a {
+  min-width: 110px;
+  margin: auto 0px;
+}
+
 /* Multijoueur */
 
 #infos_multijoueur {
@@ -1627,6 +1676,33 @@ section p {
   .score_large {
     line-height: 30px;
     min-width: 110px;
+  }
+
+  /* Salon */
+
+  #salles {
+    max-width: 680px;
+    align-self: center;
+  }
+
+  #salles h2 {
+    margin-bottom: 5px;
+  }
+
+  .salle {
+    max-width: 400px;
+  }
+
+  .salle>div {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 10px;
+    align-items: center;
+    height: 50px;
+  }
+
+  .salle a {
+    min-width: unset;
   }
 
   /* Multijoueur */

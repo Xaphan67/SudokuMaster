@@ -6,11 +6,6 @@ use PDO;
 use Xaphan67\SudokuMaster\Entities\Classer;
 
 class ClasserModel extends Model {
-    function getAll() {
-        $query = "SELECT * FROM classer";
-        $classers = $this->_db->query($query)->fetchAll();
-        return $classers;
-    }
 
     function add(Classer $classer) {
 
@@ -51,6 +46,23 @@ class ClasserModel extends Model {
 
         // Execute la requête. Retourne true (si réussite) ou false (si echec)
         return $prepare->execute();
+    }
+
+    function findAll() {
+
+        // Requête préparée pour récupérer les statistiques de tout les utilisateurs
+         $query =
+            "SELECT classer.id_utilisateur, pseudo_utilisateur, libelle_mode_de_jeu, score_global, grilles_jouees, grilles_resolues, temps_moyen, meilleur_temps, serie_victoires
+            FROM classer
+            INNER JOIN utilisateur ON utilisateur.id_utilisateur = classer.id_utilisateur
+            INNER JOIN mode_de_jeu ON mode_de_jeu.id_mode_de_jeu = classer.id_mode_de_jeu
+            WHERE inactif = 0";
+
+        $prepare = $this->_db->prepare($query);
+
+        // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
+        $prepare->execute();
+        return $prepare->fetchAll();
     }
 
     function findAllByMode(int $modeId, int $limit) {

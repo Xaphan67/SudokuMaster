@@ -3,7 +3,7 @@ RewriteEngine on
 
 RewriteRule ^salon$ index.php?controller=partie&action=lobby [L]
 RewriteRule ^solo$ index.php?controller=partie&action=soloBoard [L]
-RewriteRule ^multijoueur$ index.php?controller=partie&action=multiBoard [L]
+RewriteRule ^multijoueur(.*)$ index.php?controller=partie&action=multiBoard [L,QSA]
 
 RewriteRule ^classements$ index.php?action=leaderboard [L]
 RewriteRule ^regles$ index.php?action=rules [L]
