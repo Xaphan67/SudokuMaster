@@ -77,7 +77,8 @@ function connect() {
                             // Récupère le score du joueur hôte
                             let score = 1000;
                             for (const statistique of statistiques.statistiques) {
-                                if (statistique["id_utilisateur"] == element.hote && statistique["libelle_mode_de_jeu"] == element.mode) {
+                                let mode = statistique["libelle_mode_de_jeu"].replace("é", "e");
+                                if (statistique["id_utilisateur"] == element.hote && mode == element.mode) {
                                     score = statistique["score_global"];
                                     break;
                                 }
