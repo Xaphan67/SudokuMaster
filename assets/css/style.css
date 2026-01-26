@@ -395,6 +395,31 @@ hr {
   to {rotate: 1turn}
 }
 
+/* Chargement salles */
+
+.chargement-petit {
+  min-width: 62px;
+  min-height: 62px;
+  aspect-ratio: 1;
+  padding: 10px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  position: absolute;
+  mask: conic-gradient(#000 0 0) content-box exclude,conic-gradient(#000 0 0);
+  filter: blur(12px);
+  margin: 10px auto auto auto;
+  top: 47px;
+  left: calc(50% - 31px);
+}
+
+.chargement-petit:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: conic-gradient(#0000 35%, var(--texteCaseModifiee),#0000 65%);
+  animation: frame 0.35s linear infinite;
+}
+
 /* ------------------------------------------------  ACCESSIBILITE  ------------------------------------------------*/
 
 .dyslexique *, .dyslexique h1, .dyslexique h2, .dyslexique #regles h2, .dyslexique h3 {
@@ -1076,8 +1101,11 @@ td:not(.celluleFixe, .selected_highlight) li {
 }
 
 #salles {
+  position: relative;
   margin-top: 15px;
   align-items: center;
+  justify-content: space-between;
+  min-height: 139px;
 }
 
 #salles h2 {
@@ -1090,6 +1118,15 @@ td:not(.celluleFixe, .selected_highlight) li {
   width: 60px;
   height: 22px;
   line-height: 22px;
+}
+
+#salles .message_salles {
+  display: none;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  gap: 2px;
+  height: 62px;
 }
 
 .salle {

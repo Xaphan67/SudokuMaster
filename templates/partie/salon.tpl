@@ -44,14 +44,14 @@
             </form>
         </section>
     </div>
-    <div id="erreur_serveur" class="popup popup_large"><!-- popup d'erreur de connexion au serveur WebSocket -->
-        <h3>Une erreur est survenue</h3>
-        <p>
-            Impossible d'obtenir la liste des parties publiques<br>
-            Veuillez réessayer plus tard
-        </p>
-        <div class="bouton boutonPrincipal boutonLarge">Ok</div>
-    </div>
+    <section id="salles">
+        <h2>Salles disponibles</h2>
+        <div class="chargement-petit"></div>
+        <div class="message_salles">
+            <p>Impossible d'obtenir la liste des parties publiques</p>
+            <div class="bouton boutonPrincipal boutonLarge">Réessayer</div>
+        </div>
+    </section>
 </div>
 {nocache}{if !$utilisateurConnecte}
     <div id="compte_requis" class="popup"><!-- popup si non connecté -->

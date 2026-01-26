@@ -1,28 +1,37 @@
 // Constantes
-const SECTION_SALON = document.getElementById("salon");
-const POPUP_ERREUR_SERVEUR = document.getElementById("erreur_serveur");
-const POPUP_ERREUR_SERVEUR_PARTIES_BOUTON = POPUP_ERREUR_SERVEUR.getElementsByTagName("div")[0];
+const SALLES = document.getElementById("salles");
+const MESSAGE_SALLES = document.getElementsByClassName("message_salles")[0];
+const CHARGEMENT = document.getElementsByClassName("chargement-petit")[0];
+const REESSAYER = MESSAGE_SALLES.getElementsByTagName("div")[0];
 
 // Variables
 let connexion;
 let statistiques;
 
-// Se connecte au serveur WebSocket
-connexion = new WebSocket('ws://localhost:8080');
+connect();
 
-// En cas de problème de connexion au serveur WebSocket
-connexion.addEventListener("error", (event) => {
+function connect() {
 
-    // Affiche un popup d'erreur
-    POPUP_ERREUR_SERVEUR.style.display = "flex";
-});
+    // Se connecte au serveur WebSocket
+    connexion = new WebSocket('ws://localhost:8080');
+    
+    // En cas de problème de connexion au serveur WebSocket
+    connexion.addEventListener("error", (event) => {
+    
+        // Affiche un mesage d'erreur
+        MESSAGE_SALLES.style.display = "flex";
 
-// Ferme le popup d'erreur lors du clic sur le bouton ok
-POPUP_ERREUR_SERVEUR_PARTIES_BOUTON.addEventListener("click", (e) => {
+        // Masque l'animation de chargement
+        CHARGEMENT.style.display = "none";
 
-    // Ferme le popup d'erreur
-    POPUP_ERREUR_SERVEUR.style.display = "none";
-});
+        // Tente à nouveau de se connecter en cas de clic sur le bouton "réessayer"
+        REESSAYER.addEventListener("click", (e) => {
+            MESSAGE_SALLES.style.display = "none";
+            CHARGEMENT.style.display = "block";
+            connect();
+        });
+    });
+}
 
 // Envoie un message au serveur pour demander la liste des salles
 connexion.onopen = async function (e) {
@@ -38,27 +47,20 @@ connexion.onmessage = async function (e) {
          // Le serveur renvoie la liste des salles
         case "liste_salles":
 
-            // Si il y à des salles à afficher...
+            // Récupère les stats de tous les joueurs
+            const HOTE = await fetch("index.php?controller=api-classer&action=findAll", {
+                method: "POST",
+                headers: {
+                        'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
+                    }
+                });
+            statistiques = await HOTE.json();
+
+            // Masque l'animation de chargement
+            CHARGEMENT.style.display = "none";
+
+            // S'il y à des salles à afficher...
             if (message.salles.length > 0) {
-
-                // Crée une nouvelle section et y ajoute un titre
-                const SECTION_SALLES = document.createElement("section");
-                SECTION_SALLES.setAttribute("id", "salles");
-
-                const TITRE_SALLES = document.createElement("h2");
-                TITRE_SALLES.textContent = "Salles disponibles";
-
-                SECTION_SALON.insertAdjacentElement("afterend", SECTION_SALLES);
-                SECTION_SALLES.appendChild(TITRE_SALLES);
-
-                // Récupère les stats de tous les joueurs
-                const HOTE = await fetch("index.php?controller=api-classer&action=findAll", {
-                    method: "POST",
-                    headers: {
-                            'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
-                        }
-                    });
-                statistiques = await HOTE.json();
 
                 // Affiche les salles disponibles
                 message.salles.forEach(element => {
@@ -82,7 +84,7 @@ connexion.onmessage = async function (e) {
                     }
 
                     // Crée les élements constituants l'affichage de la salle
-                    const SALLE = SECTION_SALLES.appendChild(document.createElement("div"));
+                    const SALLE = SALLES.appendChild(document.createElement("div"));
                     const SALLE_INFOS = SALLE.appendChild(document.createElement("div"));
                     const SCORE = document.createElement("p");
                     const HOTE = document.createElement("p");
@@ -107,6 +109,13 @@ connexion.onmessage = async function (e) {
                     SALLE.appendChild(LIEN);
                 });
             }
+            else {
+
+                // Affiche un mesage indiquant qu'aucune salle n'est disponible
+                MESSAGE_SALLES.textContent = "Aucune salle disponible actuellement";
+                MESSAGE_SALLES.style.display = "flex";
+            }
+
             break;
     }
 }
