@@ -391,7 +391,7 @@ class UtilisateurController extends Controller {
         $participerModel = new ParticiperModel;
 
         // Récupère les participations
-        $donneesParticiper = $participerModel->findAllByUser($_SESSION["utilisateur"]["id_utilisateur"], desc:true);
+        $donneesParticiper = $participerModel->findAllByUser($_SESSION["utilisateur"]["id_utilisateur"], true);
 
         // Retire l'affichage des heures (qui sera toujours 00:) et tronque les millisecondes
         foreach ($donneesParticiper as $key => $participation) {

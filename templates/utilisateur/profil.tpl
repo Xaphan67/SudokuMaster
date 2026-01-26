@@ -79,23 +79,27 @@
                 <h3>Dernières parties jouées</h3>
                 <div class="dernieres_parties_mobile">
                     {if $participationsModes[$mode] != 0}
+                        {$num = 0}
                         {foreach from=$participations item=participation}
                             {if $participation.id_mode_de_jeu == $mode}
-                                <p>Partie jouée le {$participation.date_partie}</p>
-                                <div>
+                                {if $num < 5}
+                                    <p>Partie jouée le {$participation.date_partie}</p>
                                     <div>
-                                        <p>Temps</p>
-                                        <p>{$participation.duree_partie}</p>
+                                        <div>
+                                            <p>Temps</p>
+                                            <p>{$participation.duree_partie}</p>
+                                        </div>
+                                        <div>
+                                            <p>Difficulté</p>
+                                            <p>{$participation.id_difficulte == 1 ? "Facile" : ($participation.id_difficulte == 2 ? "Moyen" : "Difficile")}</p>
+                                        </div>
+                                        <div>
+                                            <p>Score</p>
+                                            <p class="{$participation.score > 0 ? "victoire" : "defaite"}">{$participation.score > 0 ? "+" : ""}{$participation.score}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p>Difficulté</p>
-                                        <p>{$participation.id_difficulte == 1 ? "Facile" : ($participation.id_difficulte == 2 ? "Moyen" : "Difficile")}</p>
-                                    </div>
-                                    <div>
-                                        <p>Score</p>
-                                        <p class="{$participation.score > 0 ? "victoire" : "defaite"}">{$participation.score > 0 ? "+" : ""}{$participation.score}</p>
-                                    </div>
-                                </div>
+                                {/if}
+                                {$num = $num + 1}
                             {/if}
                         {/foreach}
                     {else}
@@ -113,15 +117,19 @@
                             <p>Résultat</p>
                             <p>Score</p>
                         </div>
+                        {$num = 0}
                         {foreach from=$participations item=participation}
                             {if $participation.id_mode_de_jeu == $mode}
-                                <div>
+                                {if $num < 5}
+                                    <div>
                                     <p>{$participation.date_partie}</p>
                                     <p>{$participation.duree_partie}</p>
                                     <p>{$participation.id_difficulte == 1 ? "Facile" : ($participation.id_difficulte == 2 ? "Moyen" : "Difficile")}</p>
                                     <p>{$participation.gagnant ? "Victoire" : "Défaite"}</p>
                                     <p class="{$participation.score > 0 ? "victoire" : "defaite"}">{$participation.score > 0 ? "+" : ""}{$participation.score}</p>
-                                </div>
+                                    </div>
+                                {/if}
+                                {$num = $num + 1}
                             {/if}
                         {/foreach}
                     {else}

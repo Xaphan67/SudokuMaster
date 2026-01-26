@@ -61,7 +61,7 @@ class ParticiperModel extends Model {
         return $prepare->execute();
     }
 
-    function findAllByUser(int $utilisateurId, int $limit = 5, bool $desc = false) {
+    function findAllByUser(int $utilisateurId, bool $desc = false) {
 
         // Requête préparée pour récupérer les participations de l'utilisateur
         $query = "SELECT gagnant, score, date_partie, duree_partie, id_mode_de_jeu, id_difficulte
@@ -74,13 +74,10 @@ class ParticiperModel extends Model {
             $query .= " DESC";
         }
 
-        $query .= " LIMIT :limit";
-
         $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $utilisateurId, PDO::PARAM_INT);
-        $prepare->bindValue("limit", $limit, PDO::PARAM_INT);
 
         // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
         $prepare->execute();
