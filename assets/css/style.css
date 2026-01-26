@@ -1125,8 +1125,12 @@ td:not(.celluleFixe, .selected_highlight) li {
   flex-direction: column;
   text-align: center;
   justify-content: center;
+  align-items: center;  
   gap: 2px;
-  height: 62px;
+}
+
+.message_salles p {
+  text-align: center;
 }
 
 .salle {
@@ -1720,6 +1724,10 @@ section p {
   #salles {
     max-width: 680px;
     align-self: center;
+  }
+
+  #salles .message_salles {
+    height: 62px;
   }
 
   #salles h2 {
