@@ -29,7 +29,7 @@ class PartieModel extends Model {
         if ($prepare->execute()) {
 
             // Retourner l'ID de la partie insérée
-            return $partieID = $this->_db->lastInsertId();
+            return $this->_db->lastInsertId();
         }
         else {
             return false;

@@ -11,7 +11,7 @@ class ClasserModel extends Model {
 
         // Requête préparée pour ajouter les statistiques
         $query = "INSERT INTO classer (id_utilisateur, id_mode_de_jeu, score_global, grilles_jouees, grilles_resolues, temps_moyen, meilleur_temps, serie_victoires)
-            VALUES(:id_utilisateur, :id_mode_de_jeu, :score_global, '1', '0', '00:15:00', '00:15:00', '0')";
+            VALUES(:id_utilisateur, :id_mode_de_jeu, :score_global, '0', '0', '00:15:00', '00:15:00', '0')";
 
         $prepare = $this->_db->prepare($query);
 

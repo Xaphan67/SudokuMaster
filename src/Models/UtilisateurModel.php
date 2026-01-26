@@ -7,7 +7,7 @@ use Xaphan67\SudokuMaster\Entities\Utilisateur;
 
 class UtilisateurModel extends Model {
 
-    function add(Utilisateur $utilisateur) : bool {
+    function add(Utilisateur $utilisateur) {
 
         // Requête préparée pour ajouter l'utilisateur
         $query =
@@ -21,8 +21,15 @@ class UtilisateurModel extends Model {
         $prepare->bindValue(":email_utilisateur", $utilisateur->getEmail(), PDO::PARAM_STR);
         $prepare->bindValue(":mdp_utilisateur", $utilisateur->getMdp(), PDO::PARAM_STR);
 
-        // Execute la requête. Retourne true (si réussite) ou false (si echec)
-        return $prepare->execute();
+        // Execute la requête. Retourne l'ID de l'utilisateur inséré (si réussite) ou false (si echec)
+        if ($prepare->execute()) {
+
+            // Retourner l'ID de l'utilisateur inséré
+            return $this->_db->lastInsertId();
+        }
+        else {
+            return false;
+        }
     }
 
     function edit(Utilisateur $utilisateur) : bool {

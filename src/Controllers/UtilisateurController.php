@@ -73,10 +73,26 @@ class UtilisateurController extends Controller {
                 // Crée une instance du modèle Utilisateur et appelle la méthode
                 // pour insérer l'utilisateur en base de données
                 $utilisateurModel = new UtilisateurModel;
-                $utilisateurAjoute = $utilisateurModel->add($utilisateur);
+                $utilisateurID = $utilisateurModel->add($utilisateur);
 
                 // Si l'utilisateur à été ajouté correctement en base de données
-                if ($utilisateurAjoute) {
+                if ($utilisateurID) {
+
+                    // Crée une instance du modèle Classer
+                    $classerModel = new ClasserModel;
+
+                    // Pour chaque mode de jeu, ajoute les statistiques de base du joueur
+                    for ($mode = 1; $mode <= 3; $mode++) {
+
+                        // Crée un nouvel objet Classer
+                        $classer = new Classer;
+                        $classer->setUtilisateur($utilisateurID);
+                        $classer->setMode_de_jeu($mode);
+                        $classer->setScore_global(1000);
+
+                        // Insère les statistiques en base de donnée
+                        $classerModel->add($classer);
+                    }
 
                     // Redirige l'utilisateur vers la page de connexion
                     header("Location:connexion");

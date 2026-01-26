@@ -21,14 +21,6 @@ class PartieApi {
     // et retourne la grille reçue
     function getGrid() {
 
-        // Appeller l'API externe pour recevoir une grille
-        $json_data = file_get_contents('php://input'); // Lit le corps brut de la requête
-        $dataJS = json_decode($json_data, true); // Décode le JSON en tableau associatif
-
-        // Récupération des données envoyées par JS
-        $json_data = file_get_contents('php://input'); // Lit le corps brut de la requête
-        $dataJS = json_decode($json_data, true); // Décode le JSON en tableau associatif
-
         // URL de l'API à requéter
         $apiUrl = "https://sudoku-game-and-api.netlify.app/api/sudoku";
 
@@ -152,58 +144,42 @@ class PartieApi {
         $participerModel = new ParticiperModel;
         $participerModel->add($participer);
 
-        // Crée une instance du modèle Classer et appelle la méthode
-        // pour récupérer les statistiques en base de donnée
+        // Crée une instance du modèle Classer
         $classerModel = new ClasserModel;
-        $donneesClasser = $classerModel->findByUserAndMode($utilisateur->getId(), $modeDeJeu->getId());
 
         // Crée un nouvel objet Classer et l'hydrate avec les données
         $classer = new Classer;
         $classer->setUtilisateur($utilisateur->getId());
         $classer->setMode_de_jeu($modeDeJeu->getId());
 
-        // Si aucune statistiques enregistrée en base de donnée
-        if (!$donneesClasser) {
+        // Appelle la méthode pour récupérer les statistiques en base de donnée
+        $donneesClasser = $classerModel->findByUserAndMode($utilisateur->getId(), $modeDeJeu->getId());
 
-            // Calcule le score global de base en fonction de la difficulté choise
-            $coefficientDifficulte = $dataJS["difficulte"] == "Facile" ? 10 : ($dataJS["difficulte"] == "Moyen" ? 20 : 30);
-            $scoreGlobalBase = (int)(1000 + ($coefficientDifficulte * max(0.2, 1 - 900 / 900) * -1) * 1 / (sqrt(1 + 1 / 20)));
+        // Hydrate l'objet Classer avec les données récupérées en base de donnée
+        $classer->hydrate($donneesClasser);
 
-            // Défini le score global de base
-            $classer->setScore_global($scoreGlobalBase);
+        // Ajoute une grille jouée
+        $classer->setGrilles_jouees($classer->getGrilles_jouees() + 1);
 
-            // Insère les statistiques en base de donnée
-            $classerModel->add($classer);
-            $participerModel->addScore($participer, $scoreGlobalBase - 1000);
-        }
-        else {
+        // Récupère la série de victoires actuelle de l'utilisateur
+        $serieVictoires = $classer->getSerie_victoires();
 
-            // Hydrate l'objet Classer avec les données récupérées en base de donnée
-            $classer->hydrate($donneesClasser);
+        // Remet la série de victoires à 0 pour forcer l'utilisateur
+        // à finir (et gagner) la partie pour conserver sa série de victoires
+        $classer->setSerie_victoires(0);
 
-            // Ajoute une grille jouée
-            $classer->setGrilles_jouees($classer->getGrilles_jouees() + 1);
+        // Récupère le score global actuel de l'utilisateur
+        $scoreGlobal = $classer->getScore_global();
 
-            // Récupère la série de victoires actuelle de l'utilisateur
-            $serieVictoires = $classer->getSerie_victoires();
+        // Calcule le score global de l'utilisateur en cas de défaite de cette partie
+        // pour forcer l'utilisateur à finir la partie en fonction de la difficulté choise
+        $coefficientDifficulte = $dataJS["difficulte"] == "Facile" ? 10 : ($dataJS["difficulte"] == "Moyen" ? 20 : 30);
+        $scoreGlobalDefaite = (int)($scoreGlobal + ($coefficientDifficulte * max(0.2, 1 - 900 / 900) * -1) * 1 / (sqrt(1 + $classer->getGrilles_jouees() / 20)));
+        $classer->setScore_global($scoreGlobalDefaite);
 
-            // Remet la série de victoires à 0 pour forcer l'utilisateur
-            // à finir (et gagner) la partie pour conserver sa série de victoires
-            $classer->setSerie_victoires(0);
-
-            // Récupère le score global actuel de l'utilisateur
-            $scoreGlobal = $classer->getScore_global();
-
-            // Calcule le score global de l'utilisateur en cas de défaite de cette partie
-            // pour forcer l'utilisateur à finir la partie en fonction de la difficulté choise
-            $coefficientDifficulte = $dataJS["difficulte"] == "Facile" ? 10 : ($dataJS["difficulte"] == "Moyen" ? 20 : 30);
-            $scoreGlobalDefaite = (int)($scoreGlobal + ($coefficientDifficulte * max(0.2, 1 - 900 / 900) * -1) * 1 / (sqrt(1 + $classer->getGrilles_jouees() / 20)));
-            $classer->setScore_global($scoreGlobalDefaite);
-
-            // Met à jour les données en base de donnée
-            $classerModel->edit($classer);
-            $participerModel->addScore($participer, $scoreGlobalDefaite - $scoreGlobal);
-        }
+        // Met à jour les données en base de donnée
+        $classerModel->edit($classer);
+        $participerModel->addScore($participer, $scoreGlobalDefaite - $scoreGlobal);
 
         // Retourne l'ID de la partie insérée pour pouvoir la récupérer en JS plus tard
         // ainsi que la série de victoires et le score global du joueur du joueur avant cette partie
@@ -255,48 +231,31 @@ class PartieApi {
         $classer->setUtilisateur($utilisateur->getId());
         $classer->setMode_de_jeu($modeDeJeu->getId());
 
-        // Si aucune statistiques enregistrée en base de donnée
-        if (!$donneesClasser) {
+        // Hydrate l'objet Classer avec les données récupérées en base de donnée
+        $classer->hydrate($donneesClasser);
 
-            // Calcule le score global de base en fonction de la difficulté choise
-            $coefficientDifficulte = $dataJS["difficulte"] == "Facile" ? 10 : ($dataJS["difficulte"] == "Moyen" ? 20 : 30);
-            $scoreGlobalBase = (int)(1000 + ($coefficientDifficulte * max(0.2, 1 - 900 / 900) * -1) * 1 / (sqrt(1 + 1 / 20)));
+        // Ajoute une grille jouée
+        $classer->setGrilles_jouees($classer->getGrilles_jouees() + 1);
 
-            // Défini le score global de base
-            $classer->setScore_global($scoreGlobalBase);
+        // Récupère la série de victoires actuelle de l'utilisateur
+        $serieVictoires = $classer->getSerie_victoires();
 
-            // Insère les statistiques en base de donnée
-            $classerModel->add($classer);
-            $participerModel->addScore($participer, $scoreGlobalBase - 1000);
-        }
-        else {
+        // Remet la série de victoires à 0 pour forcer l'utilisateur
+        // à finir (et gagner) la partie pour conserver sa série de victoires
+        $classer->setSerie_victoires(0);
 
-            // Hydrate l'objet Classer avec les données récupérées en base de donnée
-            $classer->hydrate($donneesClasser);
+        // Récupère le score global actuel de l'utilisateur
+        $scoreGlobal = $classer->getScore_global();
 
-            // Ajoute une grille jouée
-            $classer->setGrilles_jouees($classer->getGrilles_jouees() + 1);
+        // Calcule le score global de l'utilisateur en cas de défaite de cette partie
+        // pour forcer l'utilisateur à finir la partie en fonction de la difficulté choise
+        $coefficientDifficulte = $dataJS["difficulte"] == "Facile" ? 10 : ($dataJS["difficulte"] == "Moyen" ? 20 : 30);
+        $scoreGlobalDefaite = (int)($scoreGlobal + ($coefficientDifficulte * max(0.2, 1 - 900 / 900) * -1) * 1 / (sqrt(1 + $classer->getGrilles_jouees() / 20)));
+        $classer->setScore_global($scoreGlobalDefaite);
 
-            // Récupère la série de victoires actuelle de l'utilisateur
-            $serieVictoires = $classer->getSerie_victoires();
-
-            // Remet la série de victoires à 0 pour forcer l'utilisateur
-            // à finir (et gagner) la partie pour conserver sa série de victoires
-            $classer->setSerie_victoires(0);
-
-            // Récupère le score global actuel de l'utilisateur
-            $scoreGlobal = $classer->getScore_global();
-
-            // Calcule le score global de l'utilisateur en cas de défaite de cette partie
-            // pour forcer l'utilisateur à finir la partie en fonction de la difficulté choise
-            $coefficientDifficulte = $dataJS["difficulte"] == "Facile" ? 10 : ($dataJS["difficulte"] == "Moyen" ? 20 : 30);
-            $scoreGlobalDefaite = (int)($scoreGlobal + ($coefficientDifficulte * max(0.2, 1 - 900 / 900) * -1) * 1 / (sqrt(1 + $classer->getGrilles_jouees() / 20)));
-            $classer->setScore_global($scoreGlobalDefaite);
-
-            // Met à jour les données en base de donnée
-            $classerModel->edit($classer);
-            $participerModel->addScore($participer, $scoreGlobalDefaite - $scoreGlobal);
-        }
+        // Met à jour les données en base de donnée
+        $classerModel->edit($classer);
+        $participerModel->addScore($participer, $scoreGlobalDefaite - $scoreGlobal);
 
         // Retourne la série de victoires et le score global du joueur du joueur avant cette partie
         echo '{"serie_victoires": ' . (isset($serieVictoires) ? $serieVictoires : 0) . ', "score_global": ' . (isset($scoreGlobal) ? $scoreGlobal : 1000) . '}';

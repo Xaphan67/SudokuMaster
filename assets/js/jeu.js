@@ -40,7 +40,7 @@ let multijoueur;
 let connexion;
 let infosSalle;
 let defaiteCompetitif = false;
-let statsJoueur;
+let statsJoueurs;
 let resPartie;
 
 // Timer
@@ -146,17 +146,13 @@ function joinRoom() {
 
                 // Affiche l'animation de chargement
                 CHARGEMENT.style.display = "block";
+                break;
 
-                // Récupère les statistiques du joueur qui à rejoint
-                const RES_STATS_HOTE = await fetch("index.php?controller=api-classer&action=getPlayerStats", {
-                    method: "POST",
-                    headers: {
-                            'Content-Type': 'application/json', // Indique qu'on envoie du JSON
-                            'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
-                        },
-                        body: JSON.stringify({ modeDeJeu: infosSalle.mode, difficulte: infosSalle.difficulte, idJoueur: infosSalle.hoteId}) // Objet JS converti en chaîne JSON
-                });
-                statsJoueur = await RES_STATS_HOTE.json();
+            // Le serveur envoie les statistiques transmises par le joueur hote
+            case "statistiques":
+
+                // Récupère les statistiques du joueur hote
+                statsJoueurs = message.statistiques;
 
                 //Démarre la partie
                 startGame();
@@ -173,6 +169,7 @@ function joinRoom() {
                 CHARGEMENT.style.display = "block";
 
                 // Récupère les statistiques du joueur qui à rejoint
+                // et les statistiques du joueur hôte
                 const RES_STATS_REJOINT = await fetch("index.php?controller=api-classer&action=getPlayerStats", {
                     method: "POST",
                     headers: {
@@ -181,7 +178,10 @@ function joinRoom() {
                         },
                         body: JSON.stringify({ modeDeJeu: infosSalle.mode, difficulte: infosSalle.difficulte, idJoueur: infosSalle.joueur}) // Objet JS converti en chaîne JSON
                 });
-                statsJoueur = await RES_STATS_REJOINT.json();
+                statsJoueurs = await RES_STATS_REJOINT.json();
+
+                // Envoie les stats au joueur qui a rejoint
+                connexion.send(JSON.stringify({commande: "statistiques", salle: infosSalle.salle, statistiques: statsJoueurs}));
 
                 //Démarre la partie
                 startGame();
@@ -263,7 +263,7 @@ function joinRoom() {
                         partieEnCours = false;
 
                         // Change le texte qui s'affiche sur le popup de fin de partie
-                        POPUP_FIN_PARTIE_TEXTE.textContent = statsJoueur.joueur_2.pseudo_utilisateur + " à quitté la partie";
+                        POPUP_FIN_PARTIE_TEXTE.textContent = statsJoueurs.joueur_2.pseudo_utilisateur + " à quitté la partie";
 
                         // Met fin à la partie
                         endGame();
@@ -564,32 +564,39 @@ async function startGame(element) {
 
         INFOS_JOUEURS.inert = false;
 
-        SECTION_JOUEUR_1.children[1].textContent = statsJoueur.joueur_1.score_global;
-        SECTION_JOUEUR_1.children[2].textContent = statsJoueur.joueur_1.pseudo_utilisateur;
-        JOUEUR_1.children[0].textContent = statsJoueur.joueur_1.pseudo_utilisateur;
-        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[0].textContent = statsJoueur.joueur_1.grilles_jouees;
-        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[1].textContent = statsJoueur.joueur_1.grilles_resolues;
-        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[2].textContent = statsJoueur.joueur_1.temps_moyen;
-        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[3].textContent = statsJoueur.joueur_1.meilleur_temps;
-        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[4].textContent = statsJoueur.joueur_1.serie_victoires;
+        // Inverse joueur 1 et joueur 2 pour le joueur qui à rejoint la partie
+        if (!infosSalle.hote) {
+            let temp = statsJoueurs.joueur_2;
+            statsJoueurs.joueur_2 = statsJoueurs.joueur_1;
+            statsJoueurs.joueur_1 = temp;
+        }
 
-        SECTION_JOUEUR_2.children[2].textContent = statsJoueur.joueur_2.score_global;
-        SECTION_JOUEUR_2.children[0].textContent = statsJoueur.joueur_2.pseudo_utilisateur;
-        JOUEUR_2.children[0].textContent = statsJoueur.joueur_2.pseudo_utilisateur;
-        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[0].textContent = statsJoueur.joueur_2.grilles_jouees;
-        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[1].textContent = statsJoueur.joueur_2.grilles_resolues;
-        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[2].textContent = statsJoueur.joueur_2.temps_moyen;
-        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[3].textContent = statsJoueur.joueur_2.meilleur_temps;
-        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[4].textContent = statsJoueur.joueur_2.serie_victoires;
+        SECTION_JOUEUR_1.children[1].textContent = statsJoueurs.joueur_1.score_global;
+        SECTION_JOUEUR_1.children[2].textContent = statsJoueurs.joueur_1.pseudo_utilisateur;
+        JOUEUR_1.children[0].textContent = statsJoueurs.joueur_1.pseudo_utilisateur;
+        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[0].textContent = statsJoueurs.joueur_1.grilles_jouees;
+        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[1].textContent = statsJoueurs.joueur_1.grilles_resolues;
+        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[2].textContent = statsJoueurs.joueur_1.temps_moyen;
+        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[3].textContent = statsJoueurs.joueur_1.meilleur_temps;
+        JOUEUR_1.children[1].children[1].getElementsByTagName("p")[4].textContent = statsJoueurs.joueur_1.serie_victoires;
+
+        SECTION_JOUEUR_2.children[2].textContent = statsJoueurs.joueur_2.score_global;
+        SECTION_JOUEUR_2.children[0].textContent = statsJoueurs.joueur_2.pseudo_utilisateur;
+        JOUEUR_2.children[0].textContent = statsJoueurs.joueur_2.pseudo_utilisateur;
+        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[0].textContent = statsJoueurs.joueur_2.grilles_jouees;
+        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[1].textContent = statsJoueurs.joueur_2.grilles_resolues;
+        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[2].textContent = statsJoueurs.joueur_2.temps_moyen;
+        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[3].textContent = statsJoueurs.joueur_2.meilleur_temps;
+        JOUEUR_2.children[1].children[1].getElementsByTagName("p")[4].textContent = statsJoueurs.joueur_2.serie_victoires;
 
         // Affiche les information des joueurs sur le popup demandant au joueur s'il est prêt
         const POPUP_JOUEUR_PRET = document.getElementById("verif_joueur_pret");
-        POPUP_JOUEUR_PRET.children[3].children[0].getElementsByTagName("p")[0].textContent = statsJoueur.joueur_1.pseudo_utilisateur;
-        POPUP_JOUEUR_PRET.children[3].children[1].getElementsByTagName("p")[0].textContent = statsJoueur.joueur_2.pseudo_utilisateur;
+        POPUP_JOUEUR_PRET.children[3].children[0].getElementsByTagName("p")[0].textContent = statsJoueurs.joueur_1.pseudo_utilisateur;
+        POPUP_JOUEUR_PRET.children[3].children[1].getElementsByTagName("p")[0].textContent = statsJoueurs.joueur_2.pseudo_utilisateur;
 
         // Affiche les information du 2eme joueur sur le popup d'abandon de partie
         const POPUP_JOUEUR_ABANDON_PARTIE = document.getElementById("abandon_autre_joueur_partie");
-        POPUP_JOUEUR_ABANDON_PARTIE.getElementsByTagName("h3")[0].textContent = statsJoueur.joueur_2.pseudo_utilisateur + " " + POPUP_JOUEUR_ABANDON_PARTIE.getElementsByTagName("h3")[0].textContent;
+        POPUP_JOUEUR_ABANDON_PARTIE.getElementsByTagName("h3")[0].textContent = statsJoueurs.joueur_2.pseudo_utilisateur + " " + POPUP_JOUEUR_ABANDON_PARTIE.getElementsByTagName("h3")[0].textContent;
     }
     else {
         difficulte = element.children[1].textContent;
@@ -760,7 +767,7 @@ async function endGame(popup = true) {
 
         // Change le texte qui s'affiche sur le popup de fin de partie en cas de défaite
         if (!victoire) {
-            POPUP_FIN_PARTIE_TEXTE.textContent = (defaiteCompetitif ? statsJoueur.joueur_2.pseudo_utilisateur + " à terminé la grille avant vous" : "Le temps est écoulé");
+            POPUP_FIN_PARTIE_TEXTE.textContent = (defaiteCompetitif ? statsJoueurs.joueur_2.pseudo_utilisateur + " à terminé la grille avant vous" : "Le temps est écoulé");
         }
 
         // Si un joueur est connecté
