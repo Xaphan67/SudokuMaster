@@ -1,7 +1,7 @@
 {extends 'base.tpl'}
 
 {block contenu}
-<div id="conteneur_principal" class="vertical {nocache}{!$utilisateurConnecte ? 'inactif" inert' : ""}{/nocache}">
+<div id="conteneur_principal" class="vertical{!$utilisateurConnecte ? " inactif" : ''}" {!$utilisateurConnecte ? inert : ""}>
     <h1>Multijoueur</h1>
     <p id="salon_instructions">Vous pouvez créer une salle et inviter un autre joueur à vous rejoindre, ou rejoindre une salle déja créée par un autre joueur en entrant son numéro de salle.</p>
     <div id="salon">
@@ -60,7 +60,7 @@
         </div>
     </section>
 </div>
-{nocache}{if !$utilisateurConnecte}
+{if !$utilisateurConnecte}
     <div id="compte_requis" class="popup"><!-- popup si non connecté -->
         <h3>Compte requis</h3>
         <p>Pour jouer en multijoueur, vous devez vous connecter avec votre compte</p>
@@ -68,5 +68,5 @@
         <a href="inscription" class="bouton boutonPrincipal boutonLarge">Créer un compte</a>
         <a href="connexion&from=salon" class="bouton boutonPrincipal boutonLarge">Se connecter</a>
     </div>
-{/if}{/nocache}
+{/if}
 {/block}
