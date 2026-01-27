@@ -43,17 +43,35 @@ while (true) {
 
             // Notifie le 2eme joueur dans la salle du joueur qui quitte le serveur (s'il y en a un)
             foreach ($salles as $numero => $infos) {
-                if ($client == $infos["socket_hote"] || $client == $infos["socket_client"]) {
 
-                    if (in_array($infos["socket_hote"], $clients) && in_array($infos["socket_client"], $clients)) {
-                        socket_write($clients[$salles[$numero][$client == $infos["socket_hote"] ? "client" : "hote"]], mask(json_encode(["commande" => "abandonner_partie"])));
+                // Si le joueur qui se déconnecte est l'hôte de la salle
+                if ($client == $infos["socket_hote"]) {
+
+                    // Si un client est dans la salle
+                    if (array_key_exists("socket_client", $infos) && in_array($infos["socket_client"], $clients)) {
+
+                        // Lui notifie le départ de l'hôte
+                        socket_write($clients[$salles[$numero]["client"]], mask(json_encode(["commande" => "abandonner_partie"])));
                     }
+                    else {
 
-                    // Supprime la salle si le deuxième joueur se déconnecte
-                    if (!in_array($infos["socket_hote"], $clients) || !in_array($infos["socket_client"], $clients)) {
+                        // Supprime la salle
                         unset($salles[$numero]);
                     }
-                    break;
+                }
+                else {
+
+                    // Si un hôte est dans la salle
+                    if (array_key_exists("socket_hote", $infos) && in_array($infos["socket_hote"], $clients)) {
+
+                        // Lui notifie le départ de l'hôte
+                        socket_write($clients[$salles[$numero]["hote"]], mask(json_encode(["commande" => "abandonner_partie"])));
+                    }
+                    else {
+
+                        // Supprime la salle
+                        unset($salles[$numero]);
+                    }
                 }
             }
 
