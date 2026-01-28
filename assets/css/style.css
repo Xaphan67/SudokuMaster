@@ -151,6 +151,7 @@ main {
 #conteneur_principal {
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   max-width: 1200px;
   margin: 0px auto;
@@ -2227,7 +2228,6 @@ section p {
     align-items: end;
     justify-content: space-between;
     max-width: 1200px;
-    margin: 0px auto;
   }
 
   .large {
@@ -2263,6 +2263,7 @@ section p {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: end;
     gap: 10px;
     margin-top: unset;
     width: 40vw;
@@ -2277,6 +2278,12 @@ section p {
     justify-content: space-between;
     height: 100%;
     margin-bottom: unset;
+  }
+
+  #interface_de_jeu>div:last-child {
+    width: calc(min(100dvh - 200px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px)) - 206px);
+    min-width: 380px;
+    max-width: 400px;
   }
 
   .boutons_haut {
@@ -2331,9 +2338,8 @@ section p {
 
   #bouton_jeu {
     height: 80px;
-    width: 352px;
+    width: 88%;
     line-height: 80px;
-    margin: 0px auto;
   }
 
   /* Profil */
@@ -2364,10 +2370,7 @@ section p {
   #infos_multijoueur {
     margin: unset;
     width: 40vw;
-  }
-
-  .normal {
-     min-width: min(100dvh - 190px, clamp(351px, calc(100vw - clamp(20px, 5vw, 40px) - 40vw), 720px));
+    max-width: 400px;
   }
 
   /* Regles */

@@ -1,69 +1,69 @@
 {extends 'base.tpl'}
 
 {block contenu}
-<div id="haut" class="separateur_haut">
-    <h2 id="titre_jeu" class="normal">Multijoueur</h2>
-    <div id="infos_multijoueur" inert>
-        <div>
-            <img src="assets/img/TropheeOr.webp" alt ="">
-            <p class="score_principal score_petit">0</p>
-            <p>???</p>
-            <div id="joueur_1" class="info_joueur info_joueur_bas">
-                <h3>???</h3>
-                <div>
+<div id="conteneur_principal">
+    <div id="haut" class="separateur_haut">
+        <h2 id="titre_jeu" class="normal">Multijoueur</h2>
+        <div id="infos_multijoueur" inert>
+            <div>
+                <img src="assets/img/TropheeOr.webp" alt ="">
+                <p class="score_principal score_petit">0</p>
+                <p>???</p>
+                <div id="joueur_1" class="info_joueur info_joueur_bas">
+                    <h3>???</h3>
                     <div>
-                        <p>Nombre total de grilles jouées :</p>
-                        <p>Nombre de grilles résolues :</p>
-                        <p>Temps moyen :</p>
-                        <p>Meilleur temps :</p>
-                        <p>Série de victoires :</p>
+                        <div>
+                            <p>Nombre total de grilles jouées :</p>
+                            <p>Nombre de grilles résolues :</p>
+                            <p>Temps moyen :</p>
+                            <p>Meilleur temps :</p>
+                            <p>Série de victoires :</p>
+                        </div>
+                        <div>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                        </div>
                     </div>
-                    <div>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                        <path d="m229.66 141.66l-96 96a8 8 0 0 1-11.32 0l-96-96A8 8 0 0 1 32 128h40V48a16 16 0 0 1 16-16h80a16 16 0 0 1 16 16v80h40a8 8 0 0 1 5.66 13.66Z"/>
+                    </svg>
                 </div>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-                    <path d="m229.66 141.66l-96 96a8 8 0 0 1-11.32 0l-96-96A8 8 0 0 1 32 128h40V48a16 16 0 0 1 16-16h80a16 16 0 0 1 16 16v80h40a8 8 0 0 1 5.66 13.66Z"/>
-                </svg>
             </div>
-        </div>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-            <path d="M216 34h-64a6 6 0 0 0-4.76 2.34l-65.39 85L70.6 110.1a14 14 0 0 0-19.8 0l-12.7 12.7a14 14 0 0 0 0 19.81L59.51 164L30.1 193.42a14 14 0 0 0 0 19.8l12.69 12.69a14 14 0 0 0 19.8 0L92 196.5l21.4 21.4a14 14 0 0 0 19.8 0l12.7-12.69a14 14 0 0 0 0-19.81l-11.25-11.25l85-65.39A6 6 0 0 0 222 104V40a6 6 0 0 0-6-6ZM54.1 217.42a2 2 0 0 1-2.83 0l-12.68-12.69a2 2 0 0 1 0-2.82L68 172.5L83.51 188Zm83.31-20.7l-12.69 12.7a2 2 0 0 1-2.84 0l-75.29-75.3a2 2 0 0 1 0-2.83l12.69-12.7a2 2 0 0 1 2.84 0l75.29 75.3a2 2 0 0 1 0 2.83ZM210 101.05l-83.91 64.55l-13.6-13.6l51.75-51.76a6 6 0 0 0-8.48-8.48L104 143.51l-13.6-13.6L155 46h55Z"/>
-        </svg>
-        <div>
-            <p>???</p>
-            <div id="joueur_2" class="info_joueur info_joueur_bas">
-                <h3>???</h3>
-                <div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                <path d="M216 34h-64a6 6 0 0 0-4.76 2.34l-65.39 85L70.6 110.1a14 14 0 0 0-19.8 0l-12.7 12.7a14 14 0 0 0 0 19.81L59.51 164L30.1 193.42a14 14 0 0 0 0 19.8l12.69 12.69a14 14 0 0 0 19.8 0L92 196.5l21.4 21.4a14 14 0 0 0 19.8 0l12.7-12.69a14 14 0 0 0 0-19.81l-11.25-11.25l85-65.39A6 6 0 0 0 222 104V40a6 6 0 0 0-6-6ZM54.1 217.42a2 2 0 0 1-2.83 0l-12.68-12.69a2 2 0 0 1 0-2.82L68 172.5L83.51 188Zm83.31-20.7l-12.69 12.7a2 2 0 0 1-2.84 0l-75.29-75.3a2 2 0 0 1 0-2.83l12.69-12.7a2 2 0 0 1 2.84 0l75.29 75.3a2 2 0 0 1 0 2.83ZM210 101.05l-83.91 64.55l-13.6-13.6l51.75-51.76a6 6 0 0 0-8.48-8.48L104 143.51l-13.6-13.6L155 46h55Z"/>
+            </svg>
+            <div>
+                <p>???</p>
+                <div id="joueur_2" class="info_joueur info_joueur_bas">
+                    <h3>???</h3>
                     <div>
-                        <p>Nombre total de grilles jouées :</p>
-                        <p>Nombre de grilles résolues :</p>
-                        <p>Temps moyen :</p>
-                        <p>Meilleur temps :</p>
-                        <p>Série de victoires :</p>
+                        <div>
+                            <p>Nombre total de grilles jouées :</p>
+                            <p>Nombre de grilles résolues :</p>
+                            <p>Temps moyen :</p>
+                            <p>Meilleur temps :</p>
+                            <p>Série de victoires :</p>
+                        </div>
+                        <div>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                        </div>
                     </div>
-                    <div>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                        <path d="m229.66 141.66l-96 96a8 8 0 0 1-11.32 0l-96-96A8 8 0 0 1 32 128h40V48a16 16 0 0 1 16-16h80a16 16 0 0 1 16 16v80h40a8 8 0 0 1 5.66 13.66Z"/>
+                    </svg>
                 </div>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-                    <path d="m229.66 141.66l-96 96a8 8 0 0 1-11.32 0l-96-96A8 8 0 0 1 32 128h40V48a16 16 0 0 1 16-16h80a16 16 0 0 1 16 16v80h40a8 8 0 0 1 5.66 13.66Z"/>
-                </svg>
+                <p class="score_principal score_petit score_petit_droite">0</p>
+                <img src="assets/img/TropheeOr.webp" alt ="">
             </div>
-            <p class="score_principal score_petit score_petit_droite">0</p>
-            <img src="assets/img/TropheeOr.webp" alt ="">
         </div>
     </div>
-</div>
-<div id="conteneur_principal">
     <div id="conteneur_jeu" inert>
         <div class="chargement"></div>
         <table class="grille" id="grille_vide" inert>
@@ -203,7 +203,9 @@
                     <p class="bouton boutonPave">9</p>
                 </div>
             </div>
-            <div id="bouton_jeu" class="bouton boutonPrincipal">Abandonner</div>
+            <div>
+                <div id="bouton_jeu" class="bouton boutonPrincipal">Abandonner</div>
+            </div>
         </div>
     </div>
     <div id="debut_partie" class="popup popup_large"><!-- popup de début de partie -->
