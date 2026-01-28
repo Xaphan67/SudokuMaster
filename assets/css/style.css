@@ -1811,7 +1811,16 @@ section p {
 
   nav {
     display: flex;
-    gap: 2.5vw;
+    gap: 2.2vw;
+  }
+
+  nav a {
+    padding: 10px;
+  }
+
+  nav a:hover {
+    background-color: var(--menuUtilisateur);
+    border-radius: 10px;
   }
 
   #utilisateur {
@@ -1826,7 +1835,7 @@ section p {
     border-radius: 10px 10px 0px 0px;
   }
 
-  #utilisateur:hover a {
+  nav a:hover,nav a:visited:hover, #utilisateur:hover a {
     color: var(--texteMenu);
   }
 
