@@ -795,6 +795,7 @@ nav {
 
 .aucune_partie {
   margin: auto 0px;
+  height: 30px;
 }
 
 .dernieres_parties_mobile div.aucune_partie p {
@@ -1979,6 +1980,7 @@ section p {
     flex-direction: column;
     text-align: center;
     width: 100%;
+    height: 210px;
     margin-top: 0px;
   }
 
@@ -1991,7 +1993,7 @@ section p {
     font-weight: bold;
   }
 
-  .dernieres_parties p {
+  .dernieres_parties>div:not(.aucune_partie)>p {
     width: 20%;
     line-height: 35px;
     text-align: center;
@@ -2368,6 +2370,10 @@ section p {
   .score_large {
     line-height: 40px;
     min-width: 130px;
+  }
+
+  #statistiques {
+    min-height: min(544px, calc(100vh - 367px));
   }
 
   .statistiques_mode div {

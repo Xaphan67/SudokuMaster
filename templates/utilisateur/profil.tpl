@@ -83,7 +83,7 @@
                         {foreach from=$participations item=participation}
                             {if $participation.id_mode_de_jeu == $mode}
                                 {if $num < 5}
-                                    <p>Partie jouée le {$participation.date_partie}</p>
+                                    <p>Partie jouée le {$participation.date_partie|date_format:"%d/%m/%Y"}</p>
                                     <div>
                                         <div>
                                             <p>Temps</p>
@@ -122,7 +122,7 @@
                             {if $participation.id_mode_de_jeu == $mode}
                                 {if $num < 5}
                                     <div>
-                                    <p>{$participation.date_partie}</p>
+                                    <p>{$participation.date_partie|date_format:"%d/%m/%Y"}</p>
                                     <p>{$participation.duree_partie}</p>
                                     <p>{$participation.id_difficulte == 1 ? "Facile" : ($participation.id_difficulte == 2 ? "Moyen" : "Difficile")}</p>
                                     <p>{$participation.gagnant ? "Victoire" : "Défaite"}</p>
