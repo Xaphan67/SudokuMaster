@@ -1,7 +1,7 @@
 {extends 'base.tpl'}
 
 {block contenu}
-<div id="conteneur_principal">
+<div id="conteneur_principal" class="horizontal">
     <img src="assets/img/Grille.webp" alt="">
     <section class="formulaire">
         <img class="logo" src="assets/img/SudokuMaster.png" alt="">

@@ -1,7 +1,7 @@
 {extends 'base.tpl'}
 
 {block contenu}
-<div id="conteneur_principal">
+<div id="conteneur_principal" class="vertical">
     <div id="haut" class="separateur_haut">
         <h2 id="titre_jeu" class="normal">Multijoueur</h2>
         <div id="infos_multijoueur" inert>

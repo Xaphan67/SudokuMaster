@@ -1,7 +1,7 @@
 {extends 'base.tpl'}
 
 {block contenu}
-<div id="conteneur_principal"{!$tokenValide || $mdpReinitialise ? ' class="inactif" inert' : ""}>
+<div id="conteneur_principal"  class="horizontal{!$tokenValide || $mdpReinitialise ? ' inactif' : ""}"{!$tokenValide || $mdpReinitialise ? " inert" : ""}>
     <img src="assets/img/Grille.webp" alt="">
     <section class="formulaire">
         <h1>Réinitialisation de votre mot de passe</h1>

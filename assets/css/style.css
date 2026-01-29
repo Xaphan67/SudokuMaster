@@ -134,6 +134,14 @@ p {
   user-select: none;
 }
 
+.horizontal {
+  flex-direction: row;
+}
+
+.vertical {
+    flex-direction: column;
+}
+
 .inactif {
   filter: opacity(0.40);
 }
@@ -151,8 +159,8 @@ main {
 #conteneur_principal {
   position: relative;
   display: flex;
-  flex-direction: column;
   align-self: center;
+  align-items: center;
   justify-content: space-between;
   max-width: 1200px;
 }
@@ -856,7 +864,6 @@ nav {
 }
 
 #conteneur_jeu {
-  width: 100%;
   filter: opacity(0.40);
 }
 
@@ -1107,8 +1114,7 @@ td:not(.celluleFixe, .selected_highlight) li {
   position: relative;
   margin-top: 15px;
   align-items: center;
-  justify-content: space-between;
-  min-height: 139px;
+  height: 100%;
 }
 
 #salles h2 {
@@ -1128,8 +1134,8 @@ td:not(.celluleFixe, .selected_highlight) li {
   flex-direction: column;
   text-align: center;
   justify-content: center;
-  align-items: center;  
-  gap: 2px;
+  align-items: center; 
+  gap: 10px;
 }
 
 .message_salles p {
@@ -1734,7 +1740,7 @@ section p {
   }
 
   #salles h2 {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
 
   .salle {
@@ -1747,6 +1753,7 @@ section p {
     margin-right: 10px;
     align-items: center;
     height: 50px;
+    gap: 10px;
   }
 
   .salle a {
@@ -2040,6 +2047,10 @@ section p {
 
   /* Connexion / Inscription */
 
+  #conteneur_principal {
+    width: calc(100vw - 50px);
+  }
+
   #conteneur_principal>img {
     display: block;
     margin: auto;
@@ -2051,13 +2062,23 @@ section p {
 
   #salon {
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     align-self: center;
+    width: calc(100vw - 50px);
+    max-width: 1200px;
   }
 
   #salon section {
-    width: 45%;
     margin: unset;
+    width: unset;
+  }
+
+  #salon section:first-child {
+    width: 33%;
+  }
+
+  #salon section:last-child {
+    width: 66%;
   }
 
   #salon h2 {
@@ -2069,6 +2090,25 @@ section p {
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    margin-top: 15px;
+  }
+
+  #salon section form input[type="submit"] {
+    min-width: unset;
+    width: 200px;
+  }
+
+  #salon section:last-child form {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    height: unset;
+  }
+
+  #salon section:last-child form input[type="submit"] {
+    margin-top: unset;
+    min-width: unset;
+    width: 200px;
   }
 
   /* Classements */
@@ -2235,6 +2275,7 @@ section p {
     align-items: end;
     justify-content: space-between;
     max-width: 1200px;
+    width: 100%;
   }
 
   .large {
@@ -2249,6 +2290,7 @@ section p {
   #conteneur_jeu {
     display: flex;
     margin: 10px 25px 0px 25px;
+    width: 100%;
   }
 
   .grille {
@@ -2374,6 +2416,12 @@ section p {
 
   .statistiques_mode div {
     width: 20%;
+  }
+
+  /* Salon */
+
+  #salon section:last-child form input[type="submit"] {
+    margin-bottom: 6px;
   }
 
   /* Multijoueur */

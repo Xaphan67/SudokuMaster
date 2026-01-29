@@ -1,7 +1,7 @@
 {extends 'base.tpl'}
 
 {block contenu}
-<div id="conteneur_principal">
+<div id="conteneur_principal" class="vertical">
     <h1>SUDOKU MASTER</h1>
     <div id="boutons_haut">
         <a href="solo" class="bouton boutonPrincipal boutonLarge">Jouer seul</a>

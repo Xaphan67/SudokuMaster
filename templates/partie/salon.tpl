@@ -1,7 +1,7 @@
 {extends 'base.tpl'}
 
 {block contenu}
-<div id="conteneur_principal" class="{!$utilisateurConnecte ? " inactif" : ''}" {!$utilisateurConnecte ? inert : ""}>
+<div id="conteneur_principal" class="vertical{!$utilisateurConnecte ? " inactif" : ''}" {!$utilisateurConnecte ? inert : ""}>
     <h1>Multijoueur</h1>
     <p id="salon_instructions">Vous pouvez créer une salle et inviter un autre joueur à vous rejoindre, ou rejoindre une salle déja créée par un autre joueur en entrant son numéro de salle.</p>
     <div id="salon">
@@ -49,16 +49,16 @@
                 </div>
                 <input type="submit" name="rejoindre_salle" class="bouton boutonPrincipal boutonDefaut" value="Rejoindre" />
             </form>
+            <div id="salles">
+                <h2>Salles disponibles</h2>
+                <div class="chargement-petit"></div>
+                <div class="message_salles">
+                    <p>Impossible d'obtenir la liste des salles publiques</p>
+                    <div class="bouton boutonPrincipal boutonLarge">Réessayer</div>
+                </div>
+            </div>
         </section>
     </div>
-    <section id="salles">
-        <h2>Salles disponibles</h2>
-        <div class="chargement-petit"></div>
-        <div class="message_salles">
-            <p>Impossible d'obtenir la liste des salles publiques</p>
-            <div class="bouton boutonPrincipal boutonLarge">Réessayer</div>
-        </div>
-    </section>
 </div>
 {if !$utilisateurConnecte}
     <div id="compte_requis" class="popup"><!-- popup si non connecté -->

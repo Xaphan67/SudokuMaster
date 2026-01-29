@@ -1,7 +1,7 @@
 {extends 'base.tpl'}
 
 {block contenu}
-<div id="conteneur_principal">
+<div id="conteneur_principal" class="vertical">
     <h2 id="titre_jeu" class="separateur_haut large">Jeu solo</h2>
     <div id="conteneur_jeu" inert>
         <div class="chargement"></div>

@@ -1,7 +1,7 @@
 {extends 'base.tpl'}
 
 {block contenu}
-<div id="conteneur_principal">
+<div id="conteneur_principal" class="vertical">
     <h1>Mentions légales</h1>
     <div class="sections_mentions">
         <section>

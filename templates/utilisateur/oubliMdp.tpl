@@ -1,7 +1,7 @@
 {extends 'base.tpl'}
 
 {block contenu}
-<div id="conteneur_principal"{$emailEnvoye ? ' class="inactif" inert' : ""}>
+<div id="conteneur_principal"  class="horizontal{$emailEnvoye ? ' inactif" inert' : ""}"{$emailEnvoye ? " inert" : ""}>
     <img src="assets/img/Grille.webp" alt="">
     <section class="formulaire">
         <h1>Mot de passe oublié</h1>
