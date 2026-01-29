@@ -2,7 +2,9 @@
 
 {block contenu}
 <div id="conteneur_principal" class="vertical">
-    <h2 id="titre_jeu" class="separateur_haut large">Jeu solo</h2>
+    <div id="haut" class="separateur_haut">
+        <h2 id="titre_jeu" class="large">Jeu solo</h2>
+    </div>
     <div id="conteneur_jeu" inert>
         <div class="chargement"></div>
         <table class="grille" id="grille_vide" inert>
