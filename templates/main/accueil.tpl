@@ -1,7 +1,7 @@
 {extends 'base.tpl'}
 
 {block contenu}
-<div id="conteneur_principal" class="vertical">
+<div id="conteneur_principal">
     <h1>SUDOKU MASTER</h1>
     <div id="boutons_haut">
         <a href="solo" class="bouton boutonPrincipal boutonLarge">Jouer seul</a>
@@ -24,7 +24,7 @@
         <a href="solo" class="bouton boutonPrincipal boutonLarge">Jouer seul</a>
         <a href="salon" class="bouton boutonPrincipal boutonLarge">Jouer à plusieurs</a>
     </div>
-    <section id="accueil_bas" class="vertical">
+    <section id="accueil_bas">
         <h3>Comment jouer au Sudoku</h3>
         <p>
             Le but du Sudoku est de remplir une grille de 9 x 9 cases avec des chiffres, afin que chaque ligne, chaque colonne et section de 3x3 contienne les chiffres de 1 à 9. Au début du jeu, la grille de 9x9 aura des cases déjà remplies. Votre tâche consistera à vous baser sur la logique pour remplir les chiffres manquants et compléter la grille. Notez qu'un déplacement est incorrect si :<br>

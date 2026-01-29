@@ -1,7 +1,7 @@
 {extends 'base.tpl'}
 
 {block contenu}
-<div id="conteneur_principal" class="vertical">
+<div id="conteneur_principal">
     <h1>Profil</h1>
     <section id="infos_compte">
         <div>

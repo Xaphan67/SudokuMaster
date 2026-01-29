@@ -152,13 +152,9 @@ main {
   position: relative;
   display: flex;
   flex-direction: column;
+  align-self: center;
   justify-content: space-between;
   max-width: 1200px;
-  margin: 0px auto;
-}
-
-.vertical {
-  flex-direction: column;
 }
 
 sup {

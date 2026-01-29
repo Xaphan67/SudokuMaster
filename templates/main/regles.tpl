@@ -1,9 +1,9 @@
 {extends 'base.tpl'}
 
 {block contenu}
-<div id="conteneur_principal" class="vertical">
+<div id="conteneur_principal">
     <h1>Règles du Sudoku</h1>
-    <section id="regles" class="vertical">
+    <section id="regles">
         <div class="onglets onglets_regles">
             <p class="onglet_actif">Généralités</p>
             <p>Ne répétez aucun numéro</p>

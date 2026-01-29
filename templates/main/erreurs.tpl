@@ -1,7 +1,7 @@
 {extends 'base.tpl'}
 
 {block contenu}
-<div id="conteneur_principal" class="vertical">
+<div id="conteneur_principal">
     <h1>Oups!</h1>
     <section id="section_erreur">
         <h2>{$titre}</h2>

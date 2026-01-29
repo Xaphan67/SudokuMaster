@@ -1,7 +1,7 @@
 {extends 'base.tpl'}
 
 {block contenu}
-<div id="conteneur_principal" class="vertical{!$utilisateurConnecte ? " inactif" : ''}" {!$utilisateurConnecte ? inert : ""}>
+<div id="conteneur_principal" class="{!$utilisateurConnecte ? " inactif" : ''}" {!$utilisateurConnecte ? inert : ""}>
     <h1>Multijoueur</h1>
     <p id="salon_instructions">Vous pouvez créer une salle et inviter un autre joueur à vous rejoindre, ou rejoindre une salle déja créée par un autre joueur en entrant son numéro de salle.</p>
     <div id="salon">
