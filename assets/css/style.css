@@ -1403,6 +1403,23 @@ td:not(.celluleFixe, .selected_highlight) li {
   transform: scaleY(-1);
 }
 
+.info_joueur_mobile {
+  position: fixed;
+  flex-direction: column;
+  transform: translateX(-50%) translateY(-50%);
+  width: calc(100vw - 50px);
+  top : 50%;
+  left : 50%;
+  padding: 20px;
+  max-width: 400px;
+}
+
+.info_joueur_mobile .bouton {
+  width: 150px;
+  margin: 10px auto 0px auto;
+  justify-content: center;
+}
+
 .top_3>div>img {
   position: relative;
   margin: auto;
