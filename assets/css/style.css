@@ -1114,7 +1114,7 @@ td:not(.celluleFixe, .selected_highlight) li {
   position: relative;
   margin-top: 15px;
   align-items: center;
-  height: 100%;
+  min-height: 123px;
 }
 
 #salles h2 {
@@ -1129,16 +1129,16 @@ td:not(.celluleFixe, .selected_highlight) li {
   line-height: 22px;
 }
 
-#salles .message_salles {
+#salles .erreur_liste_salles {
   display: none;
   flex-direction: column;
   text-align: center;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   gap: 10px;
 }
 
-.message_salles p {
+.erreur_liste_salles p {
   text-align: center;
 }
 
@@ -1146,8 +1146,9 @@ td:not(.celluleFixe, .selected_highlight) li {
   display: flex;
   gap: 10px;
   justify-content: center;
+  align-self: center;
   width: 100%;
-  max-width: 350px;
+  max-width: 400px;
 }
 
 .salle p {
@@ -1172,6 +1173,34 @@ td:not(.celluleFixe, .selected_highlight) li {
 .salle a {
   min-width: 110px;
   margin: auto 0px;
+}
+
+#liste_salles {
+  display: none;
+  flex-direction: column;
+}
+
+#liste_salles p {
+  text-align: center;
+}
+
+#salles_cooperatif, #salles_competitif {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#salles_competitif {
+  display: none;
+}
+
+.message_salles {
+  justify-content: center;
+  height: 50px;
+}
+
+.onglets_salles {
+  flex-direction: row;
+  margin-bottom: 10px;
 }
 
 /* Multijoueur */
@@ -1730,21 +1759,12 @@ section p {
 
   /* Salon */
 
-  #salles {
-    max-width: 680px;
-    align-self: center;
-  }
-
-  #salles .message_salles {
+  #salles .erreur_liste_salles {
     height: 62px;
   }
 
   #salles h2 {
     margin-bottom: 10px;
-  }
-
-  .salle {
-    max-width: 400px;
   }
 
   .salle>div {

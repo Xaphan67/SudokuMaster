@@ -1,8 +1,13 @@
 // Constantes
 const SALLES = document.getElementById("salles");
-const MESSAGE_SALLES = document.getElementsByClassName("message_salles")[0];
+const ERREUR_LISTE_SALLES = document.getElementsByClassName("erreur_liste_salles")[0];
 const CHARGEMENT = document.getElementsByClassName("chargement-petit")[0];
-const REESSAYER = MESSAGE_SALLES.getElementsByTagName("div")[0];
+const REESSAYER = ERREUR_LISTE_SALLES.getElementsByTagName("div")[0];
+const LISTE_SALLES = document.getElementById("liste_salles");
+const MESSAGE_SALLES = document.getElementsByClassName("message_salles")[0];
+const ONGLETS = document.getElementsByClassName("onglets")[0];
+const SALLES_COOPERATIF = document.getElementById("salles_cooperatif");
+const SALLES_COMPETITIF = document.getElementById("salles_competitif");
 
 // Variables
 let connexion;
@@ -17,16 +22,16 @@ function connect() {
 
     // En cas de problème de connexion au serveur WebSocket
     connexion.addEventListener("error", (event) => {
-    
+
         // Affiche un mesage d'erreur
-        MESSAGE_SALLES.style.display = "flex";
+        ERREUR_LISTE_SALLES.style.display = "flex";
 
         // Masque l'animation de chargement
         CHARGEMENT.style.display = "none";
 
         // Tente à nouveau de se connecter en cas de clic sur le bouton "réessayer"
         REESSAYER.addEventListener("click", (e) => {
-            MESSAGE_SALLES.style.display = "none";
+            ERREUR_LISTE_SALLES.style.display = "none";
             CHARGEMENT.style.display = "block";
             connect();
         });
@@ -59,6 +64,9 @@ function connect() {
                     // Masque l'animation de chargement
                     CHARGEMENT.style.display = "none";
 
+                    // Affiche la liste des salles avec les onglets
+                    LISTE_SALLES.style.display = "flex";
+
                     // S'il y à des salles à afficher...
                     if (message.salles.length > 0) {
 
@@ -84,8 +92,11 @@ function connect() {
                                 }
                             }
 
+                            // Masque le message indiquant qu'aucune salle n'est disponible
+                            (element.mode == "Cooperatif" ? SALLES_COOPERATIF : SALLES_COMPETITIF).getElementsByClassName("message_salles")[0].style.display = "none";
+
                             // Crée les élements constituants l'affichage de la salle
-                            const SALLE = SALLES.appendChild(document.createElement("div"));
+                            const SALLE = (element.mode == "Cooperatif" ? SALLES_COOPERATIF : SALLES_COMPETITIF).appendChild(document.createElement("div"));
                             const SALLE_INFOS = SALLE.appendChild(document.createElement("div"));
                             const SCORE = document.createElement("p");
                             const HOTE = document.createElement("p");
@@ -110,14 +121,38 @@ function connect() {
                             SALLE.appendChild(LIEN);
                         });
                     }
-                    else {
-
-                        // Affiche un mesage indiquant qu'aucune salle n'est disponible
-                        MESSAGE_SALLES.textContent = "Aucune salle publique disponible actuellement";
-                        MESSAGE_SALLES.style.display = "flex";
-                    }
                     break;
             }
         }
     });
 }
+
+// Affiche l'onglet "Cooperatif"
+ONGLETS.getElementsByTagName("P")[0].addEventListener("click", (e) => {
+    if (!e.target.classList.contains("onglet_actif")) {
+        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet "Cooperatif"
+        Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
+            element.classList.remove("onglet_actif");
+        });
+        e.target.classList.add("onglet_actif");
+
+        // Affiche l'onglet "Cooperatif" et masque les autres onglets
+        SALLES_COOPERATIF.style.display = "flex";
+        SALLES_COMPETITIF.style.display = "none";
+    }
+});
+
+// Affiche l'onglet "Competitif"
+ONGLETS.getElementsByTagName("P")[1].addEventListener("click", (e) => {
+    if (!e.target.classList.contains("onglet_actif")) {
+        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet "Competitif"
+        Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
+            element.classList.remove("onglet_actif");
+        });
+        e.target.classList.add("onglet_actif");
+
+        // Affiche l'onglet "Competitif" et masque les autres onglets
+        SALLES_COOPERATIF.style.display = "none";
+        SALLES_COMPETITIF.style.display = "flex";
+    }
+});

@@ -52,9 +52,25 @@
             <div id="salles">
                 <h2>Salles disponibles</h2>
                 <div class="chargement-petit"></div>
-                <div class="message_salles">
+                <div class="erreur_liste_salles">
                     <p>Impossible d'obtenir la liste des salles publiques</p>
                     <div class="bouton boutonPrincipal boutonLarge">Réessayer</div>
+                </div>
+                <div id="liste_salles">
+                    <div class="onglets onglets_salles">
+                        <p class="onglet_actif">Coopératif</p>
+                        <p>Compétitif</p>
+                    </div>
+                    <div id="salles_cooperatif">
+                        <div class="message_salles">
+                            <p>Aucune salle publique disponible actuellement</p>
+                        </div>
+                    </div>
+                    <div id="salles_competitif">
+                        <div class="message_salles">
+                            <p>Aucune salle publique disponible actuellement</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
