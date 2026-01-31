@@ -42,28 +42,6 @@
                         {for $place = 3 to 9}
                             {if isset($classements[$mode][$place])}
                                 <div>
-                                    <div class="info_joueur info_joueur_haut">
-                                        <h3>{$classements[$mode][$place]["pseudo_utilisateur"]}</h3>
-                                        <div>
-                                            <div>
-                                                <p>Nombre total de grilles jouées :</p>
-                                                <p>Nombre de grilles résolues :</p>
-                                                <p>Temps moyen :</p>
-                                                <p>Meilleur temps :</p>
-                                                <p>Série de victoires :</p>
-                                            </div>
-                                            <div>
-                                                <p>{$classements[$mode][$place]["grilles_jouees"]}</p>
-                                                <p>{$classements[$mode][$place]["grilles_resolues"]}</p>
-                                                <p>{substr($classements[$mode][$place]["temps_moyen"], 3, 5)}</p>
-                                                <p>{substr($classements[$mode][$place]["meilleur_temps"], 3, 5)}</p>
-                                                <p>{$classements[$mode][$place]["serie_victoires"]}</p>
-                                            </div>
-                                        </div>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-                                            <path d="m229.66 141.66l-96 96a8 8 0 0 1-11.32 0l-96-96A8 8 0 0 1 32 128h40V48a16 16 0 0 1 16-16h80a16 16 0 0 1 16 16v80h40a8 8 0 0 1 5.66 13.66Z"/>
-                                        </svg>
-                                    </div>
                                     <p>{$classements[$mode][$place]["pseudo_utilisateur"]}</p>
                                     <p class="score_principal score">{$classements[$mode][$place]["score_global"]}</p>
                                 </div>
@@ -100,12 +78,12 @@
                     {for $place = 0 to 2}
                         {if isset($classements[$mode][$place])}
                             <div>
-                                <div class="info_joueur info_joueur_haut">
+                                <div class="info_joueur info_joueur_bas{$place == 1 ? " info_joueur_gauche" : ($place == 2 ? " info_joueur_droite" : "")}">
                                     <h3>{$classements[$mode][$place]["pseudo_utilisateur"]}</h3>
                                     <div>
                                         <div>
-                                            <p>Nombre total de grilles jouées :</p>
-                                            <p>Nombre de grilles résolues :</p>
+                                            <p>Grilles jouées :</p>
+                                            <p>Grilles résolues :</p>
                                             <p>Temps moyen :</p>
                                             <p>Meilleur temps :</p>
                                             <p>Série de victoires :</p>
@@ -140,11 +118,11 @@
                         {if isset($classements[$mode][$place])}
                             <div>
                                 <div class="info_joueur info_joueur_haut">
-                                    <h3>{$classements[$mode][$place]["pseudo_utilisateur"]}></h3>
+                                    <h3>{$classements[$mode][$place]["pseudo_utilisateur"]}</h3>
                                     <div>
                                         <div>
-                                            <p>Nombre total de grilles jouées :</p>
-                                            <p>Nombre de grilles résolues :</p>
+                                            <p>Grilles jouées :</p>
+                                            <p>Grilles résolues :</p>
                                             <p>Temps moyen :</p>
                                             <p>Meilleur temps :</p>
                                             <p>Série de victoires :</p>

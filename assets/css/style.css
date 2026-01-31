@@ -448,7 +448,7 @@ header {
   width: 100%;
   background-color: var(--arrierePlan);
   box-shadow: 0px 4px 4px var(--ombrePrincipal);
-  z-index: 1;
+  z-index: 4;
 }
 
 header>div {
@@ -512,7 +512,7 @@ nav {
   background-color: var(--arrierePlan);
   padding: 0px 25px;
   box-shadow: inset 0px 4px 4px var(--ombrePrincipal), 0px 4px 4px var(--ombrePrincipal);
-  z-index: 2;
+  z-index: 3;
 }
 
 .menu_burger a {
@@ -1259,6 +1259,23 @@ td:not(.celluleFixe, .selected_highlight) li {
   transform: scaleX(-1);
 }
 
+#infos_multijoueur .info_joueur_gauche {
+  left: calc(10px);
+}
+
+#infos_multijoueur .info_joueur_droite {
+  left: auto;
+  right: calc(10px);
+}
+
+#infos_multijoueur .info_joueur_gauche>svg {
+  left: calc(15% - 20px);
+}
+
+#infos_multijoueur .info_joueur_droite>svg {
+  left: calc(85% - 20px);
+}
+
 .score_petit {
   height: 22px;
   line-height: 22px;
@@ -1345,34 +1362,49 @@ td:not(.celluleFixe, .selected_highlight) li {
 .info_joueur {
   position: absolute;
   display: none;
-  width: 400px;
-  padding: 20px 40px;
-  color: var(--texteNormal);
-  background-color: var(--sectionArrierePlan);
+  width: 250px;
+  padding: 20px;
+  background-color: var(--menuUtilisateur);
   box-shadow: 0px 4px 4px 0px var(--ombrePopup);
   border-radius: 15px;
-  z-index: 10;
+  z-index: 2;
+}
+
+.info_joueur p {
+  text-align: unset;
+  color: var(--texteMenu);
 }
 
 .info_joueur h3 {
   text-align: center;
+  color: var(--texteMenu);
 }
 
 .info_joueur_haut {
-  left: calc(50% - 200px);
+  left: calc(50% - 125px);
   bottom: calc(100% + 15px);
+  z-index: 4;
 }
 
 .info_joueur_bas {
-  left: calc(50% - 200px);
+  left: calc(50% - 125px);
   top: calc(100% + 15px);
+}
+
+.info_joueur_gauche {
+  left: calc(-15px);
+}
+
+.info_joueur_droite {
+  left: auto;
+  right: calc(-15px);
 }
 
 .info_joueur>div {
   display: flex;
   justify-content: space-between;
   text-align: left;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .info_joueur>div>div:last-child {
@@ -1389,29 +1421,46 @@ td:not(.celluleFixe, .selected_highlight) li {
   position: absolute;
   width: 40px;
   height: 40px;
-  fill: var(--sectionArrierePlan);
+  fill: var(--menuUtilisateur);
 }
 
 .info_joueur_haut>svg {
-  left: calc(50% - 20px);
+  left: calc(50% - 18px);
   bottom: calc(-20px);
 }
 
 .info_joueur_bas>svg {
   left: calc(50% - 20px);
-  top: calc(-20px);
+  top: calc(-18px);
   transform: scaleY(-1);
+}
+
+.info_joueur_gauche>svg {
+  left: calc(25% - 20px);
+}
+
+.info_joueur_droite>svg {
+  left: calc(75% - 20px);
 }
 
 .info_joueur_mobile {
   position: fixed;
   flex-direction: column;
   transform: translateX(-50%) translateY(-50%);
+  background-color: var(--sectionArrierePlan);
   width: calc(100vw - 50px);
   top : 50%;
   left : 50%;
   padding: 20px;
   max-width: 400px;
+}
+
+.info_joueur_mobile p {
+  color: var(--texteNormal);
+}
+
+.info_joueur_mobile h3 {
+  color: var(--texteNormal);
 }
 
 .info_joueur_mobile .bouton {
@@ -1432,6 +1481,7 @@ td:not(.celluleFixe, .selected_highlight) li {
   transform: translateX(-50%);
   left: 50%;
   top: 5px;
+  z-index: 3;
 }
 
 .top_3>div:nth-child(2) {
@@ -1440,6 +1490,7 @@ td:not(.celluleFixe, .selected_highlight) li {
   transform: translateX(-50%);
   left: 20%;
   bottom: 5px;
+  z-index: 2;
 }
 
 .top_3>div:nth-child(3) {
@@ -1448,6 +1499,7 @@ td:not(.celluleFixe, .selected_highlight) li {
   transform: translateX(-50%);
   left: 80%;
   bottom: 5px;
+  z-index: 2;
 }
 
 .top_3>div:first-child>p:last-child {
@@ -1915,7 +1967,6 @@ section p {
     background-color: var(--menuUtilisateur);
     border-radius: 10px 0px 10px 10px;
     padding: 10px 10px;
-    z-index: 2;
   }
 
   #menu_utilisateur>div {

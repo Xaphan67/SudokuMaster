@@ -9,12 +9,12 @@
                 <img src="assets/img/TropheeOr.webp" alt ="">
                 <p class="score_principal score_petit">0</p>
                 <p>???</p>
-                <div id="joueur_1" class="info_joueur info_joueur_bas">
+                <div id="joueur_1" class="info_joueur info_joueur_bas info_joueur_gauche">
                     <h3>???</h3>
                     <div>
                         <div>
-                            <p>Nombre total de grilles jouées :</p>
-                            <p>Nombre de grilles résolues :</p>
+                            <p>Grilles jouées :</p>
+                            <p>Grilles résolues :</p>
                             <p>Temps moyen :</p>
                             <p>Meilleur temps :</p>
                             <p>Série de victoires :</p>
@@ -37,12 +37,12 @@
             </svg>
             <div>
                 <p>???</p>
-                <div id="joueur_2" class="info_joueur info_joueur_bas">
+                <div id="joueur_2" class="info_joueur info_joueur_bas info_joueur_droite">
                     <h3>???</h3>
                     <div>
                         <div>
-                            <p>Nombre total de grilles jouées :</p>
-                            <p>Nombre de grilles résolues :</p>
+                            <p>Grilles jouées :</p>
+                            <p>Grilles résolues :</p>
                             <p>Temps moyen :</p>
                             <p>Meilleur temps :</p>
                             <p>Série de victoires :</p>
