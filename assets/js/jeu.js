@@ -274,6 +274,10 @@ function joinRoom() {
                         CONTENEUR_JEU.style.filter = "opacity(0.40)";
                         CONTENEUR_JEU.inert = "true";
 
+                        // Empèche de survoler le score des deux joueurs
+                        const INFOS_JOUEURS = document.getElementById("infos_multijoueur");
+                        INFOS_JOUEURS.inert = true;
+
                         // Met la partie en pause
                         startTimer();
 
@@ -294,6 +298,9 @@ function joinRoom() {
                             // Permet à l'utilisateur d'intéragir avec le plateau de jeu
                             CONTENEUR_JEU.style.filter = "none";
                             CONTENEUR_JEU.inert = false;
+
+                            // Permet de survoler le score des deux joueurs
+                            INFOS_JOUEURS.inert = false;
                         });
                     }
                 }
@@ -505,6 +512,10 @@ BOUTON_JEU.addEventListener("click", (e) => {
         CONTENEUR_JEU.style.filter = "opacity(0.40)";
         CONTENEUR_JEU.inert = "true";
 
+        // Empèche de survoler le score des deux joueurs
+        const INFOS_JOUEURS = document.getElementById("infos_multijoueur");
+        INFOS_JOUEURS.inert = true;
+
         // Affiche le popup d'abandon de partie
         const POPUP_ABANDON_PARTIE = document.getElementById("abandon_partie");
         const BOUTON_ANNULER_ABANDON_PARTIE = document.getElementById("bouton_annuler_partie");
@@ -519,6 +530,9 @@ BOUTON_JEU.addEventListener("click", (e) => {
             // Permet à l'utilisateur d'intéragir avec le plateau de jeu
             CONTENEUR_JEU.style.filter = "none";
             CONTENEUR_JEU.inert = false;
+
+            // Permet de survoler le score des deux joueurs
+            INFOS_JOUEURS.inert = false;
         });
     }
     else {
@@ -570,8 +584,6 @@ async function startGame(element) {
         const JOUEUR_1 = document.getElementById("joueur_1");
         const SECTION_JOUEUR_2 = INFOS_JOUEURS.children[2];
         const JOUEUR_2 = document.getElementById("joueur_2");
-
-        INFOS_JOUEURS.inert = false;
 
         // Inverse joueur 1 et joueur 2 pour le joueur qui à rejoint la partie
         if (!infosSalle.hote) {
@@ -734,6 +746,12 @@ function configureGame(resPartie) {
     // Permet à l'utilisateur d'intéragir avec le plateau de jeu
     CONTENEUR_JEU.style.filter = "none";
     CONTENEUR_JEU.inert = false;
+
+    // Si partie multijoueur, permet de survoler le score des deux joueurs
+    if (multijoueur) {
+        const INFOS_JOUEURS = document.getElementById("infos_multijoueur");
+        INFOS_JOUEURS.inert = false;
+    }
 
     // Déclare la partie comme commencée
     partieEnCours = true;
