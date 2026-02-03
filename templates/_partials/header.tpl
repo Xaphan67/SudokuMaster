@@ -45,6 +45,9 @@
                     </div>
                     {nocache}
                     {if $smarty.session.utilisateur|isset}
+                        {if $smarty.session.utilisateur.id_role == 1}
+                            <a href="administration">Administration</a>
+                        {/if}
                         <a href="deconnexion">Se déconnecter</a>
                     {else}
                         <a href="connexion">Se connecter</a>
@@ -83,6 +86,14 @@
                         <label for="mode_dyslexique" class="switch_label"></label>
                     </div>
                 </div>
+                {if $smarty.session.utilisateur|isset && $smarty.session.utilisateur.id_role == 1}
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                        <path d="M139 158.25a66 66 0 1 0-62 0c-22 6.23-41.88 19.16-57.61 37.89a6 6 0 0 0 9.18 7.72C49.1 179.44 77.31 166 108 166s58.9 13.44 79.41 37.86a6 6 0 1 0 9.18-7.72C180.86 177.41 161 164.48 139 158.25ZM54 100a54 54 0 1 1 54 54a54.06 54.06 0 0 1-54-54Zm189.25 44.8l-5.92-3.41a22 22 0 0 0 0-10.78l5.92-3.41a6 6 0 0 0-6-10.4l-5.93 3.43a22 22 0 0 0-9.32-5.39V108a6 6 0 0 0-12 0v6.84a22 22 0 0 0-9.32 5.39l-5.93-3.43a6 6 0 0 0-6 10.4l5.92 3.41a22 22 0 0 0 0 10.78l-5.92 3.41a6 6 0 0 0 6 10.4l5.93-3.43a22 22 0 0 0 9.32 5.39V164a6 6 0 0 0 12 0v-6.84a22 22 0 0 0 9.32-5.39l5.93 3.43a6 6 0 0 0 6-10.4ZM216 146a10 10 0 1 1 10-10a10 10 0 0 1-10 10Z"/>
+                    </svg>
+                    <a href="administration">Administration</a>
+                </div>
+                {/if}
                 <div>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
                         <path d="M110 216a6 6 0 0 1-6 6H48a14 14 0 0 1-14-14V48a14 14 0 0 1 14-14h56a6 6 0 0 1 0 12H48a2 2 0 0 0-2 2v160a2 2 0 0 0 2 2h56a6 6 0 0 1 6 6Zm110.24-92.24l-40-40a6 6 0 0 0-8.48 8.48L201.51 122H104a6 6 0 0 0 0 12h97.51l-29.75 29.76a6 6 0 1 0 8.48 8.48l40-40a6 6 0 0 0 0-8.48Z"/>
