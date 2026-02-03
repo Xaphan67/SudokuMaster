@@ -221,7 +221,7 @@ h1, h2, h3, label {
 
 /* Images */
 
-img {
+img, svg, path {
   cursor: inherit;
 }
 
