@@ -12,18 +12,31 @@ class PartieModel extends Model {
         return $parties;
     }
 
-    function add(Partie $partie) {
+    function add(Partie $partie, bool $duree = false) {
 
         // Requête préparée pour ajouter la partie
         $query =
             "INSERT INTO partie (id_mode_de_jeu, id_difficulte, duree_partie, date_partie)
-            VALUES (:id_mode_de_jeu, :id_difficulte, '00:15:00', CURRENT_DATE)";
+            VALUES (:id_mode_de_jeu, :id_difficulte, ";
+
+        if ($duree) {
+            $query .= ":duree_partie";
+        }
+        else {
+            $query .= "'00:15:00'";
+        }
+
+        $query .= ", CURRENT_DATE)";
 
         $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":id_mode_de_jeu", $partie->getMode_de_jeu(), PDO::PARAM_INT);
         $prepare->bindValue(":id_difficulte", $partie->getDifficulte(), PDO::PARAM_INT);
+
+        if ($duree) {
+            $prepare->bindValue(":duree_partie", $partie->getDuree(), PDO::PARAM_STR);
+        }
 
         // Execute la requête. Retourne l'ID de la partie insérée (si réussite) ou false (si echec)
         if ($prepare->execute()) {

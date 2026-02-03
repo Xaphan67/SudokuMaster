@@ -7,6 +7,8 @@ class Participer extends Entity {
     private string $id;
     private ?int $utilisateur;
     private int $partie;
+    private int $gagnant;
+    private int $score;
 
     // Constructeur
 
@@ -29,6 +31,14 @@ class Participer extends Entity {
         return $this->partie;
     }
 
+    public function getGagnant() : int {
+        return $this->gagnant;
+    }
+
+    public function getScore() : int {
+        return $this->score;
+    }
+
     // Setters
 
     public function setId($id) {
@@ -41,5 +51,13 @@ class Participer extends Entity {
 
     public function setPartie($partie) {
         $this->partie = $partie;
+    }
+
+    public function setGagnant($gagnant) {
+        $this->gagnant = $gagnant;
+    }
+
+    public function setScore($score) {
+        $this->score = $score;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Xaphan67\SudokuMaster\Controllers;
 
+use Xaphan67\SudokuMaster\Api\PartieApi;
 use Xaphan67\SudokuMaster\Entities\Classer;
 use Xaphan67\SudokuMaster\Entities\Utilisateur;
 use Xaphan67\SudokuMaster\Models\ClasserModel;
@@ -94,8 +95,18 @@ class UtilisateurController extends Controller {
                         $classerModel->add($classer);
                     }
 
-                    // Redirige l'utilisateur vers la page de connexion
-                    header("Location:connexion");
+                    // S'il y a des données d'une partie solo précédente en session
+                    if (isset($_SESSION["partie_precedente"])) {
+
+                        // Appelle la méthode dans PartieApi pour enregistrer la partie et mettre a à jour les statistiques en base de données
+                        $api = new PartieApi;
+                        $api->register($utilisateurID);
+                    }
+                    else {
+
+                        // Redirige l'utilisateur vers la page de connexion
+                        header("Location:connexion");
+                    }
                 }
             }
         }

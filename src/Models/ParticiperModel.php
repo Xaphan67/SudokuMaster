@@ -12,17 +12,41 @@ class ParticiperModel extends Model {
         return $participers;
     }
 
-    function add(Participer $participer) : bool {
+    function add(Participer $participer, bool $gagnant = false, int $score = 0) : bool {
 
         // Requête préparée pour ajouter la participation
-        $query = "INSERT INTO participer (id_utilisateur, id_partie, gagnant)
-            VALUES(:id_utilisateur, :id_partie, '0')";
+        $query = "INSERT INTO participer (id_utilisateur, id_partie, gagnant, score)
+            VALUES(:id_utilisateur, :id_partie, ";
+
+        if ($gagnant) {
+            $query .= ":gagnant, ";
+        }
+        else {
+            $query .= "'0', ";
+        }
+
+        if ($score != 0) {
+            $query .= ":score";
+        }
+        else {
+            $query .= "'0'";
+        }
+
+        $query .= ")";
 
         $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $participer->getUtilisateur(), PDO::PARAM_INT);
         $prepare->bindValue(":id_partie", $participer->getPartie(), PDO::PARAM_INT);
+
+        if ($gagnant) {
+            $prepare->bindValue(":gagnant", $participer->getGagnant(), PDO::PARAM_INT);
+        }
+
+        if ($score != 0) {
+            $prepare->bindValue(":score", $participer->getScore(), PDO::PARAM_INT);
+        }
 
         // Execute la requête. Retourne true (si réussite) ou false (si echec)
         return $prepare->execute();

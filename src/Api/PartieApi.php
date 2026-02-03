@@ -376,4 +376,113 @@ class PartieApi {
         // Retourne la différence entre le score global avant la partie et après
         echo '{"difference_score": ' . ($scoreGlobal - $dataJS["scoreGlobal"]) . "}";
     }
+
+    // Stocke les informations de la partie terminée en session
+    public function store() {
+
+        // Récupération des données envoyées par JS
+        $json_data = file_get_contents('php://input'); // Lit le corps brut de la requête
+        $dataJS = json_decode($json_data, true); // Décode le JSON en tableau associatif
+
+        // Stocke les données en session
+        $_SESSION["partie_precedente"]["difficulte"] = $dataJS["difficulte"];
+        $_SESSION["partie_precedente"]["victoire"] = $dataJS["victoire"];
+        $_SESSION["partie_precedente"]["timerMinutes"] = $dataJS["timerMinutes"];
+        $_SESSION["partie_precedente"]["timerSecondes"] = $dataJS["timerSecondes"];
+    }
+
+    // Enregistre les informations de la partie terminée en session
+    public function register(int $utilisateurID) {
+
+        // Crée une instance du modèle ModeDeJeu
+        $modeDeJeuModel = new ModeDeJeuModel;
+
+        // Crée un nouvel objet ModeDeJeu et l'hydrate avec les données présentes en base de donnée
+        $modeDeJeu = new ModeDeJeu;
+        $modeDeJeu->hydrate($modeDeJeuModel->findByLabel("Solo"));
+
+        // Crée une instance du modèle Difficulte
+        $difficulteModel = new DifficulteModel;
+
+        // Crée un nouvel objet Difficulte et l'hydrate avec les données présentes en base de donnée
+        $difficulte = new Difficulte;
+        $difficulte->hydrate($difficulteModel->findByLabel($_SESSION["partie_precedente"]["difficulte"]));
+
+        // Calcule le temps de la partie
+        // Il faut ajouter une seconde car le timer commence a 14:59
+        $minutes = $_SESSION["partie_precedente"]["timerMinutes"];
+        $secondes = $_SESSION["partie_precedente"]["timerSecondes"];
+
+        if ($secondes + 1 == 60) {
+            $minutes += 1;
+            $secondes = 0;
+        }
+
+        $duree = "00:" . ($minutes < 10 ? "0" : "") . $minutes . ":" . ($secondes < 10 ? "0" : "") . $secondes;
+
+        // Crée un nouvel objet Partie et l'hydrate avec les données
+        $partie = new Partie;
+        $partie->setMode_de_jeu($modeDeJeu->getId());
+        $partie->setDifficulte($difficulte->getId());
+        $partie->setDuree($duree);
+
+        // Crée une instance du modèle Partie et appelle la méthode
+        // pour insérer la partie en base de données et récupérer son ID
+        $partieModel = new PartieModel;
+        $partieID = $partieModel->add($partie, true);
+
+        // Calcule le score global de l'utilisateur
+        $coefficientDifficulte = $_SESSION["partie_precedente"]["difficulte"] == "Facile" ? 10 : ($_SESSION["partie_precedente"]["difficulte"] == "Moyen" ? 20 : 30);
+
+        if ($_SESSION["partie_precedente"]["victoire"]) {
+            $scoreGlobal = (int)(1000 + ($coefficientDifficulte * max(0.2, 1 - ($minutes * 60 + $secondes) / 900)) * 1 / (sqrt(1 + 1 / 20)));
+            $score = $scoreGlobal - 1000;
+        }
+        else {
+            $scoreGlobal = (int)(1000 + ($coefficientDifficulte * max(0.2, 1 - 900 / 900) * -1) * 1 / (sqrt(1 + 1 / 20)));
+            $score = 1000 - $scoreGlobal;
+        }
+
+        // Crée un nouvel objet Participer et l'hydrate avec les données
+        $participer = new Participer;
+        $participer->setUtilisateur($utilisateurID);
+        $participer->setPartie($partieID);
+        $participer->setGagnant($_SESSION["partie_precedente"]["victoire"]);
+        $participer->setScore($score);
+
+        // Crée une instance du modèle Participer et appelle la méthode
+        // pour insérer le participant en base de donnée
+        $participerModel = new ParticiperModel;
+        $participerModel->add($participer, $_SESSION["partie_precedente"]["victoire"], $score);
+
+        // Crée une instance du modèle Classer et appelle la méthode
+        // pour récupérer les statistiques en base de donnée
+        $classerModel = new ClasserModel;
+        $donneesClasser = $classerModel->findByUserAndMode($utilisateurID, $modeDeJeu->getId());
+
+        // Crée un nouvel objet Classer et l'hydrate avec les données
+        $classer = new Classer;
+        $classer->setUtilisateur($utilisateurID);
+        $classer->setMode_de_jeu($modeDeJeu->getId());
+        $classer->hydrate($donneesClasser);
+        $classer->setTemps_moyen($duree);
+        $classer->setMeilleur_temps($duree);
+        $classer->setGrilles_jouees(1);
+        $classer->setScore_global($scoreGlobal);
+
+        // En cas de victoire du joueur
+        if ($_SESSION["partie_precedente"]["victoire"]) {
+            $classer->setGrilles_resolues(1);
+            $classer->setSerie_victoires(1);
+        }
+
+        // Met à jour les données en base de donnée
+        $classerModel->edit($classer);
+
+        // Retire les variables de la session
+        unset($_SESSION["partie_precedente"]);
+
+        // Redirige l'utilisateur vers la page de connexion
+        header("Location:connexion");
+    }
 }

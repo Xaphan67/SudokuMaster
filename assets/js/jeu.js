@@ -34,6 +34,8 @@ let serieVictoires = null;
 let scoreGlobal = null;
 let valeur = null;
 let evolution = null;
+let inscription = null;
+let boutonInscription = null;
 
 // multijoueur
 let multijoueur;
@@ -820,6 +822,36 @@ async function endGame(popup = true) {
         }
         else {
             POPUP_FIN_PARTIE_SCORE_GLOBAL.style.display = "none";
+
+            // En mode solo uniquement
+
+            if (!multijoueur) {
+
+                // Ajoute un nouvel élement au DOM pour proposer au joueur de s'inscrire
+                inscription = document.createElement('P');
+                inscription.textContent = "Créez un compte pour enregistrer votre score et accéder à des fonctionnalités supplémentaires"
+                POPUP_FIN_PARTIE_SCORE_GLOBAL.insertAdjacentElement('afterend', inscription);
+                boutonInscription = document.createElement('DIV');
+                boutonInscription.innerText = "Créer un compte";
+                boutonInscription.classList.add("bouton", "boutonPrincipal", "boutonDefaut");
+                inscription.insertAdjacentElement('afterend', boutonInscription);
+
+                // Lors du clic sur le bouton Créer un compte
+                boutonInscription.addEventListener("click", async (e) => {
+                    
+                    // Enregistre les informations de la partie en session
+                    await fetch("index.php?controller=api-partie&action=store", {
+                        method: "POST",
+                        headers: {
+                                'Content-Type': 'application/json', // Indique qu'on envoie du JSON
+                            },
+                            body: JSON.stringify({difficulte: difficulte, victoire: victoire, timerMinutes: timerMinutes, timerSecondes: timerSecondes}) // Objet JS converti en chaîne JSON
+                    });
+
+                    // Redirige vers la création de compte
+                    window.location.replace("inscription");
+                });
+            }
         }
 
         // Affiche un message de victoire ou défaite selon l'état de la partie quand le popup s'affiche
