@@ -6,10 +6,31 @@ use PDO;
 use Xaphan67\SudokuMaster\Entities\Partie;
 
 class PartieModel extends Model {
-    function getAll() {
-        $query = "SELECT * FROM partie";
-        $parties = $this->_db->query($query)->fetchAll();
-        return $parties;
+
+    function findAll(int $limit = 0, bool $desc = false) {
+
+        // Requête préparée pour récupérer toutes les parties
+         $query =
+            "SELECT partie.id_partie, date_partie, duree_partie, libelle_mode_de_jeu, libelle_difficulte, pseudo_utilisateur, gagnant
+            FROM partie
+            INNER JOIN mode_de_jeu ON mode_de_jeu.id_mode_de_jeu = partie.id_mode_de_jeu
+            INNER JOIN difficulte ON difficulte.id_difficulte = partie.id_difficulte
+            INNER JOIN participer ON participer.id_partie = partie.id_partie
+            INNER JOIN utilisateur ON utilisateur.id_utilisateur = participer.Id_utilisateur";
+
+        if ($desc) {
+            $query .= " ORDER BY partie.id_partie DESC";
+        }
+
+        if ($limit != 0) {
+            $query .= " LIMIT " . $limit;
+        }
+
+        $prepare = $this->_db->prepare($query);
+
+        // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
+        $prepare->execute();
+        return $prepare->fetchAll();
     }
 
     function add(Partie $partie, bool $duree = false) {

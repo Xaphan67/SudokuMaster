@@ -7,6 +7,29 @@ use Xaphan67\SudokuMaster\Entities\Utilisateur;
 
 class UtilisateurModel extends Model {
 
+    function findAll(int $limit = 0, bool $desc = false) {
+
+        // Requête préparée pour récupérer tout les utilisateurs
+         $query =
+            "SELECT *
+            FROM utilisateur
+            WHERE inactif = 0";
+
+        if ($desc) {
+            $query .= " ORDER BY Id_utilisateur DESC";
+        }
+
+        if ($limit != 0) {
+            $query .= " LIMIT " . $limit;
+        }
+
+        $prepare = $this->_db->prepare($query);
+
+        // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
+        $prepare->execute();
+        return $prepare->fetchAll();
+    }
+
     function add(Utilisateur $utilisateur) {
 
         // Requête préparée pour ajouter l'utilisateur
