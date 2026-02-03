@@ -50,7 +50,9 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   CONSTRAINT `utilisateur_ibfk_1` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Listage des données de la table sudoku_master.utilisateur : ~0 rows (environ)
+-- Listage des données de la table sudoku_master.utilisateur : ~1 rows (environ)
+INSERT INTO `utilisateur` (`Id_utilisateur`, `pseudo_utilisateur`, `email_utilisateur`, `mdp_utilisateur`, `inactif`, `id_role`, `reset_token_hash`, `reset_token_date_expiration`) VALUES
+	(1, 'Admin', 'admin@sudokumaster.com', '$2y$10$udYnbRxrFHxXHHNo1IYp9uOuhekF7PDn6K95T07LaIpewn4CulsiK', 0, 1, NULL, NULL);
 
 -- Listage de la structure de table sudoku_master. mode_de_jeu
 DROP TABLE IF EXISTS `mode_de_jeu`;
