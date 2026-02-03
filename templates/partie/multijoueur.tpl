@@ -246,19 +246,19 @@
         <p>Vous pouvez terminer la partie seul, ou abandonner la partie</p>
         <p>Attention ! Abandonner la partie comptera comme une défaite</p>
         <div id="bouton_continuer_partie" class="bouton boutonPrincipal boutonDefaut">Terminer seul</div>
-        <a href="salon" class="bouton boutonPrincipal boutonLarge">Abandonner</a>
+        <a href="salon" class="bouton boutonPrincipal boutonDefaut">Abandonner</a>
     </div>
     <div id="abandon_partie" class="popup popup_large"><!-- popup d'abandon de partie' -->
         <h3>Abandonner la partie ?</h3>
         <p>La progression de la partie actuelle sera perdue et comptera comme une défaite</p>
-        <a href="salon" class="bouton boutonPrincipal boutonLarge">Abandonner</a>
+        <a href="salon" class="bouton boutonPrincipal boutonDefaut">Abandonner</a>
         <div id="bouton_annuler_partie" class="bouton boutonPrincipal boutonDefaut">Annuler</div>
     </div>
     <div id="fin_partie" class="popup"><!-- popup de fin de partie -->
         <h3></h3>
         <p>Vous avez correctement teminé la grille</p>
         <p class="score_global">Score global</p>
-        <a href="salon" class="bouton boutonPrincipal boutonLarge">Retour au salon</a>
+        <a href="salon" class="bouton boutonPrincipal boutonDefaut">Retour au salon</a>
     </div>
     <div id="erreur" class="popup"><!-- popup d'erreur de grille -->
         <h3>Une erreur est survenue</h3>
@@ -266,7 +266,7 @@
             Impossible de récupérer une grille actuellement<br>
             Veuillez réessayer plus tard
         </p>
-        <a href="index.php" class="bouton boutonPrincipal boutonLarge">Retour à l'accueil</a>
+        <a href="index.php" class="bouton boutonPrincipal boutonDefaut">Retour à l'accueil</a>
     </div>
     <div id="erreur_salle" class="popup popup_large"><!-- popup d'erreur de salle -->
         <h3>Une erreur est survenue</h3>
@@ -274,7 +274,7 @@
             La salle demandée n'existe pas<br>
             Veuillez réessayer
         </p>
-        <a href="salon" class="bouton boutonPrincipal boutonLarge">Retour au salon</a>
+        <a href="salon" class="bouton boutonPrincipal boutonDefaut">Retour au salon</a>
     </div>
     <div id="erreur_serveur" class="popup popup_large"><!-- popup d'erreur de connexion au serveur WebSocket -->
         <h3>Une erreur est survenue</h3>
@@ -282,7 +282,7 @@
             Impossible de contacter le serveur de parties<br>
             Veuillez réessayer plus tard
         </p>
-        <a href="salon" class="bouton boutonPrincipal boutonLarge">Retour au salon</a>
+        <a href="salon" class="bouton boutonPrincipal boutonDefaut">Retour au salon</a>
     </div>
 </div>
 {/block}

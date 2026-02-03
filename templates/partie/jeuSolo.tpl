@@ -210,7 +210,7 @@
             Impossible de récupérer une grille actuellement<br>
             Veuillez réessayer plus tard
         </p>
-        <a href="index.php" class="bouton boutonPrincipal boutonLarge">Retour à l'accueil</a>
+        <a href="index.php" class="bouton boutonPrincipal boutonDefaut">Retour à l'accueil</a>
     </div>
 </div>
 {/block}

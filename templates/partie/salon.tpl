@@ -81,8 +81,8 @@
         <h3>Compte requis</h3>
         <p>Pour jouer en multijoueur, vous devez vous connecter avec votre compte</p>
         <p>Vous n'avez pas de compte ? Créez-en un facilement en cliquant sur le bouton çi-dessous</p>
-        <a href="inscription" class="bouton boutonPrincipal boutonLarge">Créer un compte</a>
-        <a href="connexion&from=salon" class="bouton boutonPrincipal boutonLarge">Se connecter</a>
+        <a href="inscription" class="bouton boutonPrincipal boutonDefaut">Créer un compte</a>
+        <a href="connexion&from=salon" class="bouton boutonPrincipal boutonDefaut">Se connecter</a>
     </div>
 {/if}
 {/block}
