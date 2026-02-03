@@ -51,6 +51,9 @@ class UtilisateurController extends Controller {
             if (empty($_POST["mdp"])) {
                 $erreurs["mdp"] = "Ce champ est obligatoire";
             }
+            else if(!preg_match("/(?=\S{8,})(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S/", $_POST["mdp"])) {
+                $erreurs["mdp"] = "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un nombre et un caractère spécial";
+            }
 
             if (empty($_POST["mdp_confirm"])) {
                 $erreurs["mdp_confirm"] = "Ce champ est obligatoire";
@@ -265,7 +268,10 @@ class UtilisateurController extends Controller {
 
             $changerMdp = false;
             if (!empty($_POST["mdp"])) {
-                if ($_POST["mdp"] != $_POST["mdp_confirm"]) {
+                if(!preg_match("/(?=\S{8,})(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S/", $_POST["mdp"])) {
+                    $erreurs["mdp"] = "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un nombre et un caractère spécial";
+                }
+                else if ($_POST["mdp"] != $_POST["mdp_confirm"]) {
                     $erreurs["mdp_confirm"] = "Les mots de passe ne sont pas identiques";
                 }
                 else {
