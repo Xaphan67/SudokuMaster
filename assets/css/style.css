@@ -1785,7 +1785,7 @@ footer a {
 #debut_partie, #fin_partie, #modifier_compte, #supprimer_compte,
 #compte_requis, #verif_joueur_pret, #abandon_autre_joueur_partie,
 #abandon_partie, #erreur, #erreur_salle, #erreur_serveur,
-#mail_envoye, #token_invalide, #mdp_reinitialise {
+#mail_envoye, #token_invalide, #mdp_reinitialise, #supprimer_utilisateur {
   position: fixed;
   display: flex;
   transform: translateX(-50%) translateY(-50%);
@@ -1794,7 +1794,7 @@ footer a {
 
 #fin_partie, #modifier_compte, #supprimer_compte, #verif_joueur_pret,
 #abandon_autre_joueur_partie,#abandon_partie, #erreur,
-#erreur_salle, #erreur_serveur {
+#erreur_salle, #erreur_serveur, #supprimer_utilisateur {
   display: none;
 }
 
@@ -2380,6 +2380,10 @@ section p {
 
   #accueil_administration tr {
     height: unset;
+  }
+
+  #accueil_administration td {
+    cursor: default;
   }
 
   #accueil_administration table#utilisateurs tr th:last-child, #accueil_administration table#utilisateurs tr td:last-child {

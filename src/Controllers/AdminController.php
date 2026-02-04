@@ -59,6 +59,8 @@ class AdminController extends Controller {
         $parties = array_slice($partiesFusion, 0, 5);
 
         // Indique au gabarit les variables nécessaires
+        $scripts = ["admin.js"];
+        $this->_donnees["scripts"] = $scripts;
         $this->_donnees["utilisateurs"] = $utilisateurs;
         $this->_donnees["parties"] = $parties;
 
