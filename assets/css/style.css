@@ -142,10 +142,6 @@ p {
     flex-direction: column;
 }
 
-.inactif {
-  filter: opacity(0.40);
-}
-
 main {
   display: flex;
   flex-direction: column;
@@ -1604,6 +1600,105 @@ td:not(.celluleFixe, .selected_highlight) li {
   margin-top: 15px;
 }
 
+/* Administration */
+
+#accueil_administration {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  gap: 15px;
+}
+
+#accueil_administration p {
+  text-align: center;
+}
+
+#accueil_administration section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#accueil_administration section>div {
+  display: flex;
+  margin: 0px auto;
+}
+
+#accueil_administration span {
+  font-weight: bold;
+}
+
+.administration_actions {
+  position: relative;
+  width: 60px;
+}
+
+#accueil_administration .actions {
+  position: absolute;
+  display: none;
+  gap: 10px;
+  background-color: var(--sectionArrierePlan);
+  border-radius: 15px;
+  box-shadow: 0px 4px 4px 0px var(--ombrePopup);
+  padding: 5px;
+  top: 0px;
+  left: -144px;
+}
+
+#accueil_administration svg {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  max-width: 40px;
+  fill: var(--texteBouton);
+}
+
+#accueil_administration table {
+  width: 90%;
+  max-width: 90%;
+  margin: 0px auto;
+}
+
+#accueil_administration tr {
+  height: 70px;
+}
+
+#accueil_administration td, #accueil_administration td div {
+  font-size: clamp(0.85rem, 3.125vw, 1rem);
+}
+
+#accueil_administration section table:nth-child(4) {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+}
+
+#accueil_administration section table:nth-child(5) {
+  display: none;
+}
+
+.boutonIcone {
+    padding: 10px;
+    width: 60px;
+    height: 60px;
+}
+
+.boutonAdmin {
+  width: 250px;
+}
+
+.joueurs {
+  display: flex;
+}
+
+.joueurs img {
+  width: 20px;
+}
+
+#accueil_administration td>div {
+  display: flex;
+}
+
 /* Footer */
 
 footer {
@@ -1753,6 +1848,11 @@ section p {
 
 .bouton {
   cursor: pointer;
+}
+
+.inactif {
+  filter: opacity(0.40);
+  cursor: default;
 }
 
 .bouton:not(.boutonPave) {
@@ -2270,6 +2370,39 @@ section p {
     height: min(41vw, 350px);
     width: min(41vw, 350px);
     margin: auto;
+  }
+
+  /* Administration */
+
+  #accueil_administration table {
+    text-align: center;
+  }
+
+  #accueil_administration tr {
+    height: unset;
+  }
+
+  #accueil_administration table#utilisateurs tr th:last-child, #accueil_administration table#utilisateurs tr td:last-child {
+    width: 260px;
+  }
+
+  #accueil_administration section table:nth-child(4) {
+    display: none;
+  }
+
+  #accueil_administration section table:nth-child(5) {
+    display: table;
+  }
+
+  .administration_actions_large {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .joueurs {
+    display: flex;
+    justify-content: center;
   }
 
   /* Footer */
