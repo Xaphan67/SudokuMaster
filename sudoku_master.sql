@@ -37,6 +37,7 @@ INSERT INTO `role` (`id_role`, `libelle_role`) VALUES
 DROP TABLE IF EXISTS `utilisateur`;
 CREATE TABLE IF NOT EXISTS `utilisateur` (
   `Id_utilisateur` int NOT NULL AUTO_INCREMENT,
+  `date_inscription_utilisateur` date NOT NULL DEFAULT (curdate()),
   `pseudo_utilisateur` varchar(50) NOT NULL,
   `email_utilisateur` varchar(100) NOT NULL,
   `mdp_utilisateur` varchar(255) NOT NULL,
@@ -85,7 +86,11 @@ CREATE TABLE IF NOT EXISTS `classer` (
   CONSTRAINT `classer_ibfk_2` FOREIGN KEY (`id_mode_de_jeu`) REFERENCES `mode_de_jeu` (`id_mode_de_jeu`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Listage des données de la table sudoku_master.classer : ~0 rows (environ)
+-- Listage des données de la table sudoku_master.classer : ~3 rows (environ)
+INSERT INTO `classer` (`Id_utilisateur`, `id_mode_de_jeu`, `score_global`, `grilles_jouees`, `grilles_resolues`, `temps_moyen`, `meilleur_temps`, `serie_victoires`) VALUES
+	(1, 1, 1000, 0, 0, '00:15:00', '00:15:00', 0),
+	(1, 2, 1000, 0, 0, '00:15:00', '00:15:00', 0),
+	(1, 3, 1000, 0, 0, '00:15:00', '00:15:00', 0);
 
 -- Listage de la structure de table sudoku_master. difficulte
 DROP TABLE IF EXISTS `difficulte`;
