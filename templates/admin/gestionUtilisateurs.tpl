@@ -25,6 +25,11 @@
                                     <path d="M142 176a6 6 0 0 1-6 6a14 14 0 0 1-14-14v-40a2 2 0 0 0-2-2a6 6 0 0 1 0-12a14 14 0 0 1 14 14v40a2 2 0 0 0 2 2a6 6 0 0 1 6 6Zm-18-82a10 10 0 1 0-10-10a10 10 0 0 0 10 10Zm106 34A102 102 0 1 1 128 26a102.12 102.12 0 0 1 102 102Zm-12 0a90 90 0 1 0-90 90a90.1 90.1 0 0 0 90-90Z"/>
                                 </svg>
                             </div>
+                            <div name="bouton_bannir-{$utilisateur.Id_utilisateur}" class="bouton boutonPrincipal boutonIcone bouton-bannir{$utilisateur.id_role == 1 ? " inactif" : ""}">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                                    <path d="M224.4 104.2c-3.9-4.1-7.9-8.3-9.5-12.2s-1.6-9-1.7-14.7c-.1-9.3-.3-20-7.4-27.1s-17.8-7.3-27.1-7.4c-5.7-.1-11.1-.2-14.7-1.7s-8.1-5.6-12.2-9.5C145.2 25.2 137.6 18 128 18s-17.2 7.2-23.8 13.6c-4.1 3.9-8.3 7.9-12.2 9.5s-9 1.6-14.7 1.7c-9.3.1-20 .3-27.1 7.4S42.9 68 42.8 77.3c-.1 5.7-.2 11.1-1.7 14.7s-5.6 8.1-9.5 12.2C25.2 110.8 18 118.4 18 128s7.2 17.2 13.6 23.8c3.9 4.1 7.9 8.3 9.5 12.2s1.6 9 1.7 14.7c.1 9.3.3 20 7.4 27.1s17.8 7.3 27.1 7.4c5.7.1 11.1.2 14.7 1.7s8.1 5.6 12.2 9.5c6.6 6.4 14.2 13.6 23.8 13.6s17.2-7.2 23.8-13.6c4.1-3.9 8.3-7.9 12.2-9.5s9-1.6 14.7-1.7c9.3-.1 20-.3 27.1-7.4s7.3-17.8 7.4-27.1c.1-5.7.2-11.1 1.7-14.7s5.6-8.1 9.5-12.2c6.4-6.6 13.6-14.2 13.6-23.8s-7.2-17.2-13.6-23.8Zm-8.6 39.3c-4.7 4.9-9.5 9.9-12 15.9s-2.5 12.5-2.6 19.1s-.2 15.1-3.9 18.8s-11.4 3.8-18.8 3.9s-13.4.2-19.1 2.6s-11 7.3-15.9 12S132.8 226 128 226s-10.2-5.2-15.5-10.2s-9.9-9.5-15.9-12s-12.5-2.5-19.1-2.6s-15.1-.2-18.8-3.9s-3.8-11.4-3.9-18.8s-.2-13.4-2.6-19.1s-7.3-11-12-15.9S30 132.8 30 128s5.2-10.2 10.2-15.5s9.5-9.9 12-15.9s2.5-12.5 2.6-19.1s.2-15.1 3.9-18.8s11.4-3.8 18.8-3.9s13.4-.2 19.1-2.6s11-7.3 15.9-12S123.2 30 128 30s10.2 5.2 15.5 10.2s9.9 9.5 15.9 12s12.5 2.5 19.1 2.6s15.1.2 18.8 3.9s3.8 11.4 3.9 18.8s.2 13.4 2.6 19.1s7.3 11 12 15.9S226 123.2 226 128s-5.2 10.2-10.2 15.5ZM122 136V80a6 6 0 0 1 12 0v56a6 6 0 0 1-12 0Zm16 36a10 10 0 1 1-10-10a10 10 0 0 1 10 10Z"/>
+                                </svg>
+                            </div>
                             <div name="bouton_supprimer-{$utilisateur.Id_utilisateur}" class="bouton boutonPrincipal boutonIcone bouton-supprimer{$utilisateur.id_role == 1 ? " inactif" : ""}">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
                                     <path d="M216 50h-42V40a22 22 0 0 0-22-22h-48a22 22 0 0 0-22 22v10H40a6 6 0 0 0 0 12h10v146a14 14 0 0 0 14 14h128a14 14 0 0 0 14-14V62h10a6 6 0 0 0 0-12ZM94 40a10 10 0 0 1 10-10h48a10 10 0 0 1 10 10v10H94Zm100 168a2 2 0 0 1-2 2H64a2 2 0 0 1-2-2V62h132Zm-84-104v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Zm48 0v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Z"/>
@@ -56,7 +61,23 @@
                     <td>{$utilisateur.pseudo_utilisateur}</td>
                     <td>{$utilisateur.email_utilisateur}</td>
                     <td>{$utilisateur.id_role == 1 ? "Oui" : "Non"}</td>
-                    <td class="administration_actions_large"><div name="bouton_infos-{$utilisateur.Id_utilisateur}" class="bouton boutonPrincipal boutonProfil bouton-info">Infos</div><div name="bouton_supprimer-{$utilisateur.Id_utilisateur}" class="bouton boutonPrincipal boutonProfil bouton-supprimer{$utilisateur.id_role == 1 ? " inactif" : ""}">Supprimer</div></td>
+                    <td class="administration_actions_large">
+                        <div name="bouton_infos-{$utilisateur.Id_utilisateur}" class="bouton boutonPrincipal boutonIcone bouton-info">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                                <path d="M142 176a6 6 0 0 1-6 6a14 14 0 0 1-14-14v-40a2 2 0 0 0-2-2a6 6 0 0 1 0-12a14 14 0 0 1 14 14v40a2 2 0 0 0 2 2a6 6 0 0 1 6 6Zm-18-82a10 10 0 1 0-10-10a10 10 0 0 0 10 10Zm106 34A102 102 0 1 1 128 26a102.12 102.12 0 0 1 102 102Zm-12 0a90 90 0 1 0-90 90a90.1 90.1 0 0 0 90-90Z"/>
+                            </svg>
+                        </div>
+                        <div name="bouton_bannir-{$utilisateur.Id_utilisateur}" class="bouton boutonPrincipal boutonIcone bouton-bannir{$utilisateur.id_role == 1 ? " inactif" : ""}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                                <path d="M224.4 104.2c-3.9-4.1-7.9-8.3-9.5-12.2s-1.6-9-1.7-14.7c-.1-9.3-.3-20-7.4-27.1s-17.8-7.3-27.1-7.4c-5.7-.1-11.1-.2-14.7-1.7s-8.1-5.6-12.2-9.5C145.2 25.2 137.6 18 128 18s-17.2 7.2-23.8 13.6c-4.1 3.9-8.3 7.9-12.2 9.5s-9 1.6-14.7 1.7c-9.3.1-20 .3-27.1 7.4S42.9 68 42.8 77.3c-.1 5.7-.2 11.1-1.7 14.7s-5.6 8.1-9.5 12.2C25.2 110.8 18 118.4 18 128s7.2 17.2 13.6 23.8c3.9 4.1 7.9 8.3 9.5 12.2s1.6 9 1.7 14.7c.1 9.3.3 20 7.4 27.1s17.8 7.3 27.1 7.4c5.7.1 11.1.2 14.7 1.7s8.1 5.6 12.2 9.5c6.6 6.4 14.2 13.6 23.8 13.6s17.2-7.2 23.8-13.6c4.1-3.9 8.3-7.9 12.2-9.5s9-1.6 14.7-1.7c9.3-.1 20-.3 27.1-7.4s7.3-17.8 7.4-27.1c.1-5.7.2-11.1 1.7-14.7s5.6-8.1 9.5-12.2c6.4-6.6 13.6-14.2 13.6-23.8s-7.2-17.2-13.6-23.8Zm-8.6 39.3c-4.7 4.9-9.5 9.9-12 15.9s-2.5 12.5-2.6 19.1s-.2 15.1-3.9 18.8s-11.4 3.8-18.8 3.9s-13.4.2-19.1 2.6s-11 7.3-15.9 12S132.8 226 128 226s-10.2-5.2-15.5-10.2s-9.9-9.5-15.9-12s-12.5-2.5-19.1-2.6s-15.1-.2-18.8-3.9s-3.8-11.4-3.9-18.8s-.2-13.4-2.6-19.1s-7.3-11-12-15.9S30 132.8 30 128s5.2-10.2 10.2-15.5s9.5-9.9 12-15.9s2.5-12.5 2.6-19.1s.2-15.1 3.9-18.8s11.4-3.8 18.8-3.9s13.4-.2 19.1-2.6s11-7.3 15.9-12S123.2 30 128 30s10.2 5.2 15.5 10.2s9.9 9.5 15.9 12s12.5 2.5 19.1 2.6s15.1.2 18.8 3.9s3.8 11.4 3.9 18.8s.2 13.4 2.6 19.1s7.3 11 12 15.9S226 123.2 226 128s-5.2 10.2-10.2 15.5ZM122 136V80a6 6 0 0 1 12 0v56a6 6 0 0 1-12 0Zm16 36a10 10 0 1 1-10-10a10 10 0 0 1 10 10Z"/>
+                            </svg>
+                        </div>
+                        <div name="bouton_supprimer-{$utilisateur.Id_utilisateur}" class="bouton boutonPrincipal boutonIcone bouton-supprimer{$utilisateur.id_role == 1 ? " inactif" : ""}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                                <path d="M216 50h-42V40a22 22 0 0 0-22-22h-48a22 22 0 0 0-22 22v10H40a6 6 0 0 0 0 12h10v146a14 14 0 0 0 14 14h128a14 14 0 0 0 14-14V62h10a6 6 0 0 0 0-12ZM94 40a10 10 0 0 1 10-10h48a10 10 0 0 1 10 10v10H94Zm100 168a2 2 0 0 1-2 2H64a2 2 0 0 1-2-2V62h132Zm-84-104v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Zm48 0v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Z"/>
+                            </svg>
+                        </div>
+                    </td>
                 </tr>
                 {/foreach}
             </tbody>
@@ -100,10 +121,37 @@
     </div>
     <div id="bouton_fermer" class="bouton boutonPrincipal boutonDefaut">Fermer</div>
 </div>
+<div id="bannir_utilisateur" class="popup"><!-- popup de banissement utilisateur -->
+    <h3>Bannir cet utilisateur ?</h3>
+    <p>Cet utilisateur ne pourra plus se connecter pendant la durée du banissement</p>
+    <form method="post">
+        <div>
+            <label for="dateFin">Date de fin</label>
+            <input id="dateFin"
+                name="dateFin"
+                type="datetime-local"
+            />
+            {if $erreurs["dateFin"]|isset}<p class="erreur">{$erreurs["dateFin"]}</p>{/if}
+        </div>
+        <div>
+            <label for="raison">Raison</label>
+            <textarea id="raison" name="raison" rows="3" required></textarea>
+            {if $erreurs["raison"]|isset}<p class="erreur">{$erreurs["raison"]}</p>{/if}
+        </div>
+        <input type="hidden" name="id_utilisateur" value="" />
+        <p>Laissez la date vide pour un bannissement permanent</p>
+        <div class="actions-formulaire">
+            <input type="submit" name="bouton_bannir" class="bouton boutonPrincipal boutonDefaut" value="Bannir" />
+            <div id="bouton_annuler_bannir" class="bouton boutonPrincipal boutonDefaut">Annuler</div>
+        </div>
+    </form>
+</div>
 <div id="supprimer_utilisateur" class="popup"><!-- popup de suppression utilisateur -->
     <h3>Supprimer cet utilisateur ?</h3>
     <p>Cet utilisateur ne pourra plus se connecter et ses données seront annonymisées</p>
     <div id="bouton_supprimer" class="bouton boutonPrincipal boutonDefaut">Oui</div>
-    <div id="bouton_annuler" class="bouton boutonPrincipal boutonDefaut">Non</div>
+    <div id="bouton_annuler_supprimer" class="bouton boutonPrincipal boutonDefaut">Non</div>
 </div>
+<!-- Récupère le formulaire qui possède des erreurs pour être utilisé en JS et afficher immédiatement le popup correspondant -->
+<input type="hidden" id="erreurs" value="{$erreurs["id_utilisateur"]|isset ? $erreurs["id_utilisateur"] : ""}" />
 {/block}

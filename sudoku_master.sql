@@ -138,6 +138,18 @@ CREATE TABLE IF NOT EXISTS `participer` (
 
 -- Listage des données de la table sudoku_master.participer : ~0 rows (environ)
 
+CREATE TABLE IF NOT EXISTS `bannissement` (
+  `id_bannissement` int NOT NULL AUTO_INCREMENT,
+  `Id_utilisateur` int NOT NULL,
+  `date_debut_bannissement` datetime DEFAULT NULL,
+  `date_fin_bannissement` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_bannissement`),
+  KEY `Id_utilisateur` (`Id_utilisateur`),
+  CONSTRAINT `bannissement_ibfk_1` FOREIGN KEY (`Id_utilisateur`) REFERENCES `utilisateur` (`Id_utilisateur`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Listage des données de la table sudoku_master.bannissement : ~0 rows (environ)
+
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;

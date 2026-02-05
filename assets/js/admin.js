@@ -1,16 +1,21 @@
 // Constantes
 const CONTENEUR_PRINCIPAL = document.getElementById("conteneur_principal");
-const POPUP_SUPPRIMER_UTILISATEUR = document.getElementById("supprimer_utilisateur");
-const POPUP_SUPPRIMER_UTILISATEUR_OUI = document.getElementById("bouton_supprimer");
-const POPUP_SUPPRIMER_UTILISATEUR_NON = document.getElementById("bouton_annuler");
 const POPUP_INFOS_UTILISATEUR = document.getElementById("infos_utilisateur");
 const POPUP_INFOS_UTILISATEUR_FERMER = document.getElementById("bouton_fermer");
+const POPUP_BANNIR_UTILISATEUR = document.getElementById("bannir_utilisateur");
+const POPUP_BANNIR_UTILISATEUR_OUI = document.getElementById("bouton_bannir");
+const POPUP_BANNIR_UTILISATEUR_NON = document.getElementById("bouton_annuler_bannir");
+const POPUP_SUPPRIMER_UTILISATEUR = document.getElementById("supprimer_utilisateur");
+const POPUP_SUPPRIMER_UTILISATEUR_OUI = document.getElementById("bouton_supprimer");
+const POPUP_SUPPRIMER_UTILISATEUR_NON = document.getElementById("bouton_annuler_supprimer");
 const ACTIONS = Array.from(document.getElementsByClassName("actions"));
 const BOUTONS_ATIONS = Array.from(document.getElementsByClassName("boutonActions"));
 const BOUTONS_INFOS = Array.from(document.getElementsByClassName("bouton-info"));
+const BOUTONS_BANNIR = Array.from(document.getElementsByClassName("bouton-bannir"));
 const BOUTONS_SUPPRIMER = Array.from(document.getElementsByClassName("bouton-supprimer"));
 const BOUTONS_FERMER = Array.from(document.getElementsByClassName("bouton-fermer"));
 const ONGLETS = POPUP_INFOS_UTILISATEUR.getElementsByClassName("onglets")[0];
+const ERREURS_FORMULAIRES = document.getElementById("erreurs");
 
 // Variables
 let IdUtilisateur = null;
@@ -49,6 +54,24 @@ BOUTONS_INFOS.forEach(bouton => {
         // Récupère les informations de l'utilisateur
         getUserInfos(IdUtilisateur);
     });
+});
+
+// Pour chaque bouton de bannissement...
+BOUTONS_BANNIR.forEach(bouton => {
+
+    // Si le bouton est actif...
+    if (!bouton.classList.contains("inactif")) {
+
+        // Lorsqu'on clique dessus...
+        bouton.addEventListener("click", (e) => {
+
+            // stocke l'ID de l'utilisateur correspondant
+            IdUtilisateur = bouton.getAttribute("name").split('-')[1];
+
+            // Ouvre le popup avec le formulaire de bannissement
+            openBanUser(IdUtilisateur);
+        });
+    }
 });
 
 // Pour chaque bouton de suppression...
@@ -283,3 +306,36 @@ ONGLETS.getElementsByTagName("P")[2].addEventListener("click", (e) => {
         ONGLET_COMPETITIF.style.display = "block";
     }
 });
+
+// Vérifie qi'il y a des erreurs dans le formulaire
+// Si oui, ouvre immédiatement le popup qui contient le formulaire au chargement de la page
+if (ERREURS_FORMULAIRES.value !== "") {
+    openBanUser(ERREURS_FORMULAIRES.value);
+}
+
+function openBanUser(IdUtilisateur) {
+
+    // Passe l'ID de l'utilisateur au formulaire
+    const CHAMP_FORMULAIRE = document.getElementsByName("id_utilisateur")[0];
+    CHAMP_FORMULAIRE.value = IdUtilisateur;
+
+    // Affiche le popup avec le formulaire
+    CONTENEUR_PRINCIPAL.style.filter = "opacity(0.40)";
+    CONTENEUR_PRINCIPAL.inert = true;
+    POPUP_BANNIR_UTILISATEUR.style.display = "flex";
+
+    // Lors du clic sur le bouton Annuler
+    POPUP_BANNIR_UTILISATEUR_NON.addEventListener("click", (e) => {
+        
+        // Masque le popup
+        CONTENEUR_PRINCIPAL.style.filter = "none";
+        CONTENEUR_PRINCIPAL.inert = false;
+        POPUP_BANNIR_UTILISATEUR.style.display = "none";
+
+        // Retire l'affichage des erreurs si l'utilisateur rouvre le popup plus tard
+        Array.from(document.getElementsByClassName("erreur")).forEach(erreur => {
+            erreur.innerHTML = "";
+        });
+    });
+
+}

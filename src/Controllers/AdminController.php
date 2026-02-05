@@ -27,6 +27,32 @@ class AdminController extends Controller {
             }
         }
 
+        // Crée un tableau pour gérer les erreurs
+        $erreurs = [];
+
+        // Si le formulaire est soumis
+        if (count($_POST) > 0) {
+
+            // Filtrage des données
+            // Protège contre la faille XSS
+            $raison = trim(filter_input(INPUT_POST, "raison", FILTER_SANITIZE_SPECIAL_CHARS));
+
+            // Test des données
+            if ($_POST["dateFin"] < date("now")) {
+                $erreurs["dateFin"] = "La date de fin ne peut pas déjà être passée";
+            }
+
+            if (!$raison) {
+                $erreurs["raison"] = "Ce champ est obligatoire";
+            }
+
+            // Si il n'y à aucune erreur
+            if (count($erreurs) == 0) {
+
+                //TODO : appliquer le bannissement
+            }
+        }
+
         // Récupère la liste des utilisateurs
         $utilisateurModel = new UtilisateurModel;
         $utilisateurs = $utilisateurModel->findAll(5, true);
@@ -58,9 +84,16 @@ class AdminController extends Controller {
         // Garde uniquement 5 parties
         $parties = array_slice($partiesFusion, 0, 5);
 
+        // S'il y a au moins une erreur dans le formulaire
+        // Ajoute l'ID de l'utilisateur au tableau d'erreurs pour le récupérer en JS
+        if (count($erreurs) > 0) {
+            $erreurs["id_utilisateur"] = $_POST["id_utilisateur"];
+        }
+
         // Indique au gabarit les variables nécessaires
         $scripts = ["admin.js"];
         $this->_donnees["scripts"] = $scripts;
+        $this->_donnees["erreurs"] = $erreurs;
         $this->_donnees["utilisateurs"] = $utilisateurs;
         $this->_donnees["parties"] = $parties;
 
@@ -88,13 +121,46 @@ class AdminController extends Controller {
             }
         }
 
+        // Crée un tableau pour gérer les erreurs
+        $erreurs = [];
+
+        // Si le formulaire est soumis
+        if (count($_POST) > 0) {
+
+            // Filtrage des données
+            // Protège contre la faille XSS
+            $raison = trim(filter_input(INPUT_POST, "raison", FILTER_SANITIZE_SPECIAL_CHARS));
+
+            // Test des données
+            if ($_POST["dateFin"] < date("now")) {
+                $erreurs["dateFin"] = "La date de fin ne peut pas déjà être passée";
+            }
+
+            if (!$raison) {
+                $erreurs["raison"] = "Ce champ est obligatoire";
+            }
+
+            // Si il n'y à aucune erreur
+            if (count($erreurs) == 0) {
+
+                //TODO : appliquer le bannissement
+            }
+        }
+
         // Récupère la liste des utilisateurs
         $utilisateurModel = new UtilisateurModel;
         $utilisateurs = $utilisateurModel->findAll(desc: true);
 
+        // S'il y a au moins une erreur dans le formulaire
+        // Ajoute l'ID de l'utilisateur au tableau d'erreurs pour le récupérer en JS
+        if (count($erreurs) > 0) {
+            $erreurs["id_utilisateur"] = $_POST["id_utilisateur"];
+        }
+
         // Indique au gabarit les variables nécessaires
         $scripts = ["admin.js"];
         $this->_donnees["scripts"] = $scripts;
+        $this->_donnees["erreurs"] = $erreurs;
         $this->_donnees["utilisateurs"] = $utilisateurs;
 
         // Affiche le gabarit gestion utilisateurs

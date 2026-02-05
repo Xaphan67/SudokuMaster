@@ -1646,7 +1646,7 @@ td:not(.celluleFixe, .selected_highlight) li {
   box-shadow: 0px 4px 4px 0px var(--ombrePopup);
   padding: 5px;
   top: 0px;
-  left: -144px;
+  left: -214px;
 }
 
 #accueil_administration svg, #gestion_utilisateurs svg {
@@ -1709,6 +1709,35 @@ td:not(.celluleFixe, .selected_highlight) li {
   display: flex;
   justify-content: space-between;
   width: 250px;
+}
+
+input[type="datetime-local"] {
+  padding: 0px 10px;
+  height: 53px;
+  border: 2px solid var(--texteNormal);
+  background-color: var(--arrierePlan);
+  border-radius: 10px;
+}
+
+textarea {
+  width: 100%;
+  font-size: 14px;
+  padding: 10px;
+  border: 2px solid var(--texteNormal);
+  border-radius: 10px;
+  cursor: text;
+  background-color: var(--arrierePlan);
+}
+
+#bannir_utilisateur form {
+  align-items: center;
+  max-width: 360px;
+}
+
+#bannir_utilisateur form>div:not(.actions-formulaire) {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 /* Footer */
@@ -1792,7 +1821,7 @@ footer a {
   max-width: 350px;
 }
 
-.actions {
+.actions, .actions-formulaire {
   display: flex;
   justify-content: center;
   gap: 20px;
@@ -1802,7 +1831,7 @@ footer a {
 #compte_requis, #verif_joueur_pret, #abandon_autre_joueur_partie,
 #abandon_partie, #erreur, #erreur_salle, #erreur_serveur,
 #mail_envoye, #token_invalide, #mdp_reinitialise, #supprimer_utilisateur,
-#infos_utilisateur {
+#infos_utilisateur, #bannir_utilisateur {
   position: fixed;
   display: flex;
   transform: translateX(-50%) translateY(-50%);
@@ -1811,7 +1840,8 @@ footer a {
 
 #fin_partie, #modifier_compte, #supprimer_compte, #verif_joueur_pret,
 #abandon_autre_joueur_partie,#abandon_partie, #erreur,
-#erreur_salle, #erreur_serveur, #supprimer_utilisateur, #infos_utilisateur {
+#erreur_salle, #erreur_serveur, #supprimer_utilisateur,
+#infos_utilisateur, #bannir_utilisateur {
   display: none;
 }
 
@@ -2405,7 +2435,7 @@ section p {
 
   #accueil_administration table#utilisateurs tr th:last-child, #accueil_administration table#utilisateurs tr td:last-child,
   #gestion_utilisateurs table#utilisateurs tr th:last-child, #gestion_utilisateurs table#utilisateurs tr td:last-child {
-    width: 260px;
+    width: 200px;
   }
 
   #accueil_administration section table:nth-child(4), #gestion_utilisateurs table:first-child, #gestion_parties table:first-child {
@@ -2695,13 +2725,19 @@ section p {
     width:400px;
   }
 
+  /* Administration */
+
+  textarea {
+    width: 360px;
+  }
+
   /* Popups */
 
   .popup_large {
     min-width: 850px;
   }
 
-  .popup input[type="text"], .popup input[type="email"], .popup input[type="password"]{
+  .popup input[type="text"], .popup input[type="email"], .popup input[type="password"], input[type="datetime-local"] {
     width: 360px;
   }
 
@@ -2711,7 +2747,7 @@ section p {
 
   /* Settings généraux */
 
-  select, input[type="text"], input[type="email"], input[type="password"] {
+  select, input[type="text"], input[type="email"], input[type="password"], input[type="datetime-local"] {
     height: 53px;
     font-size: 24px;
     padding: 0px 20px;
