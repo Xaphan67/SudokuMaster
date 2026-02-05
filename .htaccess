@@ -18,5 +18,6 @@ RewriteRule ^reinitialisationMdp(.*)?$ index.php?controller=utilisateur&action=r
 
 RewriteRule ^administration$ index.php?controller=admin&action=home
 RewriteRule ^gestionUtilisateurs$ index.php?controller=admin&action=usersManagement
+RewriteRule ^gestionParties$ index.php?controller=admin&action=gamesManagement
 
 ErrorDocument 404 /index.php?action=erreur404
