@@ -1609,22 +1609,26 @@ td:not(.celluleFixe, .selected_highlight) li {
   gap: 15px;
 }
 
-#accueil_administration p {
+#gestion_utilisateurs {
+  margin-top: 10px;
+}
+
+#accueil_administration p, #gestion_utilisateurs p {
   text-align: center;
 }
 
-#accueil_administration section {
+#accueil_administration section, #gestion_utilisateurs {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-#accueil_administration section>div {
+#accueil_administration section>div, #gestion_utilisateurs>div {
   display: flex;
   margin: 0px auto;
 }
 
-#accueil_administration span {
+#accueil_administration span, #gestion_utilisateurs span {
   font-weight: bold;
 }
 
@@ -1633,7 +1637,7 @@ td:not(.celluleFixe, .selected_highlight) li {
   width: 60px;
 }
 
-#accueil_administration .actions {
+#accueil_administration .actions, #gestion_utilisateurs .actions {
   position: absolute;
   display: none;
   gap: 10px;
@@ -1645,7 +1649,7 @@ td:not(.celluleFixe, .selected_highlight) li {
   left: -144px;
 }
 
-#accueil_administration svg {
+#accueil_administration svg, #gestion_utilisateurs svg {
   width: 40px;
   height: 40px;
   min-width: 40px;
@@ -1653,27 +1657,27 @@ td:not(.celluleFixe, .selected_highlight) li {
   fill: var(--texteBouton);
 }
 
-#accueil_administration table {
+#accueil_administration table, #gestion_utilisateurs table {
   width: 90%;
   max-width: 90%;
   margin: 0px auto;
 }
 
-#accueil_administration tr {
+#accueil_administration tr, #gestion_utilisateurs tr {
   height: 70px;
 }
 
-#accueil_administration td, #accueil_administration td div {
+#accueil_administration td, #accueil_administration td div, #gestion_utilisateurs td, #gestion_utilisateurs td div {
   font-size: clamp(0.85rem, 3.125vw, 1rem);
 }
 
-#accueil_administration section table:nth-child(4) {
+#accueil_administration section table:nth-child(4), #gestion_utilisateurs table:first-child {
   width: 100%;
   max-width: 500px;
   margin: auto;
 }
 
-#accueil_administration section table:nth-child(5) {
+#accueil_administration section table:nth-child(5), #gestion_utilisateurs table:nth-child(2) {
   display: none;
 }
 
@@ -1695,7 +1699,7 @@ td:not(.celluleFixe, .selected_highlight) li {
   width: 20px;
 }
 
-#accueil_administration td>div {
+#accueil_administration td>div, #gestion_utilisateurs td>div {
   display: flex;
 }
 
@@ -2385,27 +2389,28 @@ section p {
 
   /* Administration */
 
-  #accueil_administration table {
+  #accueil_administration table, #gestion_utilisateurs table {
     text-align: center;
   }
 
-  #accueil_administration tr {
+  #accueil_administration tr, #gestion_utilisateurs tr {
     height: unset;
   }
 
-  #accueil_administration td {
+  #accueil_administration td, #gestion_utilisateurs td {
     cursor: default;
   }
 
-  #accueil_administration table#utilisateurs tr th:last-child, #accueil_administration table#utilisateurs tr td:last-child {
+  #accueil_administration table#utilisateurs tr th:last-child, #accueil_administration table#utilisateurs tr td:last-child,
+  #gestion_utilisateurs table#utilisateurs tr th:last-child, #gestion_utilisateurs table#utilisateurs tr td:last-child {
     width: 260px;
   }
 
-  #accueil_administration section table:nth-child(4) {
+  #accueil_administration section table:nth-child(4), #gestion_utilisateurs table:first-child {
     display: none;
   }
 
-  #accueil_administration section table:nth-child(5) {
+  #accueil_administration section table:nth-child(5), #gestion_utilisateurs table:nth-child(2) {
     display: table;
   }
 

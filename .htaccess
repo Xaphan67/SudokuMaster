@@ -17,5 +17,6 @@ RewriteRule ^profil$ index.php?controller=utilisateur&action=profil [L]
 RewriteRule ^reinitialisationMdp(.*)?$ index.php?controller=utilisateur&action=resetPassword [L,QSA]
 
 RewriteRule ^administration$ index.php?controller=admin&action=home
+RewriteRule ^gestionUtilisateurs$ index.php?controller=admin&action=usersManagement
 
 ErrorDocument 404 /index.php?action=erreur404

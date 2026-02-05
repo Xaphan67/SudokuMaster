@@ -67,4 +67,37 @@ class AdminController extends Controller {
         // Affiche le gabarit accueil
         $this->_display("admin/accueil");
     }
+
+    // Page de gestion des utilisateurs
+    public function usersManagement() {
+
+        // Si l'utilisateur n'est pas connecté
+        if (!isset($_SESSION["utilisateur"])) {
+
+            // Redirige l'utilisateur vers la page de son profil
+            header("Location:index.php");
+            exit();
+        }
+        else {
+
+            // Si l'utilisateur n'a pas le rôle administrateur
+            if ($_SESSION["utilisateur"]["id_role"] != 1) {
+
+                // Appelle la fonction _forbidden() du controller mère
+                $this->_forbidden();
+            }
+        }
+
+        // Récupère la liste des utilisateurs
+        $utilisateurModel = new UtilisateurModel;
+        $utilisateurs = $utilisateurModel->findAll(desc: true);
+
+        // Indique au gabarit les variables nécessaires
+        $scripts = ["admin.js"];
+        $this->_donnees["scripts"] = $scripts;
+        $this->_donnees["utilisateurs"] = $utilisateurs;
+
+        // Affiche le gabarit gestion utilisateurs
+        $this->_display("admin/gestionUtilisateurs");
+    }
 }

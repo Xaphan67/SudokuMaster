@@ -132,7 +132,7 @@
                 </tbody>
             </table>
             <div>
-                <a href="gestionParties" class="bouton boutonPrincipal boutonDefaut boutonAdmin">Voir les parties</a>
+                <a href="gestionParties" class="bouton boutonPrincipal boutonDefaut boutonAdmin{$parties|count == 0 ? " inactif" : ""}">Voir les parties</a>
             </div>
         </section>
     </div>
@@ -177,4 +177,4 @@
     <div id="bouton_supprimer" class="bouton boutonPrincipal boutonDefaut">Oui</div>
     <div id="bouton_annuler" class="bouton boutonPrincipal boutonDefaut">Non</div>
 </div>
-{{/block}}
+{/block}
