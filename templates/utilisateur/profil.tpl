@@ -164,7 +164,7 @@
                         {/nocache}
                         required
                     />
-                    {if $erreurs["pseudo"]|isset}<p>{$erreurs["pseudo"]}</p>{/if}
+                    {if $erreurs["pseudo"]|isset}<p class="erreur">{$erreurs["pseudo"]}</p>{/if}
                 </div>
                 <div>
                     <label for="email">Adresse mail</label>
@@ -178,7 +178,7 @@
                         {/nocache}
                         required
                     />
-                    {if $erreurs["email"]|isset}<p>{$erreurs["email"]}</p>{/if}
+                    {if $erreurs["email"]|isset}<p class="erreur">{$erreurs["email"]}</p>{/if}
                 </div>
             </div>
             <div>
@@ -190,7 +190,7 @@
                         placeholder="*********"
                         autocomplete="off"
                     />
-                    {if $erreurs["mdp"]|isset}<p>{$erreurs["mdp"]}</p>{/if}
+                    {if $erreurs["mdp"]|isset}<p class="erreur">{$erreurs["mdp"]}</p>{/if}
                 </div>
                 <div>
                     <label for="mdp_confirm">Confirmation du mot de passe</label>
@@ -200,7 +200,7 @@
                         placeholder="*********"
                         autocomplete="off"
                     />
-                    {if $erreurs["mdp_confirm"]|isset}<p>{$erreurs["mdp_confirm"]}</p>{/if}
+                    {if $erreurs["mdp_confirm"]|isset}<p class="erreur">{$erreurs["mdp_confirm"]}</p>{/if}
                 </div>
             </div>
         </div>
@@ -214,9 +214,9 @@
                 autocomplete="off"
                 required
             />
-            {if $erreurs["mdp_check"]|isset}<p>{$erreurs["mdp_check"]}</p>{/if}
+            {if $erreurs["mdp_check"]|isset}<p class="erreur">{$erreurs["mdp_check"]}</p>{/if}
         </div>
-        <div class="actions">
+        <div class="actions-formulaire">
             <input type="submit" name="modifier_compte" class="bouton boutonPrincipal boutonDefaut" value="Modifier" />
             <div id="bouton_annuler_modifier" class="bouton boutonPrincipal boutonDefaut">Annuler</div>
         </div>
@@ -239,9 +239,9 @@
                 autocomplete="off"
                 required
             />
-            {if $erreurs["mdp_check"]|isset}<p>{$erreurs["mdp_check"]}</p>{/if}
+            {if $erreurs["mdp_check"]|isset}<p class="erreur">{$erreurs["mdp_check"]}</p>{/if}
         </div>
-        <div class="actions">
+        <div class="actions-formulaire">
             <input type="submit" name="supprimer_compte" class="bouton boutonPrincipal boutonDefaut" value="Supprimer" />
             <div id="bouton_annuler_supprimer" class="bouton boutonPrincipal boutonDefaut">Annuler</div>
         </div>
