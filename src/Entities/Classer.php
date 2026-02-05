@@ -4,7 +4,7 @@ namespace Xaphan67\SudokuMaster\Entities;
 
 class Classer extends Entity {
 
-    private string $id;
+    private int $id;
     private int $utilisateur;
     private int $mode_de_jeu;
     private int $grilles_jouees;
@@ -23,7 +23,7 @@ class Classer extends Entity {
 
     // Getters
 
-    public function getId() : string {
+    public function getId() : int {
         return $this->id;
     }
 
@@ -66,7 +66,7 @@ class Classer extends Entity {
         $this->id = $id;
     }
 
-        public function setUtilisateur($utilisateur) {
+    public function setUtilisateur($utilisateur) {
         $this->utilisateur = $utilisateur;
     }
 

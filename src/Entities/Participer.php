@@ -4,7 +4,7 @@ namespace Xaphan67\SudokuMaster\Entities;
 
 class Participer extends Entity {
 
-    private string $id;
+    private int $id;
     private ?int $utilisateur;
     private int $partie;
     private int $gagnant;
@@ -19,7 +19,7 @@ class Participer extends Entity {
 
     // Getters
 
-    public function getId() : string {
+    public function getId() : int {
         return $this->id;
     }
 

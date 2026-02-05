@@ -4,12 +4,12 @@ namespace Xaphan67\SudokuMaster\Entities;
 
 class Role extends Entity {
 
-    private string $id;
+    private int $id;
     private string $libelle;
 
     // Getters
 
-    public function getId() : string {
+    public function getId() : int {
         return $this->id;
     }
 

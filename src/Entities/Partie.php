@@ -4,7 +4,7 @@ namespace Xaphan67\SudokuMaster\Entities;
 
 class Partie extends Entity {
 
-    private string $id;
+    private int $id;
     private int $mode_de_jeu;
     private int $difficulte;
     private ?string $duree;
@@ -18,7 +18,7 @@ class Partie extends Entity {
 
     // Getters
 
-    public function getId() : string {
+    public function getId() : int {
         return $this->id;
     }
 

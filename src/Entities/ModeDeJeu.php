@@ -4,7 +4,7 @@ namespace Xaphan67\SudokuMaster\Entities;
 
 class ModeDeJeu extends Entity {
 
-    private string $id;
+    private int $id;
     private string $libelle;
 
     // Constructeur
@@ -16,7 +16,7 @@ class ModeDeJeu extends Entity {
 
     // Getters
 
-    public function getId() : string {
+    public function getId() : int {
         return $this->id;
     }
 

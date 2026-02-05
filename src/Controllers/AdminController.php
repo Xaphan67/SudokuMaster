@@ -2,6 +2,8 @@
 
 namespace Xaphan67\SudokuMaster\Controllers;
 
+use Xaphan67\SudokuMaster\Entities\Bannissement;
+use Xaphan67\SudokuMaster\Models\BannissementModel;
 use Xaphan67\SudokuMaster\Models\PartieModel;
 use Xaphan67\SudokuMaster\Models\UtilisateurModel;
 
@@ -36,9 +38,11 @@ class AdminController extends Controller {
             // Filtrage des données
             // Protège contre la faille XSS
             $raison = trim(filter_input(INPUT_POST, "raison", FILTER_SANITIZE_SPECIAL_CHARS));
+            $date = str_replace("T", " ", $_POST["dateFin"]);
+            $maintenant = date('Y-m-d H:i', time());
 
             // Test des données
-            if ($_POST["dateFin"] < date("now")) {
+            if ($date < $maintenant) {
                 $erreurs["dateFin"] = "La date de fin ne peut pas déjà être passée";
             }
 
@@ -49,7 +53,17 @@ class AdminController extends Controller {
             // Si il n'y à aucune erreur
             if (count($erreurs) == 0) {
 
-                //TODO : appliquer le bannissement
+                // Crée un nouvel objet Banissement et l'ydrate avec les données
+                $banissement = new Bannissement;
+                $banissement->setUtilisateur($_POST["id_utilisateur"]);
+                $banissement->setDate_debut($maintenant);
+                $banissement->setDate_fin($date);
+                $banissement->setRaison($raison);
+
+                // Crée une instance du modèle Bannissement et appelle la méthode
+                // pour ajouter le bannissement en base de données
+                $banissementModel = new BannissementModel;
+                $banissementModel->add($banissement);
             }
         }
 
@@ -130,9 +144,11 @@ class AdminController extends Controller {
             // Filtrage des données
             // Protège contre la faille XSS
             $raison = trim(filter_input(INPUT_POST, "raison", FILTER_SANITIZE_SPECIAL_CHARS));
+            $date = str_replace("T", " ", $_POST["dateFin"]);
+            $maintenant = date('Y-m-d H:i', time());
 
             // Test des données
-            if ($_POST["dateFin"] < date("now")) {
+            if ($date < $maintenant) {
                 $erreurs["dateFin"] = "La date de fin ne peut pas déjà être passée";
             }
 
@@ -143,7 +159,17 @@ class AdminController extends Controller {
             // Si il n'y à aucune erreur
             if (count($erreurs) == 0) {
 
-                //TODO : appliquer le bannissement
+                // Crée un nouvel objet Banissement et l'ydrate avec les données
+                $banissement = new Bannissement;
+                $banissement->setUtilisateur($_POST["id_utilisateur"]);
+                $banissement->setDate_debut($maintenant);
+                $banissement->setDate_fin($date);
+                $banissement->setRaison($raison);
+
+                // Crée une instance du modèle Bannissement et appelle la méthode
+                // pour ajouter le bannissement en base de données
+                $banissementModel = new BannissementModel;
+                $banissementModel->add($banissement);
             }
         }
 

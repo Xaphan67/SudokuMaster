@@ -4,7 +4,7 @@ namespace Xaphan67\SudokuMaster\Entities;
 
 class Utilisateur extends Entity {
 
-    private string $id;
+    private int $id;
     private string $pseudo;
     private string $email;
     private string $mdp;
@@ -19,7 +19,7 @@ class Utilisateur extends Entity {
 
     // Getters
 
-    public function getId() : string {
+    public function getId() : int {
         return $this->id;
     }
 
