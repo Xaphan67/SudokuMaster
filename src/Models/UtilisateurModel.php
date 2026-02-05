@@ -117,7 +117,9 @@ class UtilisateurModel extends Model {
 
         // Requête préparée pour récupérer les informations de l'utilisateur
         $query =
-            "SELECT id_utilisateur, pseudo_utilisateur, email_utilisateur FROM utilisateur
+            "SELECT id_utilisateur, date_inscription_utilisateur, pseudo_utilisateur, email_utilisateur, libelle_role
+            FROM utilisateur
+            INNER JOIN role ON role.id_role = utilisateur.id_role
             WHERE id_utilisateur=:id_utilisateur";
 
         $prepare = $this->_db->prepare($query);

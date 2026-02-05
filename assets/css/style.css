@@ -1699,6 +1699,12 @@ td:not(.celluleFixe, .selected_highlight) li {
   display: flex;
 }
 
+#mode_solo div, #mode_cooperatif div, #mode_competitif div {
+  display: flex;
+  justify-content: space-between;
+  width: 250px;
+}
+
 /* Footer */
 
 footer {
@@ -1774,6 +1780,10 @@ footer a {
 
 .popup p {
   text-align: center;
+}
+
+.onglets_popups {
+  max-width: 350px;
 }
 
 .actions {
@@ -2408,6 +2418,10 @@ section p {
   .joueurs {
     display: flex;
     justify-content: center;
+  }
+
+  #mode_solo div, #mode_cooperatif div, #mode_competitif div {
+    width: 350px;
   }
 
   /* Footer */

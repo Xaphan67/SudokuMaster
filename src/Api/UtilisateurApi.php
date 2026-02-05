@@ -32,6 +32,11 @@ class UtilisateurApi {
         $json_data = file_get_contents('php://input'); // Lit le corps brut de la requête
         $dataJS = json_decode($json_data, true); // Décode le JSON en tableau associatif
 
+        // Crée une instance du modèle Utilisateur et appelle la méthode
+        // pour récupérer les données de l'utilisateur
+        $utilisateurModel = new UtilisateurModel;
+        $donneesUtilisateur = $utilisateurModel->findById($dataJS["id"]);
+
         // Crée une instance du modèle Classer et appelle la méthode
         // pour récupérer les statistiques en base de donnée
         $classerModel = new ClasserModel;
@@ -55,6 +60,6 @@ class UtilisateurApi {
             }
         };
 
-        echo json_encode($statistiques);
+        echo json_encode(["utilisateur" => $donneesUtilisateur, "statistiques" => $statistiques]);
     }
 }

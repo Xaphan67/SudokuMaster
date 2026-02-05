@@ -10,6 +10,7 @@ const BOUTONS_ATIONS = Array.from(document.getElementsByClassName("boutonActions
 const BOUTONS_INFOS = Array.from(document.getElementsByClassName("bouton-info"));
 const BOUTONS_SUPPRIMER = Array.from(document.getElementsByClassName("bouton-supprimer"));
 const BOUTONS_FERMER = Array.from(document.getElementsByClassName("bouton-fermer"));
+const ONGLETS = POPUP_INFOS_UTILISATEUR.getElementsByClassName("onglets")[0];
 
 // Variables
 let IdUtilisateur = null;
@@ -124,15 +125,19 @@ async function getUserInfos() {
 
     // Affiche les informations dans le popup
     const TITRE = POPUP_INFOS_UTILISATEUR.getElementsByTagName("H3")[0];
-    TITRE.innerText = resInfos[1].pseudo_utilisateur;
-
-    const ONGLETS = POPUP_INFOS_UTILISATEUR.getElementsByClassName("onglets")[0];
+    const ROLE = POPUP_INFOS_UTILISATEUR.getElementsByTagName("P")[0];
+    const EMAIL = POPUP_INFOS_UTILISATEUR.getElementsByTagName("P")[1];
+    const DATE_INSCRIPTION = POPUP_INFOS_UTILISATEUR.getElementsByTagName("DIV")[0].getElementsByTagName("P")[0];
+    TITRE.innerText = resInfos["utilisateur"].pseudo_utilisateur;
+    ROLE.innerText = resInfos["utilisateur"].libelle_role;
+    EMAIL.innerText = resInfos["utilisateur"].email_utilisateur;
+    DATE_INSCRIPTION.innerText = "Inscrit le " + new Date(resInfos["utilisateur"].date_inscription_utilisateur).toLocaleDateString();
 
     for (i = 1; i <= 3; i++) {
 
-        const CONTENEUR = document.createElement("DIV");
-        CONTENEUR.setAttribute("name","conteneur");
-        CONTENEUR.id = "mode_" + (resInfos[i].id_mode_de_jeu == 1 ? "solo" : (resInfos[i].id_mode_de_jeu == 2 ? "cooperatif" : "competitif"));
+        let id = "mode_" + (resInfos["statistiques"][i].id_mode_de_jeu == 1 ? "solo" : (resInfos["statistiques"][i].id_mode_de_jeu == 2 ? "cooperatif" : "competitif"));
+        const CONTENEUR = document.getElementById(id);
+
         if (i >= 2) {
             CONTENEUR.style.display = "none";
         }
@@ -141,7 +146,7 @@ async function getUserInfos() {
         let grillesJoueesTexte = document.createElement("P");
         let grillesJoueesValeur = document.createElement("P");
         grillesJoueesTexte.innerText = "Grilles jouées :";
-        grillesJoueesValeur.innerText = resInfos[i].grilles_jouees;
+        grillesJoueesValeur.innerText = resInfos["statistiques"][i].grilles_jouees;
         grillesJouees.appendChild(grillesJoueesTexte);
         grillesJouees.appendChild(grillesJoueesValeur);
         CONTENEUR.appendChild(grillesJouees);
@@ -150,7 +155,7 @@ async function getUserInfos() {
         let grillesResoluesTexte = document.createElement("P");
         let grillesResoluesValeur = document.createElement("P");
         grillesResoluesTexte.innerText = "Grilles résolues :";
-        grillesResoluesValeur.innerText = resInfos[i].grilles_resolues;
+        grillesResoluesValeur.innerText = resInfos["statistiques"][i].grilles_resolues;
         grillesResolues.appendChild(grillesResoluesTexte);
         grillesResolues.appendChild(grillesResoluesValeur);
         grillesJouees.insertAdjacentElement("afterend", grillesResolues);
@@ -159,7 +164,7 @@ async function getUserInfos() {
         let tempsMoyenTexte = document.createElement("P");
         let tempsMoyenValeur = document.createElement("P");
         tempsMoyenTexte.innerText = "Temps moyen :";
-        tempsMoyenValeur.innerText = resInfos[i].temps_moyen;
+        tempsMoyenValeur.innerText = resInfos["statistiques"][i].temps_moyen;
         tempsMoyen.appendChild(tempsMoyenTexte);
         tempsMoyen.appendChild(tempsMoyenValeur);
         grillesResolues.insertAdjacentElement("afterend", tempsMoyen);
@@ -168,7 +173,7 @@ async function getUserInfos() {
         let meilleurTempsTexte = document.createElement("P");
         let meilleurTempsValeur = document.createElement("P");
         meilleurTempsTexte.innerText = "Meilleur temps :";
-        meilleurTempsValeur.innerText = resInfos[i].meilleur_temps;
+        meilleurTempsValeur.innerText = resInfos["statistiques"][i].meilleur_temps;
         meilleurTemps.appendChild(meilleurTempsTexte);
         meilleurTemps.appendChild(meilleurTempsValeur);
         tempsMoyen.insertAdjacentElement("afterend", meilleurTemps);
@@ -177,65 +182,13 @@ async function getUserInfos() {
         let serieVictoiresTexte = document.createElement("P");
         let serieVictoiresValeur = document.createElement("P");
         serieVictoiresTexte.innerText = "Série de victoires :";
-        serieVictoiresValeur.innerText = resInfos[i].serie_victoires;
+        serieVictoiresValeur.innerText = resInfos["statistiques"][i].serie_victoires;
         serieVictoires.appendChild(serieVictoiresTexte);
         serieVictoires.appendChild(serieVictoiresValeur);
         meilleurTemps.insertAdjacentElement("afterend", serieVictoires);
 
         ONGLETS.insertAdjacentElement("afterend", CONTENEUR);
     }
-
-    const ONGLET_SOLO = document.getElementById("mode_solo");
-    const ONGLET_COOPERATIF = document.getElementById("mode_cooperatif");
-    const ONGLET_COMPETITIF = document.getElementById("mode_competitif");
-
-    // Affiche l'onglet "Solo"
-    ONGLETS.getElementsByTagName("P")[0].addEventListener("click", (e) => {
-        if (!e.target.classList.contains("onglet_actif")) {
-            // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet "Solo"
-            Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
-                element.classList.remove("onglet_actif");
-            });
-            ONGLETS.getElementsByTagName("P")[0].classList.add("onglet_actif");
-
-            // Affiche l'onglet "Solo" et masque les autres onglets
-            ONGLET_SOLO.style.display = "block";
-            ONGLET_COOPERATIF.style.display = "none";
-            ONGLET_COMPETITIF.style.display = "none";
-        }
-    });
-
-    // Affiche l'onglet "Cooperatif"
-    ONGLETS.getElementsByTagName("P")[1].addEventListener("click", (e) => {
-        if (!e.target.classList.contains("onglet_actif")) {
-            // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet "Cooperatif"
-            Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
-                element.classList.remove("onglet_actif");
-            });
-        ONGLETS.getElementsByTagName("P")[1].classList.add("onglet_actif");
-
-            // Affiche l'onglet "Cooperatif" et masque les autres onglets
-            ONGLET_SOLO.style.display = "none";
-            ONGLET_COOPERATIF.style.display = "block";
-            ONGLET_COMPETITIF.style.display = "none";
-        }
-    });
-
-    // Affiche l'onglet "Competitif"
-    ONGLETS.getElementsByTagName("P")[2].addEventListener("click", (e) => {
-        if (!e.target.classList.contains("onglet_actif")) {
-            // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet "Competitif"
-            Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
-                element.classList.remove("onglet_actif");
-            });
-            ONGLETS.getElementsByTagName("P")[2].classList.add("onglet_actif");
-
-            // Affiche l'onglet "Competitif" et masque les autres onglets
-            ONGLET_SOLO.style.display = "none";
-            ONGLET_COOPERATIF.style.display = "none";
-            ONGLET_COMPETITIF.style.display = "block";
-        }
-    });
 
     // Affiche le popup d'informations
     CONTENEUR_PRINCIPAL.style.filter = "opacity(0.40)";
@@ -251,10 +204,20 @@ async function getUserInfos() {
         POPUP_INFOS_UTILISATEUR.style.display = "none";
 
         // Supprime les informations du popup
-        const CONTENEURS = Array.from(document.getElementsByName("conteneur"));
-        CONTENEURS.forEach(conteneur => {
-            conteneur.remove();
-        });
+        const CONTENEUR_SOLO = document.getElementById("mode_solo");
+        while (CONTENEUR_SOLO.firstChild) {
+            CONTENEUR_SOLO.removeChild(CONTENEUR_SOLO.firstChild);
+        }
+
+        const CONTENEUR_COOPERATIF = document.getElementById("mode_cooperatif");
+        while (CONTENEUR_COOPERATIF.firstChild) {
+            CONTENEUR_COOPERATIF.removeChild(CONTENEUR_COOPERATIF.firstChild);
+        }
+
+        const CONTENEUR_COMPETITIF = document.getElementById("mode_competitif");
+        while (CONTENEUR_COMPETITIF.firstChild) {
+            CONTENEUR_COMPETITIF.removeChild(CONTENEUR_COMPETITIF.firstChild);
+        }
 
         // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet "Solo"
         Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
@@ -268,3 +231,55 @@ async function getUserInfos() {
         ONGLET_COMPETITIF.style.display = "none";
     });
 }
+
+const ONGLET_SOLO = document.getElementById("mode_solo");
+const ONGLET_COOPERATIF = document.getElementById("mode_cooperatif");
+const ONGLET_COMPETITIF = document.getElementById("mode_competitif");
+
+// Affiche l'onglet "Solo"
+ONGLETS.getElementsByTagName("P")[0].addEventListener("click", (e) => {
+    if (!e.target.classList.contains("onglet_actif")) {
+        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet "Solo"
+        Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
+            element.classList.remove("onglet_actif");
+        });
+        ONGLETS.getElementsByTagName("P")[0].classList.add("onglet_actif");
+
+        // Affiche l'onglet "Solo" et masque les autres onglets
+        ONGLET_SOLO.style.display = "block";
+        ONGLET_COOPERATIF.style.display = "none";
+        ONGLET_COMPETITIF.style.display = "none";
+    }
+});
+
+// Affiche l'onglet "Cooperatif"
+ONGLETS.getElementsByTagName("P")[1].addEventListener("click", (e) => {
+    if (!e.target.classList.contains("onglet_actif")) {
+        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet "Cooperatif"
+        Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
+            element.classList.remove("onglet_actif");
+        });
+    ONGLETS.getElementsByTagName("P")[1].classList.add("onglet_actif");
+
+        // Affiche l'onglet "Cooperatif" et masque les autres onglets
+        ONGLET_SOLO.style.display = "none";
+        ONGLET_COOPERATIF.style.display = "block";
+        ONGLET_COMPETITIF.style.display = "none";
+    }
+});
+
+// Affiche l'onglet "Competitif"
+ONGLETS.getElementsByTagName("P")[2].addEventListener("click", (e) => {
+    if (!e.target.classList.contains("onglet_actif")) {
+        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet "Competitif"
+        Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
+            element.classList.remove("onglet_actif");
+        });
+        ONGLETS.getElementsByTagName("P")[2].classList.add("onglet_actif");
+
+        // Affiche l'onglet "Competitif" et masque les autres onglets
+        ONGLET_SOLO.style.display = "none";
+        ONGLET_COOPERATIF.style.display = "none";
+        ONGLET_COMPETITIF.style.display = "block";
+    }
+});

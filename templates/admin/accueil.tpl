@@ -139,8 +139,14 @@
 </div>
 <div id="infos_utilisateur" class="popup"><!-- popup d'informations utilisateur -->
     <h3></h3>
+    <p></p>
+    <p></p>
+    <h3>Historique</h3>
+    <div>
+        <p>Inscrit le </p>
+    </div>
     <h3>Statistiques</h3>
-    <div class="onglets onglets_classements">
+    <div class="onglets onglets_classements onglets_popups">
         <p class="onglet_actif">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
                 <path d="M229.19 213c-15.81-27.32-40.63-46.49-69.47-54.62a70 70 0 1 0-63.44 0C67.44 166.5 42.62 185.67 26.81 213a6 6 0 1 0 10.38 6c19.21-33.19 53.15-53 90.81-53s71.6 19.81 90.81 53a6 6 0 1 0 10.38-6ZM70 96a58 58 0 1 1 58 58a58.07 58.07 0 0 1-58-58Z"/>
@@ -156,6 +162,12 @@
                 <path d="M216 34h-64a6 6 0 0 0-4.76 2.34l-65.39 85L70.6 110.1a14 14 0 0 0-19.8 0l-12.7 12.7a14 14 0 0 0 0 19.81L59.51 164L30.1 193.42a14 14 0 0 0 0 19.8l12.69 12.69a14 14 0 0 0 19.8 0L92 196.5l21.4 21.4a14 14 0 0 0 19.8 0l12.7-12.69a14 14 0 0 0 0-19.81l-11.25-11.25l85-65.39A6 6 0 0 0 222 104V40a6 6 0 0 0-6-6ZM54.1 217.42a2 2 0 0 1-2.83 0l-12.68-12.69a2 2 0 0 1 0-2.82L68 172.5L83.51 188Zm83.31-20.7l-12.69 12.7a2 2 0 0 1-2.84 0l-75.29-75.3a2 2 0 0 1 0-2.83l12.69-12.7a2 2 0 0 1 2.84 0l75.29 75.3a2 2 0 0 1 0 2.83ZM210 101.05l-83.91 64.55l-13.6-13.6l51.75-51.76a6 6 0 0 0-8.48-8.48L104 143.51l-13.6-13.6L155 46h55Z"/>
             </svg>
         </p>
+    </div>
+    <div id="mode_solo">
+    </div>
+    <div id="mode_cooperatif">
+    </div>
+    <div id="mode_competitif">
     </div>
     <div id="bouton_fermer" class="bouton boutonPrincipal boutonDefaut">Fermer</div>
 </div>
