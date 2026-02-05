@@ -5,6 +5,7 @@ namespace Xaphan67\SudokuMaster\Controllers;
 use Xaphan67\SudokuMaster\Api\PartieApi;
 use Xaphan67\SudokuMaster\Entities\Classer;
 use Xaphan67\SudokuMaster\Entities\Utilisateur;
+use Xaphan67\SudokuMaster\Models\BannissementModel;
 use Xaphan67\SudokuMaster\Models\ClasserModel;
 use Xaphan67\SudokuMaster\Models\ParticiperModel;
 use Xaphan67\SudokuMaster\Models\UtilisateurModel;
@@ -160,7 +161,7 @@ class UtilisateurController extends Controller {
             // Si il n'y à aucune erreur
             if (count($erreurs) == 0) {
 
-                // Crée une instance du modèle Utilisateur et appelle la méthode
+                // Crée une instance du modèle Utilisateur
                 $utilisateurModel = new UtilisateurModel;
 
                 // Récupère les informations de l'utilisateur et le hash de son mot de passe via son email
@@ -170,31 +171,53 @@ class UtilisateurController extends Controller {
                 // Si l'utilisateur à été trouvé dans la base de données
                 if ($donneesUtilisateur) {
 
-                    // Vérifie que le mot de passe entré via le formulaire correspond à l'utilisateur demandé
-                    if (password_verify($_POST["mdp"], $mdpHash["mdp_utilisateur"])) {
+                    // Crée une instance du modèle Bannissement et appelle la méthode
+                    // pour récupérer les bannissements de l'utilisateur
+                    $bannissementModel = new BannissementModel;
+                    $donneesBannissement = $bannissementModel->findAllByUser($donneesUtilisateur["id_utilisateur"]);
 
-                        // Enregistre les données de l'utilisateur en session
-                        $_SESSION["utilisateur"] = $donneesUtilisateur;
-
-                        // Si l'utilisateur à été redirigé par une autre page
-                        // on le renvoie vers cette page
-                        $page = strpos($_SERVER["HTTP_REFERER"], "from=");
-                        if ($page) {
-
-                            // Redirige l'utilisateur
-                            header("Location:" . substr($_SERVER["HTTP_REFERER"], $page + 5));
+                    // Vérifie si l'utilisateur est banni actuellement
+                    $dateFinBannissement = false;
+                    foreach ($donneesBannissement as $bannissement) {
+                        if ($bannissement["date_fin_bannissement"] > date('Y-m-d H:i', time())) {
+                            $dateFinBannissement = $bannissement["date_fin_bannissement"];
+                            break;
                         }
-                        else {
+                    }
 
-                            // Redirige l'utilisateur vers la page d'accueil
-                            header("Location:index.php");
+                    // Si l'utilisateur n'est pas banni
+                    if (!$dateFinBannissement) {
+
+                        // Vérifie que le mot de passe entré via le formulaire correspond à l'utilisateur demandé
+                        if (password_verify($_POST["mdp"], $mdpHash["mdp_utilisateur"])) {
+
+                            // Enregistre les données de l'utilisateur en session
+                            $_SESSION["utilisateur"] = $donneesUtilisateur;
+
+                            // Si l'utilisateur à été redirigé par une autre page
+                            // on le renvoie vers cette page
+                            $page = strpos($_SERVER["HTTP_REFERER"], "from=");
+                            if ($page) {
+
+                                // Redirige l'utilisateur
+                                header("Location:" . substr($_SERVER["HTTP_REFERER"], $page + 5));
+                            }
+                            else {
+
+                                // Redirige l'utilisateur vers la page d'accueil
+                                header("Location:index.php");
+                            }
                         }
+                    }
+                    else {
+                        $erreurs["banni"] = "Connexion impossible. Vous avez été banni jusqu'au " . $dateFinBannissement;
+                        var_dump($erreurs);
                     }
                 }
 
                 // Si l'utilisateur n'est pas trouvé ou que le mot de passe n'est pas bon
                 // Affiche une erreur
-                    $erreurs["identifiants"] = "Identifiants invalides. Veuillez réessayer";
+                $erreurs["identifiants"] = "Identifiants invalides. Veuillez réessayer";
             }
         }
 

@@ -24,4 +24,21 @@ class BannissementModel extends Model {
         // Execute la requête. Retourne true (si réussite) ou false (si echec)
         return $prepare->execute();
     }
+
+    function findAllByUser($utilisateurId) {
+
+        // Requête préparée pour ajouter les statistiques
+        $query = "SELECT date_debut_bannissement, date_fin_bannissement, raison_bannissement
+            FROM bannissement
+            WHERE id_utilisateur = :id_utilisateur";
+
+        $prepare = $this->_db->prepare($query);
+
+        // Définition des paramettres de la requête préparée
+        $prepare->bindValue(":id_utilisateur", $utilisateurId, PDO::PARAM_INT);
+
+        // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
+        $prepare->execute();
+        return $prepare->fetchAll();
+    }
 }
