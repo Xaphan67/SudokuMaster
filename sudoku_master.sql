@@ -144,6 +144,7 @@ CREATE TABLE IF NOT EXISTS `bannissement` (
   `date_debut_bannissement` datetime DEFAULT NULL,
   `date_fin_bannissement` datetime DEFAULT NULL,
   `raison_bannissement` text NOT NULL,
+  `date_annulation` datetime DEFAULT NULL,
   PRIMARY KEY (`id_bannissement`),
   KEY `Id_utilisateur` (`Id_utilisateur`),
   CONSTRAINT `bannissement_ibfk_1` FOREIGN KEY (`Id_utilisateur`) REFERENCES `utilisateur` (`Id_utilisateur`)
