@@ -168,28 +168,37 @@ class UtilisateurController extends Controller {
                 $donneesUtilisateur = $utilisateurModel->findByMail($email);
                 $mdpHash = $utilisateurModel->getPasswordHash($email);
 
+                $valide = false;
+
                 // Si l'utilisateur à été trouvé dans la base de données
                 if ($donneesUtilisateur) {
 
-                    // Crée une instance du modèle Bannissement et appelle la méthode
-                    // pour récupérer les bannissements de l'utilisateur
-                    $bannissementModel = new BannissementModel;
-                    $donneesBannissement = $bannissementModel->findAllByUser($donneesUtilisateur["id_utilisateur"]);
+                    // Vérifie que le mot de passe entré via le formulaire correspond à l'utilisateur demandé
+                    if (password_verify($_POST["mdp"], $mdpHash["mdp_utilisateur"])) {
 
-                    // Vérifie si l'utilisateur est banni actuellement
-                    $dateFinBannissement = false;
-                    foreach ($donneesBannissement as $bannissement) {
-                        if ($bannissement["date_fin_bannissement"] > date('Y-m-d H:i', time())) {
-                            $dateFinBannissement = $bannissement["date_fin_bannissement"];
-                            break;
+                        $valide = true;
+
+                        // Crée une instance du modèle Bannissement et appelle la méthode
+                        // pour récupérer les bannissements de l'utilisateur
+                        $bannissementModel = new BannissementModel;
+                        $donneesBannissement = $bannissementModel->findAllByUser($donneesUtilisateur["id_utilisateur"]);
+
+                        // Vérifie si l'utilisateur est banni actuellement
+                        foreach ($donneesBannissement as $bannissement) {
+                            if (empty($bannissement["date_fin_bannissement"])) {
+                                $erreurs["banni"] = "Vous avez été banni de manière permannente";
+                                $erreurs["raison_banni"] = $bannissement["raison_bannissement"];
+                                break;
+                            }
+                            else if ($bannissement["date_fin_bannissement"] > date('Y-m-d H:i', time())) {
+                                $erreurs["banni"] = "Vous avez été banni jusqu'au " . $bannissement["date_fin_bannissement"];
+                                $erreurs["raison_banni"] = $bannissement["raison_bannissement"];
+                                break;
+                            }
                         }
-                    }
 
-                    // Si l'utilisateur n'est pas banni
-                    if (!$dateFinBannissement) {
-
-                        // Vérifie que le mot de passe entré via le formulaire correspond à l'utilisateur demandé
-                        if (password_verify($_POST["mdp"], $mdpHash["mdp_utilisateur"])) {
+                        // Si l'utilisateur n'est pas banni
+                        if (!array_key_exists("banni", $erreurs)) {
 
                             // Enregistre les données de l'utilisateur en session
                             $_SESSION["utilisateur"] = $donneesUtilisateur;
@@ -209,20 +218,19 @@ class UtilisateurController extends Controller {
                             }
                         }
                     }
-                    else {
-                        $erreurs["banni"] = "Connexion impossible. Vous avez été banni jusqu'au " . $dateFinBannissement;
-                        var_dump($erreurs);
-                    }
                 }
 
                 // Si l'utilisateur n'est pas trouvé ou que le mot de passe n'est pas bon
                 // Affiche une erreur
+                if (!$donneesUtilisateur || !$valide)
                 $erreurs["identifiants"] = "Identifiants invalides. Veuillez réessayer";
             }
         }
 
 
         // Indique au gabarit les variables nécessaires
+        $scripts = ["connexion.js"];
+        $this->_donnees["scripts"] = $scripts;
         $this->_donnees["erreurs"] = $erreurs;
 
         // Affiche le gabarit connexion
@@ -537,8 +545,8 @@ class UtilisateurController extends Controller {
         }
 
         // Indique au gabarit les variables nécessaires
-        $script = ["oubliMdp.js"];
-        $this->_donnees["script"] = $script;
+        $scripts = ["oubliMdp.js"];
+        $this->_donnees["scripts"] = $scripts;
         $this->_donnees["emailEnvoye"] = $emailEnvoye;
         $this->_donnees["erreurs"] = $erreurs;
 

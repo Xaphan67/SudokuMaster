@@ -42,7 +42,7 @@ class AdminController extends Controller {
             $maintenant = date('Y-m-d H:i', time());
 
             // Test des données
-            if ($date < $maintenant) {
+            if (!empty($date) && $date < $maintenant) {
                 $erreurs["dateFin"] = "La date de fin ne peut pas déjà être passée";
             }
 
@@ -148,7 +148,7 @@ class AdminController extends Controller {
             $maintenant = date('Y-m-d H:i', time());
 
             // Test des données
-            if ($date < $maintenant) {
+            if (!empty($date) && $date < $maintenant) {
                 $erreurs["dateFin"] = "La date de fin ne peut pas déjà être passée";
             }
 

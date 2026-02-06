@@ -38,4 +38,12 @@
         <a href="oubliMdp">Vous avez oublié votre mot de passe ?</a>
     </section>
 </div>
+{if $erreurs["banni"]|isset}
+<div id="banni" class="popup"><!-- popup de bannissement -->
+    <h3>Connexion impossible</h3>
+    <p>{$erreurs["banni"]}</p>
+    <p>Raison : {$erreurs["raison_banni"]}
+    <div id="bouton_ok" class="bouton boutonPrincipal boutonDefaut">Ok</div>
+</div>
+{/if}
 {/block}

@@ -10,15 +10,30 @@ class BannissementModel extends Model {
     function add(Bannissement $bannissement) {
 
         // Requête préparée pour ajouter les statistiques
-        $query = "INSERT INTO bannissement (id_utilisateur, date_debut_bannissement, date_fin_bannissement, raison_bannissement)
-            VALUES(:id_utilisateur, :date_debut_bannissement, :date_fin_bannissement, :raison_bannissement)";
+        $query = "INSERT INTO bannissement (id_utilisateur, date_debut_bannissement";
+
+        if (!empty($bannissement->getDate_fin())) {
+            $query .= ", date_fin_bannissement";
+        }
+
+        $query .= ", raison_bannissement)
+            VALUES(:id_utilisateur, :date_debut_bannissement";
+
+        if (!empty($bannissement->getDate_fin())) {
+            $query .= ", :date_fin_bannissement";
+        }
+
+        $query .= ", :raison_bannissement)";
 
         $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $bannissement->getUtilisateur(), PDO::PARAM_INT);
         $prepare->bindValue(":date_debut_bannissement", $bannissement->getDate_debut(), PDO::PARAM_STR);
-        $prepare->bindValue(":date_fin_bannissement", $bannissement->getDate_fin(), PDO::PARAM_STR);
+
+        if (!empty($bannissement->getDate_fin())) {
+            $prepare->bindValue(":date_fin_bannissement", $bannissement->getDate_fin(), PDO::PARAM_STR);
+        }
         $prepare->bindValue(":raison_bannissement", $bannissement->getRaison(), PDO::PARAM_STR);
 
         // Execute la requête. Retourne true (si réussite) ou false (si echec)
