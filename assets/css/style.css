@@ -1831,7 +1831,7 @@ footer a {
 #compte_requis, #verif_joueur_pret, #abandon_autre_joueur_partie,
 #abandon_partie, #erreur, #erreur_salle, #erreur_serveur,
 #mail_envoye, #token_invalide, #mdp_reinitialise, #supprimer_utilisateur,
-#infos_utilisateur, #bannir_utilisateur, #banni {
+#infos_utilisateur, #bannir_utilisateur, #debannir_utilisateur, #banni {
   position: fixed;
   display: flex;
   transform: translateX(-50%) translateY(-50%);
@@ -1841,7 +1841,7 @@ footer a {
 #fin_partie, #modifier_compte, #supprimer_compte, #verif_joueur_pret,
 #abandon_autre_joueur_partie,#abandon_partie, #erreur,
 #erreur_salle, #erreur_serveur, #supprimer_utilisateur,
-#infos_utilisateur, #bannir_utilisateur {
+#infos_utilisateur, #bannir_utilisateur, #debannir_utilisateur {
   display: none;
 }
 

@@ -3,8 +3,10 @@ const CONTENEUR_PRINCIPAL = document.getElementById("conteneur_principal");
 const POPUP_INFOS_UTILISATEUR = document.getElementById("infos_utilisateur");
 const POPUP_INFOS_UTILISATEUR_FERMER = document.getElementById("bouton_fermer");
 const POPUP_BANNIR_UTILISATEUR = document.getElementById("bannir_utilisateur");
-const POPUP_BANNIR_UTILISATEUR_OUI = document.getElementById("bouton_bannir");
 const POPUP_BANNIR_UTILISATEUR_NON = document.getElementById("bouton_annuler_bannir");
+const POPUP_DEBANNIR_UTILISATEUR = document.getElementById("debannir_utilisateur");
+const POPUP_DEBANNIR_UTILISATEUR_OUI = document.getElementById("bouton_debannir");
+const POPUP_DEBANNIR_UTILISATEUR_NON = document.getElementById("bouton_annuler_debannir");
 const POPUP_SUPPRIMER_UTILISATEUR = document.getElementById("supprimer_utilisateur");
 const POPUP_SUPPRIMER_UTILISATEUR_OUI = document.getElementById("bouton_supprimer");
 const POPUP_SUPPRIMER_UTILISATEUR_NON = document.getElementById("bouton_annuler_supprimer");
@@ -52,7 +54,7 @@ BOUTONS_INFOS.forEach(bouton => {
         IdUtilisateur = bouton.getAttribute("name").split('-')[1];
 
         // Récupère les informations de l'utilisateur
-        getUserInfos(IdUtilisateur);
+        getUserInfos();
     });
 });
 
@@ -68,8 +70,8 @@ BOUTONS_BANNIR.forEach(bouton => {
             // stocke l'ID de l'utilisateur correspondant
             IdUtilisateur = bouton.getAttribute("name").split('-')[1];
 
-            // Ouvre le popup avec le formulaire de bannissement
-            openBanUser(IdUtilisateur);
+            // ouvre le popup avec le formulaire ou propose de dé-bannir l'utilisateur
+            openBanUser();
         });
     }
 });
@@ -157,13 +159,19 @@ async function getUserInfos() {
     DATE_INSCRIPTION.innerText = "Inscrit le " + new Date(resInfos["utilisateur"].date_inscription_utilisateur).toLocaleDateString();
 
     resInfos["bannissements"].forEach(bannissement => {
-        console.log(bannissement);
         let historique= document.createElement("P");
         if (bannissement.date_fin_bannissement) {
-            historique.innerText = "Banni du " + new Date(bannissement.date_debut_bannissement).toLocaleDateString() + " au " + new Date(bannissement.date_fin_bannissement).toLocaleDateString();
+            let heureDebut = new Date(bannissement.date_debut_bannissement).toLocaleTimeString();
+            resHeureDebut = heureDebut.substring(0, heureDebut.length - 3);
+            let heureFin = new Date(bannissement.date_fin_bannissement).toLocaleTimeString();
+            resHeureFin = heureFin.substring(0, heureFin.length - 3);
+            historique.innerText = "Banni du " + new Date(bannissement.date_debut_bannissement).toLocaleDateString() + " " + resHeureDebut + " au " + new Date(bannissement.date_fin_bannissement).toLocaleDateString() + " " + resHeureFin;
         }
         else {
             historique.innerText = "Banni de manière permanente le " + new Date(bannissement.date_debut_bannissement).toLocaleDateString();
+        }
+        if (bannissement.date_annulation) {
+            historique.innerText += "\nDébanni le " + new Date(bannissement.date_annulation).toLocaleDateString();
         }
         DATE_INSCRIPTION.insertAdjacentElement("afterend", historique);
     });
@@ -330,29 +338,92 @@ if (ERREURS_FORMULAIRES.value !== "") {
     openBanUser(ERREURS_FORMULAIRES.value);
 }
 
-function openBanUser(IdUtilisateur) {
+async function openBanUser() {
 
-    // Passe l'ID de l'utilisateur au formulaire
-    const CHAMP_FORMULAIRE = document.getElementsByName("id_utilisateur")[0];
-    CHAMP_FORMULAIRE.value = IdUtilisateur;
+    // Récupère le dernier bannissement de l'utilisateur
+    const BANNISSEMENT = await fetch("index.php?controller=api-utilisateur&action=getLastBan", {
+        method: "POST",
+        headers: {
+                'Content-Type': 'application/json', // Indique qu'on envoie du JSON
+                'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
+            },
+            body: JSON.stringify({id: IdUtilisateur}) // Objet JS converti en chaîne JSON
+    });
+    let resBannissement = await BANNISSEMENT.json();
 
-    // Affiche le popup avec le formulaire
+      // Détermnie si l'utilisateur est actuellement banni
+    let utilisateurBanni = resBannissement[0] && (((resBannissement[0].date_fin_bannissement == null || new Date(resBannissement[0].date_fin_bannissement) > new Date()) && resBannissement[0].date_annulation == null));
+
+    // Opacifie et rends non interractinble le conteneur principal
     CONTENEUR_PRINCIPAL.style.filter = "opacity(0.40)";
     CONTENEUR_PRINCIPAL.inert = true;
-    POPUP_BANNIR_UTILISATEUR.style.display = "flex";
 
-    // Lors du clic sur le bouton Annuler
-    POPUP_BANNIR_UTILISATEUR_NON.addEventListener("click", (e) => {
+    // Si l'utilisateur est banni...
+    if (utilisateurBanni) {
 
-        // Masque le popup
-        CONTENEUR_PRINCIPAL.style.filter = "none";
-        CONTENEUR_PRINCIPAL.inert = false;
-        POPUP_BANNIR_UTILISATEUR.style.display = "none";
+        // Affiche la date et la raison du bannissement actuel
+        const MESSAGE = POPUP_DEBANNIR_UTILISATEUR.getElementsByTagName("P")[0];
+        const RAISON = POPUP_DEBANNIR_UTILISATEUR.getElementsByTagName("P")[1];
+        MESSAGE.innerText = "Cet utilisateur est actuellement banni ";
+        if (resBannissement[0].date_fin_bannissement == null) {
+            MESSAGE.innerText += "de manière permanente";
+        }
+        else {
+            let heure = new Date(resBannissement[0].date_fin_bannissement).toLocaleTimeString();
+            resHeure = heure.substring(0, heure.length - 3);
+            MESSAGE.innerText += "\njusqu'au " + new Date(resBannissement[0].date_fin_bannissement).toLocaleDateString() + " " + resHeure;
+        }
 
-        // Retire l'affichage des erreurs si l'utilisateur rouvre le popup plus tard
-        Array.from(document.getElementsByClassName("erreur")).forEach(erreur => {
-            erreur.innerHTML = "";
+        RAISON.innerHTML = "Raison : " + resBannissement[0].raison_bannissement;
+
+        // Affiche le popup pour débannir l'utilisateur
+        POPUP_DEBANNIR_UTILISATEUR.style.display = "flex";
+
+        // Lors du clic sur le bouton Oui
+        POPUP_DEBANNIR_UTILISATEUR_OUI.addEventListener("click", (e) => {
+
+            fetch("index.php?controller=api-utilisateur&action=unBan", {
+                method: "POST",
+                headers: {
+                        'Content-Type': 'application/json', // Indique qu'on envoie du JSON
+                    },
+                    body: JSON.stringify({id: IdUtilisateur}) // Objet JS converti en chaîne JSON
+            });
+
+            // Redirige vers l'accueil de l'administration
+            window.location.replace("administration");
         });
-    });
 
+        // Lors du clic sur le bouton Non
+        POPUP_DEBANNIR_UTILISATEUR_NON.addEventListener("click", (e) => {
+
+            // Masque le popup
+            CONTENEUR_PRINCIPAL.style.filter = "none";
+            CONTENEUR_PRINCIPAL.inert = false;
+            POPUP_DEBANNIR_UTILISATEUR.style.display = "none";
+        });
+    }
+    else {
+
+        // Passe l'ID de l'utilisateur au formulaire
+        const CHAMP_FORMULAIRE = document.getElementsByName("id_utilisateur")[0];
+        CHAMP_FORMULAIRE.value = IdUtilisateur;
+
+        // Affiche le popup avec le formulaire
+        POPUP_BANNIR_UTILISATEUR.style.display = "flex";
+
+        // Lors du clic sur le bouton Annuler
+        POPUP_BANNIR_UTILISATEUR_NON.addEventListener("click", (e) => {
+
+            // Masque le popup
+            CONTENEUR_PRINCIPAL.style.filter = "none";
+            CONTENEUR_PRINCIPAL.inert = false;
+            POPUP_BANNIR_UTILISATEUR.style.display = "none";
+
+            // Retire l'affichage des erreurs si l'utilisateur rouvre le popup plus tard
+            Array.from(document.getElementsByClassName("erreur")).forEach(erreur => {
+                erreur.innerHTML = "";
+            });
+        });
+    }
 }

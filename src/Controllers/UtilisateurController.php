@@ -181,19 +181,21 @@ class UtilisateurController extends Controller {
                         // Crée une instance du modèle Bannissement et appelle la méthode
                         // pour récupérer les bannissements de l'utilisateur
                         $bannissementModel = new BannissementModel;
-                        $donneesBannissement = $bannissementModel->findAllByUser($donneesUtilisateur["id_utilisateur"]);
+                        $donneesBannissement = $bannissementModel->findLastByUser($donneesUtilisateur["id_utilisateur"]);
 
-                        // Vérifie si l'utilisateur est banni actuellement
-                        foreach ($donneesBannissement as $bannissement) {
-                            if (empty($bannissement["date_fin_bannissement"])) {
-                                $erreurs["banni"] = "Vous avez été banni de manière permannente";
-                                $erreurs["raison_banni"] = $bannissement["raison_bannissement"];
-                                break;
-                            }
-                            else if ($bannissement["date_fin_bannissement"] > date('Y-m-d H:i', time())) {
-                                $erreurs["banni"] = "Vous avez été banni jusqu'au " . $bannissement["date_fin_bannissement"];
-                                $erreurs["raison_banni"] = $bannissement["raison_bannissement"];
-                                break;
+                        // Si un bannissement est trouvé...
+                        if ($donneesBannissement) {
+
+                            // Vérifie si l'utilisateur est banni actuellement
+                            if (empty($donneesBannissement["date_annulation"])) {
+                                if (empty($donneesBannissement["date_fin_bannissement"])) {
+                                        $erreurs["banni"] = "Vous avez été banni de manière permannente";
+                                        $erreurs["raison_banni"] = $donneesBannissement["raison_bannissement"];
+                                }
+                                else if ($donneesBannissement["date_fin_bannissement"] > date('Y-m-d H:i', time())) {
+                                    $erreurs["banni"] = "Vous avez été banni jusqu'au " . date("d/m/Y H:i", strtotime(($donneesBannissement["date_fin_bannissement"])));
+                                    $erreurs["raison_banni"] = $donneesBannissement["raison_bannissement"];
+                                }
                             }
                         }
 

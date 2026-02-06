@@ -7,8 +7,9 @@ class Bannissement extends Entity {
     private int $id;
     private int $utilisateur;
     private string $date_debut;
-    private string $date_fin;
+    private ?string $date_fin;
     private string $raison;
+    private ?string $date_annulation;
 
     // Constructeur
 
@@ -39,6 +40,10 @@ class Bannissement extends Entity {
         return $this->raison;
     }
 
+    public function getDate_annulation() : string {
+        return $this->date_annulation;
+    }
+
     // Setters
 
     public function setId($id) {
@@ -59,5 +64,9 @@ class Bannissement extends Entity {
 
     public function setRaison($raison) {
         $this->raison = $raison;
+    }
+
+    public function setDate_annulation($date_annulation) {
+        $this->date_annulation = $date_annulation;
     }
 }

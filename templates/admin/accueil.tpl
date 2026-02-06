@@ -217,6 +217,13 @@
         </div>
     </form>
 </div>
+<div id="debannir_utilisateur" class="popup"><!-- popup de débannissement utilisateur -->
+    <h3>Débanir cet utilisateur ?</h3>
+    <p>Cet utilisateur est actuellement banni</p>
+    <p></p>
+    <div id="bouton_debannir" class="bouton boutonPrincipal boutonDefaut">Oui</div>
+    <div id="bouton_annuler_debannir" class="bouton boutonPrincipal boutonDefaut">Non</div>
+</div>
 <div id="supprimer_utilisateur" class="popup"><!-- popup de suppression utilisateur -->
     <h3>Supprimer cet utilisateur ?</h3>
     <p>Cet utilisateur ne pourra plus se connecter et ses données seront annonymisées</p>
