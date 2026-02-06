@@ -102,12 +102,12 @@
                             Type : {$partie.libelle_mode_de_jeu} - {$partie.libelle_difficulte}<br>
                             Durée : {$partie.duree_partie}<br>
                             <div>
-                                Joueur(s) : 
+                                Joueur(s) :
                                 <div class="joueurs">
                                     {if $partie.gagnant}<img src="assets/img/TropheeOr" alt="">{/if}{$partie.pseudo_utilisateur}
                                 </div>
                                 {if $partie.pseudo_utilisateur_2 != ""}
-                                {$partie.libelle_mode_de_jeu == "Compétitif" ? "VS" : "-"} 
+                                {$partie.libelle_mode_de_jeu == "Compétitif" ? "VS" : "-"}
                                 <div class="joueurs">
                                     {if $partie.gagnant_2}<img src="assets/img/TropheeOr" alt="">{/if}{$partie.pseudo_utilisateur_2}
                                 </div>

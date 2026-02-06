@@ -93,7 +93,7 @@ BOUTONS_SUPPRIMER.forEach(bouton => {
 
             // Lors du clic sur le bouton Oui
             POPUP_SUPPRIMER_UTILISATEUR_OUI.addEventListener("click", (e) => {
-                
+
                 fetch("index.php?controller=api-utilisateur&action=delete", {
                     method: "POST",
                     headers: {
@@ -108,7 +108,7 @@ BOUTONS_SUPPRIMER.forEach(bouton => {
 
             // Lors du clic sur le bouton Non
             POPUP_SUPPRIMER_UTILISATEUR_NON.addEventListener("click", (e) => {
-                
+
                 // Masque le popup de confirmation
                 CONTENEUR_PRINCIPAL.style.filter = "none";
                 CONTENEUR_PRINCIPAL.inert = false;
@@ -155,6 +155,18 @@ async function getUserInfos() {
     ROLE.innerText = resInfos["utilisateur"].libelle_role;
     EMAIL.innerText = resInfos["utilisateur"].email_utilisateur;
     DATE_INSCRIPTION.innerText = "Inscrit le " + new Date(resInfos["utilisateur"].date_inscription_utilisateur).toLocaleDateString();
+
+    resInfos["bannissements"].forEach(bannissement => {
+        console.log(bannissement);
+        let historique= document.createElement("P");
+        if (bannissement.date_fin_bannissement) {
+            historique.innerText = "Banni du " + new Date(bannissement.date_debut_bannissement).toLocaleDateString() + " au " + new Date(bannissement.date_fin_bannissement).toLocaleDateString();
+        }
+        else {
+            historique.innerText = "Banni de manière permanente le " + new Date(bannissement.date_debut_bannissement).toLocaleDateString();
+        }
+        DATE_INSCRIPTION.insertAdjacentElement("afterend", historique);
+    });
 
     for (i = 1; i <= 3; i++) {
 
@@ -220,7 +232,7 @@ async function getUserInfos() {
 
     // Lors du clic sur le bouton Fermer
     POPUP_INFOS_UTILISATEUR_FERMER.addEventListener("click", (e) => {
-        
+
         // Masque le popup de confirmation
         CONTENEUR_PRINCIPAL.style.filter = "none";
         CONTENEUR_PRINCIPAL.inert = false;
@@ -240,6 +252,11 @@ async function getUserInfos() {
         const CONTENEUR_COMPETITIF = document.getElementById("mode_competitif");
         while (CONTENEUR_COMPETITIF.firstChild) {
             CONTENEUR_COMPETITIF.removeChild(CONTENEUR_COMPETITIF.firstChild);
+        }
+
+        const HISTORIQUE = POPUP_INFOS_UTILISATEUR.getElementsByTagName("DIV")[0];
+        while (HISTORIQUE.childElementCount > 1) {
+            HISTORIQUE.removeChild(HISTORIQUE.lastChild);
         }
 
         // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet "Solo"
@@ -326,7 +343,7 @@ function openBanUser(IdUtilisateur) {
 
     // Lors du clic sur le bouton Annuler
     POPUP_BANNIR_UTILISATEUR_NON.addEventListener("click", (e) => {
-        
+
         // Masque le popup
         CONTENEUR_PRINCIPAL.style.filter = "none";
         CONTENEUR_PRINCIPAL.inert = false;

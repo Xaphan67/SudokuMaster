@@ -5,6 +5,7 @@ namespace Xaphan67\SudokuMaster\Api;
 use Xaphan67\SudokuMaster\Entities\Classer;
 use Xaphan67\SudokuMaster\Models\ClasserModel;
 use Xaphan67\SudokuMaster\Entities\Utilisateur;
+use Xaphan67\SudokuMaster\Models\BannissementModel;
 use Xaphan67\SudokuMaster\Models\UtilisateurModel;
 
 class UtilisateurApi {
@@ -37,8 +38,12 @@ class UtilisateurApi {
         $utilisateurModel = new UtilisateurModel;
         $donneesUtilisateur = $utilisateurModel->findById($dataJS["id"]);
 
-        // Crée une instance du modèle Classer et appelle la méthode
-        // pour récupérer les statistiques en base de donnée
+        // Crée une instance du modèle Bannissement et appelle la méthode
+        // pour récupérer les bannissements en base de donnée
+        $bannissementModel = new BannissementModel;
+        $bannissements = $bannissementModel->findAllByUser($dataJS["id"]);
+
+        // Crée une instance du modèle Classer
         $classerModel = new ClasserModel;
 
         // Instancie un tableau qui contiendra les statistiques
@@ -60,6 +65,6 @@ class UtilisateurApi {
             }
         };
 
-        echo json_encode(["utilisateur" => $donneesUtilisateur, "statistiques" => $statistiques]);
+        echo json_encode(["utilisateur" => $donneesUtilisateur, "bannissements" => $bannissements, "statistiques" => $statistiques]);
     }
 }
