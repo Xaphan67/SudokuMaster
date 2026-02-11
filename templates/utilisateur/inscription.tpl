@@ -52,6 +52,8 @@
                 />
                 {if $erreurs["mdp_confirm"]|isset}<p>{$erreurs["mdp_confirm"]}</p>{/if}
             </div>
+            <input type="hidden" name="tokenCSRF" value="{$tokenCSRF.token}" />
+            {if $erreurs["general"]|isset}<p>{$erreurs["general"]}</p>{/if}
             <input type="submit" class="bouton boutonPrincipal boutonDefaut" value="Créer mon compte" />
         </form>
     </section>

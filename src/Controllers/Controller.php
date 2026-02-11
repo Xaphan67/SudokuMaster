@@ -108,4 +108,36 @@ abstract class Controller {
         // Appèle la fonction _notFound() du controller mère
         $this->_notFound();
     }
+
+    // Génère un token CSRF et le stoke en session
+    protected function _generateCSRFToken() {
+
+        // Génère un token aléatoire
+        $token = bin2hex(random_bytes(16));
+        $tokenDateExpiration = date("Y-m-d H:i:s", time() + 60 * 60); // Heure actuelle + 60 minutes (60 * 60 secondes)
+
+        // Stocke le token en session
+        $_SESSION["tokenCSRF"]["token"] = $token;
+        $_SESSION["tokenCSRF"]["dateExpiration"] = $tokenDateExpiration;
+
+        return $token;
+    }
+
+    // Vérifie la validité d'un token CSRF
+    protected function _checkCSRFToken($token) : bool {
+
+        $isValid = false;
+
+        // Si le token est identique à celui en session et que la date d'expiration est inférieure à la date actuelle
+        if ($_SESSION["tokenCSRF"]["token"] == $token && strtotime($_SESSION["tokenCSRF"]["dateExpiration"]) <= date("Y-m-d H:i:s", time())) {
+            $isValid = true;
+        }
+
+        var_dump($_SESSION["tokenCSRF"]["token"], $token);
+
+        // Retire les données du token en session
+        unset($_SESSION["tokenCSRF"]);
+
+        return $isValid;
+    }
 }

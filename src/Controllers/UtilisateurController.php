@@ -26,8 +26,18 @@ class UtilisateurController extends Controller {
         // Crée un tableau pour gérer les erreurs
         $erreurs = [];
 
+        if (count($_POST) == 0) {
+            $_SESSION["tokenCSRF"]["token"] = "";
+            $_SESSION["tokenCSRF"]["dateExpiration"] = "";
+        }
+
         // Si le formulaire est soumis
         if (count($_POST) > 0) {
+
+            // Vérifie la validité du token CSRF
+            if (!$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+                $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
+            }
 
             // Filtrage des données
             // Protège contre la faille XSS
@@ -117,6 +127,9 @@ class UtilisateurController extends Controller {
 
         // Indique à au gabarit les variables nécessaires
         $this->_donnees["erreurs"] = $erreurs;
+        $this->_donnees["tokenCSRF"]["token"] = $this->_generateCSRFToken();
+
+        //var_dump($this->_donnees["tokenCSRF"]["token"]);
 
         // Affiche le gabarit inscription
         $this->_display("utilisateur/inscription");
