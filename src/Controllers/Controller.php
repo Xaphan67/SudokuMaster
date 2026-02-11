@@ -54,7 +54,7 @@ abstract class Controller {
             self::$_smartyInstance->setCacheDir('cache/');
 
             // Activation ou non du cache Smarty
-           self::$_smartyInstance->setCaching($_ENV['SMARTY_CACHE'] ? Smarty::CACHING_LIFETIME_CURRENT : Smarty::CACHING_OFF);
+           self::$_smartyInstance->setCaching($_ENV['SMARTY_CACHE'] == "true" ? Smarty::CACHING_LIFETIME_SAVED : Smarty::CACHING_OFF);
         }
 
         return self::$_smartyInstance;
