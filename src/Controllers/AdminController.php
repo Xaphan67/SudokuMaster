@@ -35,6 +35,11 @@ class AdminController extends Controller {
         // Si le formulaire est soumis
         if (count($_POST) > 0) {
 
+            // Vérifie la validité du token CSRF
+            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+                $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
+            }
+
             // Filtrage des données
             // Protège contre la faille XSS
             $raison = trim(filter_input(INPUT_POST, "raison", FILTER_SANITIZE_SPECIAL_CHARS));
@@ -104,13 +109,19 @@ class AdminController extends Controller {
             $erreurs["id_utilisateur"] = $_POST["id_utilisateur"];
         }
 
+        // Génère un token CSRF si aucun en session
+        if (!isset($_SESSION["tokenCSRF"]["token"])) {
+            $this->_generateCSRFToken();
+        }
+
         // Affiche le gabarit accueil
         // et lui indique les variables nécessaires
         $this->_twig->display("admin/accueil.html.twig",[
             'scripts' => ["admin.js"],
             'erreurs' => $erreurs,
             'utilisateurs' => $utilisateurs,
-            'parties' => $parties
+            'parties' => $parties,
+            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
         ]);
     }
 
@@ -139,6 +150,11 @@ class AdminController extends Controller {
 
         // Si le formulaire est soumis
         if (count($_POST) > 0) {
+
+            // Vérifie la validité du token CSRF
+            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+                $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
+            }
 
             // Filtrage des données
             // Protège contre la faille XSS
@@ -182,12 +198,18 @@ class AdminController extends Controller {
             $erreurs["id_utilisateur"] = $_POST["id_utilisateur"];
         }
 
+        // Génère un token CSRF si aucun en session
+        if (!isset($_SESSION["tokenCSRF"]["token"])) {
+            $this->_generateCSRFToken();
+        }
+
         // Affiche le gabarit gestion utilisateurs
         // et lui indique les variables nécessaires
         $this->_twig->display("admin/gestionUtilisateurs.html.twig",[
             'scripts' => ["admin.js"],
             'erreurs' => $erreurs,
-            'utilisateurs' => $utilisateurs
+            'utilisateurs' => $utilisateurs,
+            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
         ]);
     }
 
