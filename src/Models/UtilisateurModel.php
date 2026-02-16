@@ -2,8 +2,10 @@
 
 namespace Xaphan67\SudokuMaster\Models;
 
+use Exception;
 use PDO;
 use Xaphan67\SudokuMaster\Entities\Utilisateur;
+use Xaphan67\SudokuMaster\Models\Model;
 
 class UtilisateurModel extends Model {
 
@@ -30,7 +32,7 @@ class UtilisateurModel extends Model {
         return $prepare->fetchAll();
     }
 
-    function add(Utilisateur $utilisateur) {
+    function add(Utilisateur $utilisateur) : int | bool {
 
         // Requête préparée pour ajouter l'utilisateur
         $query =
@@ -45,12 +47,13 @@ class UtilisateurModel extends Model {
         $prepare->bindValue(":mdp_utilisateur", $utilisateur->getMdp(), PDO::PARAM_STR);
 
         // Execute la requête. Retourne l'ID de l'utilisateur inséré (si réussite) ou false (si echec)
-        if ($prepare->execute()) {
+        try {
+            $prepare->execute();
 
             // Retourner l'ID de l'utilisateur inséré
             return $this->_db->lastInsertId();
         }
-        else {
+        catch (Exception $e) {
             return false;
         }
     }
@@ -80,7 +83,13 @@ class UtilisateurModel extends Model {
         }
 
         // Execute la requête. Retourne true (si réussite) ou false (si echec)
-        return $prepare->execute();
+        try {
+            $prepare->execute();
+            return true;
+        }
+        catch (Exception $e) {
+            return false;
+        }
     }
 
     function delete(Utilisateur $utilisateur) : bool {

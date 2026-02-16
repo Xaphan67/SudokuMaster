@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `reset_token_date_expiration` datetime DEFAULT NULL,
   PRIMARY KEY (`Id_utilisateur`),
   UNIQUE KEY `reset_token` (`reset_token_hash`) USING BTREE,
+  UNIQUE KEY `email` (`email_utilisateur`) USING BTREE,
   KEY `id_role` (`id_role`),
   CONSTRAINT `utilisateur_ibfk_1` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

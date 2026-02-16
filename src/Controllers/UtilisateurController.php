@@ -117,6 +117,9 @@ class UtilisateurController extends Controller {
                         header("Location:connexion");
                     }
                 }
+                else {
+                    $erreurs["email"] = "Adresse mail invalide";
+                }
             }
         }
 
@@ -372,18 +375,19 @@ class UtilisateurController extends Controller {
 
                     // Redirige l'utilisateur vers la page de son profil
                     header("Location:profil");
+                    exit();
+                }
+                else {
+                    $erreurs["email"] = "Adresse mail invalide";
                 }
             }
-            else {
 
-                // Ajoute au tableau d'erreurs l'identifiant du formulaire
-                $erreurs["formulaire"] = "modifier_compte";
+            // Ajoute au tableau d'erreurs l'identifiant du formulaire
+            $erreurs["formulaire"] = "modifier_compte";
 
-                // Stocke les données saisies par l'utilisateur
-                // Pour les afficher à la place de celles en session
-                $this->_donnees["pseudoSaisi"] = $_POST["pseudo"];
-                $this->_donnees["emailSaisi"] = $_POST["email"];
-            }
+            // Stocke les données saisies par l'utilisateur
+            // Pour les afficher à la place de celles en session
+            $variablesSaisiesGabarit = ['pseudoSaisi' => $_POST["pseudo"], 'emailSaisi' => $_POST["email"]];
         }
 
         // Si le formulaire de suppression du compte est soumis
@@ -430,13 +434,12 @@ class UtilisateurController extends Controller {
 
                     // Redirige l'utilisateur vers la page d'accueil
                     header("Location:index.php");
+                    exit();
                 }
             }
-            else {
-
-                // Ajoute au tableau d'erreurs l'identifiant du formulaire
-                $erreurs["formulaire"] = "supprimer_compte";
-            }
+            
+            // Ajoute au tableau d'erreurs l'identifiant du formulaire
+            $erreurs["formulaire"] = "supprimer_compte";
         }
 
         // Crée une instance du modèle Classer et appelle la méthode
@@ -491,16 +494,20 @@ class UtilisateurController extends Controller {
             $this->_generateCSRFToken();
         }
 
-        // Affiche le gabarit profil
-        // et lui indique les variables nécessaires
-        $this->_twig->display("utilisateur/profil.html.twig",[
+        // Variables à passer au gabarit
+        $variablesGabarit = [
             'erreurs' => $erreurs,
             'scripts' => ["profil.js"],
             'statistiques' => $statistiques,
             'participations' => $donneesParticiper,
             'participationsModes' => $participationsModes,
             'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
-        ]);
+        ];
+        $donneesGabarit = array_merge($variablesGabarit, isset($variablesSaisiesGabarit) ? $variablesSaisiesGabarit : []);
+
+        // Affiche le gabarit profil
+        // et lui indique les variables nécessaires
+        $this->_twig->display("utilisateur/profil.html.twig", $donneesGabarit);
     }
 
     // Afficher la page de mot de passe oublié
