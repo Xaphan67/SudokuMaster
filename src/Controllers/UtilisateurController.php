@@ -503,7 +503,7 @@ class UtilisateurController extends Controller {
             'participationsModes' => $participationsModes,
             'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
         ];
-        $donneesGabarit = array_merge($variablesGabarit, isset($variablesSaisiesGabarit) ? $variablesSaisiesGabarit : []);
+        $donneesGabarit = array_merge($variablesGabarit, $variablesSaisiesGabarit ?? []);
 
         // Affiche le gabarit profil
         // et lui indique les variables nécessaires
