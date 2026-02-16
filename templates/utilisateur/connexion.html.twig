@@ -1,6 +1,6 @@
-{extends 'base.tpl'}
+{% extends 'base.html.twig' %}
 
-{block contenu}
+{% block contenu %}
 <div id="conteneur_principal" class="horizontal">
     <img src="assets/img/Grille.webp" alt="">
     <section class="formulaire">
@@ -14,10 +14,10 @@
                     type="email"
                     placeholder="exemple@exemple.fr"
                     autocomplete="email"
-                    {if $smarty.post.email|isset}value="{$smarty.post.email}"{/if}
+                    {% if get.email is defined %}value="{{ get.email }}"{% endif %}
                     required
                 />
-                {if $erreurs["email"]|isset}<p>{$erreurs["email"]}</p>{/if}
+                {% if erreurs.email is defined %}<p>{{ erreurs.email }}</p>{% endif %}
             </div>
             <div>
                 <label for="mdp">Mot de passe</label>
@@ -28,9 +28,9 @@
                     autocomplete="off"
                     required
                 />
-                {if $erreurs["mdp"]|isset}<p>{$erreurs["mdp"]}</p>{/if}
+                {% if erreurs.mdp is defined %}<p>{{ erreurs.mdp }}</p>{% endif %}
             </div>
-            {if $erreurs["identifiants"]|isset}<p>{$erreurs["identifiants"]}</p>{/if}
+            {% if erreurs.identifiants is defined %}<p>{{ erreurs.identifiants }}</p>{% endif %}
             <input type="submit" class="bouton boutonPrincipal boutonDefaut" value="Se connecter" />
         </form>
         <hr />
@@ -38,12 +38,12 @@
         <a href="oubliMdp">Vous avez oublié votre mot de passe ?</a>
     </section>
 </div>
-{if $erreurs["banni"]|isset}
+{% if erreurs.banni is defined %}
 <div id="banni" class="popup"><!-- popup de bannissement -->
     <h3>Connexion impossible</h3>
-    <p>{$erreurs["banni"]}</p>
-    <p>Raison : {$erreurs["raison_banni"]}
+    <p>{{ erreurs.banni }}</p>
+    <p>Raison : {{ erreurs.raison_banni }}
     <div id="bouton_ok" class="bouton boutonPrincipal boutonDefaut">Ok</div>
 </div>
-{/if}
-{/block}
+{% endif %}
+{% endblock %}

@@ -2,5 +2,4 @@ vendor
 composer.lock
 .env
 !.env.example
-cache/
 templates_c/

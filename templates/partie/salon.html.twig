@@ -1,7 +1,7 @@
-{extends 'base.tpl'}
+{% extends 'base.html.twig' %}
 
-{block contenu}
-<div id="conteneur_principal" class="vertical{!$utilisateurConnecte ? " inactif" : ''}" {!$utilisateurConnecte ? inert : ""}>
+{% block contenu %}
+<div id="conteneur_principal" class="vertical{{ not utilisateurConnecte ? " inactif" : '' }}" {{ not utilisateurConnecte ? inert : "" }}>
     <h1>Multijoueur</h1>
     <p id="salon_instructions">Vous pouvez créer une salle et inviter un autre joueur à vous rejoindre, ou rejoindre une salle déja créée par un autre joueur en entrant son numéro de salle.</p>
     <div id="salon">
@@ -42,10 +42,10 @@
                         name="salle"
                         type="text"
                         placeholder="948561"
-                        value="{$smarty.session.saisie.salle|isset ? $smarty.session.saisie.salle : ""}"
+                        value="{{ session.saisie.salle is defined ? session.saisie.salle : "" }}"
                         required
                     />
-                    {if $erreurs["salle"]|isset}<p>{$erreurs["salle"]}</p>{/if}
+                    {% if erreurs.salle is defined %}<p>{{ erreurs.salle }}</p>{% endif %}
                 </div>
                 <input type="submit" name="rejoindre_salle" class="bouton boutonPrincipal boutonDefaut" value="Rejoindre" />
             </form>
@@ -76,7 +76,7 @@
         </section>
     </div>
 </div>
-{if !$utilisateurConnecte}
+{% if not utilisateurConnecte %}
     <div id="compte_requis" class="popup"><!-- popup si non connecté -->
         <h3>Compte requis</h3>
         <p>Pour jouer en multijoueur, vous devez vous connecter avec votre compte</p>
@@ -84,5 +84,5 @@
         <a href="inscription" class="bouton boutonPrincipal boutonDefaut">Créer un compte</a>
         <a href="connexion&from=salon" class="bouton boutonPrincipal boutonDefaut">Se connecter</a>
     </div>
-{/if}
-{/block}
+{% endif %}
+{% endblock %}

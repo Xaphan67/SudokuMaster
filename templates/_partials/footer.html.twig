@@ -8,8 +8,8 @@
     </div>
 </footer>
 
-{if $scripts}
-    {foreach $scripts as $script}
-        <script src="assets/js/{$script}"></script>
-    {/foreach}
-{/if}
+{% if scripts %}
+    {% for script in scripts %}
+        <script src="assets/js/{{ script }}"></script>
+    {% endfor %}
+{% endif %}

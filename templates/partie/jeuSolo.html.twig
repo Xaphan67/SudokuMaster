@@ -1,6 +1,6 @@
-{extends 'base.tpl'}
+{% extends 'base.html.twig' %}
 
-{block contenu}
+{% block contenu %}
 <div id="conteneur_principal" class="vertical">
     <div id="haut" class="separateur_haut">
         <h2 id="titre_jeu" class="large">Jeu solo</h2>
@@ -9,105 +9,13 @@
         <div class="chargement"></div>
         <table class="grille" id="grille_vide" inert>
             <tbody>
+                {% for i in 1..9 %}
                 <tr>
+                    {% for j in 1..9 %}
                     <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    {% endfor %}
                 </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
         <table class="grille" id="grille">
@@ -133,15 +41,9 @@
                     </div>
                 </div>
                 <div id="pave_numerique"> <!-- pavé numérique -->
-                    <p class="bouton boutonPave">1</p>
-                    <p class="bouton boutonPave">2</p>
-                    <p class="bouton boutonPave">3</p>
-                    <p class="bouton boutonPave">4</p>
-                    <p class="bouton boutonPave">5</p>
-                    <p class="bouton boutonPave">6</p>
-                    <p class="bouton boutonPave">7</p>
-                    <p class="bouton boutonPave">8</p>
-                    <p class="bouton boutonPave">9</p>
+                    {% for i in 1..9 %}
+                    <p class="bouton boutonPave">{{ i }}</p>
+                    {% endfor %}
                 </div>
             </div>
             <div>
@@ -213,4 +115,4 @@
         <a href="index.php" class="bouton boutonPrincipal boutonDefaut">Retour à l'accueil</a>
     </div>
 </div>
-{/block}
+{% endblock %}

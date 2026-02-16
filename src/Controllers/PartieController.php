@@ -7,24 +7,22 @@ class PartieController extends Controller {
     // Afficher l'écran de partie solo
     public function soloBoard() {
 
-        // Indique au gabarit les variables nécessaires
-        $scripts = ["jeu.js", "api.js"];
-        $this->_donnees["scripts"] = $scripts;
-
         // Affiche le gabarit jeuSolo
-        $this->_display("partie/jeuSolo");
+        // et lui indique les variables nécessaires
+        $this->_twig->display("partie/jeuSolo.html.twig",[
+            'scripts' => ["jeu.js", "api.js"]
+        ]);
     }
 
     // Afficher l'écran de lobby pour partie multijoueur
     public function lobby() {
 
-        // Indique au gabarit les variables nécessaires
-        $scripts = ["salon.js"];
-        $this->_donnees["scripts"] = $scripts;
-        $this->_donnees ["utilisateurConnecte"] = isset($_SESSION["utilisateur"]);
-
         // Affiche le gabarit salon
-        $this->_display("partie/salon");
+        // et lui indique les variables nécessaires
+        $this->_twig->display("partie/salon.html.twig",[
+            'scripts' => ["salon.js"],
+            'utilisateurConnecte' => isset($_SESSION["utilisateur"])
+        ]);
 
         // Efface les erreurs et saisies relatives aux formulaires stockées en session
         unset($_SESSION["erreurs"]);
@@ -116,11 +114,10 @@ class PartieController extends Controller {
             }
         }
 
-        // Indique au gabarit les variables nécessaires
-        $scripts = ["jeu.js", "api.js"];
-        $this->_donnees["scripts"] = $scripts;
-
         // Affiche le gabarit multijoueur
-        $this->_display("partie/multijoueur");
+        // et lui indique les variables nécessaires
+        $this->_twig->display("partie/multijoueur.html.twig",[
+            'scripts' => ["jeu.js", "api.js"]
+        ]);
     }
 }

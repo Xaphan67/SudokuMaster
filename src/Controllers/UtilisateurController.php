@@ -26,18 +26,8 @@ class UtilisateurController extends Controller {
         // Crée un tableau pour gérer les erreurs
         $erreurs = [];
 
-        if (count($_POST) == 0) {
-            $_SESSION["tokenCSRF"]["token"] = "";
-            $_SESSION["tokenCSRF"]["dateExpiration"] = "";
-        }
-
         // Si le formulaire est soumis
         if (count($_POST) > 0) {
-
-            // Vérifie la validité du token CSRF
-            if (!$this->_checkCSRFToken($_POST["tokenCSRF"])) {
-                $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
-            }
 
             // Filtrage des données
             // Protège contre la faille XSS
@@ -125,14 +115,11 @@ class UtilisateurController extends Controller {
             }
         }
 
-        // Indique à au gabarit les variables nécessaires
-        $this->_donnees["erreurs"] = $erreurs;
-        $this->_donnees["tokenCSRF"]["token"] = $this->_generateCSRFToken();
-
-        //var_dump($this->_donnees["tokenCSRF"]["token"]);
-
         // Affiche le gabarit inscription
-        $this->_display("utilisateur/inscription");
+        // et lui indique les variables nécessaires
+        $this->_twig->display("utilisateur/inscription.html.twig",[
+            'erreurs' => $erreurs
+        ]);
     }
 
     // Affiche la page de connexion
@@ -243,13 +230,12 @@ class UtilisateurController extends Controller {
         }
 
 
-        // Indique au gabarit les variables nécessaires
-        $scripts = ["connexion.js"];
-        $this->_donnees["scripts"] = $scripts;
-        $this->_donnees["erreurs"] = $erreurs;
-
         // Affiche le gabarit connexion
-        $this->_display("utilisateur/connexion");
+        // et lui indique les variables nécessaires
+        $this->_twig->display("utilisateur/connexion.html.twig",[
+            'erreurs' => $erreurs,
+            'scripts' => ["connexion.js"]
+        ]);
     }
 
     // Déconnecte l'utilisateur
@@ -469,16 +455,15 @@ class UtilisateurController extends Controller {
             $participationsModes[$participation["id_mode_de_jeu"]] ++;
         }
 
-        // Indique au gabarit les variables nécessaires
-        $scripts = ["profil.js"];
-        $this->_donnees["scripts"] = $scripts;
-        $this->_donnees["statistiques"] = $statistiques;
-        $this->_donnees["participations"] = $donneesParticiper;
-        $this->_donnees["participationsModes"] = $participationsModes;
-        $this->_donnees["erreurs"] = $erreurs;
-
         // Affiche le gabarit profil
-        $this->_display("utilisateur/profil");
+        // et lui indique les variables nécessaires
+        $this->_twig->display("utilisateur/profil.html.twig",[
+            'erreurs' => $erreurs,
+            'scripts' => ["profil.js"],
+            'statistiques' => $statistiques,
+            'participations' => $donneesParticiper,
+            'participationsModes' => $participationsModes
+        ]);
     }
 
     // Afficher la page de mot de passe oublié
@@ -559,14 +544,13 @@ class UtilisateurController extends Controller {
             }
         }
 
-        // Indique au gabarit les variables nécessaires
-        $scripts = ["oubliMdp.js"];
-        $this->_donnees["scripts"] = $scripts;
-        $this->_donnees["emailEnvoye"] = $emailEnvoye;
-        $this->_donnees["erreurs"] = $erreurs;
-
         // Affiche le gabarit mot de passe oublié
-        $this->_display("utilisateur/oubliMdp");
+        // et lui indique les variables nécessaires
+        $this->_twig->display("utilisateur/oubliMdp.html.twig",[
+            'erreurs' => $erreurs,
+            'scripts' => ["oubliMdp.js"],
+            'emailEnvoye' => $emailEnvoye
+        ]);
     }
 
     // Afficher la page réinitialisation du mot de passe
@@ -640,13 +624,13 @@ class UtilisateurController extends Controller {
             }
         }
 
-        // Indique au gabarit les variables nécessaires
-        $this->_donnees["token"] = $token;
-        $this->_donnees["tokenValide"] = $tokenValide;
-        $this->_donnees["mdpReinitialise"] = $mdpReinitialise;
-        $this->_donnees["erreurs"] = $erreurs;
-
         // Affiche le gabarit réinitialisation du mot de passe
-        $this->_display("utilisateur/reinitialisationMdp");
+        // et lui indique les variables nécessaires
+        $this->_twig->display("utilisateur/reinitialisationMdp.html.twig",[
+            'erreurs' => $erreurs,
+            'token' => $token,
+            'tokenValide' => $tokenValide,
+            'mdpReinitialise' => $mdpReinitialise
+        ]);
     }
 }

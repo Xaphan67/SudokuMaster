@@ -95,8 +95,6 @@ class UtilisateurApi {
         $bannissement = new Bannissement;
         $bannissement->hydrate($bannissementModel->findLastByUser($dataJS["id"]));
 
-        var_dump($bannissement);
-
         // Ajoute la date actuelle en tant que date d'annulation
         $bannissement->setDate_annulation(date('Y-m-d H:i', time()));
 

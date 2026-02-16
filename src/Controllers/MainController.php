@@ -10,7 +10,7 @@ class MainController extends Controller {
     public function home() {
 
         // Affiche le gabarit accueil
-        $this->_display("main/accueil");
+        $this->_twig->display("main/accueil.html.twig");
     }
 
     // Affiche la page des classements
@@ -31,30 +31,28 @@ class MainController extends Controller {
             $classements[$mode] = $donneesClasser;
         }
 
-        // Indique au gabarit les variables nécessaires
-        $scripts = ["classements.js"];
-        $this->_donnees["scripts"] = $scripts;
-        $this->_donnees["classements"] = $classements;
-
         // Affiche le gabarit classements
-        $this->_display("main/classements");
+        // et lui indique les variables nécessaires
+        $this->_twig->display("main/classements.html.twig",[
+            'scripts' => ["classements.js"],
+            'classements' => $classements
+        ]);
     }
 
     // Affiche la page des règles
     public function rules() {
 
-        // Indique au gabarit les variables nécessaires
-        $scripts = ["regles.js"];
-        $this->_donnees["scripts"] = $scripts;
-
         // Affiche le gabarit regles
-        $this->_display("main/regles");
+        // et lui indique les variables nécessaires
+        $this->_twig->display("main/regles.html.twig",[
+            'scripts' => ["regles.js"]
+        ]);
     }
 
     // Affiche la page des mentions légales
     public function legals() {
 
         // Affiche le gabarit mentions
-        $this->_display("main/mentions");
+        $this->_twig->display("main/mentions.html.twig");
     }
 }

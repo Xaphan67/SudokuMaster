@@ -1,6 +1,6 @@
-{extends 'base.tpl'}
+{% extends 'base.html.twig' %}
 
-{block contenu}
+{% block contenu %}
 <div id="conteneur_principal" class="vertical">
     <h1>Interface d'administration</h1>
     <div id="accueil_administration">
@@ -10,36 +10,36 @@
             <h3>Les 5 derniers utilisateurs inscrits :</h3>
             <table>
                 <tbody>
-                    {foreach from=$utilisateurs item=utilisateur}
+                    {% for utilisateur in utilisateurs %}
                     <tr>
                         <td>
-                            <span>{$utilisateur.pseudo_utilisateur}</span><br>
-                            {$utilisateur.email_utilisateur}<br>
-                            Admin : {$utilisateur.id_role == 1 ? "Oui" : "Non"}
+                            <span>{{ utilisateur.pseudo_utilisateur }}</span><br>
+                            {{ utilisateur.email_utilisateur }}<br>
+                            Admin : {{ utilisateur.id_role == 1 ? 'Oui' : 'Non' }}
                         </td>
                         <td class="administration_actions">
-                            <div name="bouton_action-{$utilisateur.Id_utilisateur}" class="bouton boutonPrincipal boutonIcone boutonActions">
+                            <div name="bouton_action-{{ utilisateur.Id_utilisateur }}" class="bouton boutonPrincipal boutonIcone boutonActions">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
                                     <path d="M128 82a46 46 0 1 0 46 46a46.06 46.06 0 0 0-46-46Zm0 80a34 34 0 1 1 34-34a34 34 0 0 1-34 34Zm86-31.16c.06-1.89.06-3.79 0-5.68L229.33 106a6 6 0 0 0 1.11-5.29a105.34 105.34 0 0 0-10.68-25.81a6 6 0 0 0-4.53-3l-24.45-2.71q-1.93-2.07-4-4l-2.72-24.46a6 6 0 0 0-3-4.53a105.65 105.65 0 0 0-25.77-10.66a6 6 0 0 0-5.29 1.14l-19.2 15.37a89.64 89.64 0 0 0-5.68 0L106 26.67a6 6 0 0 0-5.29-1.11A105.34 105.34 0 0 0 74.9 36.24a6 6 0 0 0-3 4.53l-2.67 24.45q-2.07 1.94-4 4L40.76 72a6 6 0 0 0-4.53 3a105.65 105.65 0 0 0-10.66 25.77a6 6 0 0 0 1.11 5.23l15.37 19.2a89.64 89.64 0 0 0 0 5.68l-15.38 19.17a6 6 0 0 0-1.11 5.29a105.34 105.34 0 0 0 10.68 25.76a6 6 0 0 0 4.53 3l24.45 2.71q1.94 2.07 4 4L72 215.24a6 6 0 0 0 3 4.53a105.65 105.65 0 0 0 25.77 10.66a6 6 0 0 0 5.29-1.11l19.1-15.32c1.89.06 3.79.06 5.68 0l19.21 15.38a6 6 0 0 0 3.75 1.31a6.2 6.2 0 0 0 1.54-.2a105.34 105.34 0 0 0 25.76-10.68a6 6 0 0 0 3-4.53l2.71-24.45q2.07-1.93 4-4l24.46-2.72a6 6 0 0 0 4.53-3a105.49 105.49 0 0 0 10.66-25.77a6 6 0 0 0-1.11-5.29Zm-3.1 41.63l-23.64 2.63a6 6 0 0 0-3.82 2a75.14 75.14 0 0 1-6.31 6.31a6 6 0 0 0-2 3.82l-2.63 23.63a94.28 94.28 0 0 1-17.36 7.14l-18.57-14.86a6 6 0 0 0-3.75-1.31h-.36a78.07 78.07 0 0 1-8.92 0a6 6 0 0 0-4.11 1.3L100.87 218a94.13 94.13 0 0 1-17.34-7.17l-2.63-23.62a6 6 0 0 0-2-3.82a75.14 75.14 0 0 1-6.31-6.31a6 6 0 0 0-3.82-2l-23.63-2.63A94.28 94.28 0 0 1 38 155.14l14.86-18.57a6 6 0 0 0 1.3-4.11a78.07 78.07 0 0 1 0-8.92a6 6 0 0 0-1.3-4.11L38 100.87a94.13 94.13 0 0 1 7.17-17.34l23.62-2.63a6 6 0 0 0 3.82-2a75.14 75.14 0 0 1 6.31-6.31a6 6 0 0 0 2-3.82l2.63-23.63A94.28 94.28 0 0 1 100.86 38l18.57 14.86a6 6 0 0 0 4.11 1.3a78.07 78.07 0 0 1 8.92 0a6 6 0 0 0 4.11-1.3L155.13 38a94.13 94.13 0 0 1 17.34 7.17l2.63 23.64a6 6 0 0 0 2 3.82a75.14 75.14 0 0 1 6.31 6.31a6 6 0 0 0 3.82 2l23.63 2.63a94.28 94.28 0 0 1 7.14 17.29l-14.86 18.57a6 6 0 0 0-1.3 4.11a78.07 78.07 0 0 1 0 8.92a6 6 0 0 0 1.3 4.11L218 155.13a94.13 94.13 0 0 1-7.15 17.34Z"/>
                                 </svg>
                             </div>
-                            <div name="actions-{$utilisateur.Id_utilisateur}" class="actions">
-                                <div name="bouton_infos-{$utilisateur.Id_utilisateur}" class="bouton boutonPrincipal boutonIcone bouton-info">
+                            <div name="actions-{{ utilisateur.Id_utilisateur }}" class="actions">
+                                <div name="bouton_infos-{{ utilisateur.Id_utilisateur }}" class="bouton boutonPrincipal boutonIcone bouton-info">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
                                         <path d="M142 176a6 6 0 0 1-6 6a14 14 0 0 1-14-14v-40a2 2 0 0 0-2-2a6 6 0 0 1 0-12a14 14 0 0 1 14 14v40a2 2 0 0 0 2 2a6 6 0 0 1 6 6Zm-18-82a10 10 0 1 0-10-10a10 10 0 0 0 10 10Zm106 34A102 102 0 1 1 128 26a102.12 102.12 0 0 1 102 102Zm-12 0a90 90 0 1 0-90 90a90.1 90.1 0 0 0 90-90Z"/>
                                     </svg>
                                 </div>
-                                <div name="bouton_bannir-{$utilisateur.Id_utilisateur}" class="bouton boutonPrincipal boutonIcone bouton-bannir{$utilisateur.id_role == 1 ? " inactif" : ""}">
+                                <div name="bouton_bannir-{{ utilisateur.Id_utilisateur }}" class="bouton boutonPrincipal boutonIcone bouton-bannir{{ utilisateur.id_role == 1 ? ' inactif' : '' }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
                                         <path d="M224.4 104.2c-3.9-4.1-7.9-8.3-9.5-12.2s-1.6-9-1.7-14.7c-.1-9.3-.3-20-7.4-27.1s-17.8-7.3-27.1-7.4c-5.7-.1-11.1-.2-14.7-1.7s-8.1-5.6-12.2-9.5C145.2 25.2 137.6 18 128 18s-17.2 7.2-23.8 13.6c-4.1 3.9-8.3 7.9-12.2 9.5s-9 1.6-14.7 1.7c-9.3.1-20 .3-27.1 7.4S42.9 68 42.8 77.3c-.1 5.7-.2 11.1-1.7 14.7s-5.6 8.1-9.5 12.2C25.2 110.8 18 118.4 18 128s7.2 17.2 13.6 23.8c3.9 4.1 7.9 8.3 9.5 12.2s1.6 9 1.7 14.7c.1 9.3.3 20 7.4 27.1s17.8 7.3 27.1 7.4c5.7.1 11.1.2 14.7 1.7s8.1 5.6 12.2 9.5c6.6 6.4 14.2 13.6 23.8 13.6s17.2-7.2 23.8-13.6c4.1-3.9 8.3-7.9 12.2-9.5s9-1.6 14.7-1.7c9.3-.1 20-.3 27.1-7.4s7.3-17.8 7.4-27.1c.1-5.7.2-11.1 1.7-14.7s5.6-8.1 9.5-12.2c6.4-6.6 13.6-14.2 13.6-23.8s-7.2-17.2-13.6-23.8Zm-8.6 39.3c-4.7 4.9-9.5 9.9-12 15.9s-2.5 12.5-2.6 19.1s-.2 15.1-3.9 18.8s-11.4 3.8-18.8 3.9s-13.4.2-19.1 2.6s-11 7.3-15.9 12S132.8 226 128 226s-10.2-5.2-15.5-10.2s-9.9-9.5-15.9-12s-12.5-2.5-19.1-2.6s-15.1-.2-18.8-3.9s-3.8-11.4-3.9-18.8s-.2-13.4-2.6-19.1s-7.3-11-12-15.9S30 132.8 30 128s5.2-10.2 10.2-15.5s9.5-9.9 12-15.9s2.5-12.5 2.6-19.1s.2-15.1 3.9-18.8s11.4-3.8 18.8-3.9s13.4-.2 19.1-2.6s11-7.3 15.9-12S123.2 30 128 30s10.2 5.2 15.5 10.2s9.9 9.5 15.9 12s12.5 2.5 19.1 2.6s15.1.2 18.8 3.9s3.8 11.4 3.9 18.8s.2 13.4 2.6 19.1s7.3 11 12 15.9S226 123.2 226 128s-5.2 10.2-10.2 15.5ZM122 136V80a6 6 0 0 1 12 0v56a6 6 0 0 1-12 0Zm16 36a10 10 0 1 1-10-10a10 10 0 0 1 10 10Z"/>
                                     </svg>
                                 </div>
-                                <div name="bouton_supprimer-{$utilisateur.Id_utilisateur}" class="bouton boutonPrincipal boutonIcone bouton-supprimer{$utilisateur.id_role == 1 ? " inactif" : ""}">
+                                <div name="bouton_supprimer-{{ utilisateur.Id_utilisateur }}" class="bouton boutonPrincipal boutonIcone bouton-supprimer{{ utilisateur.id_role == 1 ? ' inactif' : '' }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
                                         <path d="M216 50h-42V40a22 22 0 0 0-22-22h-48a22 22 0 0 0-22 22v10H40a6 6 0 0 0 0 12h10v146a14 14 0 0 0 14 14h128a14 14 0 0 0 14-14V62h10a6 6 0 0 0 0-12ZM94 40a10 10 0 0 1 10-10h48a10 10 0 0 1 10 10v10H94Zm100 168a2 2 0 0 1-2 2H64a2 2 0 0 1-2-2V62h132Zm-84-104v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Zm48 0v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Z"/>
                                     </svg>
                                 </div>
-                                <div name="bouton_fermer-{$utilisateur.Id_utilisateur}" class="bouton boutonPrincipal boutonIcone bouton-fermer">
+                                <div name="bouton_fermer-{{ utilisateur.Id_utilisateur }}" class="bouton boutonPrincipal boutonIcone bouton-fermer">
                                     <svg xmlns="http://www.w3.org/2000/svg"viewBox="0 0 256 256">
                                         <path d="M230 112a62.07 62.07 0 0 1-62 62H46.49l37.75 37.76a6 6 0 1 1-8.48 8.48l-48-48a6 6 0 0 1 0-8.48l48-48a6 6 0 0 1 8.48 8.48L46.49 162H168a50 50 0 0 0 0-100H80a6 6 0 0 1 0-12h88a62.07 62.07 0 0 1 62 62Z"/>
                                     </svg>
@@ -47,7 +47,7 @@
                             </div>
                         </td>
                     </tr>
-                    {/foreach}
+                    {% endfor %}
                 </tbody>
             </table>
             <table id="utilisateurs">
@@ -59,31 +59,31 @@
                         <th>Admin</th>
                         <th>Actions</th>
                     </tr>
-                    {foreach from=$utilisateurs item=utilisateur}
+                    {% for utilisateur in utilisateurs %}
                     <tr>
-                        <td>{$utilisateur.Id_utilisateur}</td>
-                        <td>{$utilisateur.pseudo_utilisateur}</td>
-                        <td>{$utilisateur.email_utilisateur}</td>
-                        <td>{$utilisateur.id_role == 1 ? "Oui" : "Non"}</td>
+                        <td>{{ utilisateur.Id_utilisateur }}</td>
+                        <td>{{ utilisateur.pseudo_utilisateur }}</td>
+                        <td>{{ utilisateur.email_utilisateur }}</td>
+                        <td>{{ utilisateur.id_role == 1 ? 'Oui' : 'Non' }}</td>
                         <td class="administration_actions_large">
-                            <div name="bouton_infos-{$utilisateur.Id_utilisateur}" class="bouton boutonPrincipal boutonIcone bouton-info">
+                            <div name="bouton_infos-{{ utilisateur.Id_utilisateur }}" class="bouton boutonPrincipal boutonIcone bouton-info">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
                                     <path d="M142 176a6 6 0 0 1-6 6a14 14 0 0 1-14-14v-40a2 2 0 0 0-2-2a6 6 0 0 1 0-12a14 14 0 0 1 14 14v40a2 2 0 0 0 2 2a6 6 0 0 1 6 6Zm-18-82a10 10 0 1 0-10-10a10 10 0 0 0 10 10Zm106 34A102 102 0 1 1 128 26a102.12 102.12 0 0 1 102 102Zm-12 0a90 90 0 1 0-90 90a90.1 90.1 0 0 0 90-90Z"/>
                                 </svg>
                             </div>
-                            <div name="bouton_bannir-{$utilisateur.Id_utilisateur}" class="bouton boutonPrincipal boutonIcone bouton-bannir{$utilisateur.id_role == 1 ? " inactif" : ""}">
+                            <div name="bouton_bannir-{{ utilisateur.Id_utilisateur }}" class="bouton boutonPrincipal boutonIcone bouton-bannir{{ utilisateur.id_role == 1 ? ' inactif' : '' }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
                                     <path d="M224.4 104.2c-3.9-4.1-7.9-8.3-9.5-12.2s-1.6-9-1.7-14.7c-.1-9.3-.3-20-7.4-27.1s-17.8-7.3-27.1-7.4c-5.7-.1-11.1-.2-14.7-1.7s-8.1-5.6-12.2-9.5C145.2 25.2 137.6 18 128 18s-17.2 7.2-23.8 13.6c-4.1 3.9-8.3 7.9-12.2 9.5s-9 1.6-14.7 1.7c-9.3.1-20 .3-27.1 7.4S42.9 68 42.8 77.3c-.1 5.7-.2 11.1-1.7 14.7s-5.6 8.1-9.5 12.2C25.2 110.8 18 118.4 18 128s7.2 17.2 13.6 23.8c3.9 4.1 7.9 8.3 9.5 12.2s1.6 9 1.7 14.7c.1 9.3.3 20 7.4 27.1s17.8 7.3 27.1 7.4c5.7.1 11.1.2 14.7 1.7s8.1 5.6 12.2 9.5c6.6 6.4 14.2 13.6 23.8 13.6s17.2-7.2 23.8-13.6c4.1-3.9 8.3-7.9 12.2-9.5s9-1.6 14.7-1.7c9.3-.1 20-.3 27.1-7.4s7.3-17.8 7.4-27.1c.1-5.7.2-11.1 1.7-14.7s5.6-8.1 9.5-12.2c6.4-6.6 13.6-14.2 13.6-23.8s-7.2-17.2-13.6-23.8Zm-8.6 39.3c-4.7 4.9-9.5 9.9-12 15.9s-2.5 12.5-2.6 19.1s-.2 15.1-3.9 18.8s-11.4 3.8-18.8 3.9s-13.4.2-19.1 2.6s-11 7.3-15.9 12S132.8 226 128 226s-10.2-5.2-15.5-10.2s-9.9-9.5-15.9-12s-12.5-2.5-19.1-2.6s-15.1-.2-18.8-3.9s-3.8-11.4-3.9-18.8s-.2-13.4-2.6-19.1s-7.3-11-12-15.9S30 132.8 30 128s5.2-10.2 10.2-15.5s9.5-9.9 12-15.9s2.5-12.5 2.6-19.1s.2-15.1 3.9-18.8s11.4-3.8 18.8-3.9s13.4-.2 19.1-2.6s11-7.3 15.9-12S123.2 30 128 30s10.2 5.2 15.5 10.2s9.9 9.5 15.9 12s12.5 2.5 19.1 2.6s15.1.2 18.8 3.9s3.8 11.4 3.9 18.8s.2 13.4 2.6 19.1s7.3 11 12 15.9S226 123.2 226 128s-5.2 10.2-10.2 15.5ZM122 136V80a6 6 0 0 1 12 0v56a6 6 0 0 1-12 0Zm16 36a10 10 0 1 1-10-10a10 10 0 0 1 10 10Z"/>
                                 </svg>
                             </div>
-                            <div name="bouton_supprimer-{$utilisateur.Id_utilisateur}" class="bouton boutonPrincipal boutonIcone bouton-supprimer{$utilisateur.id_role == 1 ? " inactif" : ""}">
+                            <div name="bouton_supprimer-{{ utilisateur.Id_utilisateur }}" class="bouton boutonPrincipal boutonIcone bouton-supprimer{{ utilisateur.id_role == 1 ? ' inactif' : '' }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
                                     <path d="M216 50h-42V40a22 22 0 0 0-22-22h-48a22 22 0 0 0-22 22v10H40a6 6 0 0 0 0 12h10v146a14 14 0 0 0 14 14h128a14 14 0 0 0 14-14V62h10a6 6 0 0 0 0-12ZM94 40a10 10 0 0 1 10-10h48a10 10 0 0 1 10 10v10H94Zm100 168a2 2 0 0 1-2 2H64a2 2 0 0 1-2-2V62h132Zm-84-104v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Zm48 0v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Z"/>
                                 </svg>
                             </div>
                         </td>
                     </tr>
-                    {/foreach}
+                    {% endfor %}
                 </tbody>
             </table>
             <div>
@@ -96,26 +96,26 @@
             <h3>Les 5 dernières parties :</h3>
             <table>
                 <tbody>
-                    {foreach from=$parties item=partie}
+                    {% for partie in parties %}
                     <tr>
                         <td>
-                            Type : {$partie.libelle_mode_de_jeu} - {$partie.libelle_difficulte}<br>
-                            Durée : {$partie.duree_partie}<br>
+                            Type : {{ partie.libelle_mode_de_jeu }} - {{ partie.libelle_difficulte }}<br>
+                            Durée : {{ partie.duree_partie }}<br>
                             <div>
                                 Joueur(s) :
                                 <div class="joueurs">
-                                    {if $partie.gagnant}<img src="assets/img/TropheeOr" alt="">{/if}{$partie.pseudo_utilisateur}
+                                    {% if partie.gagnant %}<img src="assets/img/TropheeOr" alt="">{% endif %}{{ partie.pseudo_utilisateur }}
                                 </div>
-                                {if $partie.pseudo_utilisateur_2 != ""}
-                                {$partie.libelle_mode_de_jeu == "Compétitif" ? "VS" : "-"}
+                                {% if partie.pseudo_utilisateur_2 != '' %}
+                                {{ partie.libelle_mode_de_jeu == 'Compétitif' ? 'VS' : '-' }}
                                 <div class="joueurs">
-                                    {if $partie.gagnant_2}<img src="assets/img/TropheeOr" alt="">{/if}{$partie.pseudo_utilisateur_2}
+                                    {% if partie.gagnant_2 %}<img src="assets/img/TropheeOr" alt="">{% endif %}{{ partie.pseudo_utilisateur_2 }}
                                 </div>
-                                {/if}
+                                {% endif %}
                             </div>
                         </td>
                     </tr>
-                    {/foreach}
+                    {% endfor %}
                 </tbody>
             </table>
             <table>
@@ -128,32 +128,32 @@
                         <th>Joueur(s)</th>
                         <th>Gagnant(s)</th>
                     </tr>
-                    {foreach from=$parties item=partie}
+                    {% for partie in parties %}
                     <tr>
-                        <td>{$partie.id_partie}</td>
-                        <td>{$partie.libelle_mode_de_jeu}</td>
-                        <td>{$partie.libelle_difficulte}</td>
-                        <td>{$partie.duree_partie}</td>
+                        <td>{{ partie.id_partie }}</td>
+                        <td>{{ partie.libelle_mode_de_jeu }}</td>
+                        <td>{{ partie.libelle_difficulte }}</td>
+                        <td>{{ partie.duree_partie }}</td>
                         <td class="joueurs">
-                            {$partie.pseudo_utilisateur}
-                            {if $partie.pseudo_utilisateur_2 != ""}
+                            {{ partie.pseudo_utilisateur }}
+                            {% if partie.pseudo_utilisateur_2 != '' %}
                                 -
-                                {$partie.pseudo_utilisateur_2}
-                            {/if}
+                                {{ partie.pseudo_utilisateur_2 }}
+                            {% endif %}
                         </td>
                         <td>
-                            {if $partie.gagnant}{$partie.pseudo_utilisateur}{else}-{/if}
-                            {if $partie.pseudo_utilisateur_2 != ""}
+                            {% if partie.gagnant %}{{ partie.pseudo_utilisateur }}{% else %}-{% endif %}
+                            {% if partie.pseudo_utilisateur_2 != '' %}
                                 -
-                                {if $partie.gagnant_2}{$partie.pseudo_utilisateur_2}{/if}
-                            {/if}
+                                {% if partie.gagnant_2 %}{{ partie.pseudo_utilisateur_2 }}{% endif %}
+                            {% endif %}
                         </td>
                     </tr>
-                    {/foreach}
+                    {% endfor %}
                 </tbody>
             </table>
             <div>
-                <a href="gestionParties" class="bouton boutonPrincipal boutonDefaut boutonAdmin{$parties|count == 0 ? " inactif" : ""}">Voir les parties</a>
+                <a href="gestionParties" class="bouton boutonPrincipal boutonDefaut boutonAdmin{{ parties|length == 0 ? ' inactif' : '' }}">Voir les parties</a>
             </div>
         </section>
     </div>
@@ -202,12 +202,12 @@
                 name="dateFin"
                 type="datetime-local"
             />
-            {if $erreurs["dateFin"]|isset}<p class="erreur">{$erreurs["dateFin"]}</p>{/if}
+            {% if erreurs.dateFin is defined %}<p class="erreur">{{ erreurs.dateFin }}</p>{% endif %}
         </div>
         <div>
             <label for="raison">Raison</label>
             <textarea id="raison" name="raison" rows="3" required></textarea>
-            {if $erreurs["raison"]|isset}<p class="erreur">{$erreurs["raison"]}</p>{/if}
+            {% if erreurs.raison is defined %}<p class="erreur">{{ erreurs.raison }}</p>{% endif %}
         </div>
         <input type="hidden" name="id_utilisateur" value="" />
         <p>Laissez la date vide pour un bannissement permanent</p>
@@ -231,5 +231,5 @@
     <div id="bouton_annuler_supprimer" class="bouton boutonPrincipal boutonDefaut">Non</div>
 </div>
 <!-- Récupère le formulaire qui possède des erreurs pour être utilisé en JS et afficher immédiatement le popup correspondant -->
-<input type="hidden" id="erreurs" value="{$erreurs["id_utilisateur"]|isset ? $erreurs["id_utilisateur"] : ""}" />
-{/block}
+<input type="hidden" id="erreurs" value="{{ erreurs.id_utilisateur is defined ? erreurs.id_utilisateur : '' }}" />
+{% endblock %}

@@ -1,6 +1,6 @@
-{extends 'base.tpl'}
+{% extends 'base.html.twig' %}
 
-{block contenu}
+{% block contenu %}
 <div id="conteneur_principal" class="vertical">
     <h1>SUDOKU MASTER</h1>
     <div id="boutons_haut">
@@ -34,4 +34,4 @@
         </p>
     </section>
 </div>
-{/block}
+{% endblock %}

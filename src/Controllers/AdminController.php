@@ -104,15 +104,14 @@ class AdminController extends Controller {
             $erreurs["id_utilisateur"] = $_POST["id_utilisateur"];
         }
 
-        // Indique au gabarit les variables nécessaires
-        $scripts = ["admin.js"];
-        $this->_donnees["scripts"] = $scripts;
-        $this->_donnees["erreurs"] = $erreurs;
-        $this->_donnees["utilisateurs"] = $utilisateurs;
-        $this->_donnees["parties"] = $parties;
-
         // Affiche le gabarit accueil
-        $this->_display("admin/accueil");
+        // et lui indique les variables nécessaires
+        $this->_twig->display("admin/accueil.html.twig",[
+            'scripts' => ["admin.js"],
+            'erreurs' => $erreurs,
+            'utilisateurs' => $utilisateurs,
+            'parties' => $parties
+        ]);
     }
 
     // Page de gestion des utilisateurs
@@ -183,14 +182,13 @@ class AdminController extends Controller {
             $erreurs["id_utilisateur"] = $_POST["id_utilisateur"];
         }
 
-        // Indique au gabarit les variables nécessaires
-        $scripts = ["admin.js"];
-        $this->_donnees["scripts"] = $scripts;
-        $this->_donnees["erreurs"] = $erreurs;
-        $this->_donnees["utilisateurs"] = $utilisateurs;
-
         // Affiche le gabarit gestion utilisateurs
-        $this->_display("admin/gestionUtilisateurs");
+        // et lui indique les variables nécessaires
+        $this->_twig->display("admin/gestionUtilisateurs.html.twig",[
+            'scripts' => ["admin.js"],
+            'erreurs' => $erreurs,
+            'utilisateurs' => $utilisateurs
+        ]);
     }
 
     // Page de gestion des parties
@@ -237,12 +235,11 @@ class AdminController extends Controller {
             }
         }
 
-        // Indique au gabarit les variables nécessaires
-        $scripts = ["admin.js"];
-        $this->_donnees["scripts"] = $scripts;
-        $this->_donnees["parties"] = $partiesFusion;
-
         // Affiche le gabarit gestion parties
-        $this->_display("admin/gestionParties");
+        // et lui indique les variables nécessaires
+        $this->_twig->display("admin/gestionParties.html.twig",[
+            'scripts' => ["admin.js"],
+            'parties' => $partiesFusion
+        ]);
     }
 }

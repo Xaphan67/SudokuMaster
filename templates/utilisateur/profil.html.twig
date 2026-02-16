@@ -1,6 +1,6 @@
-{extends 'base.tpl'}
+{% extends 'base.html.twig' %}
 
-{block contenu}
+{% block contenu %}
 <div id="conteneur_principal" class="vertical">
     <h1>Profil</h1>
     <section id="infos_compte">
@@ -11,16 +11,16 @@
                 <p>Mot de passe :</p>
             </div>
             <div>
-                <p>{$smarty.session.utilisateur.pseudo_utilisateur}</p>
-                <p>{$smarty.session.utilisateur.email_utilisateur}</p>
+                <p>{{ session.utilisateur.pseudo_utilisateur }}</p>
+                <p>{{ session.utilisateur.email_utilisateur }}</p>
                 <p>*********</p>
             </div>
         </div>
         <div>
             <p>Pseudo</p>
-            <p>{$smarty.session.utilisateur.pseudo_utilisateur}</p>
+            <p>{{ session.utilisateur.pseudo_utilisateur }}</p>
             <p>Adresse mail</p>
-            <p>{$smarty.session.utilisateur.email_utilisateur}</p>
+            <p>{{ session.utilisateur.email_utilisateur }}</p>
             <p>Mot de passe</p>
             <p>*********</p>
         </div>
@@ -46,66 +46,66 @@
             <p>Coopératif</p>
             <p>Compétitif</p>
         </div>
-        {for $mode = 1 to 3}
-            <div id="statistiques_{$mode == 1 ? "solo" : ($mode == 2 ? "cooperatif" : "competitif")}" class="statistiques">
+        {% for mode in 1..3 %}
+            <div id="statistiques_{{ mode == 1 ? 'solo' : (mode == 2 ? 'cooperatif' : 'competitif') }}" class="statistiques">
                 <h3>Score global</h3>
-                <p class="score_principal score_large">{$statistiques[$mode]|isset ? $statistiques[$mode]->getScore_global() : "1000"}</p>
+                <p class="score_principal score_large">{{ statistiques[mode] is defined ? statistiques[mode].score_global : '1000' }}</p>
                 <div class="statistiques_mode">
                     <div>
                         <p>Grilles jouées</p>
-                        <p>{$statistiques[$mode]|isset ? $statistiques[$mode]->getGrilles_jouees() : "0"}</p>
+                        <p>{{ statistiques[mode] is defined ? statistiques[mode].grilles_jouees : '0' }}</p>
                     </div>
                     <div>
                         <p>Grilles résolues</p>
-                        <p>{$statistiques[$mode]|isset ? $statistiques[$mode]->getGrilles_resolues() : "0"}</p>
+                        <p>{{ statistiques[mode] is defined ? statistiques[mode].grilles_resolues : '0' }}</p>
                     </div>
                     <div>
                         <p>Temps moyen</p>
-                        <p>{$statistiques[$mode]|isset ? $statistiques[$mode]->getTemps_moyen() : "00:00"}</p>
+                        <p>{{ statistiques[mode] is defined ? statistiques[mode].temps_moyen : '00:00' }}</p>
                     </div>
                     <div>
                         <p>Meilleur temps</p>
-                        <p>{$statistiques[$mode]|isset ? $statistiques[$mode]->getMeilleur_temps() : "00:00"}</p>
+                        <p>{{ statistiques[mode] is defined ? statistiques[mode].meilleur_temps : '00:00' }}</p>
                     </div>
                     <div>
                         <p>Série de victoires</p>
-                        <p>{$statistiques[$mode]|isset ? $statistiques[$mode]->getSerie_victoires() : "0"}</p>
+                        <p>{{ statistiques[mode] is defined ? statistiques[mode].serie_victoires : '0' }}</p>
                     </div>
                 </div>
                 <h3>Dernières parties jouées</h3>
                 <div class="dernieres_parties_mobile">
-                    {if $participationsModes[$mode] != 0}
-                        {$num = 0}
-                        {foreach from=$participations item=participation}
-                            {if $participation.id_mode_de_jeu == $mode}
-                                {if $num < 5}
-                                    <p>Partie jouée le {$participation.date_partie|date_format:"%d/%m/%Y"}</p>
+                    {% if participationsModes[mode] != 0 %}
+                        {% set num = 0 %}
+                        {% for participation in participations %}
+                            {% if participation.id_mode_de_jeu == mode %}
+                                {% if num < 5 %}
+                                    <p>Partie jouée le {{ participation.date_partie|date('d/m/Y') }}</p>
                                     <div>
                                         <div>
                                             <p>Temps</p>
-                                            <p>{$participation.duree_partie}</p>
+                                            <p>{{ participation.duree_partie }}</p>
                                         </div>
                                         <div>
                                             <p>Difficulté</p>
-                                            <p>{$participation.id_difficulte == 1 ? "Facile" : ($participation.id_difficulte == 2 ? "Moyen" : "Difficile")}</p>
+                                            <p>{{ participation.id_difficulte == 1 ? 'Facile' : (participation.id_difficulte == 2 ? 'Moyen' : 'Difficile') }}</p>
                                         </div>
                                         <div>
                                             <p>Score</p>
-                                            <p class="{$participation.score > 0 ? "victoire" : "defaite"}">{$participation.score > 0 ? "+" : ""}{$participation.score}</p>
+                                            <p class="{{ participation.score > 0 ? 'victoire' : 'defaite' }}">{{ participation.score > 0 ? '+' : '' }}{{ participation.score }}</p>
                                         </div>
                                     </div>
-                                {/if}
-                                {$num = $num + 1}
-                            {/if}
-                        {/foreach}
-                    {else}
+                                {% endif %}
+                                {% set num = num + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
                         <div class="aucune_partie">
                             <p>Aucune partie jouée</p>
                         </div>
-                    {/if}
+                    {% endif %}
                 </div>
                 <div class="dernieres_parties">
-                    {if $participationsModes[$mode] != 0}
+                    {% if participationsModes[mode] != 0 %}
                         <div>
                             <p>Date</p>
                             <p>Temps</p>
@@ -113,29 +113,29 @@
                             <p>Résultat</p>
                             <p>Score</p>
                         </div>
-                        {$num = 0}
-                        {foreach from=$participations item=participation}
-                            {if $participation.id_mode_de_jeu == $mode}
-                                {if $num < 5}
+                        {% set num = 0 %}
+                        {% for participation in participations %}
+                            {% if participation.id_mode_de_jeu == mode %}
+                                {% if num < 5 %}
                                     <div>
-                                    <p>{$participation.date_partie|date_format:"%d/%m/%Y"}</p>
-                                    <p>{$participation.duree_partie}</p>
-                                    <p>{$participation.id_difficulte == 1 ? "Facile" : ($participation.id_difficulte == 2 ? "Moyen" : "Difficile")}</p>
-                                    <p>{$participation.gagnant ? "Victoire" : "Défaite"}</p>
-                                    <p class="{$participation.score > 0 ? "victoire" : "defaite"}">{$participation.score > 0 ? "+" : ""}{$participation.score}</p>
+                                    <p>{{ participation.date_partie|date('d/m/Y') }}</p>
+                                    <p>{{ participation.duree_partie }}</p>
+                                    <p>{{ participation.id_difficulte == 1 ? 'Facile' : (participation.id_difficulte == 2 ? 'Moyen' : 'Difficile') }}</p>
+                                    <p>{{ participation.gagnant ? 'Victoire' : 'Défaite' }}</p>
+                                    <p class="{{ participation.score > 0 ? 'victoire' : 'defaite' }}">{{ participation.score > 0 ? '+' : '' }}{{ participation.score }}</p>
                                     </div>
-                                {/if}
-                                {$num = $num + 1}
-                            {/if}
-                        {/foreach}
-                    {else}
+                                {% endif %}
+                                {% set num = num + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
                         <div class="aucune_partie">
                             <p>Aucune partie jouée</p>
                         </div>
-                    {/if}
+                    {% endif %}
                 </div>
             </div>
-        {/for}
+        {% endfor %}
     </section>
 </div>
 <div id="modifier_compte" class="popup popup_large"> <!-- popup modification des données du compte -->
@@ -153,24 +153,24 @@
                     <input id="pseudo"
                         name="pseudo"
                         type="text"
-                        placeholder="{$smarty.session.utilisateur.pseudo_utilisateur}"
+                        placeholder="{{ session.utilisateur.pseudo_utilisateur }}"
                         autocomplete="username"
-                        value="{$pseudoSaisi|isset ? $pseudoSaisi : $smarty.session.utilisateur.pseudo_utilisateur}"
+                        value="{{ pseudoSaisi is defined ? pseudoSaisi : session.utilisateur.pseudo_utilisateur }}"
                         required
                     />
-                    {if $erreurs["pseudo"]|isset}<p class="erreur">{$erreurs["pseudo"]}</p>{/if}
+                    {% if erreurs.pseudo is defined %}<p class="erreur">{{ erreurs.pseudo }}</p>{% endif %}
                 </div>
                 <div>
                     <label for="email">Adresse mail</label>
                     <input id="email"
                         name="email"
                         type="email"
-                        placeholder="{$smarty.session.utilisateur.email_utilisateur}"
+                        placeholder="{{ session.utilisateur.email_utilisateur }}"
                         autocomplete="email"
-                        value="{$pseudoSaisi|isset ? $emailSaisi : $smarty.session.utilisateur.email_utilisateur}"
+                        value="{{ emailSaisi is defined ? emailSaisi : session.utilisateur.email_utilisateur }}"
                         required
                     />
-                    {if $erreurs["email"]|isset}<p class="erreur">{$erreurs["email"]}</p>{/if}
+                    {% if erreurs.email is defined %}<p class="erreur">{{ erreurs.email }}</p>{% endif %}
                 </div>
             </div>
             <div>
@@ -182,7 +182,7 @@
                         placeholder="*********"
                         autocomplete="off"
                     />
-                    {if $erreurs["mdp"]|isset}<p class="erreur">{$erreurs["mdp"]}</p>{/if}
+                    {% if erreurs.mdp is defined %}<p class="erreur">{{ erreurs.mdp }}</p>{% endif %}
                 </div>
                 <div>
                     <label for="mdp_confirm">Confirmation du mot de passe</label>
@@ -192,7 +192,7 @@
                         placeholder="*********"
                         autocomplete="off"
                     />
-                    {if $erreurs["mdp_confirm"]|isset}<p class="erreur">{$erreurs["mdp_confirm"]}</p>{/if}
+                    {% if erreurs.mdp_confirm is defined %}<p class="erreur">{{ erreurs.mdp_confirm }}</p>{% endif %}
                 </div>
             </div>
         </div>
@@ -206,7 +206,7 @@
                 autocomplete="off"
                 required
             />
-            {if $erreurs["mdp_check"]|isset}<p class="erreur">{$erreurs["mdp_check"]}</p>{/if}
+            {% if erreurs.mdp_check is defined %}<p class="erreur">{{ erreurs.mdp_check }}</p>{% endif %}
         </div>
         <div class="actions-formulaire">
             <input type="submit" name="modifier_compte" class="bouton boutonPrincipal boutonDefaut" value="Modifier" />
@@ -231,7 +231,7 @@
                 autocomplete="off"
                 required
             />
-            {if $erreurs["mdp_check"]|isset}<p class="erreur">{$erreurs["mdp_check"]}</p>{/if}
+            {% if erreurs.mdp_check is defined %}<p class="erreur">{{ erreurs.mdp_check }}</p>{% endif %}
         </div>
         <div class="actions-formulaire">
             <input type="submit" name="supprimer_compte" class="bouton boutonPrincipal boutonDefaut" value="Supprimer" />
@@ -240,5 +240,5 @@
     </form>
 </div>
 <!-- Récupère le formulaire qui possède des erreurs pour être utilisé en JS et afficher immédiatement le popup correspondant -->
-<input type="hidden" id="erreurs" value="{$erreurs["formulaire"]|isset ? $erreurs["formulaire"] : ""}" />
-{/block}
+<input type="hidden" id="erreurs" value="{{ erreurs.formulaire is defined ? erreurs.formulaire : '' }}" />
+{% endblock %}

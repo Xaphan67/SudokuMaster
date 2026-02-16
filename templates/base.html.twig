@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="fr">
+    {# Head (meta données, JS, CSS, etc...) #}
+    {% include '_partials/head.html.twig' %}
+    <body>
+        {# Header #}
+        {% include '_partials/header.html.twig'%}
+        <main>
+            {# Contenu spécifique à chaque page #}
+            {% block contenu %}{% endblock %}
+        </main>
+        {# Footer #}
+        {% include '_partials/footer.html.twig'%}
+    </body>
+</html>
