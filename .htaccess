@@ -1,9 +1,9 @@
 Options +FollowSymlinks
 RewriteEngine on
 
-RewriteRule ^salon$ index.php?controller=partie&action=lobby [L]
+RewriteRule ^salon$ index.php?controller=partie&action=lobby [L,QSA]
 RewriteRule ^solo$ index.php?controller=partie&action=soloBoard [L]
-RewriteRule ^multijoueur(.*)$ index.php?controller=partie&action=multiBoard [L,QSA]
+RewriteRule ^multijoueur(.*)$ index.php?controller=partie&action=multiBoard [L]
 
 RewriteRule ^classements$ index.php?action=leaderboard [L]
 RewriteRule ^regles$ index.php?action=rules [L]

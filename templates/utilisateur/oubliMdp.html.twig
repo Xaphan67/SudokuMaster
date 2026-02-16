@@ -19,6 +19,8 @@
                 />
                 {% if erreurs.email is defined %}<p>{{ erreurs.email }}</p>{% endif %}
             </div>
+            <input type="hidden" name="tokenCSRF" value="{{ tokenCSRF }}" />
+            {% if erreurs.general is defined %}<p>{{ erreurs.general }}</p>{% endif %}
             <input type="submit" class="bouton boutonPrincipal boutonDefaut" value="Réinitialiser le mot de passe" />
         </form>
     </section>

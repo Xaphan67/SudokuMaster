@@ -52,6 +52,7 @@
                 />
                 {% if erreurs.mdp_confirm is defined %}<p>{{ erreurs.mdp_confirm }}</p>{% endif %}
             </div>
+            <input type="hidden" name="tokenCSRF" value="{{ tokenCSRF }}" />
             {% if erreurs.general is defined %}<p>{{ erreurs.general }}</p>{% endif %}
             <input type="submit" class="bouton boutonPrincipal boutonDefaut" value="Créer mon compte" />
         </form>

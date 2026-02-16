@@ -110,7 +110,7 @@ function connect() {
                             HOTE.textContent = pseudoJoueur;
                             DIFFICULTE.textContent = element.difficulte;
                             LIEN.textContent = "Rejoindre";
-                            LIEN.href = "multijoueur?salle=" + element.numero;
+                            LIEN.href = "salon?salle=" + element.numero;
                             LIEN.classList.add("bouton", "boutonPrincipal", "boutonLarge");
 
                             // Ajoute la salle à la liste

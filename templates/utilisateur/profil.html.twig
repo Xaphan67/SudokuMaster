@@ -208,6 +208,8 @@
             />
             {% if erreurs.mdp_check is defined %}<p class="erreur">{{ erreurs.mdp_check }}</p>{% endif %}
         </div>
+        <input type="hidden" name="tokenCSRF" value="{{ tokenCSRF }}" />
+        {% if erreurs.general is defined %}<p>{{ erreurs.general }}</p>{% endif %}
         <div class="actions-formulaire">
             <input type="submit" name="modifier_compte" class="bouton boutonPrincipal boutonDefaut" value="Modifier" />
             <div id="bouton_annuler_modifier" class="bouton boutonPrincipal boutonDefaut">Annuler</div>
@@ -233,6 +235,8 @@
             />
             {% if erreurs.mdp_check is defined %}<p class="erreur">{{ erreurs.mdp_check }}</p>{% endif %}
         </div>
+        <input type="hidden" name="tokenCSRF" value="{{ tokenCSRF }}" />
+        {% if erreurs.general is defined %}<p>{{ erreurs.general }}</p>{% endif %}
         <div class="actions-formulaire">
             <input type="submit" name="supprimer_compte" class="bouton boutonPrincipal boutonDefaut" value="Supprimer" />
             <div id="bouton_annuler_supprimer" class="bouton boutonPrincipal boutonDefaut">Annuler</div>

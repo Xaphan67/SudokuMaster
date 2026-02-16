@@ -30,6 +30,8 @@
                 />
                 {% if erreurs.mdp is defined %}<p>{{ erreurs.mdp }}</p>{% endif %}
             </div>
+            <input type="hidden" name="tokenCSRF" value="{{ tokenCSRF }}" />
+            {% if erreurs.general is defined %}<p>{{ erreurs.general }}</p>{% endif %}
             {% if erreurs.identifiants is defined %}<p>{{ erreurs.identifiants }}</p>{% endif %}
             <input type="submit" class="bouton boutonPrincipal boutonDefaut" value="Se connecter" />
         </form>

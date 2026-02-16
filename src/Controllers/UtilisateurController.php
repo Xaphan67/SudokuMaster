@@ -29,6 +29,11 @@ class UtilisateurController extends Controller {
         // Si le formulaire est soumis
         if (count($_POST) > 0) {
 
+            // Vérifie la validité du token CSRF
+            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+                $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
+            }
+
             // Filtrage des données
             // Protège contre la faille XSS
             $pseudo = trim(filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_SPECIAL_CHARS));
@@ -115,10 +120,16 @@ class UtilisateurController extends Controller {
             }
         }
 
+        // Génère un token CSRF si aucun en session
+        if (!isset($_SESSION["tokenCSRF"]["token"])) {
+            $this->_generateCSRFToken();
+        }
+
         // Affiche le gabarit inscription
         // et lui indique les variables nécessaires
         $this->_twig->display("utilisateur/inscription.html.twig",[
-            'erreurs' => $erreurs
+            'erreurs' => $erreurs,
+            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
         ]);
     }
 
@@ -138,6 +149,11 @@ class UtilisateurController extends Controller {
 
         // Si le formulaire est soumis
         if (count($_POST) > 0) {
+
+            // Vérifie la validité du token CSRF
+            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+                $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
+            }
 
             // Filtrage des données
             // Protège contre la faille XSS
@@ -229,12 +245,17 @@ class UtilisateurController extends Controller {
             }
         }
 
+        // Génère un token CSRF si aucun en session
+        if (!isset($_SESSION["tokenCSRF"]["token"])) {
+            $this->_generateCSRFToken();
+        }
 
         // Affiche le gabarit connexion
         // et lui indique les variables nécessaires
         $this->_twig->display("utilisateur/connexion.html.twig",[
             'erreurs' => $erreurs,
-            'scripts' => ["connexion.js"]
+            'scripts' => ["connexion.js"],
+            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
         ]);
     }
 
@@ -267,6 +288,11 @@ class UtilisateurController extends Controller {
 
         // Si le formulaire de modification des données du compte est soumis
         if (isset($_POST["modifier_compte"])) {
+
+            // Vérifie la validité du token CSRF
+            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+                $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
+            }
 
             // Crée une instance du modèle Utilisateur
             $utilisateurModel = new UtilisateurModel;
@@ -363,6 +389,11 @@ class UtilisateurController extends Controller {
         // Si le formulaire de suppression du compte est soumis
         if (isset($_POST["supprimer_compte"])) {
 
+            // Vérifie la validité du token CSRF
+            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+                $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
+            }
+
             // Crée une instance du modèle Utilisateur
             $utilisateurModel = new UtilisateurModel;
 
@@ -455,6 +486,11 @@ class UtilisateurController extends Controller {
             $participationsModes[$participation["id_mode_de_jeu"]] ++;
         }
 
+        // Génère un token CSRF si aucun en session
+        if (!isset($_SESSION["tokenCSRF"]["token"])) {
+            $this->_generateCSRFToken();
+        }
+
         // Affiche le gabarit profil
         // et lui indique les variables nécessaires
         $this->_twig->display("utilisateur/profil.html.twig",[
@@ -462,7 +498,8 @@ class UtilisateurController extends Controller {
             'scripts' => ["profil.js"],
             'statistiques' => $statistiques,
             'participations' => $donneesParticiper,
-            'participationsModes' => $participationsModes
+            'participationsModes' => $participationsModes,
+            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
         ]);
     }
 
@@ -485,6 +522,11 @@ class UtilisateurController extends Controller {
 
         // Si le formulaire est soumis
         if (count($_POST) > 0) {
+
+            // Vérifie la validité du token CSRF
+            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+                $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
+            }
 
             // Filtrage des données
             // Protège contre la faille XSS
@@ -544,12 +586,18 @@ class UtilisateurController extends Controller {
             }
         }
 
+        // Génère un token CSRF si aucun en session
+        if (!isset($_SESSION["tokenCSRF"]["token"])) {
+            $this->_generateCSRFToken();
+        }
+
         // Affiche le gabarit mot de passe oublié
         // et lui indique les variables nécessaires
         $this->_twig->display("utilisateur/oubliMdp.html.twig",[
             'erreurs' => $erreurs,
             'scripts' => ["oubliMdp.js"],
-            'emailEnvoye' => $emailEnvoye
+            'emailEnvoye' => $emailEnvoye,
+            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
         ]);
     }
 
@@ -594,6 +642,11 @@ class UtilisateurController extends Controller {
         // Si le formulaire est soumis et que le token est valide
         if (count($_POST) > 0 && $tokenValide) {
 
+            // Vérifie la validité du token CSRF
+            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+                $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
+            }
+
             // Test des données
             if (empty($_POST["mdp"])) {
                 $erreurs["mdp"] = "Ce champ est obligatoire";
@@ -624,13 +677,19 @@ class UtilisateurController extends Controller {
             }
         }
 
+        // Génère un token CSRF si aucun en session
+        if (!isset($_SESSION["tokenCSRF"]["token"])) {
+            $this->_generateCSRFToken();
+        }
+
         // Affiche le gabarit réinitialisation du mot de passe
         // et lui indique les variables nécessaires
         $this->_twig->display("utilisateur/reinitialisationMdp.html.twig",[
             'erreurs' => $erreurs,
             'token' => $token,
             'tokenValide' => $tokenValide,
-            'mdpReinitialise' => $mdpReinitialise
+            'mdpReinitialise' => $mdpReinitialise,
+            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
         ]);
     }
 }

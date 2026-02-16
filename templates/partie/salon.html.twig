@@ -7,7 +7,7 @@
     <div id="salon">
         <section>
             <h2>Créer une salle</h2>
-            <form method="post" action ="multijoueur">
+            <form method="post">
                 <div>
                     <label for="mode">Mode de jeu</label>
                     <select name="mode" id="mode" required>
@@ -30,23 +30,28 @@
                         <option value="prive">Privée</option>
                     </select>
                 </div>
+                <input type="hidden" name="tokenCSRF" value="{{ tokenCSRF }}" />
+                {% if erreurs.general is defined %}<p>{{ erreurs.general }}</p>{% endif %}
                 <input type="submit" name="creer_salle" class="bouton boutonPrincipal boutonDefaut" value="Créer" />
             </form>
         </section>
         <section>
             <h2>Rejoindre une salle</h2>
-            <form method="post" action ="multijoueur">
+            <form method="post">
                 <div>
                     <label for="salle">ID de la salle</label>
+                    {{ session.saisie.salle is defined }}
                     <input id="salle"
                         name="salle"
                         type="text"
                         placeholder="948561"
-                        value="{{ session.saisie.salle is defined ? session.saisie.salle : "" }}"
+                        {% if post.salle is defined %}value="{{ post.salle }}"{% endif %}
                         required
                     />
                     {% if erreurs.salle is defined %}<p>{{ erreurs.salle }}</p>{% endif %}
                 </div>
+                <input type="hidden" name="tokenCSRF" value="{{ tokenCSRF }}" />
+                {% if erreurs.general is defined %}<p>{{ erreurs.general }}</p>{% endif %}
                 <input type="submit" name="rejoindre_salle" class="bouton boutonPrincipal boutonDefaut" value="Rejoindre" />
             </form>
             <div id="salles">
