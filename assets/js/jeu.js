@@ -314,7 +314,7 @@ function joinRoom() {
 // Partie solo uniquement
 if (!multijoueur) {
 
-    // Séléction de la difficulté via popop début de partie
+    // Sélection de la difficulté via popop début de partie
     const POPUP_BOUTONS_DIFFICULTE = Array.from(document.getElementsByClassName("boutons_difficulte")[1].getElementsByTagName("div"));
     POPUP_BOUTONS_DIFFICULTE.forEach(element => {
         element.onclick= function() {
@@ -329,7 +329,7 @@ if (!multijoueur) {
         }
     });
 
-    // Séléction de la difficulté via le menu
+    // Sélection de la difficulté via le menu
     const MENU_PARTIE_BOUTONS_DIFFICULTE = Array.from(document.getElementsByClassName("boutons_difficulte")[0].getElementsByTagName("div"));
     MENU_PARTIE_BOUTONS_DIFFICULTE.forEach(element => {
         element.onclick= function() {
