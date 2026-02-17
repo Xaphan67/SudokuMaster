@@ -17,32 +17,277 @@ use Xaphan67\SudokuMaster\Models\UtilisateurModel;
 
 class PartieApi {
 
-    // Appelle l'api externe pour récupérer une grille
-    // et retourne la grille reçue
+    // Génère une grille complète (solution), puis 3 versions de cette grille (1 par difficulté)
+    // Et renvoie le résultat en format JSON
     function getGrid() {
 
-        // URL de l'API à requéter
-        $apiUrl = "https://sudoku-game-and-api.netlify.app/api/sudoku";
+        // Crée une grille vide
+        function generateEmptyGrild() : array {
 
-        // Requête a envoyer à l'API
-        $options = [
-            'http' => [
-                'method'  => 'POST',
-                'ignore_errors' => false
-            ],
-        ];
+            $grilleVide = [];
+            for ($i = 0; $i <= 8; $i++) {
+                $grilleVide[$i] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+            }
 
-        // Envoi de la requête et récupération de la réponse
-        $context  = stream_context_create($options);
-        $result = file_get_contents($apiUrl, false, $context);
-
-        // Affiche la grille retournée si tout est ok, sinon retourne une ereur
-        if ($result === false) {
-            echo json_encode(['error' => 'Impossible de récupérer la grille']);
+            return $grilleVide;
         }
-        else {
-            echo $result;
+
+        // Détermine si un chiffre est valide
+        function isValid($grille, $ligne, $colonne, $chiffre) : bool {
+
+            // Vérifie que le chiffre n'est pas déjà présent sur la ligne
+            for ($c = 0; $c <= 8; $c++) {
+                if ($grille[$ligne][$c] == $chiffre) {
+                    return false;
+                }
+            }
+
+            // Vérifie que le chiffre n'est pas déjà présent sur la colonne
+            for ($l = 0; $l <= 8; $l++) {
+                if ($grille[$l][$colonne] == $chiffre) {
+                    return false;
+                }
+            }
+
+            // Vérifie que le chiffre n'est pas déjà dans le bloc 3x3
+            $ligneBloc = floor($ligne / 3) * 3;
+            $colonneBloc = floor($colonne / 3) * 3;
+            for ($l = 0; $l <= 2; $l++) {
+                for ($c = 0; $c <= 2; $c++) {
+                    if ($grille[$ligneBloc + $l][$colonneBloc + $c] == $chiffre) {
+                        return false;
+                    }
+                }
+            }
+
+            // Si toutes les vérifications sont ok, le nombre peut être placé
+            return true;
         }
+
+        // Remplit la grille à l'aide du backtracking récursif
+        function generateGrid($grille) {
+
+            // Pour chaque ligne, et chaque colonne...
+            for ($ligne = 0; $ligne < 9; $ligne++) {
+                for ($colonne = 0; $colonne < 9; $colonne++) {
+
+                    // Si le chiffre n'a pas encore été déterminé
+                    if ($grille[$ligne][$colonne] === 0) {
+
+                        // Crée un tableu vaec les chiffres possibles et le mélange
+                        $chiffres = range(1, 9);
+                        shuffle($chiffres);
+
+                        // Pour chaque chiffre...
+                        foreach ($chiffres as $chiffre) {
+
+                            // Teste s'il peut être placé dans la grille
+                            if (isValid($grille, $ligne, $colonne, $chiffre)) {
+                                $grille[$ligne][$colonne] = $chiffre;
+
+                                // Propage le tableau pour pouvoir le renvoyer en fin de fonction
+                                $resultat = generateGrid($grille);
+                                if ($resultat !== false) {
+                                    return $resultat;
+                                }
+
+                                // Backtracking récursif
+                                $grille[$ligne][$colonne] = 0;
+                            }
+                        }
+
+                        // Aucun chiffre valide trouvé, on remonte
+                        return false;
+                    }
+                }
+            }
+
+            // Grille complète, on la renvoie
+            return $grille;
+        }
+
+        // Compte le nombre de solutions (max 2)
+        function countSolutions(array $grille): int
+        {
+            // --- Bitmasks : bit N = chiffre N déjà utilisé ---
+            $lignes = array_fill(0, 9, 0);
+            $colonnes = array_fill(0, 9, 0);
+            $carres = array_fill(0, 9, 0);
+            $cellulesVides = [];
+
+            for ($ligne = 0; $ligne < 9; $ligne++) {
+                for ($colonne = 0; $colonne < 9; $colonne++) {
+                    $valeur = $grille[$ligne][$colonne];
+                    if ($valeur !== 0) {
+                        $bit = 1 << $valeur;
+                        $lignes[$ligne] |= $bit;
+                        $colonnes[$colonne] |= $bit;
+                        $carres[floor($ligne / 3) * 3 + floor($colonne / 3)] |= $bit;
+                    } else {
+                        $cellulesVides[] = [$ligne, $colonne];
+                    }
+                }
+            }
+
+            return solve($grille, 0, $cellulesVides, $lignes, $colonnes, $carres);
+        }
+
+        // Résoud une case de la grille — retourne le nombre de solutions trouvées
+        function solve(array $grille, int $solutions, array $cellulesVides, array $lignes, array $colonnes, array $carres): int
+        {
+            if ($solutions > 1) {
+                return $solutions;
+            }
+
+            if (empty($cellulesVides)) {
+                return $solutions + 1;
+            }
+
+            // --- MRV : choisir la cellule avec le moins de candidats ---
+            $meilleurChoix = 0;
+            $meilleurSolution = 10;
+
+            foreach ($cellulesVides as $i => [$ligne, $colonne]) {
+                $carre = floor($ligne / 3) * 3 + floor($colonne / 3);
+                $utilise = $lignes[$ligne] | $colonnes[$colonne] | $carres[$carre];
+                $libre = 9 - substr_count(decbin($utilise & 0b1111111110), '1');
+
+                if ($libre < $meilleurSolution) {
+                    $meilleurSolution = $libre;
+                    $meilleurChoix = $i;
+                    if ($libre === 0) {
+                        return $solutions; // cellule sans candidat → impasse
+                    }
+                }
+            }
+
+            [$ligne, $colonne] = $cellulesVides[$meilleurChoix];
+            $carre = floor($ligne / 3) * 3 + floor($colonne / 3);
+            $utilise = $lignes[$ligne] | $colonnes[$colonne] | $carres[$carre];
+
+            // Retirer cette cellule de la liste pour les appels récursifs
+            $nouvellesCellulesVides = $cellulesVides;
+            array_splice($nouvellesCellulesVides, $meilleurChoix, 1);
+
+            for ($chiffre = 1; $chiffre <= 9; $chiffre++) {
+
+                $bit = 1 << $chiffre;
+
+                if ($utilise & $bit) {
+                    continue; // chiffre déjà utilisé
+                }
+
+                // Placer le chiffre
+                $nouvelleLigne = $lignes[$ligne] | $bit;
+                $nouvelleColonne = $colonnes[$colonne] | $bit;
+                $nouveauCarre = $carres[$carre] | $bit;
+
+                $nouvelleGrille = $grille;
+                $nouvelleGrille[$ligne][$colonne] = $chiffre;
+
+                $nouvelleLignes = $lignes;
+                $nouvelleLignes[$ligne] = $nouvelleLigne;
+
+                $nouvellesColonnes = $colonnes;
+                $nouvellesColonnes[$colonne] = $nouvelleColonne;
+
+                $nouveauxCarres = $carres;
+                $nouveauxCarres[$carre] = $nouveauCarre;
+
+                $solutions = solve($nouvelleGrille, $solutions, $nouvellesCellulesVides, $nouvelleLignes, $nouvellesColonnes, $nouveauxCarres);
+
+                if ($solutions > 1) {
+                    return $solutions;
+                }
+            }
+
+            return $solutions;
+        }
+
+        // Détermine si la grille n'a qu'une solution
+        function hasUniqueSolution($grille) {
+
+            $count = 0;
+            $count = countSolutions($grille, $count);
+            return $count === 1;
+        }
+
+        // Génère une grille complète et 3 grilles basées sur la solution avec des numéros manquants en fonction de la difficulté
+        function generateGrids() {
+
+            // Récupère une grille vide
+            $grilleVide = generateEmptyGrild();
+
+            // Génère un puzzle
+            $puzzle = generateGrid($grilleVide);
+
+            // Variables qui contiendront les données à renvoyer
+            $solution = $puzzle;
+            $facile = [];
+            $moyen = [];
+            $difficile = [];
+
+            // Indices 0..80 mélangés aléatoirement
+            $cellules = range(0, 80);
+            shuffle($cellules);
+
+            // Nombre total d'indices au départ (grille pleine)
+            $indices = 81;
+
+            foreach ($cellules as $idx) {
+
+                // Coordonnées de la cellule
+                $ligne = floor($idx / 9);
+                $colonne = $idx % 9;
+
+                // Stoke le chiffre correspondant
+                $backup = $puzzle[$ligne][$colonne];
+
+                // Cellule déjà vide, on passe
+                if ($backup === 0) {
+                    continue;
+                }
+
+                // On ne descend pas sous le minimum d'indices
+                // et stoke la grille obtenue en fonction de la difficulté
+                if ($indices - 1 < 50 && $facile == []) {
+                    $facile = $puzzle;
+                    continue;
+                }
+                else if ($indices - 1 < 40 && $moyen == []) {
+                    $moyen = $puzzle;
+                    continue;
+                }
+                else if ($indices - 1 < 30 && $difficile == []) {
+                    $difficile = $puzzle;
+                    continue;
+                }
+
+                // On supprime temporairement le chiffre
+                $puzzle[$ligne][$colonne] = 0;
+
+                // Crée un clone de la grille pour effectuer le test d'unicité
+                $cloneGrille = $puzzle;
+
+                // Teste si la grille n'a qu'une solution à ce stade
+                if (!hasUniqueSolution($cloneGrille)) {
+
+                    // Remet le chiffre
+                    $puzzle[$ligne][$colonne] = $backup;
+                } else {
+
+                    // Déduit un indice du total
+                    $indices--;
+                }
+            }
+
+            return ["solution" => $solution, "facile" => $facile, "moyen" => $moyen, "difficile" => $difficile];
+        }
+
+        // Récupère une grille et ses modes de difficulté
+        $grilles = generateGrids();
+
+        echo(json_encode(["solution" => $grilles["solution"], "facile" => $grilles["facile"], "moyen" => $grilles["moyen"], "difficile" => $grilles["difficile"]]));
     }
 
     // Retourne si l'utilisateur est l'hôte de la partie multijoueur
