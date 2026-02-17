@@ -47,9 +47,9 @@ abstract class Controller {
         $this->loader = new FilesystemLoader("templates");
 
         // Définition de l'environnement twig
-        $this->_twig = new Environment($this->loader/*, [
+        $this->_twig = new Environment($this->loader, [
             'cache' => 'templates_c',
-        ]*/);
+        ]);
         $this->_twig->addGlobal('session', $_SESSION);
         $this->_twig->addGlobal('get', $_GET);
         $this->_twig->addGlobal('post', $_POST);
