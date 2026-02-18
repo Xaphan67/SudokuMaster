@@ -21,6 +21,8 @@ async function callSudokuAPI(difficulte) {
                 }
                 if (element != "0") {
                     nouvelleCellule.classList.add("celluleFixe")
+                } else {
+                    nouvelleCellule.tabIndex = 0; // Permet de focus les cellules modifiables
                 }
                 const NOUVEAU_P = document.createElement("p");
                 NOUVEAU_P.inert = true;

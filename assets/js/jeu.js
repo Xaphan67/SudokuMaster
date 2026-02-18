@@ -2,7 +2,6 @@
 const CONTENEUR_JEU = document.getElementById("conteneur_jeu");
 const CHARGEMENT = document.getElementsByClassName("chargement")[0];
 const TABLE = document.getElementById("grille");
-const TABLE_VIDE = document.getElementById("grille_vide");
 const PAVE = document.getElementById("pave_numerique");
 const BOUTONS =  Array.from(PAVE.getElementsByTagName("p"));
 const BOUTON_NOTES = document.getElementById("bouton_notes");
@@ -25,7 +24,6 @@ const UTILISATEUR_CONNECTE = document.getElementById("session_utilisateur");
 // DOM
 let difficulte = null;
 let caseActuelle = null;
-let case_focus = null;
 
 // Partie
 let partieEnCours = false;
@@ -352,17 +350,16 @@ if (!multijoueur) {
 
 // Stocke la case sur laquelle l'utilisateur à cliqué
 TABLE.addEventListener("click", (e) => {
-    let cellules = Array.from(TABLE.getElementsByTagName("td"));
-    case_focus = e.target;
-    if (case_focus.nodeName == "TD") {
-        caseActuelle = case_focus;
+    if (e.target.nodeName == "TD") {
+
+        caseActuelle = e.target;
 
         // Récupère les coordonnées de la case cliquée
-        selectionX = caseActuelle.cellIndex;
-        selectionY = caseActuelle.parentNode.rowIndex;
+        selectionX = e.target.cellIndex;
+        selectionY = e.target.parentNode.rowIndex;
 
         // Met la case en surbrillance
-        case_focus.classList.add("selected_highlight");
+        e.target.classList.add("selected_highlight");
 
         // Colorie les autres cellules contenant le même chiffre que celle selectionnée
         colorCells(e.target);
@@ -382,120 +379,123 @@ BOUTON_PAUSE_TIMER.addEventListener("click", (e) => {
 
 // Lors d'un clic sur un des boutons du pavé numérique...
 BOUTONS.forEach(element => {
-    element.onclick=function() {
-        // Vérifie que la case actuelle n'est pas nulle, qu'elle peux être modifiée par le joueur
-        // et que la partie est en cours
-        if (caseActuelle != null && !case_focus.classList.contains("celluleFixe") && partieEnCours) {
-            const LISTE_NOTES = caseActuelle.getElementsByTagName("ul")[0];
+    element.onclick = updateCell;
+});
 
-            // Vérifie si le mode notes est activé
-            if (modeNotes) {
-                // Ajoute la note dans la liste de notes de la case
+function updateCell(supprimer = false) {
 
-                // Si la case à déjà été remplie par le joueur, on supprime ce qu'il à marqué
-                caseActuelle.getElementsByTagName("p")[0].textContent = "";
-                grille[selectionY][selectionX] = "0";
+    // Vérifie que la case actuelle n'est pas nulle, qu'elle peux être modifiée par le joueur
+    // et que la partie est en cours
+    if (caseActuelle != null && !caseActuelle.classList.contains("celluleFixe") && partieEnCours) {
+        const LISTE_NOTES = caseActuelle.getElementsByTagName("ul")[0];
 
-                // Si la case n'a pas de liste de notes, on en crée une
-                if (LISTE_NOTES == undefined) {
-                    const NOUVEAU_UL = document.createElement("ul");
-                    NOUVEAU_UL.inert = true;
+        // Vérifie si le mode notes est activé et que le mode suppression est désactivé
+        if (modeNotes && !supprimer) {
+            // Ajoute la note dans la liste de notes de la case
+
+            // Si la case à déjà été remplie par le joueur, on supprime ce qu'il à marqué
+            caseActuelle.getElementsByTagName("p")[0].textContent = "";
+            grille[selectionY][selectionX] = "0";
+
+            // Si la case n'a pas de liste de notes, on en crée une
+            if (LISTE_NOTES == undefined) {
+                const NOUVEAU_UL = document.createElement("ul");
+                NOUVEAU_UL.inert = true;
+                const NOUVEAU_LI = document.createElement("li");
+                const NOMBRE = document.createTextNode(this.textContent);
+                NOUVEAU_LI.appendChild(NOMBRE);
+                NOUVEAU_UL.appendChild(NOUVEAU_LI);
+                caseActuelle.appendChild(NOUVEAU_UL);
+            }
+            else { // Sinon, on ajoute à la liste existante
+                // On récupère les notes actuellement dans la liste
+                const NOTES_ACTUELLES = Array.from(caseActuelle.getElementsByTagName("li"));
+                let existeDeja = false;
+                let noteIndex = 0;
+
+                // On vérifie si la note existe déja dans la liste
+                NOTES_ACTUELLES.forEach((note, index) => {
+                    if (note.textContent == this.textContent) {
+                        existeDeja = true;
+                        noteIndex = index;
+                    }
+                })
+
+                // Si la note existe déja, on l'enlève de la liste à la place
+                if (existeDeja) {
+                    caseActuelle.getElementsByTagName("li")[noteIndex].remove();
+
+                    // Si la liste de notes est vide, on l'enlève aussi
+                    if (LISTE_NOTES.getElementsByTagName("li")[0] == undefined) {
+                        LISTE_NOTES.remove();
+                    }
+                }
+                else {
                     const NOUVEAU_LI = document.createElement("li");
                     const NOMBRE = document.createTextNode(this.textContent);
                     NOUVEAU_LI.appendChild(NOMBRE);
-                    NOUVEAU_UL.appendChild(NOUVEAU_LI);
-                    caseActuelle.appendChild(NOUVEAU_UL);
-                }
-                else { // Sinon, on ajoute à la liste existante
-                    // On récupère les notes actuellement dans la liste
-                    const NOTES_ACTUELLES = Array.from(caseActuelle.getElementsByTagName("li"));
-                    let existeDeja = false;
-                    let noteIndex = 0;
 
-                    // On vérifie si la note existe déja dans la liste
-                    NOTES_ACTUELLES.forEach((note, index) => {
-                        if (note.textContent == this.textContent) {
-                            existeDeja = true;
-                            noteIndex = index;
-                        }
-                    })
+                    // On insert la note de manière à ce qu'elle soit dans l'ordre
 
-                    // Si la note existe déja, on l'enlève de la liste à la place
-                    if (existeDeja) {
-                        caseActuelle.getElementsByTagName("li")[noteIndex].remove();
+                    // Pour chaque note existante...
+                    let inseree = false;
+                    for (i = 0; i < NOTES_ACTUELLES.length; i ++) {
 
-                        // Si la liste de notes est vide, on l'enlève aussi
-                        if (LISTE_NOTES.getElementsByTagName("li")[0] == undefined) {
-                            LISTE_NOTES.remove();
+                        // Si la note existante est supérieure à celle à insérer, on insert la note juste avant
+                        if (NOTES_ACTUELLES[i].textContent > this.textContent) {
+                            LISTE_NOTES.insertBefore(NOUVEAU_LI, LISTE_NOTES.getElementsByTagName("li")[i]);
+                            inseree = true;
+                            break;
                         }
                     }
-                    else {
-                        const NOUVEAU_LI = document.createElement("li");
-                        const NOMBRE = document.createTextNode(this.textContent);
-                        NOUVEAU_LI.appendChild(NOMBRE);
 
-                        // On insert la note de manière à ce qu'elle soit dans l'ordre
-
-                        // Pour chaque note existante...
-                        let inseree = false;
-                        for (i = 0; i < NOTES_ACTUELLES.length; i ++) {
-
-                            // Si la note existante est supérieure à celle à insérer, on insert la note juste avant
-                            if (NOTES_ACTUELLES[i].textContent > this.textContent) {
-                                LISTE_NOTES.insertBefore(NOUVEAU_LI, LISTE_NOTES.getElementsByTagName("li")[i]);
-                                inseree = true;
-                                break;
-                            }
-                        }
-
-                        // Si la note n'a pas été insérée, on l'insert à la fin de la liste car c'est la note la plus "grande"
-                        if (!inseree) {
-                            LISTE_NOTES.appendChild(NOUVEAU_LI);
-                        }
+                    // Si la note n'a pas été insérée, on l'insert à la fin de la liste car c'est la note la plus "grande"
+                    if (!inseree) {
+                        LISTE_NOTES.appendChild(NOUVEAU_LI);
                     }
-                }
-            }
-            else {
-                // Change la valeur de la case cliquée
-
-                // Change la valeur de la case dans le DOM,
-                // ou la supprime si la valeur de la cas est la même que celle du bouton
-                let supprimerValeur = false;
-                if (caseActuelle.getElementsByTagName("p")[0].textContent == this.textContent) {
-                    caseActuelle.getElementsByTagName("p")[0].textContent = "";
-                    supprimerValeur = true;
-                }
-                else {
-                    caseActuelle.getElementsByTagName("p")[0].textContent = this.textContent;
-                }
-
-                // Change la valeur de la case dans la variable grille
-                grille[selectionY][selectionX] = this.textContent;
-
-                // Colorie les autres cellules contenant le même chiffre que celle selectionnée
-                colorCells(caseActuelle);
-
-                // Si la case à une liste de notes, on la supprime
-                if (LISTE_NOTES != undefined) {
-                    LISTE_NOTES.remove();
-                }
-
-                // Si partie mulijoueur en mode coopératif
-                // on envoie la modification de la valeur de la case au 2eme joueur
-                if (multijoueur && infosSalle.mode == "Cooperatif") {
-                    connexion.send(JSON.stringify({commande: "changer_case", salle: infosSalle.salle, Y: selectionY, X: selectionX, valeur: supprimerValeur ? "" : this.textContent, hote: infosSalle.hote}));
-                }
-
-                // Si la grille est terminée, met fin à la partie
-                if (grille.equals(solution)) {
-                    endGame();
                 }
             }
         }
-    }
-});
+        else {
+            // Change la valeur de la case cliquée
 
-// Lors d'un appui sur une touche du clavier correspondant à une touche du pavé numérique...
+            // Change la valeur de la case dans le DOM,
+            // ou la supprime si la valeur de la cas est la même que celle du bouton
+            let supprimerValeur = false;
+            if (caseActuelle.getElementsByTagName("p")[0].textContent == this.textContent) {
+                caseActuelle.getElementsByTagName("p")[0].textContent = "";
+                supprimerValeur = true;
+            }
+            else {
+                caseActuelle.getElementsByTagName("p")[0].textContent = this.textContent;
+            }
+
+            // Change la valeur de la case dans la variable grille
+            grille[selectionY][selectionX] = this.textContent;
+
+            // Colorie les autres cellules contenant le même chiffre que celle selectionnée
+            colorCells(caseActuelle);
+
+            // Si la case à une liste de notes, on la supprime
+            if (LISTE_NOTES != undefined) {
+                LISTE_NOTES.remove();
+            }
+
+            // Si partie mulijoueur en mode coopératif
+            // on envoie la modification de la valeur de la case au 2eme joueur
+            if (multijoueur && infosSalle.mode == "Cooperatif") {
+                connexion.send(JSON.stringify({commande: "changer_case", salle: infosSalle.salle, Y: selectionY, X: selectionX, valeur: supprimerValeur ? "" : this.textContent, hote: infosSalle.hote}));
+            }
+
+            // Si la grille est terminée, met fin à la partie
+            if (grille.equals(solution)) {
+                endGame();
+            }
+        }
+    }
+}
+
+// Lors d'un appui sur une touche du clavier...
 document.addEventListener("keydown", (e) => {
 
     // Si l'appui n'est pas répété (Donc uniquement déclenché une fois)
@@ -506,12 +506,56 @@ document.addEventListener("keydown", (e) => {
 
             // Si la touche appuyée correspond au contenu du bouton,
             // on appelle l'évènement onclick du bouton (défini au dessus)
-            if (element.textContent == e.key) {
+            if (e.key == element.textContent) {
                 element.onclick();
             }
         });
+
+        // Si le joueur appuie sur la touche echap, suppr ou retour chariot
+        if (e.key == "Escape" || e.key == "Delete" || e.key == "Backspace") {
+            updateCell(true);
+        }
+
+        // Si le joueur appuie sur la touche espace
+        if (e.key == " ") {
+
+            // Met ou enlève la pause
+            startTimer();
+        }
+
+        // Si le joueur appuie sur la touche n
+        if (e.key == "n") {
+
+            // Active ou désactive le mode notes
+            modeNotes = !modeNotes;
+            NOTES.textContent = "Notes : " + (modeNotes ? "ON" : "OFF");
+        }
     }
 });
+
+// Lors du relachement d'une touche du clavier...
+document.addEventListener("keyup", (e) => {
+
+    // Si le joueur appuie sur la touche Tab...
+    if (e.key = "Tab") {
+
+        if (e.target.nodeName == "TD") {
+
+            caseActuelle = e.target;
+
+            // Récupère les coordonnées de la case cliquée
+            selectionX = caseActuelle.cellIndex;
+            selectionY = caseActuelle.parentNode.rowIndex;
+
+            // Met la case en surbrillance
+            caseActuelle.classList.add("selected_highlight");
+
+            // Colorie les autres cellules contenant le même chiffre que celle selectionnée
+            colorCells(e.target);
+        }
+    }
+});
+
 
 // Lors d'un clic sur le bouton jeu...
 BOUTON_JEU.addEventListener("click", (e) => {
@@ -557,8 +601,8 @@ BOUTON_JEU.addEventListener("click", (e) => {
 
 // Colorie les cellules ayant le même chiffre que la cellule active
 function colorCells(active) {
-    let cellules = Array.from(TABLE.getElementsByTagName("td"));
-    cellules.forEach(cellule => {
+    const CELLULLES = Array.from(TABLE.getElementsByTagName("td"));
+    CELLULLES.forEach(cellule => {
         if (cellule != active && active != 0) {
             cellule.classList.remove("selected_highlight");
 
@@ -579,9 +623,6 @@ function colorCells(active) {
 
 // Début de partie
 async function startGame(element) {
-    // Masque la grille
-    TABLE.style.display = "none";
-    TABLE_VIDE.style.display = "inline-table";
 
     // Affiche la difficulté choisie
     // et les informations du mode de jeu
@@ -932,15 +973,31 @@ function sleep(ms) {
 
 // Démare le timer
 async function startTimer() {
+    const CELLULES = Array.from(TABLE.getElementsByTagName("TD"));
     if (timerActif == false) { // Si le timer n'a pas démarré ou est en pause, on le démarre
+
         // Rends les éléments visibles et interactibles
-        TABLE.style.display = "inline-table";
-        TABLE_VIDE.style.display = "none";
-        TABLE_VIDE.style.filter = "none";
+        TABLE.style.filter = "none";
+        TABLE.inert = false;
         BOUTON_NOTES.style.filter = "revert-layer";
         BOUTON_NOTES.inert = false;
         PAVE.style.filter = "none";
         PAVE.inert = false;
+
+        // Affiche la grille
+        CELLULES.forEach(cellule => {
+            cellule.firstChild.style.display = "block";
+        });
+
+        // Met la case active en surbrillance
+        // ainsi que les cases ayant le même chiffre
+        if (caseActuelle != null) {
+            caseActuelle.classList.add("selected_highlight");
+
+            CELLULES.forEach(cellule => {
+                colorCells(caseActuelle)
+            });
+        }
 
         // En multijoueur, empèche l'activation du bouton pause
         if (multijoueur) {
@@ -959,14 +1016,29 @@ async function startTimer() {
         timerInterval = setInterval(decreaseTimer, 100);
     }
     else { // Sinon, on le met en pause
+
         // Rends les éléments légèrement opaques et non-interactibles
-        TABLE.style.display = "none";
-        TABLE_VIDE.style.display = "inline-table";
-        TABLE_VIDE.style.filter = "opacity(0.40)";
+        TABLE.style.filter = "opacity(0.40)";
+        TABLE.inert = true;
         BOUTON_NOTES.style.filter = "opacity(0.40)";
         BOUTON_NOTES.inert = true;
         PAVE.style.filter = "opacity(0.40)";
         PAVE.inert = true;
+
+        // Cache la grille
+        CELLULES.forEach(cellule => {
+            cellule.firstChild.style.display = "none";
+        });
+
+        // Retire la surbrillance de la case active
+        if (caseActuelle != null) {
+            caseActuelle.classList.remove("selected_highlight");
+
+            CELLULES.forEach(cellule => {
+                cellule.classList.remove("selected");
+            });
+            
+        }
 
         // Met le timer en pause
         clearInterval(timerInterval);

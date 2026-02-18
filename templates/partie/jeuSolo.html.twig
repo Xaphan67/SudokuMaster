@@ -7,18 +7,16 @@
     </div>
     <div id="conteneur_jeu" inert>
         <div class="chargement"></div>
-        <table class="grille" id="grille_vide" inert>
+        <table class="grille" id="grille">
             <tbody>
                 {% for i in 1..9 %}
                 <tr>
                     {% for j in 1..9 %}
-                    <td></td>
+                    <td onfocus="focusCell"></td>
                     {% endfor %}
                 </tr>
                 {% endfor %}
             </tbody>
-        </table>
-        <table class="grille" id="grille">
         </table>
         <div id="interface_de_jeu"> <!-- boutons de jeu -->
             <div>

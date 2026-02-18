@@ -854,16 +854,13 @@ nav {
   transition: all 0.1s ease;
 }
 
-.grille {
-  position: relative;
-  margin-top: 10px;
-}
-
 #conteneur_jeu {
   filter: opacity(0.40);
 }
 
 .grille {
+  position: relative;
+  margin-top: 10px;
   border-radius: clamp(10px, 2vw, 20px);
   border: 6px solid var(--grille);
   border-spacing: 0px;
@@ -872,7 +869,6 @@ nav {
 }
 
 #grille {
-  display: none;
   font-weight: bold;
 }
 
@@ -904,6 +900,10 @@ nav {
   width: 35px;
   border: 1px solid var(--grille);
   text-align: center;
+}
+
+.grille td:focus{
+  outline: none;
 }
 
 .grille tr:nth-child(4) td {
