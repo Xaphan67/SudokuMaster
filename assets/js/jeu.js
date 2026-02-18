@@ -727,6 +727,9 @@ async function startGame(element) {
             await sleep(10)
         }
 
+        // Vide la table contenant la grille
+        TABLE.innerHTML = "";
+
         grille.forEach((line, ligneIndex) => {
             let nouvelleLigne = TABLE.insertRow(-1);
             line.forEach((element, coloneIndex) => {
