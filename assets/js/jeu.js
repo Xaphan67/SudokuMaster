@@ -250,7 +250,7 @@ function joinRoom() {
                 }
 
                 // Met fin à la partie
-                endGame();
+                endGame(false, true);
                 break;
 
             // Le serveur indique que le 2eme joueur à abandonné la partie
@@ -268,7 +268,7 @@ function joinRoom() {
                         POPUP_FIN_PARTIE_TEXTE.textContent = statsJoueurs.joueur_2.pseudo_utilisateur + " à quitté la partie";
 
                         // Met fin à la partie
-                        endGame();
+                        endGame(false, true);
                     }
                     else {
 
@@ -339,7 +339,7 @@ if (!multijoueur) {
             BOUTON_JEU.textContent = "Nouvelle partie";
 
             // Met fin à la partie
-            endGame(false);
+            endGame(false, true);
 
             // Remet le timer à 15 minutes
             resetTimer();
@@ -764,7 +764,14 @@ function configureGame(resPartie) {
 }
 
 // Fin de partie
-async function endGame(popup = true) {
+async function endGame(popup = true, forcee = false) {
+
+    // Si la grille du joueur ne correspond pas à la solution...
+    if (!grille.equals(solution) && !forcee) {
+
+        // Empèche la fin de partie
+        return;
+    }
 
     // Si partie multijoueur, informe le 2eme joueur que la partie est terminée
     if (multijoueur && partieEnCours) {
@@ -983,7 +990,7 @@ function decreaseTimer() {
     // Met fin à la partie si le temps est écoulé
     if (timerMinutes == 14 && timerSecondes == 59) {
         clearInterval(timerInterval); // Stop le timer
-        endGame();
+        endGame(false, true);
     }
 }
 
