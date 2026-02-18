@@ -1,5 +1,9 @@
-vendor
-composer.lock
+# Ignore le dossier contenant les dépendances
+/vendor/
+
+# Ignore le fichier de configuration (données senssibles), sauf un fichier d'exemple avec les clés nécessaires
 .env
 !.env.example
-templates_c/
+
+# Ignore le dossier contenant le cache de twig
+/templates_c/
