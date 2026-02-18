@@ -458,8 +458,14 @@ BOUTONS.forEach(element => {
             else {
                 // Change la valeur de la case cliquée
 
-                // Change la valeur de la case dans le DOM
-                caseActuelle.getElementsByTagName("p")[0].textContent = this.textContent;
+                // Change la valeur de la case dans le DOM,
+                // ou la supprime si la valeur de la cas est la même que celle du bouton
+                if (caseActuelle.getElementsByTagName("p")[0].textContent == this.textContent) {
+                    caseActuelle.getElementsByTagName("p")[0].textContent = "";
+                }
+                else {
+                    caseActuelle.getElementsByTagName("p")[0].textContent = this.textContent;
+                }
 
                 // Change la valeur de la case dans la variable grille
                 grille[selectionY][selectionX] = this.textContent;
