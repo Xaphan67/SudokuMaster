@@ -15,7 +15,7 @@ use Xaphan67\SudokuMaster\Models\ParticiperModel;
 use Xaphan67\SudokuMaster\Models\PartieModel;
 use Xaphan67\SudokuMaster\Models\UtilisateurModel;
 
-class PartieApi {
+class PartieApi extends Controller {
 
     // Génère une grille complète (solution), puis 3 versions de cette grille (1 par difficulté)
     // Et renvoie le résultat en format JSON
@@ -294,6 +294,13 @@ class PartieApi {
     // Si non, retourne la salle qu'il souhaite rejoindre
     public function getRoomInfo() {
 
+        // Si aucun utilisateur n'est connecté
+        if (!isset($_SESSION["utilisateur"])) {
+
+            echo $this->jsonErrorResponse(403, "Vous devez vous connecter pour acceder a cette page");
+            exit();
+        }
+
         // Si les informations de la partie sont en session
         if (isset($_SESSION["partie"]["hote"])) {
 
@@ -436,6 +443,13 @@ class PartieApi {
     // Rejoint une partie
     public function join() {
 
+        // Si aucun utilisateur n'est connecté
+        if (!isset($_SESSION["utilisateur"])) {
+
+            echo $this->jsonErrorResponse(403, "Vous devez vous connecter pour acceder a cette page");
+            exit();
+        }
+
         // Récupération des données envoyées par JS
         $json_data = file_get_contents('php://input'); // Lit le corps brut de la requête
         $dataJS = json_decode($json_data, true); // Décode le JSON en tableau associatif
@@ -510,6 +524,13 @@ class PartieApi {
 
     // Met fin à la partie
     public function end() {
+
+        // Si aucun utilisateur n'est connecté
+        if (!isset($_SESSION["utilisateur"])) {
+
+            echo $this->jsonErrorResponse(403, "Vous devez vous connecter pour acceder a cette page");
+            exit();
+        }
 
         // Récupération des données envoyées par JS
         $json_data = file_get_contents('php://input'); // Lit le corps brut de la requête
@@ -638,6 +659,13 @@ class PartieApi {
 
     // Enregistre les informations de la partie terminée en session
     public function register(int $utilisateurID) {
+
+        // Si aucun utilisateur n'est connecté
+        if (!isset($_SESSION["utilisateur"])) {
+
+            echo $this->jsonErrorResponse(403, "Vous devez vous connecter pour acceder a cette page");
+            exit();
+        }
 
         // Crée une instance du modèle ModeDeJeu
         $modeDeJeuModel = new ModeDeJeuModel;

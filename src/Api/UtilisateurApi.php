@@ -8,9 +8,21 @@ use Xaphan67\SudokuMaster\Entities\Bannissement;
 use Xaphan67\SudokuMaster\Models\UtilisateurModel;
 use Xaphan67\SudokuMaster\Models\BannissementModel;
 
-class UtilisateurApi {
+class UtilisateurApi extends Controller {
 
     function delete() {
+
+        // Si aucun utilisateur n'est connecté ou si utilisateur n'est pas administrateur
+        if (!isset($_SESSION["utilisateur"]) ) {
+
+            echo $this->jsonErrorResponse(403, "Vous devez vous connecter pour acceder a cette page");
+            exit();
+        }
+        else if($_SESSION["utilisateur"]["id_role"] != 1) {
+
+            echo $this->jsonErrorResponse(403, "Vous n'avez pas acces a cette page");
+            exit();
+        }
 
         // Récupération des données envoyées par JS
         $json_data = file_get_contents('php://input'); // Lit le corps brut de la requête
@@ -28,6 +40,18 @@ class UtilisateurApi {
     }
 
     function getInfos() {
+
+        // Si aucun utilisateur n'est connecté ou si utilisateur n'est pas administrateur
+        if (!isset($_SESSION["utilisateur"]) ) {
+
+            echo $this->jsonErrorResponse(403, "Vous devez vous connecter pour acceder a cette page");
+            exit();
+        }
+        else if($_SESSION["utilisateur"]["id_role"] != 1) {
+
+            echo $this->jsonErrorResponse(403, "Vous n'avez pas acces a cette page");
+            exit();
+        }
 
         // Récupération des données envoyées par JS
         $json_data = file_get_contents('php://input'); // Lit le corps brut de la requête
@@ -70,6 +94,18 @@ class UtilisateurApi {
 
     function getLastBan() {
 
+        // Si aucun utilisateur n'est connecté ou si utilisateur n'est pas administrateur
+        if (!isset($_SESSION["utilisateur"]) ) {
+
+            echo $this->jsonErrorResponse(403, "Vous devez vous connecter pour acceder a cette page");
+            exit();
+        }
+        else if($_SESSION["utilisateur"]["id_role"] != 1) {
+
+            echo $this->jsonErrorResponse(403, "Vous n'avez pas acces a cette page");
+            exit();
+        }
+
         // Récupération des données envoyées par JS
         $json_data = file_get_contents('php://input'); // Lit le corps brut de la requête
         $dataJS = json_decode($json_data, true); // Décode le JSON en tableau associatif
@@ -83,6 +119,18 @@ class UtilisateurApi {
     }
 
     function unBan() {
+
+        // Si aucun utilisateur n'est connecté ou si utilisateur n'est pas administrateur
+        if (!isset($_SESSION["utilisateur"]) ) {
+
+            echo $this->jsonErrorResponse(403, "Vous devez vous connecter pour acceder a cette page");
+            exit();
+        }
+        else if($_SESSION["utilisateur"]["id_role"] != 1) {
+
+            echo $this->jsonErrorResponse(403, "Vous n'avez pas acces a cette page");
+            exit();
+        }
 
         // Récupération des données envoyées par JS
         $json_data = file_get_contents('php://input'); // Lit le corps brut de la requête
