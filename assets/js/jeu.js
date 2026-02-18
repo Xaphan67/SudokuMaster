@@ -460,8 +460,10 @@ BOUTONS.forEach(element => {
 
                 // Change la valeur de la case dans le DOM,
                 // ou la supprime si la valeur de la cas est la même que celle du bouton
+                let supprimerValeur = false;
                 if (caseActuelle.getElementsByTagName("p")[0].textContent == this.textContent) {
                     caseActuelle.getElementsByTagName("p")[0].textContent = "";
+                    supprimerValeur = true;
                 }
                 else {
                     caseActuelle.getElementsByTagName("p")[0].textContent = this.textContent;
@@ -481,7 +483,7 @@ BOUTONS.forEach(element => {
                 // Si partie mulijoueur en mode coopératif
                 // on envoie la modification de la valeur de la case au 2eme joueur
                 if (multijoueur && infosSalle.mode == "Cooperatif") {
-                    connexion.send(JSON.stringify({commande: "changer_case", salle: infosSalle.salle, Y: selectionY, X: selectionX, valeur: this.textContent, hote: infosSalle.hote}));
+                    connexion.send(JSON.stringify({commande: "changer_case", salle: infosSalle.salle, Y: selectionY, X: selectionX, valeur: supprimerValeur ? "" : this.textContent, hote: infosSalle.hote}));
                 }
 
                 // Si la grille est terminée, met fin à la partie
