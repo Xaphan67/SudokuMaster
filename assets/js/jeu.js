@@ -868,6 +868,14 @@ async function endGame(popup = true) {
                 POPUP_FIN_PARTIE.style.display = "none";
                 POPUP_DEBUT_PARTIE.style.display = "flex";
 
+                // Retire le texte et le bouton proposant au joueur de créer un compte (s'il à été affiché)
+                if (inscription != null) {
+                    inscription.remove();
+                    boutonInscription.remove();
+                    inscription = null;
+                    boutonInscription = null;
+                }
+
                  // Si un joueur est connecté
                 if (idPartie != 0) {
 
