@@ -385,15 +385,15 @@ BOUTONS.forEach(element => {
     element.onclick = updateCell;
 });
 
-async function updateCell(supprimer = false) {
+async function updateCell() {
 
     // Vérifie que la case actuelle n'est pas nulle, qu'elle peux être modifiée par le joueur
     // et que la partie est en cours
     if (caseActuelle != null && !caseActuelle.classList.contains("celluleFixe") && partieEnCours) {
         const LISTE_NOTES = caseActuelle.getElementsByTagName("ul")[0];
 
-        // Vérifie si le mode notes est activé et que le mode suppression est désactivé
-        if (modeNotes && !supprimer) {
+        // Vérifie si le mode notes est activé et qu'un bouton du pavé est cliqué
+        if (modeNotes && this.textContent != undefined) {
             // Ajoute la note dans la liste de notes de la case
 
             // Si la case à déjà été remplie par le joueur, on supprime ce qu'il à marqué
