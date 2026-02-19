@@ -1034,33 +1034,53 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// Démare le timer
-async function startTimer() {
+// Affiche ou masque la grille
+function displayGrid(cacher = false) {
     const CELLULES = Array.from(TABLE.getElementsByTagName("TD"));
-    if (timerActif == false) { // Si le timer n'a pas démarré ou est en pause, on le démarre
 
-        // Rends les éléments visibles et interactibles
-        TABLE.style.filter = "none";
-        TABLE.inert = false;
-        BOUTON_NOTES.style.filter = "revert-layer";
-        BOUTON_NOTES.inert = false;
-        PAVE.style.filter = "none";
-        PAVE.inert = false;
+    TABLE.style.filter = cacher ? "opacity(0.40)" : "none";
+    TABLE.inert = cacher;
 
-        // Affiche la grille
-        CELLULES.forEach(cellule => {
-            cellule.firstChild.style.display = "block";
-        });
+    // Affiche la grille
+    CELLULES.forEach(cellule => {
+        cellule.firstChild.style.display = cacher ? "none" : "block";
+    });
 
-        // Met la case active en surbrillance
-        // ainsi que les cases ayant le même chiffre
-        if (caseActuelle != null) {
+    // Retire ou affiche la surbrillance de la case active
+    if (caseActuelle != null) {
+
+        if (cacher) {
+            caseActuelle.classList.remove("selected_highlight");
+
+            CELLULES.forEach(cellule => {
+                cellule.classList.remove("selected");
+            });            
+        }
+        else {
+
             caseActuelle.classList.add("selected_highlight");
 
             CELLULES.forEach(cellule => {
                 colorCells(caseActuelle)
             });
         }
+        
+    }
+}
+
+// Démare le timer
+async function startTimer() {
+    const CELLULES = Array.from(TABLE.getElementsByTagName("TD"));
+    if (timerActif == false) { // Si le timer n'a pas démarré ou est en pause, on le démarre
+
+        // Rends les éléments visibles et interactibles
+        BOUTON_NOTES.style.filter = "revert-layer";
+        BOUTON_NOTES.inert = false;
+        PAVE.style.filter = "none";
+        PAVE.inert = false;
+
+        // Affiche la grille
+        displayGrid();
 
         // En multijoueur, empèche l'activation du bouton pause
         if (multijoueur) {
@@ -1081,27 +1101,13 @@ async function startTimer() {
     else { // Sinon, on le met en pause
 
         // Rends les éléments légèrement opaques et non-interactibles
-        TABLE.style.filter = "opacity(0.40)";
-        TABLE.inert = true;
         BOUTON_NOTES.style.filter = "opacity(0.40)";
         BOUTON_NOTES.inert = true;
         PAVE.style.filter = "opacity(0.40)";
         PAVE.inert = true;
 
         // Cache la grille
-        CELLULES.forEach(cellule => {
-            cellule.firstChild.style.display = "none";
-        });
-
-        // Retire la surbrillance de la case active
-        if (caseActuelle != null) {
-            caseActuelle.classList.remove("selected_highlight");
-
-            CELLULES.forEach(cellule => {
-                cellule.classList.remove("selected");
-            });
-            
-        }
+        displayGrid(true);
 
         // Met le timer en pause
         clearInterval(timerInterval);
@@ -1136,6 +1142,14 @@ function decreaseTimer() {
         endGame(false, true);
     }
 }
+
+// Préviens l'utilisateur que la partie sera perdue s'il tente de
+// changer de page ou d'actualiser lorsque la partie est en cours
+window.addEventListener('beforeunload', function(e) {
+    if (partieEnCours) {
+        e.preventDefault();
+    }
+});
 
 // Ajoute la fonction "equals" aux tableaux pour comparer qu'ils sont identiques
 // Assume que les tableaux ont la même taille
