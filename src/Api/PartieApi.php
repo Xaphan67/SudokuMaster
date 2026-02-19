@@ -302,7 +302,7 @@ class PartieApi extends Controller {
 
                     // On ne descend pas sous le minimum d'indices
                     // et stoke la grille obtenue en fonction de la difficulté
-                    if ($indices - 1 < 80 && $facile == []) {
+                    if ($indices - 1 < 50 && $facile == []) {
                         $facile = $puzzle;
                         continue;
                     }
