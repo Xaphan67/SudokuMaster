@@ -503,34 +503,38 @@ document.addEventListener("keydown", (e) => {
     // Si l'appui n'est pas répété (Donc uniquement déclenché une fois)
     if (!e.repeat) {
 
-        // Pour chaque bouton du pavé numérique...
-        BOUTONS.forEach(element => {
+        // Si la partie est en cours...
+        if (partieEnCours) {
 
-            // Si la touche appuyée correspond au contenu du bouton,
-            // on appelle l'évènement onclick du bouton (défini au dessus)
-            if (e.key == element.textContent) {
-                element.onclick();
+            // Pour chaque bouton du pavé numérique...
+            BOUTONS.forEach(element => {
+
+                // Si la touche appuyée correspond au contenu du bouton,
+                // on appelle l'évènement onclick du bouton (défini au dessus)
+                if (e.key == element.textContent) {
+                    element.onclick();
+                }
+            });
+
+            // Si le joueur appuie sur la touche echap, suppr ou retour chariot
+            if (e.key == "Escape" || e.key == "Delete" || e.key == "Backspace") {
+                updateCell(true);
             }
-        });
 
-        // Si le joueur appuie sur la touche echap, suppr ou retour chariot
-        if (e.key == "Escape" || e.key == "Delete" || e.key == "Backspace") {
-            updateCell(true);
-        }
+            // Si le joueur appuie sur la touche espace (sauf en multijoueur)
+            if (e.key == " " && !multijoueur) {
 
-        // Si le joueur appuie sur la touche espace (sauf en multijoueur)
-        if (e.key == " " && !multijoueur) {
+                // Met ou enlève la pause
+                startTimer();
+            }
 
-            // Met ou enlève la pause
-            startTimer();
-        }
+            // Si le joueur appuie sur la touche n
+            if (e.key == "n") {
 
-        // Si le joueur appuie sur la touche n
-        if (e.key == "n") {
-
-            // Active ou désactive le mode notes
-            modeNotes = !modeNotes;
-            NOTES.textContent = "Notes : " + (modeNotes ? "ON" : "OFF");
+                // Active ou désactive le mode notes
+                modeNotes = !modeNotes;
+                NOTES.textContent = "Notes : " + (modeNotes ? "ON" : "OFF");
+            }
         }
     }
 });
