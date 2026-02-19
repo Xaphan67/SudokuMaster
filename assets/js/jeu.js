@@ -518,8 +518,8 @@ document.addEventListener("keydown", (e) => {
             updateCell(true);
         }
 
-        // Si le joueur appuie sur la touche espace
-        if (e.key == " ") {
+        // Si le joueur appuie sur la touche espace (sauf en multijoueur)
+        if (e.key == " " && !multijoueur) {
 
             // Met ou enlève la pause
             startTimer();
