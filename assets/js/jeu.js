@@ -336,6 +336,9 @@ if (!multijoueur) {
             menuOuvert = false;
             BOUTON_JEU.textContent = "Nouvelle partie";
 
+            // Masque la grille
+            displayGrid(true);
+
             // Met fin à la partie
             endGame(false, true);
 
