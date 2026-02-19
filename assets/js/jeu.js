@@ -26,6 +26,7 @@ let difficulte = null;
 let caseActuelle = null;
 
 // Partie
+let invite = false;
 let partieEnCours = false;
 let idPartie = null;
 let serieVictoires = null;
@@ -34,6 +35,7 @@ let valeur = null;
 let evolution = null;
 let inscription = null;
 let boutonInscription = null;
+let resSolution = false;
 
 // multijoueur
 let multijoueur;
@@ -53,7 +55,6 @@ let timerInterval = -1;
 
 // Grille
 let grille = [];
-let solution = [];
 let selectionX = null;
 let selectionY = null;
 
@@ -193,7 +194,6 @@ function joinRoom() {
                 // Récupère les informations de la partie
                 idPartie = message.idPartie;
                 grille = message.grille;
-                solution = message.solution;
                 break;
 
             // Le serveur indique que l'autre joueur est prêt
@@ -248,7 +248,7 @@ function joinRoom() {
                 }
 
                 // Met fin à la partie
-                endGame(false, true);
+                endGame(true, true);
                 break;
 
             // Le serveur indique que le 2eme joueur à abandonné la partie
@@ -382,7 +382,7 @@ BOUTONS.forEach(element => {
     element.onclick = updateCell;
 });
 
-function updateCell(supprimer = false) {
+async function updateCell(supprimer = false) {
 
     // Vérifie que la case actuelle n'est pas nulle, qu'elle peux être modifiée par le joueur
     // et que la partie est en cours
@@ -471,7 +471,7 @@ function updateCell(supprimer = false) {
             }
 
             // Change la valeur de la case dans la variable grille
-            grille[selectionY][selectionX] = this.textContent;
+            grille[selectionY][selectionX] = parseInt(this.textContent);
 
             // Colorie les autres cellules contenant le même chiffre que celle selectionnée
             colorCells(caseActuelle);
@@ -488,7 +488,9 @@ function updateCell(supprimer = false) {
             }
 
             // Si la grille est terminée, met fin à la partie
-            if (grille.equals(solution)) {
+            let check = await checkSolution();
+
+            if (check) {
                 endGame();
             }
         }
@@ -678,30 +680,68 @@ async function startGame(element) {
     // Mode solo ou hote de partie multijoueur
     if (!multijoueur || (multijoueur && infosSalle.hote)) {
 
-        // Appelle l'API pour obtenir une grille et l'afficher
-        grilleObtenue = await callSudokuAPI(multijoueur ? infosSalle.difficulte : difficulte);
+        // Ajoute la partie dans la base de données
+        // Et retourne son ID (ou 0 si aucun utilisateur connecté) et la série de victoire du joueur avant cette partie
+        const RES_PARTIE = await fetch("index.php?controller=api-partie&action=new", {
+            method: "POST",
+            headers: {
+                    'Content-Type': 'application/json', // Indique qu'on envoie du JSON
+                    'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
+                },
+                body: JSON.stringify({ modeDeJeu: multijoueur ? infosSalle.mode : "Solo", difficulte: multijoueur ? infosSalle.difficulte : difficulte, hote: multijoueur ? infosSalle.hote : false}) // Objet JS converti en chaîne JSON
+        });
+        resPartie = await RES_PARTIE.json();
+        idPartie = resPartie["partieId"];
+
+        // Stoke si un joueur est connecté ou non lors de la création de la partie
+        invite = resPartie["invite"];
+
+        // Récupère la grille dans le DOM
+        const TABLE = document.getElementById("grille");
+
+        // Si la grille à bien été obtenue
+        if (resPartie["grille"]) {
+
+            // Vide la table contenant la grille
+            TABLE.innerHTML = "";
+
+            // Parcours la grille renvoyée par l'API et l'affiche dans un tableau
+            resPartie["grille"][(multijoueur ? infosSalle.difficulte : difficulte).toLowerCase()].forEach((line, ligneIndex) => {
+                let nouvelleLigne = TABLE.insertRow(-1);
+                line.forEach((element, coloneIndex) => {
+                    let nouvelleCellule = nouvelleLigne.insertCell(coloneIndex);
+                    if (((ligneIndex < 3 || ligneIndex >= 6) && coloneIndex >= 3 && coloneIndex < 6) || (ligneIndex >= 3 && ligneIndex < 6 && (coloneIndex < 3 || coloneIndex >= 6))) {
+                        nouvelleCellule.className = 'celluleBleue';
+                    }
+                    if (element != "0") {
+                        nouvelleCellule.classList.add("celluleFixe")
+                    } else {
+                        nouvelleCellule.tabIndex = 0; // Permet de focus les cellules modifiables
+                    }
+                    const NOUVEAU_P = document.createElement("p");
+                    NOUVEAU_P.inert = true;
+                    const NOMBRE = document.createTextNode(element != "0" ? element : "");
+                    NOUVEAU_P.appendChild(NOMBRE);
+                    nouvelleCellule.appendChild(NOUVEAU_P);
+                });
+            });
+
+            // Stocke la grille dans une variable
+            grille = resPartie["grille"][(multijoueur ? infosSalle.difficulte : difficulte).toLowerCase()];
+            grilleObtenue = true;
+        }
+        else {
+            grilleObtenue = false;
+        }
 
         // Si la grille à bien été obtenue
         if (grilleObtenue) {
-
-            // Ajoute la partie dans la base de données
-            // Et retourne son ID (ou 0 si aucun utilisateur connecté) et la série de victoire du joueur avant cette partie
-            const RES_PARTIE = await fetch("index.php?controller=api-partie&action=new", {
-                method: "POST",
-                headers: {
-                        'Content-Type': 'application/json', // Indique qu'on envoie du JSON
-                        'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
-                    },
-                    body: JSON.stringify({ modeDeJeu: multijoueur ? infosSalle.mode : "Solo", difficulte: multijoueur ? infosSalle.difficulte : difficulte, hote: multijoueur ? infosSalle.hote : false}) // Objet JS converti en chaîne JSON
-            });
-            resPartie = await RES_PARTIE.json();
-            idPartie = resPartie["partieId"];
 
             // En multijoueur, indique au 2eme joueur que la partie est prête
             if (multijoueur) {
 
                 // Envoie les informations de la partie
-                connexion.send(JSON.stringify({commande: "partie_prete", idPartie: resPartie["partieId"], salle: infosSalle.salle, grille: grille, solution: solution}));
+                connexion.send(JSON.stringify({commande: "partie_prete", idPartie: resPartie["partieId"], salle: infosSalle.salle, grille: grille }));
 
                 // Attends que le joueur soit prêt pour commencer
                 getPlayerReady();
@@ -815,13 +855,33 @@ function configureGame(resPartie) {
     startTimer();
 }
 
+// Vérification grille
+async function checkSolution() {
+
+    // Vérifie si la grille est terminée
+    const RES_SOLUTION = await fetch("index.php?controller=api-partie&action=checkGrid", {
+        method: "POST",
+        headers: {
+                'Content-Type': 'application/json', // Indique qu'on envoie du JSON
+                'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
+            },
+            body: JSON.stringify({ idPartie: idPartie, grille: grille }) // Objet JS converti en chaîne JSON
+    });
+
+    resSolution = await RES_SOLUTION.json();
+
+    return resSolution.grilleResolue;
+}
+
 // Fin de partie
 async function endGame(popup = true, forcee = false) {
 
-    // Si la grille du joueur ne correspond pas à la solution...
-    if (!grille.equals(solution) && !forcee) {
+    let check = await checkSolution();
 
-        // Empèche la fin de partie
+    // Si la grille n'est pas résolue...
+    if (!check && !forcee) {
+
+         // Empèche la fin de partie
         return;
     }
 
@@ -859,7 +919,7 @@ async function endGame(popup = true, forcee = false) {
         }
 
         // Si un joueur est connecté
-        if (idPartie != 0) {
+        if (!invite) {
 
             // Met à jour les statistiques du joueur
             // Et retourne son gain ou perte de score global
@@ -904,7 +964,7 @@ async function endGame(popup = true, forcee = false) {
                         headers: {
                                 'Content-Type': 'application/json', // Indique qu'on envoie du JSON
                             },
-                            body: JSON.stringify({difficulte: difficulte, victoire: victoire, timerMinutes: timerMinutes, timerSecondes: timerSecondes}) // Objet JS converti en chaîne JSON
+                            body: JSON.stringify({idPartie: idPartie, difficulte: difficulte, victoire: victoire, timerMinutes: timerMinutes, timerSecondes: timerSecondes}) // Objet JS converti en chaîne JSON
                     });
 
                     // Redirige vers la création de compte

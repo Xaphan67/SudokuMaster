@@ -10,7 +10,7 @@ class PartieController extends Controller {
         // Affiche le gabarit jeuSolo
         // et lui indique les variables nécessaires
         $this->_twig->display("partie/jeuSolo.html.twig",[
-            'scripts' => ["jeu.js", "api.js"]
+            'scripts' => ["jeu.js"]
         ]);
     }
 
@@ -126,7 +126,7 @@ class PartieController extends Controller {
         // Affiche le gabarit multijoueur
         // et lui indique les variables nécessaires
         $this->_twig->display("partie/multijoueur.html.twig",[
-            'scripts' => ["jeu.js", "api.js"]
+            'scripts' => ["jeu.js"]
         ]);
     }
 }

@@ -15,8 +15,8 @@ class PartieModel extends Model {
             FROM partie
             INNER JOIN mode_de_jeu ON mode_de_jeu.id_mode_de_jeu = partie.id_mode_de_jeu
             INNER JOIN difficulte ON difficulte.id_difficulte = partie.id_difficulte
-            INNER JOIN participer ON participer.id_partie = partie.id_partie
-            INNER JOIN utilisateur ON utilisateur.id_utilisateur = participer.Id_utilisateur";
+            LEFT JOIN participer ON participer.id_partie = partie.id_partie
+            LEFT JOIN utilisateur ON utilisateur.id_utilisateur = participer.Id_utilisateur";
 
         if ($desc) {
             $query .= " ORDER BY partie.id_partie DESC";
@@ -33,31 +33,18 @@ class PartieModel extends Model {
         return $prepare->fetchAll();
     }
 
-    function add(Partie $partie, bool $duree = false) {
+    function add(Partie $partie) {
 
         // Requête préparée pour ajouter la partie
         $query =
             "INSERT INTO partie (id_mode_de_jeu, id_difficulte, duree_partie, date_partie)
-            VALUES (:id_mode_de_jeu, :id_difficulte, ";
-
-        if ($duree) {
-            $query .= ":duree_partie";
-        }
-        else {
-            $query .= "'00:15:00'";
-        }
-
-        $query .= ", CURRENT_DATE)";
+            VALUES (:id_mode_de_jeu, :id_difficulte, '00:15:00', CURRENT_DATE)";
 
         $prepare = $this->_db->prepare($query);
 
         // Définition des paramettres de la requête préparée
         $prepare->bindValue(":id_mode_de_jeu", $partie->getMode_de_jeu(), PDO::PARAM_INT);
         $prepare->bindValue(":id_difficulte", $partie->getDifficulte(), PDO::PARAM_INT);
-
-        if ($duree) {
-            $prepare->bindValue(":duree_partie", $partie->getDuree(), PDO::PARAM_STR);
-        }
 
         // Execute la requête. Retourne l'ID de la partie insérée (si réussite) ou false (si echec)
         if ($prepare->execute()) {
@@ -68,6 +55,41 @@ class PartieModel extends Model {
         else {
             return false;
         }
+    }
+
+    function setSolution(Partie $partie) : bool {
+
+        // Requête préparée pour modifier la solution de la partie
+        $query =
+            "UPDATE partie SET solution_partie = :solution_partie
+             WHERE id_partie = :id_partie";
+
+        $prepare = $this->_db->prepare($query);
+
+        // Définition des paramettres de la requête préparée
+        $prepare->bindValue(":solution_partie", $partie->getSolution(), PDO::PARAM_STR);
+        $prepare->bindValue(":id_partie", $partie->getId(), PDO::PARAM_INT);
+
+        // Execute la requête. Retourne true (si réussite) ou false (si echec)
+        return $prepare->execute();
+    }
+
+    function getSolution($id) {
+
+        // Requête préparée pour récupérer la solution de la partie
+        $query =
+            "SELECT solution_partie
+            FROM partie
+            WHERE id_partie = :id_partie";
+
+        $prepare = $this->_db->prepare($query);
+
+        // Définition des paramettres de la requête préparée
+        $prepare->bindValue(":id_partie", $id, PDO::PARAM_INT);
+
+        // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
+        $prepare->execute();
+        return $prepare->fetch();
     }
 
     function setTime(Partie $partie) : bool {
@@ -91,7 +113,7 @@ class PartieModel extends Model {
 
         // Requête préparée pour récupérer les informations de la partie
         $query =
-            "SELECT id_partie, duree_partie, id_mode_de_jeu, id_difficulte FROM partie
+            "SELECT id_partie, duree_partie, id_mode_de_jeu AS mode_de_jeu, id_difficulte AS difficulte FROM partie
             WHERE id_partie=:id_partie";
 
         $prepare = $this->_db->prepare($query);

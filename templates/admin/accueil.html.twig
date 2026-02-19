@@ -135,7 +135,7 @@
                         <td>{{ partie.libelle_difficulte }}</td>
                         <td>{{ partie.duree_partie }}</td>
                         <td class="joueurs">
-                            {{ partie.pseudo_utilisateur }}
+                            {% if partie.pseudo_utilisateur %}{{ partie.pseudo_utilisateur }}{% else %}-{% endif %}
                             {% if partie.pseudo_utilisateur_2 != '' %}
                                 -
                                 {{ partie.pseudo_utilisateur_2 }}

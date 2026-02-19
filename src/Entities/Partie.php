@@ -8,6 +8,7 @@ class Partie extends Entity {
     private int $mode_de_jeu;
     private int $difficulte;
     private ?string $duree;
+    private ?string $solution;
 
     // Constructeur
 
@@ -34,6 +35,10 @@ class Partie extends Entity {
         return $this->duree;
     }
 
+    public function getSolution() : ?string {
+        return $this->solution;
+    }
+
     // Setters
 
     public function setId($id) {
@@ -50,5 +55,9 @@ class Partie extends Entity {
 
     public function setDuree($duree) {
         $this->duree = $duree;
+    }
+
+    public function setSolution($solution) {
+        $this->solution = $solution;
     }
 }
