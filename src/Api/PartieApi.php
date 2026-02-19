@@ -440,7 +440,7 @@ class PartieApi extends Controller {
 
         // Retourne l'ID de la partie insérée pour pouvoir la récupérer en JS plus tard
         // ainsi que la grille, la série de victoires et le score global du joueur du joueur avant cette partie
-        echo '{"partieId": ' . $partieID . ', "grille": ' . json_encode($grille["grilles"]) . ', "serie_victoires": ' . (isset($serieVictoires) ? $serieVictoires : 0) . ', "score_global": ' . (isset($scoreGlobal) ? $scoreGlobal : 1000) . ', "invite": ' . !isset($_SESSION["utilisateur"]) . '}';
+        echo '{"partieId": ' . $partieID . ', "grille": ' . json_encode($grille["grilles"]) . ', "serie_victoires": ' . (isset($serieVictoires) ? $serieVictoires : 0) . ', "score_global": ' . (isset($scoreGlobal) ? $scoreGlobal : 1000) . ', "invite": ' . (!isset($_SESSION["utilisateur"]) ? "true" : "false") . '}';
     }
 
     // Rejoint une partie

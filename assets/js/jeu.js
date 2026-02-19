@@ -693,7 +693,7 @@ async function startGame(element) {
         resPartie = await RES_PARTIE.json();
         idPartie = resPartie["partieId"];
 
-        // Stoke si un joueur est connecté ou non lors de la création de la partie
+        // Stocke si un joueur est connecté ou non lors de la création de la partie
         invite = resPartie["invite"];
 
         // Récupère la grille dans le DOM
