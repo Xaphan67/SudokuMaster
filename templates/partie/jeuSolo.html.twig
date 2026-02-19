@@ -45,31 +45,7 @@
                 </div>
             </div>
             <div>
-                <div id="menu_partie" class="popup"><!-- menu -->
-                    <h3>Sélectionnez la difficulté</h3>
-                    <p>La progression de la partie actuelle sera perdue et comptera comme une défaite</p>
-                    <div class="boutons_difficulte">
-                        <div class="bouton">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-                                <path d="M173.19 155c-9.92 17.16-26.39 27-45.19 27s-35.27-9.84-45.19-27a6 6 0 0 1 10.38-6c7.84 13.54 20.2 21 34.81 21s27-7.46 34.81-21a6 6 0 1 1 10.38 6ZM230 128A102 102 0 1 1 128 26a102.12 102.12 0 0 1 102 102Zm-12 0a90 90 0 1 0-90 90a90.1 90.1 0 0 0 90-90ZM92 118a10 10 0 1 0-10-10a10 10 0 0 0 10 10Zm72-20a10 10 0 1 0 10 10a10 10 0 0 0-10-10Z"/>
-                            </svg>
-                            <p>Facile</p>
-                        </div>
-                        <div class="bouton">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-                                <path d="M128 26a102 102 0 1 0 102 102A102.12 102.12 0 0 0 128 26Zm0 192a90 90 0 1 1 90-90a90.1 90.1 0 0 1-90 90Zm46-58a6 6 0 0 1-6 6H88a6 6 0 0 1 0-12h80a6 6 0 0 1 6 6Zm-92-52a10 10 0 1 1 10 10a10 10 0 0 1-10-10Zm92 0a10 10 0 1 1-10-10a10 10 0 0 1 10 10Z"/>
-                            </svg>
-                            <p>Moyen</p>
-                        </div>
-                        <div class="bouton">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-                                <path d="M128 26a102 102 0 1 0 102 102A102.12 102.12 0 0 0 128 26Zm0 192a90 90 0 1 1 90-90a90.1 90.1 0 0 1-90 90ZM82 108a10 10 0 1 1 10 10a10 10 0 0 1-10-10Zm92 0a10 10 0 1 1-10-10a10 10 0 0 1 10 10Zm-.81 65a6 6 0 0 1-10.38 6c-7.84-13.54-20.2-21-34.81-21s-27 7.46-34.81 21a6 6 0 0 1-5.2 3a5.9 5.9 0 0 1-3-.81a6 6 0 0 1-2.18-8.19c9.92-17.16 26.39-27 45.19-27s35.27 9.84 45.19 27Z"/>
-                            </svg>
-                            <p>Difficile</p>
-                        </div>
-                    </div>
-                </div>
-                <div id="bouton_jeu" class="bouton boutonPrincipal">Nouvelle Partie</div>
+                <div id="bouton_jeu" class="bouton boutonPrincipal">Abandonner</div>
             </div>
         </div>
     </div>
@@ -97,6 +73,12 @@
                 <p>Difficile</p>
             </div>
         </div>
+    </div>
+    <div id="abandon_partie" class="popup popup_large"><!-- popup d'abandon de partie' -->
+        <h3>Abandonner la partie ?</h3>
+        <p>La progression de la partie actuelle sera perdue et comptera comme une défaite</p>
+        <a href="solo" class="bouton boutonPrincipal boutonDefaut">Abandonner</a>
+        <div id="bouton_annuler_partie" class="bouton boutonPrincipal boutonDefaut">Annuler</div>
     </div>
     <div id="fin_partie" class="popup"><!-- popup de fin de partie -->
         <h3></h3>

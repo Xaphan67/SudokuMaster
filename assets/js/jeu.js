@@ -7,7 +7,6 @@ const BOUTONS =  Array.from(PAVE.getElementsByTagName("p"));
 const BOUTON_NOTES = document.getElementById("bouton_notes");
 const BOUTON_PAUSE_TIMER = document.getElementById("bouton_pause");
 const BOUTON_JEU = document.getElementById("bouton_jeu");
-const MENU_PARTIE = document.getElementById("menu_partie");
 const TITRE_JEU = document.getElementById("titre_jeu");
 const POPUP_DEBUT_PARTIE = document.getElementById("debut_partie");
 const POPUP_FIN_PARTIE = document.getElementById("fin_partie");
@@ -60,9 +59,6 @@ let selectionY = null;
 
 // Mode Notes
 let modeNotes = false;
-
-// Menu Bouton Jeu
-let menuOuvert = false;
 
 // Si le joueur joue une partie multijoueur
 if (TITRE_JEU.textContent.includes('Multijoueur')) {
@@ -313,7 +309,7 @@ function joinRoom() {
 if (!multijoueur) {
 
     // Sélection de la difficulté via popop début de partie
-    const POPUP_BOUTONS_DIFFICULTE = Array.from(document.getElementsByClassName("boutons_difficulte")[1].getElementsByTagName("div"));
+    const POPUP_BOUTONS_DIFFICULTE = Array.from(document.getElementsByClassName("boutons_difficulte")[0].getElementsByTagName("div"));
     POPUP_BOUTONS_DIFFICULTE.forEach(element => {
         element.onclick= function() {
             // Masque le popup
@@ -321,29 +317,6 @@ if (!multijoueur) {
 
             // Affiche l'animation de chargement
             CHARGEMENT.style.display = "block";
-
-            // Démarre la partie
-            startGame(element);
-        }
-    });
-
-    // Sélection de la difficulté via le menu
-    const MENU_PARTIE_BOUTONS_DIFFICULTE = Array.from(document.getElementsByClassName("boutons_difficulte")[0].getElementsByTagName("div"));
-    MENU_PARTIE_BOUTONS_DIFFICULTE.forEach(element => {
-        element.onclick= function() {
-            // Masque le menu et le considère comme fermé
-            MENU_PARTIE.style.display = "none";
-            menuOuvert = false;
-            BOUTON_JEU.textContent = "Nouvelle partie";
-
-            // Masque la grille
-            displayGrid(true);
-
-            // Met fin à la partie
-            endGame(false, true);
-
-            // Remet le timer à 15 minutes
-            resetTimer();
 
             // Démarre la partie
             startGame(element);
@@ -569,43 +542,40 @@ document.addEventListener("keyup", (e) => {
 // Lors d'un clic sur le bouton jeu...
 BOUTON_JEU.addEventListener("click", (e) => {
 
-    if (multijoueur) {
+    partieEnCours = false;
 
-        // Opacifie la zone de jeu
-        CONTENEUR_JEU.style.filter = "opacity(0.40)";
-        CONTENEUR_JEU.inert = "true";
+    // Opacifie la zone de jeu
+    CONTENEUR_JEU.style.filter = "opacity(0.40)";
+    CONTENEUR_JEU.inert = "true";
+
+    // En mode multijoueur...
+    if (multijoueur) {
 
         // Empèche de survoler le score des deux joueurs
         const INFOS_JOUEURS = document.getElementById("infos_multijoueur");
         INFOS_JOUEURS.inert = true;
+    }
 
-        // Affiche le popup d'abandon de partie
-        const POPUP_ABANDON_PARTIE = document.getElementById("abandon_partie");
-        const BOUTON_ANNULER_ABANDON_PARTIE = document.getElementById("bouton_annuler_partie");
-        POPUP_ABANDON_PARTIE.style.display = "flex";
+    // Affiche le popup d'abandon de partie
+    const POPUP_ABANDON_PARTIE = document.getElementById("abandon_partie");
+    const BOUTON_ANNULER_ABANDON_PARTIE = document.getElementById("bouton_annuler_partie");
+    POPUP_ABANDON_PARTIE.style.display = "flex";
 
         // Si le joueur clique sur le bouton Annuler
         BOUTON_ANNULER_ABANDON_PARTIE.addEventListener("click", (e) => {
 
-            // Masque le popup
-            POPUP_ABANDON_PARTIE.style.display = "none";
+        partieEnCours = true;
 
-            // Permet à l'utilisateur d'intéragir avec le plateau de jeu
-            CONTENEUR_JEU.style.filter = "none";
-            CONTENEUR_JEU.inert = false;
+        // Masque le popup
+        POPUP_ABANDON_PARTIE.style.display = "none";
 
-            // Permet de survoler le score des deux joueurs
-            INFOS_JOUEURS.inert = false;
-        });
-    }
-    else {
+        // Permet à l'utilisateur d'intéragir avec le plateau de jeu
+        CONTENEUR_JEU.style.filter = "none";
+        CONTENEUR_JEU.inert = false;
 
-        // Affiche ou masque le menu, et change le texte du bouton
-        menuOuvert = !menuOuvert;
-        MENU_PARTIE.style.display = menuOuvert ? "flex" : "none";
-        BOUTON_JEU.textContent = menuOuvert ? "Annuler" : "Nouvelle partie";
-    }
-
+        // Permet de survoler le score des deux joueurs
+        INFOS_JOUEURS.inert = false;
+    });
 });
 
 // Colorie les cellules ayant le même chiffre que la cellule active
