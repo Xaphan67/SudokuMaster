@@ -113,6 +113,7 @@ CREATE TABLE IF NOT EXISTS `partie` (
   `id_partie` int NOT NULL AUTO_INCREMENT,
   `date_partie` date DEFAULT NULL,
   `duree_partie` time DEFAULT NULL,
+  `solution_partie` json DEFAULT NULL,
   `id_mode_de_jeu` int NOT NULL,
   `id_difficulte` int NOT NULL,
   PRIMARY KEY (`id_partie`),
