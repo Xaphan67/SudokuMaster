@@ -1113,13 +1113,19 @@ function decreaseTimer() {
     let affichageMinutes = 14 - timerMinutes;
     let affichageSecondes = 59 - timerSecondes;
 
+    // Empèche un affichage négatif des minutes
+    // (si la page est ouverte dans un autre onglet du navigateur par exemple)
+    if (affichageMinutes < 0) {
+        affichageMinutes = 0;
+    }
+
     // Affiche le temps
     TIMER.innerText = "Temps : " + (affichageMinutes < 10 ? "0" : "") + affichageMinutes + ":" + (affichageSecondes < 10 ? "0" : "") + affichageSecondes;
 
     // Met fin à la partie si le temps est écoulé
-    if (timerMinutes == 14 && timerSecondes == 59) {
+    if ((timerMinutes == 14 && timerSecondes == 59) || timerMinutes > 14) {
         clearInterval(timerInterval); // Stop le timer
-        endGame(false, true);
+        endGame(true, true);
     }
 }
 
