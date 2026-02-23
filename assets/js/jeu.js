@@ -960,6 +960,9 @@ async function endGame(popup = true, forcee = false) {
             // Lors du clic sur Rejouer...
             POPUP_FIN_PARTIE_REJOUER.addEventListener("click", (e) => {
 
+                // Masque la grille
+                displayGrid(true);
+
                 // Masque le popup
                 POPUP_FIN_PARTIE.style.display = "none";
                 POPUP_DEBUT_PARTIE.style.display = "flex";
