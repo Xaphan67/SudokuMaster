@@ -252,11 +252,11 @@ function joinRoom() {
 
                 if (partieEnCours) {
 
+                    // Déclare la partie comme terminée
+                    partieEnCours = false;
+
                     // Si mode compétitif
                     if (infosSalle.mode == "Competitif") {
-
-                        // Déclare la partie comme terminée
-                        partieEnCours = false;
 
                         // Change le texte qui s'affiche sur le popup de fin de partie
                         POPUP_FIN_PARTIE_TEXTE.textContent = statsJoueurs.joueur_2.pseudo_utilisateur + " à quitté la partie";
@@ -282,8 +282,11 @@ function joinRoom() {
                         const BOUTON_CONTINUER_PARTIE = document.getElementById("bouton_continuer_partie");
                         POPUP_JOUEUR_ABANDON_PARTIE.style.display = "flex";
 
-                        // Si le joueur clique sur le bouton Continue la partie
+                        // Si le joueur clique sur le bouton Continuer la partie
                         BOUTON_CONTINUER_PARTIE.addEventListener("click", (e) => {
+
+                            // Déclare la partie comme commencée
+                            partieEnCours = true;
 
                             // Masque le popup
                             POPUP_JOUEUR_ABANDON_PARTIE.style.display = "none";
@@ -610,9 +613,10 @@ BOUTON_JEU.addEventListener("click", (e) => {
     const BOUTON_ANNULER_ABANDON_PARTIE = document.getElementById("bouton_annuler_partie");
     POPUP_ABANDON_PARTIE.style.display = "flex";
 
-        // Si le joueur clique sur le bouton Annuler
-        BOUTON_ANNULER_ABANDON_PARTIE.addEventListener("click", (e) => {
+    // Si le joueur clique sur le bouton Annuler
+    BOUTON_ANNULER_ABANDON_PARTIE.addEventListener("click", (e) => {
 
+        // Déclare la partie comme commencée
         partieEnCours = true;
 
         // Masque le popup

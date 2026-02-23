@@ -1845,6 +1845,10 @@ footer a {
   display: none;
 }
 
+#abandon_premature {
+  display: none;
+}
+
 #modifier_compte, #supprimer_compte {
   align-items: center;
 }
