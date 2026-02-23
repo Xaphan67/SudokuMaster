@@ -511,33 +511,82 @@ document.addEventListener("keydown", (e) => {
                 modeNotes = !modeNotes;
                 NOTES.textContent = "Notes : " + (modeNotes ? "ON" : "OFF");
             }
+
+            // Si le joueur appuis sur une flèche directionnelle
+            moveSelection(e);
         }
+    }
+    else {
+
+        // Si le joueur appuis sur une flèche directionnelle
+        moveSelection(e);
     }
 });
 
-// Lors du relachement d'une touche du clavier...
-document.addEventListener("keyup", (e) => {
+function moveSelection(e) {
 
-    // Si le joueur appuie sur la touche Tab...
-    if (e.key = "Tab") {
+    // Si le joueur appuis sur une flèche directionnelle
+    if (e.key == "ArrowLeft" || e.key == "ArrowRight" || e.key == "ArrowUp" || e.key == "ArrowDown") {
 
-        if (e.target.nodeName == "TD") {
+        // Flèche gauche - Séléctionne la case à gauche de la selection actuelle
+        if (e.key == "ArrowLeft") {
 
-            caseActuelle = e.target;
+            // S'il y à une case à gauche de la case actuelle
+            if (caseActuelle.cellIndex - 1 >= 0) {
 
-            // Récupère les coordonnées de la case cliquée
-            selectionX = caseActuelle.cellIndex;
-            selectionY = caseActuelle.parentNode.rowIndex;
-
-            // Met la case en surbrillance
-            caseActuelle.classList.add("selected_highlight");
-
-            // Colorie les autres cellules contenant le même chiffre que celle selectionnée
-            colorCells(e.target);
+                // Récupère les coordonnées de la case cliquée
+                selectionX = caseActuelle.cellIndex - 1;
+                selectionY = caseActuelle.parentNode.rowIndex;
+                caseActuelle = TABLE.rows[selectionY].cells[selectionX];
+            }
         }
-    }
-});
 
+        // Flèche droite - Séléctionne la case à droite de la selection actuelle
+        if (e.key == "ArrowRight") {
+
+            // S'il y à une case à droite de la case actuelle
+            if (caseActuelle.cellIndex + 1 <= 8) {
+
+                // Récupère les coordonnées de la case cliquée
+                selectionX = caseActuelle.cellIndex + 1;
+                selectionY = caseActuelle.parentNode.rowIndex;
+                caseActuelle = TABLE.rows[selectionY].cells[selectionX];
+            }
+        }
+
+        // Flèche haut - Séléctionne la case au dessous de la selection actuelle
+        if (e.key == "ArrowUp") {
+
+            // S'il y à une case au dessous de la case actuelle
+            if (caseActuelle.parentNode.rowIndex - 1 >= 0) {
+
+                // Récupère les coordonnées de la case cliquée
+                selectionX = caseActuelle.cellIndex;
+                selectionY = caseActuelle.parentNode.rowIndex - 1;
+                caseActuelle = TABLE.rows[selectionY].cells[selectionX];
+            }
+        }
+
+        // Flèche bas - Séléctionne la case au dessus de la selection actuelle
+        if (e.key == "ArrowDown") {
+
+            // S'il y à une case au dessus de la case actuelle
+            if (caseActuelle.parentNode.rowIndex + 1 <= 8) {
+
+                // Récupère les coordonnées de la case cliquée
+                selectionX = caseActuelle.cellIndex;
+                selectionY = caseActuelle.parentNode.rowIndex + 1;
+                caseActuelle = TABLE.rows[selectionY].cells[selectionX];
+            }
+        }
+
+        // Met la case en surbrillance
+        caseActuelle.classList.add("selected_highlight");
+
+        // Colorie les autres cellules contenant le même chiffre que celle selectionnée
+        colorCells(caseActuelle);
+    }
+}
 
 // Lors d'un clic sur le bouton jeu...
 BOUTON_JEU.addEventListener("click", (e) => {
@@ -692,8 +741,6 @@ async function startGame(element) {
                     }
                     if (element != "0") {
                         nouvelleCellule.classList.add("celluleFixe")
-                    } else {
-                        nouvelleCellule.tabIndex = 0; // Permet de focus les cellules modifiables
                     }
                     const NOUVEAU_P = document.createElement("p");
                     NOUVEAU_P.inert = true;
@@ -810,6 +857,15 @@ function getPlayerReady() {
 function configureGame(resPartie) {
     serieVictoires = resPartie["serie_victoires"];
     scoreGlobal = resPartie["score_global"];
+
+    // Séléctionne la case centrale
+    caseActuelle = TABLE.rows[4].cells[4];
+
+    // Met la case centrale en surbrillance
+    caseActuelle.classList.add("selected_highlight");
+
+    // Colorie les autres cellules contenant le même chiffre que la case centrale
+    colorCells(caseActuelle);
 
     // Masque l'animation de chargement
     CHARGEMENT.style.display = "none";
@@ -974,11 +1030,11 @@ async function endGame(forcee = false) {
                 boutonInscription = null;
             }
 
-                // Si un joueur est connecté
-            if (idPartie != 0) {
-
-                // Retire les éléments ajoutés au DOM
+            // Retire les éléments ajoutés au DOM
+            if (valeur != null) {
                 valeur.remove();
+            }
+            if (evolution != null) {
                 evolution.remove();
             }
 
