@@ -244,7 +244,7 @@ function joinRoom() {
                 }
 
                 // Met fin à la partie
-                endGame(true, true);
+                endGame(true);
                 break;
 
             // Le serveur indique que le 2eme joueur à abandonné la partie
@@ -262,7 +262,7 @@ function joinRoom() {
                         POPUP_FIN_PARTIE_TEXTE.textContent = statsJoueurs.joueur_2.pseudo_utilisateur + " à quitté la partie";
 
                         // Met fin à la partie
-                        endGame(false, true);
+                        endGame(true);
                     }
                     else {
 
@@ -851,7 +851,7 @@ async function checkSolution() {
 }
 
 // Fin de partie
-async function endGame(popup = true, forcee = false) {
+async function endGame(forcee = false) {
 
     let check = await checkSolution();
 
@@ -879,114 +879,112 @@ async function endGame(popup = true, forcee = false) {
     // Empèche l'utilisateur d'intéragir avec le plateau de jeu
     CONTENEUR_JEU.inert = true;
 
-    if (popup) {
-        // Détermine si la partie est gagnée ou perdue
-        let victoire = timerMinutes < 14 || (timerMinutes == 14 && timerSecondes < 59);
+    // Détermine si la partie est gagnée ou perdue
+    let victoire = timerMinutes < 14 || (timerMinutes == 14 && timerSecondes < 59);
 
-        // Si partie multijoueur en mode compétitif
-        // Le joueur qui a notifié l'autre de sa victoire gagne
-        // donc, je deuxième joueur perd.
-        if (multijoueur && defaiteCompetitif) {
-            victoire = false;
+    // Si partie multijoueur en mode compétitif
+    // Le joueur qui a notifié l'autre de sa victoire gagne
+    // donc, je deuxième joueur perd.
+    if (multijoueur && defaiteCompetitif) {
+        victoire = false;
+    }
+
+    // Change le texte qui s'affiche sur le popup de fin de partie en cas de défaite
+    if (!victoire) {
+        POPUP_FIN_PARTIE_TEXTE.textContent = (defaiteCompetitif ? statsJoueurs.joueur_2.pseudo_utilisateur + " à terminé la grille avant vous" : "Le temps est écoulé");
+    }
+
+    // Si un joueur est connecté
+    if (!invite) {
+
+        // Met à jour les statistiques du joueur
+        // Et retourne son gain ou perte de score global
+        let differenceStats = await updateStats(victoire);
+        if (differenceStats >= 0) {
+            differenceStats = "+" + differenceStats;
         }
 
-        // Change le texte qui s'affiche sur le popup de fin de partie en cas de défaite
-        if (!victoire) {
-            POPUP_FIN_PARTIE_TEXTE.textContent = (defaiteCompetitif ? statsJoueurs.joueur_2.pseudo_utilisateur + " à terminé la grille avant vous" : "Le temps est écoulé");
-        }
+        // Ajoute un nouvel élément au DOM pour afficher la différence de score
+        valeur = document.createElement("P");
+        valeur.textContent = differenceStats;
+        valeur.classList.add("score_global_valeur", differenceStats >= 0 ? "victoire" : "defaite");
+        POPUP_FIN_PARTIE_SCORE_GLOBAL.insertAdjacentElement('afterend', valeur);
+        evolution = document.createElement("P");
+        let scoreFinal = scoreGlobal + parseInt(differenceStats);
+        evolution.textContent = scoreGlobal + " --> " + scoreFinal;
+        evolution.classList.add("score_golbal_evolution");
+        valeur.insertAdjacentElement('afterend', evolution);
+    }
+    else {
+        POPUP_FIN_PARTIE_SCORE_GLOBAL.style.display = "none";
 
-        // Si un joueur est connecté
-        if (!invite) {
+        // En mode solo uniquement
 
-            // Met à jour les statistiques du joueur
-            // Et retourne son gain ou perte de score global
-            let differenceStats = await updateStats(victoire);
-            if (differenceStats >= 0) {
-                differenceStats = "+" + differenceStats;
-            }
-
-            // Ajoute un nouvel élément au DOM pour afficher la différence de score
-            valeur = document.createElement("P");
-            valeur.textContent = differenceStats;
-            valeur.classList.add("score_global_valeur", differenceStats >= 0 ? "victoire" : "defaite");
-            POPUP_FIN_PARTIE_SCORE_GLOBAL.insertAdjacentElement('afterend', valeur);
-            evolution = document.createElement("P");
-            let scoreFinal = scoreGlobal + parseInt(differenceStats);
-            evolution.textContent = scoreGlobal + " --> " + scoreFinal;
-            evolution.classList.add("score_golbal_evolution");
-            valeur.insertAdjacentElement('afterend', evolution);
-        }
-        else {
-            POPUP_FIN_PARTIE_SCORE_GLOBAL.style.display = "none";
-
-            // En mode solo uniquement
-
-            if (!multijoueur) {
-
-                // Ajoute un nouvel élement au DOM pour proposer au joueur de s'inscrire
-                inscription = document.createElement('P');
-                inscription.textContent = "Créez un compte pour enregistrer votre score et accéder à des fonctionnalités supplémentaires"
-                POPUP_FIN_PARTIE_SCORE_GLOBAL.insertAdjacentElement('afterend', inscription);
-                boutonInscription = document.createElement('DIV');
-                boutonInscription.innerText = "Créer un compte";
-                boutonInscription.classList.add("bouton", "boutonPrincipal", "boutonDefaut");
-                inscription.insertAdjacentElement('afterend', boutonInscription);
-
-                // Lors du clic sur le bouton Créer un compte
-                boutonInscription.addEventListener("click", async (e) => {
-                    
-                    // Enregistre les informations de la partie en session
-                    await fetch("index.php?controller=api-partie&action=store", {
-                        method: "POST",
-                        headers: {
-                                'Content-Type': 'application/json', // Indique qu'on envoie du JSON
-                            },
-                            body: JSON.stringify({idPartie: idPartie, difficulte: difficulte, victoire: victoire, timerMinutes: timerMinutes, timerSecondes: timerSecondes}) // Objet JS converti en chaîne JSON
-                    });
-
-                    // Redirige vers la création de compte
-                    window.location.replace("inscription");
-                });
-            }
-        }
-
-        // Affiche un message de victoire ou défaite selon l'état de la partie quand le popup s'affiche
-        POPUP_FIN_PARTIE.style.display = "flex";
-        POPUP_FIN_PARTIE_TITRE.textContent = (victoire ? "Victoire" : "Défaite") + " !";
-
-        // En partie solo uniquement...
         if (!multijoueur) {
 
-            // Lors du clic sur Rejouer...
-            POPUP_FIN_PARTIE_REJOUER.addEventListener("click", (e) => {
+            // Ajoute un nouvel élement au DOM pour proposer au joueur de s'inscrire
+            inscription = document.createElement('P');
+            inscription.textContent = "Créez un compte pour enregistrer votre score et accéder à des fonctionnalités supplémentaires"
+            POPUP_FIN_PARTIE_SCORE_GLOBAL.insertAdjacentElement('afterend', inscription);
+            boutonInscription = document.createElement('DIV');
+            boutonInscription.innerText = "Créer un compte";
+            boutonInscription.classList.add("bouton", "boutonPrincipal", "boutonDefaut");
+            inscription.insertAdjacentElement('afterend', boutonInscription);
 
-                // Masque la grille
-                displayGrid(true);
+            // Lors du clic sur le bouton Créer un compte
+            boutonInscription.addEventListener("click", async (e) => {
+                
+                // Enregistre les informations de la partie en session
+                await fetch("index.php?controller=api-partie&action=store", {
+                    method: "POST",
+                    headers: {
+                            'Content-Type': 'application/json', // Indique qu'on envoie du JSON
+                        },
+                        body: JSON.stringify({idPartie: idPartie, difficulte: difficulte, victoire: victoire, timerMinutes: timerMinutes, timerSecondes: timerSecondes}) // Objet JS converti en chaîne JSON
+                });
 
-                // Masque le popup
-                POPUP_FIN_PARTIE.style.display = "none";
-                POPUP_DEBUT_PARTIE.style.display = "flex";
-
-                // Retire le texte et le bouton proposant au joueur de créer un compte (s'il à été affiché)
-                if (inscription != null) {
-                    inscription.remove();
-                    boutonInscription.remove();
-                    inscription = null;
-                    boutonInscription = null;
-                }
-
-                 // Si un joueur est connecté
-                if (idPartie != 0) {
-
-                    // Retire les éléments ajoutés au DOM
-                    valeur.remove();
-                    evolution.remove();
-                }
-
-                // Remet le timer à 15 minutes
-                resetTimer();
+                // Redirige vers la création de compte
+                window.location.replace("inscription");
             });
         }
+    }
+
+    // Affiche un message de victoire ou défaite selon l'état de la partie quand le popup s'affiche
+    POPUP_FIN_PARTIE.style.display = "flex";
+    POPUP_FIN_PARTIE_TITRE.textContent = (victoire ? "Victoire" : "Défaite") + " !";
+
+    // En partie solo uniquement...
+    if (!multijoueur) {
+
+        // Lors du clic sur Rejouer...
+        POPUP_FIN_PARTIE_REJOUER.addEventListener("click", (e) => {
+
+            // Masque la grille
+            displayGrid(true);
+
+            // Masque le popup
+            POPUP_FIN_PARTIE.style.display = "none";
+            POPUP_DEBUT_PARTIE.style.display = "flex";
+
+            // Retire le texte et le bouton proposant au joueur de créer un compte (s'il à été affiché)
+            if (inscription != null) {
+                inscription.remove();
+                boutonInscription.remove();
+                inscription = null;
+                boutonInscription = null;
+            }
+
+                // Si un joueur est connecté
+            if (idPartie != 0) {
+
+                // Retire les éléments ajoutés au DOM
+                valeur.remove();
+                evolution.remove();
+            }
+
+            // Remet le timer à 15 minutes
+            resetTimer();
+        });
     }
 }
 
@@ -1125,7 +1123,7 @@ function decreaseTimer() {
     // Met fin à la partie si le temps est écoulé
     if ((timerMinutes == 14 && timerSecondes == 59) || timerMinutes > 14) {
         clearInterval(timerInterval); // Stop le timer
-        endGame(true, true);
+        endGame(true);
     }
 }
 
