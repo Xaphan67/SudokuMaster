@@ -210,6 +210,9 @@ function joinRoom() {
             // Le serveur indique que la partie doit commencer (Lesdeux joueurs sont prêts)
             case "commencer_partie":
 
+                // Masque la grille
+                displayGrid(true);
+
                 // Masque le popup demandant au joueur s'il est prêt
                 const POPUP_JOUEUR_PRET = document.getElementById("verif_joueur_pret");
                 POPUP_JOUEUR_PRET.style.display = "none";
@@ -258,56 +261,71 @@ function joinRoom() {
             case "abandonner_partie":
 
                 if (partieEnCours) {
+                    const POPUP_JOUEUR_PRET = document.getElementById("verif_joueur_pret");
 
                     // Déclare la partie comme terminée
                     partieEnCours = false;
 
-                    // Si mode compétitif
-                    if (infosSalle.mode == "Competitif") {
+                    // Si le popup demandant au joueur s'il est prêt est ouvert
+                    if (POPUP_JOUEUR_PRET.style.display != "none") {
 
-                        // Change le texte qui s'affiche sur le popup de fin de partie
-                        POPUP_FIN_PARTIE_TEXTE.textContent = statsJoueurs.joueur_2.pseudo_utilisateur + " à quitté la partie";
+                        // Masque le popup demandant au joueur s'il est prêt
+                        POPUP_JOUEUR_PRET.style.display = "none";
 
-                        // Met fin à la partie
-                        endGame(true);
+                        // Affiche le popup indiquant que le 2eme joueur à quitté la partie
+                        const POPUP_JOUEUR_ABANDON_PARTIE = document.getElementById("abandon_debut_partie");
+                        POPUP_JOUEUR_ABANDON_PARTIE.getElementsByTagName("H3")[0].innerText = statsJoueurs.joueur_2.pseudo_utilisateur  + " à quitté la partie";
+                        POPUP_JOUEUR_ABANDON_PARTIE.style.display = "flex";
                     }
                     else {
 
-                        // Opacifie la zone de jeu
-                        CONTENEUR_JEU.style.filter = "opacity(0.40)";
-                        CONTENEUR_JEU.inert = "true";
+                        // Si mode compétitif
+                        if (infosSalle.mode == "Competitif") {
 
-                        // Empèche de survoler le score des deux joueurs
-                        const INFOS_JOUEURS = document.getElementById("infos_multijoueur");
-                        INFOS_JOUEURS.inert = true;
+                            // Change le texte qui s'affiche sur le popup de fin de partie
+                            POPUP_FIN_PARTIE_TEXTE.textContent = statsJoueurs.joueur_2.pseudo_utilisateur + " à quitté la partie";
 
-                        // Met la partie en pause
-                        startTimer();
+                            // Met fin à la partie
+                            endGame(true);
+                        }
+                        else {
 
-                        // Affiche le popup indiquant que le 2eme joueur à quitté la partie
-                        const POPUP_JOUEUR_ABANDON_PARTIE = document.getElementById("abandon_autre_joueur_partie");
-                        const BOUTON_CONTINUER_PARTIE = document.getElementById("bouton_continuer_partie");
-                        POPUP_JOUEUR_ABANDON_PARTIE.style.display = "flex";
+                            // Opacifie la zone de jeu
+                            CONTENEUR_JEU.style.filter = "opacity(0.40)";
+                            CONTENEUR_JEU.inert = "true";
 
-                        // Si le joueur clique sur le bouton Continuer la partie
-                        BOUTON_CONTINUER_PARTIE.addEventListener("click", (e) => {
+                            // Empèche de survoler le score des deux joueurs
+                            const INFOS_JOUEURS = document.getElementById("infos_multijoueur");
+                            INFOS_JOUEURS.inert = true;
 
-                            // Déclare la partie comme commencée
-                            partieEnCours = true;
-
-                            // Masque le popup
-                            POPUP_JOUEUR_ABANDON_PARTIE.style.display = "none";
-
-                            // Reprends la partie
+                            // Met la partie en pause
                             startTimer();
 
-                            // Permet à l'utilisateur d'intéragir avec le plateau de jeu
-                            CONTENEUR_JEU.style.filter = "none";
-                            CONTENEUR_JEU.inert = false;
+                            // Affiche le popup indiquant que le 2eme joueur à quitté la partie
+                            const POPUP_JOUEUR_ABANDON_PARTIE = document.getElementById("abandon_autre_joueur_partie");
+                            const BOUTON_CONTINUER_PARTIE = document.getElementById("bouton_continuer_partie");
+                            POPUP_JOUEUR_ABANDON_PARTIE.style.display = "flex";
 
-                            // Permet de survoler le score des deux joueurs
-                            INFOS_JOUEURS.inert = false;
-                        });
+                            // Si le joueur clique sur le bouton Continuer la partie
+                            BOUTON_CONTINUER_PARTIE.addEventListener("click", (e) => {
+
+                                // Déclare la partie comme commencée
+                                partieEnCours = true;
+
+                                // Masque le popup
+                                POPUP_JOUEUR_ABANDON_PARTIE.style.display = "none";
+
+                                // Reprends la partie
+                                startTimer();
+
+                                // Permet à l'utilisateur d'intéragir avec le plateau de jeu
+                                CONTENEUR_JEU.style.filter = "none";
+                                CONTENEUR_JEU.inert = false;
+
+                                // Permet de survoler le score des deux joueurs
+                                INFOS_JOUEURS.inert = false;
+                            });
+                        }
                     }
                 }
                 break;
@@ -814,6 +832,12 @@ async function startGame(element) {
 }
 
 function getPlayerReady() {
+
+    // Cache la grille
+    displayGrid(true);
+
+    // Déclare la partie comme commencée
+    partieEnCours = true;
 
      // Masque l'animation de chargement
     CHARGEMENT.style.display = "none";
