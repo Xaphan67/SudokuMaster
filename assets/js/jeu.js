@@ -53,6 +53,7 @@ let timerSecondes;
 let timerInterval = -1;
 
 // Grille
+let resGrille;
 let grille = [];
 let selectionX = null;
 let selectionY = null;
@@ -188,8 +189,14 @@ function joinRoom() {
             case "partie_prete":
 
                 // Récupère les informations de la partie
-                idPartie = message.idPartie;
                 grille = message.grille;
+                break;
+
+            // Le serveur indique l'id de la partie créée par l'hôte
+            case "id_partie":
+
+                // Récupère les informations de la partie
+                idPartie = message.idPartie;
                 break;
 
             // Le serveur indique que l'autre joueur est prêt
@@ -208,7 +215,7 @@ function joinRoom() {
                 POPUP_JOUEUR_PRET.style.display = "none";
 
                 //Démarre la partie
-                configureGame(resPartie);
+                configureGame();
                 break;
 
             // Le serveur indique que la salle à rejoindre n'existe pas
@@ -710,33 +717,26 @@ async function startGame(element) {
     // Mode solo ou hote de partie multijoueur
     if (!multijoueur || (multijoueur && infosSalle.hote)) {
 
-        // Ajoute la partie dans la base de données
-        // Et retourne son ID (ou 0 si aucun utilisateur connecté) et la série de victoire du joueur avant cette partie
-        const RES_PARTIE = await fetch("index.php?controller=api-partie&action=new", {
+        // Génère une grille
+        const RES_GRILLE = await fetch("index.php?controller=api-partie&action=generateNewGrid", {
             method: "POST",
             headers: {
-                    'Content-Type': 'application/json', // Indique qu'on envoie du JSON
                     'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
-                },
-                body: JSON.stringify({ modeDeJeu: multijoueur ? infosSalle.mode : "Solo", difficulte: multijoueur ? infosSalle.difficulte : difficulte, hote: multijoueur ? infosSalle.hote : false}) // Objet JS converti en chaîne JSON
+                }
         });
-        resPartie = await RES_PARTIE.json();
-        idPartie = resPartie["partieId"];
+        resGrille = await RES_GRILLE.json();
 
-        // Stocke si un joueur est connecté ou non lors de la création de la partie
-        invite = resPartie["invite"];
-
-        // Récupère la grille dans le DOM
+         // Récupère la grille dans le DOM
         const TABLE = document.getElementById("grille");
 
         // Si la grille à bien été obtenue
-        if (resPartie["grille"]) {
+        if (resGrille) {
 
             // Vide la table contenant la grille
             TABLE.innerHTML = "";
 
             // Parcours la grille renvoyée par l'API et l'affiche dans un tableau
-            resPartie["grille"][(multijoueur ? infosSalle.difficulte : difficulte).toLowerCase()].forEach((line, ligneIndex) => {
+            resGrille["grilles"][(multijoueur ? infosSalle.difficulte : difficulte).toLowerCase()].forEach((line, ligneIndex) => {
                 let nouvelleLigne = TABLE.insertRow(-1);
                 line.forEach((element, coloneIndex) => {
                     let nouvelleCellule = nouvelleLigne.insertCell(coloneIndex);
@@ -755,21 +755,13 @@ async function startGame(element) {
             });
 
             // Stocke la grille dans une variable
-            grille = resPartie["grille"][(multijoueur ? infosSalle.difficulte : difficulte).toLowerCase()];
-            grilleObtenue = true;
-        }
-        else {
-            grilleObtenue = false;
-        }
-
-        // Si la grille à bien été obtenue
-        if (grilleObtenue) {
+            grille = resGrille["grilles"][(multijoueur ? infosSalle.difficulte : difficulte).toLowerCase()];
 
             // En multijoueur, indique au 2eme joueur que la partie est prête
             if (multijoueur) {
 
                 // Envoie les informations de la partie
-                connexion.send(JSON.stringify({commande: "partie_prete", idPartie: resPartie["partieId"], salle: infosSalle.salle, grille: grille }));
+                connexion.send(JSON.stringify({commande: "partie_prete", salle: infosSalle.salle, grille: grille }));
 
                 // Attends que le joueur soit prêt pour commencer
                 getPlayerReady();
@@ -777,7 +769,7 @@ async function startGame(element) {
             else {
 
                 // Configure la partie
-                configureGame(resPartie);
+                configureGame();
             }
         }
         else {
@@ -790,8 +782,8 @@ async function startGame(element) {
     // Mode multijoueur pour joueur non hote
     if (multijoueur && !infosSalle.hote) {
 
-        // Attends que la partie soit créée par l'hôte
-        while (idPartie == null) {
+        // Attends que la grille soit cenvoyée par l'hôte
+        while (grille.length == 0) {
             await sleep(10)
         }
 
@@ -815,18 +807,6 @@ async function startGame(element) {
                 nouvelleCellule.appendChild(NOUVEAU_P);
             });
         });
-
-        // Ajoute le joueur à la partie dans la base de données
-        // Et retourne la série de victoire du joueur avant cette partie
-        const RES_PARTIE = await fetch("index.php?controller=api-partie&action=join", {
-            method: "POST",
-            headers: {
-                    'Content-Type': 'application/json', // Indique qu'on envoie du JSON
-                    'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
-                },
-                body: JSON.stringify({modeDeJeu: infosSalle.mode, difficulte: infosSalle.difficulte, idPartie: idPartie}) // Objet JS converti en chaîne JSON
-        });
-        resPartie = await RES_PARTIE.json();
 
         // Attends que le joueur soit prêt pour commencer
         getPlayerReady();
@@ -858,7 +838,55 @@ function getPlayerReady() {
     });
 }
 
-function configureGame(resPartie) {
+async function configureGame() {
+
+    // Mode solo ou hote de partie multijoueur
+    if (!multijoueur || (multijoueur && infosSalle.hote)) {
+
+        // Ajoute la partie dans la base de données
+        // Et retourne son ID (ou 0 si aucun utilisateur connecté) et la série de victoire du joueur avant cette partie
+        const RES_PARTIE = await fetch("index.php?controller=api-partie&action=new", {
+            method: "POST",
+            headers: {
+                    'Content-Type': 'application/json', // Indique qu'on envoie du JSON
+                    'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
+                },
+                body: JSON.stringify({ modeDeJeu: multijoueur ? infosSalle.mode : "Solo", difficulte: multijoueur ? infosSalle.difficulte : difficulte, grille: resGrille, hote: multijoueur ? infosSalle.hote : false}) // Objet JS converti en chaîne JSON
+        });
+        resPartie = await RES_PARTIE.json();
+        idPartie = resPartie["partieId"];
+
+        if (multijoueur) {
+
+            // Envoie l'id de la partie à l'autre joueur
+            connexion.send(JSON.stringify({commande: "id_partie", idPartie: resPartie["partieId"], salle: infosSalle.salle }));
+        }
+
+        // Stocke si un joueur est connecté ou non lors de la création de la partie
+        invite = resPartie["invite"];
+    }
+
+    // Mode multijoueur pour joueur non hote
+    if (multijoueur && !infosSalle.hote) {
+
+        // Attends que la partie soit créée en base de données par l'hôte
+        while (idPartie == null) {
+            await sleep(10)
+        }
+
+        // Ajoute le joueur à la partie dans la base de données
+        // Et retourne la série de victoire du joueur avant cette partie
+        const RES_PARTIE = await fetch("index.php?controller=api-partie&action=join", {
+            method: "POST",
+            headers: {
+                    'Content-Type': 'application/json', // Indique qu'on envoie du JSON
+                    'Accept': 'application/json' // Indique qu'on attend du JSON en réponse
+                },
+                body: JSON.stringify({modeDeJeu: infosSalle.mode, difficulte: infosSalle.difficulte, idPartie: idPartie}) // Objet JS converti en chaîne JSON
+        });
+        resPartie = await RES_PARTIE.json();
+    }
+
     serieVictoires = resPartie["serie_victoires"];
     scoreGlobal = resPartie["score_global"];
 
@@ -993,7 +1021,7 @@ async function endGame(forcee = false) {
 
             // Lors du clic sur le bouton Créer un compte
             boutonInscription.addEventListener("click", async (e) => {
-                
+
                 // Enregistre les informations de la partie en session
                 await fetch("index.php?controller=api-partie&action=store", {
                     method: "POST",
@@ -1092,7 +1120,7 @@ function displayGrid(cacher = false) {
 
             CELLULES.forEach(cellule => {
                 cellule.classList.remove("selected");
-            });            
+            });
         }
         else {
 
@@ -1102,7 +1130,6 @@ function displayGrid(cacher = false) {
                 colorCells(caseActuelle)
             });
         }
-        
     }
 }
 

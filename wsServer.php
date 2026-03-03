@@ -169,7 +169,14 @@ while (true) {
                 case "partie_prete":
 
                     // Envoie les informations de la partie au 2eme joueur
-                    socket_write($clients[$salles[$message->salle]["client"]], mask(json_encode(["commande" => "partie_prete", "idPartie" => $message->idPartie, "grille" => $message->grille])));
+                    socket_write($clients[$salles[$message->salle]["client"]], mask(json_encode(["commande" => "partie_prete", "grille" => $message->grille])));
+                    break;
+
+                // L'hôte envoie l"id de la partie
+                case "id_partie":
+
+                    // Envoie les informations de la partie au 2eme joueur
+                    socket_write($clients[$salles[$message->salle]["client"]], mask(json_encode(["commande" => "id_partie", "idPartie" => $message->idPartie])));
                     break;
 
                 // L'hote à envoyé les statiqtiques des deux joueurs
