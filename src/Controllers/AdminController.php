@@ -116,6 +116,7 @@ class AdminController extends Controller {
 
         // Variables d'affichage
         $affichage["titre"] = "Administration";
+        $affichage["descripion"] = "Obtenez un aperçu rapide des derniers utilisaturs inscrits et des parties jouées";
 
         // Affiche le gabarit accueil
         // et lui indique les variables nécessaires
@@ -209,6 +210,7 @@ class AdminController extends Controller {
 
         // Variables d'affichage
         $affichage["titre"] = "Gestion des utilisateurs";
+        $affichage["descripion"] = "Gérez vos utilisateurs, le banissements ou l'affichage de leur informations";
 
         // Affiche le gabarit gestion utilisateurs
         // et lui indique les variables nécessaires
@@ -267,6 +269,7 @@ class AdminController extends Controller {
 
         // Variables d'affichage
         $affichage["titre"] = "Gestion des parties";
+        $affichage["descripion"] = "Gérez les parties, affichez les joueurs et le résultat";
 
         // Affiche le gabarit gestion parties
         // et lui indique les variables nécessaires

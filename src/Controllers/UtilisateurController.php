@@ -130,6 +130,7 @@ class UtilisateurController extends Controller {
 
         // Variables d'affichage
         $affichage["titre"] = "Inscription";
+        $affichage["descripion"] = "Inscrivez-vous à SudokuMaster pour enregistrer vos meilleures parties";
 
         // Affiche le gabarit inscription
         // et lui indique les variables nécessaires
@@ -259,6 +260,7 @@ class UtilisateurController extends Controller {
 
         // Variables d'affichage
         $affichage["titre"] = "Connexion";
+        $affichage["descripion"] = "Connectez-vous à votre profil et gérez votre compte SudokuMaster";
 
         // Affiche le gabarit connexion
         // et lui indique les variables nécessaires
@@ -504,6 +506,7 @@ class UtilisateurController extends Controller {
 
         // Variables d'affichage
         $affichage["titre"] = "Profil";
+        $affichage["descripion"] = "Mettez vos inforations personnelles à jour et consultez les statistiques de vos parties";
 
         // Variables à passer au gabarit
         $variablesGabarit = [
@@ -612,6 +615,7 @@ class UtilisateurController extends Controller {
 
         // Variables d'affichage
         $affichage["titre"] = "Mot de passe oublié";
+        $affichage["descripion"] = "Récupérez votre mot de passe si vous l'avez oublié";
 
         // Affiche le gabarit mot de passe oublié
         // et lui indique les variables nécessaires
@@ -707,6 +711,7 @@ class UtilisateurController extends Controller {
 
         // Variables d'affichage
         $affichage["titre"] = "Réinitialisation du mot de passe";
+        $affichage["descripion"] = "Récupérez votre mot de passe si vous l'avez oublié";
 
         // Affiche le gabarit réinitialisation du mot de passe
         // et lui indique les variables nécessaires
