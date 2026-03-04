@@ -7,10 +7,14 @@ class PartieController extends Controller {
     // Afficher l'écran de partie solo
     public function soloBoard() {
 
+        // Variables d'affichage
+        $affichage["titre"] = "Jeu solo";
+
         // Affiche le gabarit jeuSolo
         // et lui indique les variables nécessaires
         $this->_twig->display("partie/jeuSolo.html.twig",[
-            'scripts' => ["jeu.js"]
+            'scripts' => ["jeu.js"],
+            'affichage' => $affichage
         ]);
     }
 
@@ -100,9 +104,13 @@ class PartieController extends Controller {
             $this->_generateCSRFToken();
         }
 
+        // Variables d'affichage
+        $affichage["titre"] = "Multijoueur";
+
         // Affiche le gabarit salon
         // et lui indique les variables nécessaires
         $this->_twig->display("partie/salon.html.twig",[
+            'affichage' => $affichage,
             'scripts' => ["salon.js"],
             'erreurs' => $erreurs,
             'utilisateurConnecte' => isset($_SESSION["utilisateur"]),
@@ -123,9 +131,13 @@ class PartieController extends Controller {
              $this->_forbidden();
         }
 
+        // Variables d'affichage
+        $affichage["titre"] = "Multijoueur";
+
         // Affiche le gabarit multijoueur
         // et lui indique les variables nécessaires
         $this->_twig->display("partie/multijoueur.html.twig",[
+            'affichage' => $affichage,
             'scripts' => ["jeu.js"]
         ]);
     }

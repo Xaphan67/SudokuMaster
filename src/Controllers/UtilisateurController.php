@@ -128,9 +128,13 @@ class UtilisateurController extends Controller {
             $this->_generateCSRFToken();
         }
 
+        // Variables d'affichage
+        $affichage["titre"] = "Inscription";
+
         // Affiche le gabarit inscription
         // et lui indique les variables nécessaires
         $this->_twig->display("utilisateur/inscription.html.twig",[
+            'affichage' => $affichage,
             'erreurs' => $erreurs,
             'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
         ]);
@@ -253,11 +257,15 @@ class UtilisateurController extends Controller {
             $this->_generateCSRFToken();
         }
 
+        // Variables d'affichage
+        $affichage["titre"] = "Connexion";
+
         // Affiche le gabarit connexion
         // et lui indique les variables nécessaires
         $this->_twig->display("utilisateur/connexion.html.twig",[
-            'erreurs' => $erreurs,
             'scripts' => ["connexion.js"],
+            'affichage' => $affichage,
+            'erreurs' => $erreurs,
             'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
         ]);
     }
@@ -494,10 +502,14 @@ class UtilisateurController extends Controller {
             $this->_generateCSRFToken();
         }
 
+        // Variables d'affichage
+        $affichage["titre"] = "Profil";
+
         // Variables à passer au gabarit
         $variablesGabarit = [
-            'erreurs' => $erreurs,
             'scripts' => ["profil.js"],
+            'affichage' => $affichage,
+            'erreurs' => $erreurs,
             'statistiques' => $statistiques,
             'participations' => $donneesParticiper,
             'participationsModes' => $participationsModes,
@@ -598,11 +610,15 @@ class UtilisateurController extends Controller {
             $this->_generateCSRFToken();
         }
 
+        // Variables d'affichage
+        $affichage["titre"] = "Mot de passe oublié";
+
         // Affiche le gabarit mot de passe oublié
         // et lui indique les variables nécessaires
         $this->_twig->display("utilisateur/oubliMdp.html.twig",[
-            'erreurs' => $erreurs,
             'scripts' => ["oubliMdp.js"],
+            'affichage' => $affichage,
+            'erreurs' => $erreurs,
             'emailEnvoye' => $emailEnvoye,
             'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
         ]);
@@ -689,9 +705,13 @@ class UtilisateurController extends Controller {
             $this->_generateCSRFToken();
         }
 
+        // Variables d'affichage
+        $affichage["titre"] = "Réinitialisation du mot de passe";
+
         // Affiche le gabarit réinitialisation du mot de passe
         // et lui indique les variables nécessaires
         $this->_twig->display("utilisateur/reinitialisationMdp.html.twig",[
+            'affichage' => $affichage,
             'erreurs' => $erreurs,
             'token' => $token,
             'tokenValide' => $tokenValide,

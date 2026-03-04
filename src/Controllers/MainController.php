@@ -9,8 +9,13 @@ class MainController extends Controller {
     // Affiche la page d'accueil
     public function home() {
 
+        // Variables d'affichage
+        $affichage["titre"] = "Accueil";
+
         // Affiche le gabarit accueil
-        $this->_twig->display("main/accueil.html.twig");
+        $this->_twig->display("main/accueil.html.twig",[
+            'affichage' => $affichage
+        ]);
     }
 
     // Affiche la page des classements
@@ -31,10 +36,14 @@ class MainController extends Controller {
             $classements[$mode] = $donneesClasser;
         }
 
+        // Variables d'affichage
+        $affichage["titre"] = "Classements";
+
         // Affiche le gabarit classements
         // et lui indique les variables nécessaires
         $this->_twig->display("main/classements.html.twig",[
             'scripts' => ["classements.js"],
+            'affichage' => $affichage,
             'classements' => $classements
         ]);
     }
@@ -42,17 +51,26 @@ class MainController extends Controller {
     // Affiche la page des règles
     public function rules() {
 
+        // Variables d'affichage
+        $affichage["titre"] = "Règles";
+
         // Affiche le gabarit regles
         // et lui indique les variables nécessaires
         $this->_twig->display("main/regles.html.twig",[
-            'scripts' => ["regles.js"]
+            'scripts' => ["regles.js"],
+            'affichage' => $affichage
         ]);
     }
 
     // Affiche la page des mentions légales
     public function legals() {
 
+        // Variables d'affichage
+        $affichage["titre"] = "Mentions légales";
+
         // Affiche le gabarit mentions
-        $this->_twig->display("main/mentions.html.twig");
+        $this->_twig->display("main/mentions.html.twig",[
+            'affichage' => $affichage
+        ]);
     }
 }

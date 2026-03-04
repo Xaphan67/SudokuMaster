@@ -114,10 +114,14 @@ class AdminController extends Controller {
             $this->_generateCSRFToken();
         }
 
+        // Variables d'affichage
+        $affichage["titre"] = "Administration";
+
         // Affiche le gabarit accueil
         // et lui indique les variables nécessaires
         $this->_twig->display("admin/accueil.html.twig",[
             'scripts' => ["admin.js"],
+            'affichage' => $affichage,
             'erreurs' => $erreurs,
             'utilisateurs' => $utilisateurs,
             'parties' => $parties,
@@ -203,10 +207,14 @@ class AdminController extends Controller {
             $this->_generateCSRFToken();
         }
 
+        // Variables d'affichage
+        $affichage["titre"] = "Gestion des utilisateurs";
+
         // Affiche le gabarit gestion utilisateurs
         // et lui indique les variables nécessaires
         $this->_twig->display("admin/gestionUtilisateurs.html.twig",[
             'scripts' => ["admin.js"],
+            'affichage' => $affichage,
             'erreurs' => $erreurs,
             'utilisateurs' => $utilisateurs,
             'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
@@ -257,10 +265,14 @@ class AdminController extends Controller {
             }
         }
 
+        // Variables d'affichage
+        $affichage["titre"] = "Gestion des parties";
+
         // Affiche le gabarit gestion parties
         // et lui indique les variables nécessaires
         $this->_twig->display("admin/gestionParties.html.twig",[
             'scripts' => ["admin.js"],
+            'affichage' => $affichage,
             'parties' => $partiesFusion
         ]);
     }
