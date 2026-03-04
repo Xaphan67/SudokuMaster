@@ -104,12 +104,12 @@
                             <div>
                                 Joueur(s) :
                                 <div class="joueurs">
-                                    {% if partie.gagnant %}<img src="assets/img/TropheeOr" alt="">{% endif %}{{ partie.pseudo_utilisateur }}
+                                    {% if partie.gagnant %}<img src="assets/img/TropheeOr" alt="Trophée d'Or">{% endif %}{{ partie.pseudo_utilisateur }}
                                 </div>
                                 {% if partie.pseudo_utilisateur_2 != '' %}
                                 {{ partie.libelle_mode_de_jeu == 'Compétitif' ? 'VS' : '-' }}
                                 <div class="joueurs">
-                                    {% if partie.gagnant_2 %}<img src="assets/img/TropheeOr" alt="">{% endif %}{{ partie.pseudo_utilisateur_2 }}
+                                    {% if partie.gagnant_2 %}<img src="assets/img/TropheeOr" alt="Trophée d'Or">{% endif %}{{ partie.pseudo_utilisateur_2 }}
                                 </div>
                                 {% endif %}
                             </div>
