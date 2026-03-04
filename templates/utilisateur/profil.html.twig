@@ -42,9 +42,9 @@
     <section id="statistiques">
         <h2>Statistiques Personnelles</h2>
         <div class="onglets onglets_stats">
-            <p class="onglet_actif">Solo</p>
-            <p>Coopératif</p>
-            <p>Compétitif</p>
+            <p class="onglet_actif" tabindex="0">Solo</p>
+            <p tabindex="0">Coopératif</p>
+            <p tabindex="0">Compétitif</p>
         </div>
         {% for mode in 1..3 %}
             <div id="statistiques_{{ mode == 1 ? 'solo' : (mode == 2 ? 'cooperatif' : 'competitif') }}" class="statistiques">

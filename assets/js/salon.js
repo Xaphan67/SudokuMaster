@@ -129,30 +129,33 @@ function connect() {
 
 // Affiche l'onglet "Cooperatif"
 ONGLETS.getElementsByTagName("P")[0].addEventListener("click", (e) => {
-    if (!e.target.classList.contains("onglet_actif")) {
-        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet "Cooperatif"
-        Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
-            element.classList.remove("onglet_actif");
-        });
-        e.target.classList.add("onglet_actif");
+    switchTab(e, 1);
+});
 
-        // Affiche l'onglet "Cooperatif" et masque les autres onglets
-        SALLES_COOPERATIF.style.display = "flex";
-        SALLES_COMPETITIF.style.display = "none";
-    }
+ONGLETS.getElementsByTagName("P")[0].addEventListener("focus", (e) => {
+    switchTab(e, 1);
 });
 
 // Affiche l'onglet "Competitif"
 ONGLETS.getElementsByTagName("P")[1].addEventListener("click", (e) => {
-    if (!e.target.classList.contains("onglet_actif")) {
-        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet "Competitif"
+    switchTab(e, 2);
+});
+
+ONGLETS.getElementsByTagName("P")[1].addEventListener("focus", (e) => {
+    switchTab(e, 2);
+});
+
+function switchTab(element, tab) {
+    if (!element.target.classList.contains("onglet_actif")) {
+
+        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet actuel
         Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
             element.classList.remove("onglet_actif");
         });
-        e.target.classList.add("onglet_actif");
+        element.target.classList.add("onglet_actif");
 
-        // Affiche l'onglet "Competitif" et masque les autres onglets
-        SALLES_COOPERATIF.style.display = "none";
-        SALLES_COMPETITIF.style.display = "flex";
+        // Affiche l'onglet actuel et masque les autres onglets
+        SALLES_COOPERATIF.style.display = tab == 1 ? "flex" : "none";
+        SALLES_COMPETITIF.style.display = tab == 2 ? "flex" : "none";
     }
-});
+}

@@ -82,51 +82,46 @@ if (ERREURS_FORMULAIRES.value !== "") {
 
 // Affiche les statistiques du mode Solo
 ONGLETS.getElementsByTagName("P")[0].addEventListener("click", (e) => {
-    if (!e.target.classList.contains("onglet_actif")) {
-        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet Solo
-        Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
-            element.classList.remove("onglet_actif");
-        });
-        e.target.classList.add("onglet_actif");
+    switchTab(e, 1);
+});
 
-        // Affiche l'onglet Solo et masque les autres onglets
-        ONGLET_STATISTIQUES_SOLO.style.display = "flex";
-        ONGLET_STATISTIQUES_COOPERATIF.style.display = "none";
-        ONGLET_STATISTIQUES_COMPETITIF.style.display = "none";
-    }
+ONGLETS.getElementsByTagName("P")[0].addEventListener("focus", (e) => {
+    switchTab(e, 1);
 });
 
 // Affiche les statistiques du mode Coopératif
 ONGLETS.getElementsByTagName("P")[1].addEventListener("click", (e) => {
-    if (!e.target.classList.contains("onglet_actif")) {
-        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet Coopératif
-        Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
-            element.classList.remove("onglet_actif");
-        });
-        e.target.classList.add("onglet_actif");
+    switchTab(e, 2);
+});
 
-        // Affiche l'onglet Coopératif et masque les autres onglets
-        ONGLET_STATISTIQUES_SOLO.style.display = "none";
-        ONGLET_STATISTIQUES_COOPERATIF.style.display = "flex";
-        ONGLET_STATISTIQUES_COMPETITIF.style.display = "none";
-    }
+ONGLETS.getElementsByTagName("P")[1].addEventListener("focus", (e) => {
+    switchTab(e, 2);
 });
 
 // Affiche les statistiques du mode Compétitif
 ONGLETS.getElementsByTagName("P")[2].addEventListener("click", (e) => {
-    if (!e.target.classList.contains("onglet_actif")) {
-        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet Compétitif
+    switchTab(e, 3);
+});
+
+ONGLETS.getElementsByTagName("P")[2].addEventListener("focus", (e) => {
+    switchTab(e, 3);
+});
+
+function switchTab(element, tab) {
+    if (!element.target.classList.contains("onglet_actif")) {
+
+        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet actuel
         Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
             element.classList.remove("onglet_actif");
         });
-        e.target.classList.add("onglet_actif");
+        element.target.classList.add("onglet_actif");
 
-        // Affiche l'onglet Compétitif et masque les autres onglets
-        ONGLET_STATISTIQUES_SOLO.style.display = "none";
-        ONGLET_STATISTIQUES_COOPERATIF.style.display = "none";
-        ONGLET_STATISTIQUES_COMPETITIF.style.display = "flex";
+        // Affiche l'onglet actuel et masque les autres onglets
+        ONGLET_STATISTIQUES_SOLO.style.display = tab == 1 ? "flex" : "none";
+        ONGLET_STATISTIQUES_COOPERATIF.style.display = tab == 2 ? "flex" : "none";
+        ONGLET_STATISTIQUES_COMPETITIF.style.display = tab == 3 ? "flex" : "none";
     }
-});
+}
 
 // Ouvre le popup "Modifier informations du compte"
 function openEditAccount() {

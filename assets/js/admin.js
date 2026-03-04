@@ -286,51 +286,46 @@ const ONGLET_COMPETITIF = document.getElementById("mode_competitif");
 
 // Affiche l'onglet "Solo"
 ONGLETS.getElementsByTagName("P")[0].addEventListener("click", (e) => {
-    if (!e.target.classList.contains("onglet_actif")) {
-        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet "Solo"
-        Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
-            element.classList.remove("onglet_actif");
-        });
-        ONGLETS.getElementsByTagName("P")[0].classList.add("onglet_actif");
+    switchTab(e, 1);
+});
 
-        // Affiche l'onglet "Solo" et masque les autres onglets
-        ONGLET_SOLO.style.display = "block";
-        ONGLET_COOPERATIF.style.display = "none";
-        ONGLET_COMPETITIF.style.display = "none";
-    }
+ONGLETS.getElementsByTagName("P")[0].addEventListener("focus", (e) => {
+    switchTab(e, 1);
 });
 
 // Affiche l'onglet "Cooperatif"
 ONGLETS.getElementsByTagName("P")[1].addEventListener("click", (e) => {
-    if (!e.target.classList.contains("onglet_actif")) {
-        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet "Cooperatif"
-        Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
-            element.classList.remove("onglet_actif");
-        });
-    ONGLETS.getElementsByTagName("P")[1].classList.add("onglet_actif");
+    switchTab(e, 2);
+});
 
-        // Affiche l'onglet "Cooperatif" et masque les autres onglets
-        ONGLET_SOLO.style.display = "none";
-        ONGLET_COOPERATIF.style.display = "block";
-        ONGLET_COMPETITIF.style.display = "none";
-    }
+ONGLETS.getElementsByTagName("P")[1].addEventListener("focus", (e) => {
+    switchTab(e, 2);
 });
 
 // Affiche l'onglet "Competitif"
 ONGLETS.getElementsByTagName("P")[2].addEventListener("click", (e) => {
-    if (!e.target.classList.contains("onglet_actif")) {
-        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet "Competitif"
+    switchTab(e, 3);
+});
+
+ONGLETS.getElementsByTagName("P")[2].addEventListener("focus", (e) => {
+    switchTab(e, 3);
+});
+
+function switchTab(element, tab) {
+    if (!element.target.classList.contains("onglet_actif")) {
+
+        // Retire la classe onglet_actif de tout les onglets, puis l'ajoute à l'onglet actuel
         Array.from(ONGLETS.getElementsByTagName("P")).forEach(element => {
             element.classList.remove("onglet_actif");
         });
-        ONGLETS.getElementsByTagName("P")[2].classList.add("onglet_actif");
+        element.target.classList.add("onglet_actif");
 
-        // Affiche l'onglet "Competitif" et masque les autres onglets
-        ONGLET_SOLO.style.display = "none";
-        ONGLET_COOPERATIF.style.display = "none";
-        ONGLET_COMPETITIF.style.display = "block";
+        // Affiche l'onglet actuel et masque les autres onglets
+        ONGLET_SOLO.style.display = tab == 1 ? "block" : "none";
+        ONGLET_COOPERATIF.style.display = tab == 2 ? "block" : "none";
+        ONGLET_COMPETITIF.style.display = tab == 3 ? "block" : "none";
     }
-});
+}
 
 // Vérifie qi'il y a des erreurs dans le formulaire
 // Si oui, ouvre immédiatement le popup qui contient le formulaire au chargement de la page
