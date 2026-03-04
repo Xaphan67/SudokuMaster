@@ -11,7 +11,7 @@ class MainController extends Controller {
 
         // Variables d'affichage
         $affichage["titre"] = "Accueil";
-        $affichage["descripion"] = "Jouez au Sudoku en ligne seul ou à plusieurs";
+        $affichage["description"] = "Jouez au Sudoku en ligne seul ou à plusieurs";
 
         // Affiche le gabarit accueil
         $this->_twig->display("main/accueil.html.twig",[
@@ -39,7 +39,7 @@ class MainController extends Controller {
 
         // Variables d'affichage
         $affichage["titre"] = "Classements";
-        $affichage["descripion"] = "Découvrez le classement des meilleurs joueurs de Sudoku";
+        $affichage["description"] = "Découvrez le classement des meilleurs joueurs de Sudoku";
 
         // Affiche le gabarit classements
         // et lui indique les variables nécessaires
@@ -55,7 +55,7 @@ class MainController extends Controller {
 
         // Variables d'affichage
         $affichage["titre"] = "Règles";
-        $affichage["descripion"] = "Consultez les règles pour devenir un pro au Sudoku";
+        $affichage["description"] = "Consultez les règles pour devenir un pro au Sudoku";
 
         // Affiche le gabarit regles
         // et lui indique les variables nécessaires
@@ -70,7 +70,7 @@ class MainController extends Controller {
 
         // Variables d'affichage
         $affichage["titre"] = "Mentions légales";
-        $affichage["descripion"] = "Consultez les mentions légales pour l'utilisation de notre site";
+        $affichage["description"] = "Consultez les mentions légales pour l'utilisation de notre site";
 
         // Affiche le gabarit mentions
         $this->_twig->display("main/mentions.html.twig",[

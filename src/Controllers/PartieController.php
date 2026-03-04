@@ -9,7 +9,7 @@ class PartieController extends Controller {
 
         // Variables d'affichage
         $affichage["titre"] = "Jeu solo";
-        $affichage["descripion"] = "Testez-vous sur des grilles de Sudoku à la difficulté variable";
+        $affichage["description"] = "Testez-vous sur des grilles de Sudoku à la difficulté variable";
 
         // Affiche le gabarit jeuSolo
         // et lui indique les variables nécessaires
@@ -107,7 +107,7 @@ class PartieController extends Controller {
 
         // Variables d'affichage
         $affichage["titre"] = "Multijoueur";
-        $affichage["descripion"] = "Créez ou trouvez une partie de Sudoku pour jouer à plusieurs";
+        $affichage["description"] = "Créez ou trouvez une partie de Sudoku pour jouer à plusieurs";
 
         // Affiche le gabarit salon
         // et lui indique les variables nécessaires
@@ -135,7 +135,7 @@ class PartieController extends Controller {
 
         // Variables d'affichage
         $affichage["titre"] = "Multijoueur";
-        $affichage["descripion"] = "Jouez au Sudoku avec ou conte vos amis, ou d'autres joueurs";
+        $affichage["description"] = "Jouez au Sudoku avec ou conte vos amis, ou d'autres joueurs";
 
         // Affiche le gabarit multijoueur
         // et lui indique les variables nécessaires
