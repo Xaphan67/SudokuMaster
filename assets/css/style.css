@@ -826,7 +826,7 @@ nav {
   width: 100%;
 }
 
-.boutons_difficulte div {
+.boutons_difficulte button {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -838,18 +838,18 @@ nav {
   transition: all 0.5s ease;
 }
 
-.boutons_difficulte div svg {
+.boutons_difficulte button svg {
   width: 50px;
   height: 50px;
   min-width: 50px;
   min-height: 50px;
 }
 
-.boutons_difficulte div:hover {
+.boutons_difficulte button:hover {
   background-color: var(--ombrePrincipal);
 }
 
-.boutons_difficulte div:active {
+.boutons_difficulte button:active {
   background-color: var(--caseSelectionnee);
   transition: all 0.1s ease;
 }
@@ -985,7 +985,7 @@ nav {
   width: clamp(180px, 40vw, 250px);
 }
 
-.boutons_ronds>div {
+.boutons_ronds>button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1010,7 +1010,7 @@ nav {
   height: calc(3*(clamp(35px, 10vw, 90px)) + 10px);
 }
 
-#pave_numerique p {
+#pave_numerique button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1037,16 +1037,16 @@ nav {
 
 #interface_de_jeu>div:last-child {
   position: relative;
+  text-align: center;
 }
 
 #bouton_jeu {
   width: 250px;
   height: 40px;
   line-height: 40px;
-  margin: auto;
 }
 
-td, #pave_numerique p, .boutons_difficulte div {
+td, #pave_numerique button, .boutons_difficulte div {
   pointer-events: all;
   cursor: pointer;
 }
@@ -1898,6 +1898,10 @@ section p {
   cursor: pointer;
 }
 
+button {
+  border: 1px solid transparent;
+}
+
 .inactif {
   filter: opacity(0.40);
   cursor: default;
@@ -2628,7 +2632,7 @@ section p {
     width: unset;
   }
 
-  .boutons_ronds>div {
+  .boutons_ronds>button {
     width: 90px;
     height: 90px;
     border-radius: 50%;
@@ -2651,7 +2655,7 @@ section p {
     margin: auto;
   }
 
-  #pave_numerique p {
+  #pave_numerique button {
     display: flex;
     justify-content: center;
     align-items: center;

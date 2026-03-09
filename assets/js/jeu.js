@@ -3,7 +3,7 @@ const CONTENEUR_JEU = document.getElementById("conteneur_jeu");
 const CHARGEMENT = document.getElementsByClassName("chargement")[0];
 const TABLE = document.getElementById("grille");
 const PAVE = document.getElementById("pave_numerique");
-const BOUTONS =  Array.from(PAVE.getElementsByTagName("p"));
+const BOUTONS =  Array.from(PAVE.getElementsByTagName("button"));
 const BOUTON_NOTES = document.getElementById("bouton_notes");
 const BOUTON_PAUSE_TIMER = document.getElementById("bouton_pause");
 const BOUTON_JEU = document.getElementById("bouton_jeu");
@@ -337,7 +337,7 @@ function joinRoom() {
 if (!multijoueur) {
 
     // Sélection de la difficulté via popop début de partie
-    const POPUP_BOUTONS_DIFFICULTE = Array.from(document.getElementsByClassName("boutons_difficulte")[0].getElementsByTagName("div"));
+    const POPUP_BOUTONS_DIFFICULTE = Array.from(document.getElementsByClassName("boutons_difficulte")[0].getElementsByTagName("button"));
     POPUP_BOUTONS_DIFFICULTE.forEach(element => {
         element.onclick= function() {
             // Masque le popup
