@@ -1046,7 +1046,7 @@ nav {
   line-height: 40px;
 }
 
-td, #pave_numerique button, .boutons_difficulte div {
+td, #pave_numerique button, .boutons_difficulte button {
   pointer-events: all;
   cursor: pointer;
 }
@@ -1961,13 +1961,13 @@ button {
 
   /* Jeu solo */
 
-  .boutons_difficulte div {
+  .boutons_difficulte button {
     width: 120px;
     height: 120px;
     justify-content: center;
   }
 
-   #menu_partie .boutons_difficulte div {
+   #menu_partie .boutons_difficulte button {
     width: 90px;
     height: 80px;
     justify-content: center;
@@ -2826,7 +2826,7 @@ button {
     margin: 10px auto 0px auto;
   }
 
-  #menu_partie .boutons_difficulte div {
+  #menu_partie .boutons_difficulte button {
     width: 120px;
     height: 120px;
   }
