@@ -39,7 +39,7 @@
                         <input type="checkbox" id="mode_dyslexique_mobile" class="switch_input mode_dyslexique">
                         <label for="mode_dyslexique_mobile" class="switch_label"></label>
                     </div>
-                    {% if sessionutilisateur is defined %}
+                    {% if session.utilisateur is defined %}
                         {% if session.utilisateur.id_role == 1 %}
                             <a href="administration">Administration</a>
                         {% endif %}
