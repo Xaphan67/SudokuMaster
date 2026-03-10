@@ -2075,20 +2075,20 @@ button {
     margin: 10px 0px;
   }
 
-  #utilisateur:hover {
+  #utilisateur:hover, #utilisateur:focus, #utilisateur:focus-within {
     background-color: var(--menuUtilisateur);
     border-radius: 10px 10px 0px 0px;
   }
 
-  nav a:hover,nav a:visited:hover, #utilisateur:hover a {
+  nav a:hover,nav a:visited:hover, #utilisateur:hover a, #utilisateur:focus a, #utilisateur:focus-within a {
     color: var(--texteMenu);
   }
 
-  #utilisateur:hover svg {
+  #utilisateur:hover svg, #utilisateur:focus svg, #utilisateur:focus-within svg {
     fill: var(--texteMenu);
   }
 
-  #utilisateur:hover:after {
+  #utilisateur:hover:after, #utilisateur:focus:after, #utilisateur:focus-within:after {
     content: "";
     display: block;
     position: absolute;
@@ -2099,7 +2099,7 @@ button {
     bottom: 0px;
   }
 
-  #utilisateur:hover #menu_utilisateur {
+  #utilisateur:hover #menu_utilisateur, #utilisateur:focus #menu_utilisateur, #utilisateur:focus-within #menu_utilisateur {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

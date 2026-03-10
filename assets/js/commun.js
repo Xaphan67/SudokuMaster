@@ -4,21 +4,25 @@ const SWITCHES_MODE_SOMBRE = document.getElementsByClassName("mode_sombre");
 const SWITCHES_MODE_DYSLEXIQUE = document.getElementsByClassName("mode_dyslexique");
 const LOGOS = document.getElementsByClassName("logo");
 
+// Variables
+let logos_src = null;
+let logos_sombre_src = null;
+
 // Mode sombre
 
 // Une fois le contenu du DOM chargé...
 document.addEventListener("DOMContentLoaded", () => {
 
     // Stocke le chemin du logo et celui du logo en version sombre
-    const LOGOS_SRC =  LOGOS[0].src ;
-    const LOGOS_SOMBRE_SRC = LOGOS_SRC.substring(0, LOGOS_SRC.length - 4) + "-Sombre.png";
+    logos_src =  LOGOS[0].src ;
+    logos_sombre_src = logos_src.substring(0, logos_src.length - 4) + "-Sombre.png";
 
 
     // Applique le thème enregistré par l'utilisateur dans le local storage, ou sa préférence système
     const THEME_LOCAL_STORAGE = localStorage.getItem("theme");
     const THEME_SYSTEME = window.matchMedia("(prefers-color-scheme: dark)").matches;
     if (THEME_LOCAL_STORAGE == "sombre" || THEME_LOCAL_STORAGE == null && THEME_SYSTEME) {
-         setThemeSombre(LOGOS_SOMBRE_SRC);
+         setThemeSombre(logos_sombre_src);
     }
 
     // Pour les deux switches du mode sombre (normal + mobile)
@@ -26,19 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Quand on clique sur le switch, ajoute ou retire la classe "sombre"
         element.addEventListener("change", (e) => {
-            if (!HTML.classList.contains("sombre")) {
-                setThemeSombre(LOGOS_SOMBRE_SRC);
-                localStorage.setItem("theme", "sombre");
-            }
-             else {
-                setThemeClair(LOGOS_SRC);
-                localStorage.setItem("theme", "clair");
-            }
-
-            // Retire l'attribut "class" si aucune classe restante
-            if (HTML.classList.length == 0) {
-                HTML.removeAttribute("class");
-            }
+            switchThemeSombre();
         });
     }
 
@@ -53,22 +45,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Quand on clique sur le switch, ajoute ou retire la classe "dyslexique"
         element.addEventListener("change", (e) => {
-            if (!HTML.classList.contains("dyslexique")) {
-                setPoliceDyslexique();
-                localStorage.setItem("dyslexique", "dyslexique");
-            }
-             else {
-                setPoliceNormal();
-                localStorage.setItem("dyslexique", "normal");
-            }
-
-            // Retire l'attribut "class" si aucune classe restante
-            if (HTML.classList.length == 0) {
-                HTML.removeAttribute("class");
-            }
+            switchModeDyslexique();
         });
     }
 });
+
+// Lors d'un appui sur une touche du clavier...
+document.addEventListener("keydown", (e) => {
+
+    // Si l'appui n'est pas répété (Donc uniquement déclenché une fois)
+    if (!e.repeat) {
+
+        const LABEL_MODE_SOMBRE = document.getElementById("mode_sombre_label");
+        const LABEL_MODE_DYSLEXIQUE = document.getElementById("mode_dyslexique_label");
+
+        // Si l'utilisateur appuie sur la touche espace ou entrée
+        if (e.key == "Space" || e.key == "Enter") {
+
+            // Si le mode sombre est focus
+            if (document.activeElement == LABEL_MODE_SOMBRE) {
+                switchThemeSombre();
+            }
+
+            // Si le mode dyslexique est focus
+            if (document.activeElement == LABEL_MODE_DYSLEXIQUE) {
+                switchModeDyslexique();
+            }
+        }
+    }
+});
+
+function switchThemeSombre() {
+    if (!HTML.classList.contains("sombre")) {
+        setThemeSombre(logos_sombre_src);
+        localStorage.setItem("theme", "sombre");
+    }
+        else {
+        setThemeClair(logos_src);
+        localStorage.setItem("theme", "clair");
+    }
+
+    // Retire l'attribut "class" si aucune classe restante
+    if (HTML.classList.length == 0) {
+        HTML.removeAttribute("class");
+    }
+}
+
+function switchModeDyslexique() {
+    if (!HTML.classList.contains("dyslexique")) {
+        setPoliceDyslexique();
+        localStorage.setItem("dyslexique", "dyslexique");
+    }
+        else {
+        setPoliceNormal();
+        localStorage.setItem("dyslexique", "normal");
+    }
+
+    // Retire l'attribut "class" si aucune classe restante
+    if (HTML.classList.length == 0) {
+        HTML.removeAttribute("class");
+    }
+}
 
 
 function setThemeSombre(logoSrc) {
