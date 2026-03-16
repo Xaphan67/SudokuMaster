@@ -68,6 +68,10 @@ class UtilisateurController extends Controller {
                 $erreurs["mdp_confirm"] = "Les mots de passe ne sont pas identiques";
             }
 
+            if (empty($_POST["conditions"])) {
+                $erreurs["conditions"] = "Vous devez accepter les conditions d'utilisation";
+            }
+
             // Si il n'y à aucune erreur
             if (count($erreurs) == 0) {
 

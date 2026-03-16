@@ -52,6 +52,13 @@
                 />
                 {% if erreurs.mdp_confirm is defined %}<p>{{ erreurs.mdp_confirm }}</p>{% endif %}
             </div>
+            <div class="conditions">
+                <div>
+                    <input id="conditions" type="checkbox" name="conditions" required />
+                    <label for="conditions">J'accepte les <a href="mentions" target="_blank">termes d'utilisation</a></label>
+                </div>
+                {% if erreurs.conditions is defined %}<p>{{ erreurs.conditions }}</p>{% endif %}
+            </div>
             <input type="hidden" name="tokenCSRF" value="{{ tokenCSRF }}" />
             {% if erreurs.general is defined %}<p>{{ erreurs.general }}</p>{% endif %}
             <input type="submit" class="bouton boutonPrincipal boutonDefaut" value="Créer mon compte" />

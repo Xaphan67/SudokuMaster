@@ -624,6 +624,28 @@ nav {
   display: none;
 }
 
+input[type="checkbox"] {
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
+.conditions {
+  display: flex;
+  flex-direction: column;
+}
+
+.conditions div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.conditions label, .conditions a {
+  font-size: 15px;
+}
+
 /* Profil */
 
 #infos_compte {
