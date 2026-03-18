@@ -25,6 +25,7 @@ html {
   --texteMenu : #FFFFFF;
   --texteNormal : #270211;
   --texteScore : #FFFFFF;
+  --texteErreur: #ff0000;
   transition: all 0.3s;
 }
 
@@ -53,6 +54,7 @@ html.sombre {
   --texteMenu : #F5F5F5;
   --texteNormal: #F5F5F5;
   --texteScore : #F5F5F5;
+  --texteErreur: #ff0000;
   transition: all 0.3s;
 }
 
@@ -423,6 +425,13 @@ hr {
   inset: 0;
   background: conic-gradient(#0000 35%, var(--texteCaseModifiee),#0000 65%);
   animation: frame 0.35s linear infinite;
+}
+
+/* Erreurs */
+
+form .formulaire_erreur {
+  border-color: var(--texteErreur);
+  color: var(--texteErreur);
 }
 
 /* ------------------------------------------------  ACCESSIBILITE  ------------------------------------------------*/

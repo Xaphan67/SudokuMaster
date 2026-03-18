@@ -151,6 +151,7 @@
                 <div>
                     <label for="pseudo">Pseudo</label>
                     <input id="pseudo"
+                        {% if erreurs.pseudo is defined %}class="formulaire_erreur"{% endif %}
                         name="pseudo"
                         type="text"
                         placeholder="{{ session.utilisateur.pseudo_utilisateur }}"
@@ -158,11 +159,12 @@
                         value="{{ pseudoSaisi is defined ? pseudoSaisi : session.utilisateur.pseudo_utilisateur }}"
                         required
                     />
-                    {% if erreurs.pseudo is defined %}<p class="erreur">{{ erreurs.pseudo }}</p>{% endif %}
+                    {% if erreurs.pseudo is defined %}<p class="formulaire_erreur">{{ erreurs.pseudo }}</p>{% endif %}
                 </div>
                 <div>
                     <label for="email">Adresse mail</label>
                     <input id="email"
+                        {% if erreurs.email is defined %}class="formulaire_erreur"{% endif %}
                         name="email"
                         type="email"
                         placeholder="{{ session.utilisateur.email_utilisateur }}"
@@ -170,29 +172,31 @@
                         value="{{ emailSaisi is defined ? emailSaisi : session.utilisateur.email_utilisateur }}"
                         required
                     />
-                    {% if erreurs.email is defined %}<p class="erreur">{{ erreurs.email }}</p>{% endif %}
+                    {% if erreurs.email is defined %}<p class="formulaire_erreur">{{ erreurs.email }}</p>{% endif %}
                 </div>
             </div>
             <div>
                 <div>
                     <label for="mdp">Mot de passe</label>
                     <input id="mdp"
+                        {% if erreurs.mdp is defined %}class="formulaire_erreur"{% endif %}
                         name="mdp"
                         type="password"
                         placeholder="*********"
                         autocomplete="off"
                     />
-                    {% if erreurs.mdp is defined %}<p class="erreur">{{ erreurs.mdp }}</p>{% endif %}
+                    {% if erreurs.mdp is defined %}<p class="formulaire_erreur">{{ erreurs.mdp }}</p>{% endif %}
                 </div>
                 <div>
                     <label for="mdp_confirm">Confirmation du mot de passe</label>
                     <input id="mdp_confirm"
+                        {% if erreurs.mdp_confirm is defined %}class="formulaire_erreur"{% endif %}
                         name="mdp_confirm"
                         type="password"
                         placeholder="*********"
                         autocomplete="off"
                     />
-                    {% if erreurs.mdp_confirm is defined %}<p class="erreur">{{ erreurs.mdp_confirm }}</p>{% endif %}
+                    {% if erreurs.mdp_confirm is defined %}<p class="formulaire_erreur">{{ erreurs.mdp_confirm }}</p>{% endif %}
                 </div>
             </div>
         </div>
@@ -200,13 +204,14 @@
         <div>
             <label for="modifier_compte_mdp_check">Mot de passe actuel</label>
             <input id="modifier_compte_mdp_check"
+                {% if erreurs.mdp_check is defined %}class="formulaire_erreur"{% endif %}
                 name="mdp_check"
                 type="password"
                 placeholder="*********"
                 autocomplete="off"
                 required
             />
-            {% if erreurs.mdp_check is defined %}<p class="erreur">{{ erreurs.mdp_check }}</p>{% endif %}
+            {% if erreurs.mdp_check is defined %}<p class="formulaire_erreur">{{ erreurs.mdp_check }}</p>{% endif %}
         </div>
         <input type="hidden" name="tokenCSRF" value="{{ tokenCSRF }}" />
         {% if erreurs.general is defined %}<p>{{ erreurs.general }}</p>{% endif %}
@@ -227,13 +232,14 @@
         <div>
             <label for="supprimer_compte_mdp_check">Mot de passe actuel</label>
             <input id="supprimer_compte_mdp_check"
+                {% if erreurs.mdp_check is defined %}class="formulaire_erreur"{% endif %}
                 name="mdp_check"
                 type="password"
                 placeholder="*********"
                 autocomplete="off"
                 required
             />
-            {% if erreurs.mdp_check is defined %}<p class="erreur">{{ erreurs.mdp_check }}</p>{% endif %}
+            {% if erreurs.mdp_check is defined %}<p class="formulaire_erreur">{{ erreurs.mdp_check }}</p>{% endif %}
         </div>
         <input type="hidden" name="tokenCSRF" value="{{ tokenCSRF }}" />
         {% if erreurs.general is defined %}<p>{{ erreurs.general }}</p>{% endif %}

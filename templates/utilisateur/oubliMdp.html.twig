@@ -10,6 +10,7 @@
             <div>
                 <label for="email">Adresse mail</label>
                 <input id="email"
+                    {% if erreurs.email is defined %}class="formulaire_erreur"{% endif %}
                     name="email"
                     type="email"
                     placeholder="exemple@exemple.fr"
@@ -17,10 +18,10 @@
                     {% if post.email is defined %}value="{{ post.email }}"{% endif %}
                     required
                 />
-                {% if erreurs.email is defined %}<p>{{ erreurs.email }}</p>{% endif %}
+                {% if erreurs.email is defined %}<p class="formulaire_erreur">{{ erreurs.email }}</p>{% endif %}
             </div>
             <input type="hidden" name="tokenCSRF" value="{{ tokenCSRF }}" />
-            {% if erreurs.general is defined %}<p>{{ erreurs.general }}</p>{% endif %}
+            {% if erreurs.general is defined %}<p class="formulaire_erreur">{{ erreurs.general }}</p>{% endif %}
             <input type="submit" class="bouton boutonPrincipal boutonDefaut" value="Réinitialiser le mot de passe" />
         </form>
     </section>
