@@ -1127,6 +1127,7 @@ function sleep(ms) {
 // Affiche ou masque la grille
 function displayGrid(cacher = false) {
     const CELLULES = Array.from(TABLE.getElementsByTagName("TD"));
+    const NOTES = Array.from(TABLE.getElementsByTagName("UL"));
 
     TABLE.style.filter = cacher ? "opacity(0.40)" : "none";
     TABLE.inert = cacher;
@@ -1135,6 +1136,10 @@ function displayGrid(cacher = false) {
     CELLULES.forEach(cellule => {
         cellule.firstChild.style.display = cacher ? "none" : "block";
     });
+
+    NOTES.forEach(note => {
+        note.style.display = cacher ? "none" : "flex";
+    })
 
     // Retire ou affiche la surbrillance de la case active
     if (caseActuelle != null) {
