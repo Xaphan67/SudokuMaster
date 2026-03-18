@@ -1164,8 +1164,12 @@ function displayGrid(cacher = false) {
 
 // Démare le timer
 async function startTimer() {
-    const CELLULES = Array.from(TABLE.getElementsByTagName("TD"));
+
     if (timerActif == false) { // Si le timer n'a pas démarré ou est en pause, on le démarre
+
+        // Change l'icone du bouton
+        document.getElementById("bouton_pause_play").style.display = "none";
+        document.getElementById("bouton_pause_pause").style.display = "block";
 
         // Rends les éléments visibles et interactibles
         BOUTON_NOTES.style.filter = "revert-layer";
@@ -1193,6 +1197,10 @@ async function startTimer() {
         timerInterval = setInterval(decreaseTimer, 100);
     }
     else { // Sinon, on le met en pause
+
+        // Change l'icone du bouton
+        document.getElementById("bouton_pause_play").style.display = "block";
+        document.getElementById("bouton_pause_pause").style.display = "none";
 
         // Rends les éléments légèrement opaques et non-interactibles
         BOUTON_NOTES.style.filter = "opacity(0.40)";
