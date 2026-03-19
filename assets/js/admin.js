@@ -416,8 +416,9 @@ async function openBanUser() {
             POPUP_BANNIR_UTILISATEUR.style.display = "none";
 
             // Retire l'affichage des erreurs si l'utilisateur rouvre le popup plus tard
-            Array.from(document.getElementsByClassName("erreur")).forEach(erreur => {
+            Array.from(document.getElementsByClassName("formulaire_erreur")).forEach(erreur => {
                 erreur.innerHTML = "";
+                erreur.classList.remove("formulaire_erreur");
             });
         });
     }

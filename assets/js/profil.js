@@ -39,8 +39,9 @@ BOUTON_ANNULER_MODIFIER_COMPTE.addEventListener("click", (e) => {
     CONTENEUR_PRINCIPAL.inert = false;
 
     // Retire l'affichage des erreurs si l'utilisateur rouvre le popup plus tard
-    Array.from(document.getElementsByClassName("erreur")).forEach(erreur => {
+    Array.from(document.getElementsByClassName("formulaire_erreur")).forEach(erreur => {
         erreur.innerHTML = "";
+        erreur.classList.remove("formulaire_erreur");
     });
 
     // Restaure les données initiales du formulaire si l'utilisateur rouvre le popup plus tard
@@ -59,8 +60,9 @@ BOUTON_ANNULER_SUPPRIMER_COMPTE.addEventListener("click", (e) => {
     CONTENEUR_PRINCIPAL.inert = false;
 
     // Retire l'affichage des erreurs si l'utilisateur rouvre le popup plus tard
-    Array.from(document.getElementsByClassName("erreur")).forEach(erreur => {
+    Array.from(document.getElementsByClassName("formulaire_erreur")).forEach(erreur => {
         erreur.innerHTML = "";
+        erreur.classList.remove("formulaire_erreur");
     });
 
     // Restaure les données initiales du formulaire si l'utilisateur rouvre le popup plus tard
