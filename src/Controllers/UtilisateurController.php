@@ -9,8 +9,20 @@ use Xaphan67\SudokuMaster\Models\BannissementModel;
 use Xaphan67\SudokuMaster\Models\ClasserModel;
 use Xaphan67\SudokuMaster\Models\ParticiperModel;
 use Xaphan67\SudokuMaster\Models\UtilisateurModel;
+use Xaphan67\SudokuMaster\Services\Validation\UtilisateurValidator;
 
 class UtilisateurController extends Controller {
+
+    private UtilisateurValidator $validation;
+
+    public function __construct() {
+
+        // Appelle le constructeur de la classe parente
+        parent::__construct();
+
+        // Instancie le validateur
+        $this->validation = new UtilisateurValidator;
+    }
 
     // Affiche la page d'inscription
     public function signUp() {
@@ -39,38 +51,15 @@ class UtilisateurController extends Controller {
             $pseudo = trim(filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_SPECIAL_CHARS));
             $email = trim(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
 
-            // Test si l'email est dans un format valide
-            $emailValide = filter_var($email, FILTER_VALIDATE_EMAIL);
-
             // Test des données
-            if (!$pseudo) {
-                $erreurs["pseudo"] = "Ce champ est obligatoire";
-            }
-
-            if (!$email) {
-                $erreurs["email"] = "Ce champ est obligatoire";
-            }
-            else if (!$emailValide) {
-                $erreurs["email"] = "Adresse mail invalide";
-            }
-
-            if (empty($_POST["mdp"])) {
-                $erreurs["mdp"] = "Ce champ est obligatoire";
-            }
-            else if(!preg_match("/(?=\S{8,})(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S/", $_POST["mdp"])) {
-                $erreurs["mdp"] = "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un nombre et un caractère spécial";
-            }
-
-            if (empty($_POST["mdp_confirm"])) {
-                $erreurs["mdp_confirm"] = "Ce champ est obligatoire";
-            }
-            else if ($_POST["mdp"] != $_POST["mdp_confirm"]) {
-                $erreurs["mdp_confirm"] = "Les mots de passe ne sont pas identiques";
-            }
-
-            if (empty($_POST["conditions"])) {
-                $erreurs["conditions"] = "Vous devez accepter les conditions d'utilisation";
-            }
+            $erreurs["pseudo"] = $this->validation->validatePseudo($pseudo);
+            $erreurs["email"] = $this->validation->validateEmail($email);
+            $erreurs["mdp"] = $this->validation->validateMotDePasse($_POST["mdp"]);
+            $erreurs["mdp_confirm"] = $this->validation->validateMotDePasseConfirm($_POST["mdp"], $_POST["mdp_confirm"]);
+            $erreurs["conditions"] = $this->validation->validateConditions(isset($_POST["conditions"]));
+            
+            // Retire les valeures null du tableau d'erreur
+            $erreurs = array_filter($erreurs);
 
             // Si il n'y à aucune erreur
             if (count($erreurs) == 0) {
@@ -171,20 +160,12 @@ class UtilisateurController extends Controller {
             // Protège contre la faille XSS
             $email = trim(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
 
-            // Test si l'email est dans un format valide
-            $emailValide = filter_var($email, FILTER_VALIDATE_EMAIL);
-
             // Test des données
-            if (!$email) {
-                $erreurs["email"] = "Ce champ est obligatoire";
-            }
-            else if (!$emailValide) {
-                $erreurs["email"] = "Adresse mail invalide";
-            }
+            $erreurs["email"] = $this->validation->validateEmail($email);
+            $erreurs["mdp"] = $this->validation->validateMotDePasse($_POST["mdp"]);
 
-            if (empty($_POST["mdp"])) {
-                $erreurs["mdp"] = "Ce champ est obligatoire";
-            }
+            // Retire les valeures null du tableau d'erreur
+            $erreurs = array_filter($erreurs);
 
             // Si il n'y à aucune erreur
             if (count($erreurs) == 0) {
@@ -326,46 +307,25 @@ class UtilisateurController extends Controller {
             $pseudo = trim(filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_SPECIAL_CHARS));
             $email = trim(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
 
-            // Test si l'email est dans un format valide
-            $emailValide = filter_var($email, FILTER_VALIDATE_EMAIL);
-
             // Test des données
-            if (!$pseudo) {
-                $erreurs["pseudo"] = "Ce champ est obligatoire";
-            }
+            $erreurs["pseudo"] = $this->validation->validatePseudo($pseudo);
+            $erreurs["email"] = $this->validation->validateEmail($email);
 
-            if (!$email) {
-                $erreurs["email"] = "Ce champ est obligatoire";
-            }
-            else if (!$emailValide) {
-                $erreurs["email"] = "Adresse mail invalide";
-            }
-
-            $changerMdp = false;
             if (!empty($_POST["mdp"])) {
-                if(!preg_match("/(?=\S{8,})(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S/", $_POST["mdp"])) {
-                    $erreurs["mdp"] = "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un nombre et un caractère spécial";
-                }
-                else if ($_POST["mdp"] != $_POST["mdp_confirm"]) {
-                    $erreurs["mdp_confirm"] = "Les mots de passe ne sont pas identiques";
-                }
-                else {
-                    $changerMdp = true;
-                }
+                $erreurs["mdp"] = $this->validation->validateMotDePasse($_POST["mdp"]);
+                $erreurs["mdp_confirm"] = $this->validation->validateMotDePasseConfirm($_POST["mdp"], $_POST["mdp_confirm"]);
             }
 
-            if (empty($_POST["mdp_check"])) {
-                $erreurs["mdp_check"] = "Ce champ est obligatoire";
-            }
-            else if (!password_verify($_POST["mdp_check"], $mdpHash["mdp_utilisateur"])) {
-                $erreurs["mdp_check"] = "Mot de passe incorrect";
-            }
+            $erreurs["mdp_check"] = $this->validation->validateMotDePasseCheck($_POST["mdp_check"], $mdpHash["mdp_utilisateur"]);
+
+            // Retire les valeures null du tableau d'erreur
+            $erreurs = array_filter($erreurs);
 
             // Si il n'y à aucune erreur
             if (count($erreurs) == 0) {
 
                 // S'il faut changer le mot de passe
-                if ($changerMdp) {
+                if (!empty($_POST["mdp"])) {
 
                     // Hashe le mot de passe de l'utilisateur
                     $mdp = password_hash($_POST["mdp"], PASSWORD_DEFAULT);
@@ -419,16 +379,10 @@ class UtilisateurController extends Controller {
             $mdpHash = $utilisateurModel->getPasswordHash($_SESSION["utilisateur"]["email_utilisateur"]);
 
             // Test des données
-            if (empty($_POST["mdp_check"])) {
-                $erreurs["mdp_check"] = "Ce champ est obligatoire";
-            }
+             $erreurs["mdp_check"] = $this->validation->validateMotDePasseCheck($_POST["mdp_check"], $mdpHash["mdp_utilisateur"]);
 
-            if (empty($_POST["mdp_check"])) {
-                $erreurs["mdp_check"] = "Ce champ est obligatoire";
-            }
-            else if (!password_verify($_POST["mdp_check"], $mdpHash["mdp_utilisateur"])) {
-                $erreurs["mdp_check"] = "Mot de passe incorrect";
-            }
+            // Retire les valeures null du tableau d'erreur
+            $erreurs = array_filter($erreurs);
 
             // Si il n'y à aucune erreur
             if (count($erreurs) == 0) {
@@ -558,16 +512,11 @@ class UtilisateurController extends Controller {
             // Protège contre la faille XSS
             $email = trim(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
 
-            // Test si l'email est dans un format valide
-            $emailValide = filter_var($email, FILTER_VALIDATE_EMAIL);
-
             // Test des données
-            if (!$email) {
-                $erreurs["email"] = "Ce champ est obligatoire";
-            }
-            else if (!$emailValide) {
-                $erreurs["email"] = "Adresse mail invalide";
-            }
+            $erreurs["email"] = $this->validation->validateEmail($email);
+
+            // Retire les valeures null du tableau d'erreur
+            $erreurs = array_filter($erreurs);
 
             // Si il n'y à aucune erreur
             if (count($erreurs) == 0) {
@@ -679,16 +628,11 @@ class UtilisateurController extends Controller {
             }
 
             // Test des données
-            if (empty($_POST["mdp"])) {
-                $erreurs["mdp"] = "Ce champ est obligatoire";
-            }
+            $erreurs["mdp"] = $this->validation->validateMotDePasse($_POST["mdp"]);
+            $erreurs["mdp_confirm"] = $this->validation->validateMotDePasseConfirm($_POST["mdp"], $_POST["mdp_confirm"]);
 
-            if (empty($_POST["mdp_confirm"])) {
-                $erreurs["mdp_confirm"] = "Ce champ est obligatoire";
-            }
-            else if ($_POST["mdp"] != $_POST["mdp_confirm"]) {
-                $erreurs["mdp_confirm"] = "Les mots de passe ne sont pas identiques";
-            }
+            // Retire les valeures null du tableau d'erreur
+            $erreurs = array_filter($erreurs);
 
             if (count($erreurs) == 0) {
 

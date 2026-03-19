@@ -6,8 +6,20 @@ use Xaphan67\SudokuMaster\Entities\Bannissement;
 use Xaphan67\SudokuMaster\Models\BannissementModel;
 use Xaphan67\SudokuMaster\Models\PartieModel;
 use Xaphan67\SudokuMaster\Models\UtilisateurModel;
+use Xaphan67\SudokuMaster\Services\Validation\AdminValidator;
 
 class AdminController extends Controller {
+
+    private AdminValidator $validation;
+
+    public function __construct() {
+
+        // Appelle le constructeur de la classe parente
+        parent::__construct();
+
+        // Instancie le validateur
+        $this->validation = new AdminValidator;
+    }
 
     // Affiche la page d'accueil de l'administration
     public function home() {
@@ -47,13 +59,11 @@ class AdminController extends Controller {
             $maintenant = date('Y-m-d H:i', time());
 
             // Test des données
-            if (!empty($date) && $date < $maintenant) {
-                $erreurs["dateFin"] = "La date de fin ne peut pas déjà être passée";
-            }
+            $erreurs["dateFin"] = $this->validation->validateDate($date, $maintenant);
+            $erreurs["raison"] = $this->validation->validateRaison($raison);
 
-            if (!$raison) {
-                $erreurs["raison"] = "Ce champ est obligatoire";
-            }
+            // Retire les valeures null du tableau d'erreur
+            $erreurs = array_filter($erreurs);
 
             // Si il n'y à aucune erreur
             if (count($erreurs) == 0) {
@@ -168,13 +178,11 @@ class AdminController extends Controller {
             $maintenant = date('Y-m-d H:i', time());
 
             // Test des données
-            if (!empty($date) && $date < $maintenant) {
-                $erreurs["dateFin"] = "La date de fin ne peut pas déjà être passée";
-            }
+            $erreurs["dateFin"] = $this->validation->validateDate($date, $maintenant);
+            $erreurs["raison"] = $this->validation->validateRaison($raison);
 
-            if (!$raison) {
-                $erreurs["raison"] = "Ce champ est obligatoire";
-            }
+            // Retire les valeures null du tableau d'erreur
+            $erreurs = array_filter($erreurs);
 
             // Si il n'y à aucune erreur
             if (count($erreurs) == 0) {

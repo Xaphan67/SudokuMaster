@@ -2,7 +2,20 @@
 
 namespace Xaphan67\SudokuMaster\Controllers;
 
+use Xaphan67\SudokuMaster\Services\Validation\PartieValidator;
+
 class PartieController extends Controller {
+
+    private PartieValidator $validation;
+
+    public function __construct() {
+
+        // Appelle le constructeur de la classe parente
+        parent::__construct();
+
+        // Instancie le validateur
+        $this->validation = new PartieValidator;
+    }
 
     // Afficher l'écran de partie solo
     public function soloBoard() {
@@ -61,12 +74,10 @@ class PartieController extends Controller {
             $salle = trim(filter_input(INPUT_POST, "salle", FILTER_SANITIZE_SPECIAL_CHARS));
 
             // Test des données
-            if (!$salle) {
-                $erreurs["salle"] = "Ce champ est obligatoire";
-            }
-            else if (preg_match("/([^0-9])/",($salle))) {
-                $erreurs["salle"] = "L'ID de la salle ne peut contenir que des chiffres";
-            }
+            $erreurs["salle"] = $this->validation->validateSalle($salle);
+            
+            // Retire les valeures null du tableau d'erreur
+            $erreurs = array_filter($erreurs);
 
             // Si il n'y à aucune erreur
             if (count($erreurs) == 0) {
@@ -86,9 +97,10 @@ class PartieController extends Controller {
             $salle = trim($_GET["salle"]);
 
             // Test des données
-            if (preg_match("/([^0-9])/",($salle))) {
-                $erreurs["salle"] = "L'ID de la salle ne peut contenir que des chiffres";
-            }
+            $erreurs["salle"] = $this->validation->validateSalle($salle);
+            
+            // Retire les valeures null du tableau d'erreur
+            $erreurs = array_filter($erreurs);
 
             // Si il n'y à aucune erreur
             if (count($erreurs) == 0) {
