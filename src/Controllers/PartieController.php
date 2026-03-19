@@ -2,19 +2,22 @@
 
 namespace Xaphan67\SudokuMaster\Controllers;
 
+use Xaphan67\SudokuMaster\Services\TokenCSRFService;
 use Xaphan67\SudokuMaster\Services\Validation\PartieValidator;
 
 class PartieController extends Controller {
 
     private PartieValidator $validation;
+    private TokenCSRFService $tokenCSRFService;
 
     public function __construct() {
 
         // Appelle le constructeur de la classe parente
         parent::__construct();
 
-        // Instancie le validateur
+        // Instancie les services
         $this->validation = new PartieValidator;
+        $this->tokenCSRFService = new TokenCSRFService;
     }
 
     // Afficher l'écran de partie solo
@@ -42,7 +45,7 @@ class PartieController extends Controller {
         if (isset($_POST["creer_salle"])) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
@@ -65,7 +68,7 @@ class PartieController extends Controller {
         if (isset($_POST["rejoindre_salle"])) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
@@ -114,7 +117,7 @@ class PartieController extends Controller {
 
         // Génère un token CSRF si aucun en session
         if (!isset($_SESSION["tokenCSRF"]["token"])) {
-            $this->_generateCSRFToken();
+            $this->tokenCSRFService->generateCSRFToken();
         }
 
         // Variables d'affichage

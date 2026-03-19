@@ -9,19 +9,22 @@ use Xaphan67\SudokuMaster\Models\BannissementModel;
 use Xaphan67\SudokuMaster\Models\ClasserModel;
 use Xaphan67\SudokuMaster\Models\ParticiperModel;
 use Xaphan67\SudokuMaster\Models\UtilisateurModel;
+use Xaphan67\SudokuMaster\Services\TokenCSRFService;
 use Xaphan67\SudokuMaster\Services\Validation\UtilisateurValidator;
 
 class UtilisateurController extends Controller {
 
     private UtilisateurValidator $validation;
+    private TokenCSRFService $tokenCSRFService;
 
     public function __construct() {
 
         // Appelle le constructeur de la classe parente
         parent::__construct();
 
-        // Instancie le validateur
+        // Instancie les services
         $this->validation = new UtilisateurValidator;
+        $this->tokenCSRFService = new TokenCSRFService;
     }
 
     // Affiche la page d'inscription
@@ -42,7 +45,7 @@ class UtilisateurController extends Controller {
         if (count($_POST) > 0) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
@@ -118,7 +121,7 @@ class UtilisateurController extends Controller {
 
         // Génère un token CSRF si aucun en session
         if (!isset($_SESSION["tokenCSRF"]["token"])) {
-            $this->_generateCSRFToken();
+            $this->tokenCSRFService->generateCSRFToken();
         }
 
         // Variables d'affichage
@@ -152,7 +155,7 @@ class UtilisateurController extends Controller {
         if (count($_POST) > 0) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
@@ -240,7 +243,7 @@ class UtilisateurController extends Controller {
 
         // Génère un token CSRF si aucun en session
         if (!isset($_SESSION["tokenCSRF"]["token"])) {
-            $this->_generateCSRFToken();
+            $this->tokenCSRFService->generateCSRFToken();
         }
 
         // Variables d'affichage
@@ -288,7 +291,7 @@ class UtilisateurController extends Controller {
         if (isset($_POST["modifier_compte"])) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
@@ -368,7 +371,7 @@ class UtilisateurController extends Controller {
         if (isset($_POST["supprimer_compte"])) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
@@ -459,7 +462,7 @@ class UtilisateurController extends Controller {
 
         // Génère un token CSRF si aucun en session
         if (!isset($_SESSION["tokenCSRF"]["token"])) {
-            $this->_generateCSRFToken();
+            $this->tokenCSRFService->generateCSRFToken();
         }
 
         // Variables d'affichage
@@ -504,7 +507,7 @@ class UtilisateurController extends Controller {
         if (count($_POST) > 0) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
@@ -563,7 +566,7 @@ class UtilisateurController extends Controller {
 
         // Génère un token CSRF si aucun en session
         if (!isset($_SESSION["tokenCSRF"]["token"])) {
-            $this->_generateCSRFToken();
+            $this->tokenCSRFService->generateCSRFToken();
         }
 
         // Variables d'affichage
@@ -623,7 +626,7 @@ class UtilisateurController extends Controller {
         if (count($_POST) > 0 && $tokenValide) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
@@ -654,7 +657,7 @@ class UtilisateurController extends Controller {
 
         // Génère un token CSRF si aucun en session
         if (!isset($_SESSION["tokenCSRF"]["token"])) {
-            $this->_generateCSRFToken();
+            $this->tokenCSRFService->generateCSRFToken();
         }
 
         // Variables d'affichage

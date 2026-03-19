@@ -6,19 +6,22 @@ use Xaphan67\SudokuMaster\Entities\Bannissement;
 use Xaphan67\SudokuMaster\Models\BannissementModel;
 use Xaphan67\SudokuMaster\Models\PartieModel;
 use Xaphan67\SudokuMaster\Models\UtilisateurModel;
+use Xaphan67\SudokuMaster\Services\TokenCSRFService;
 use Xaphan67\SudokuMaster\Services\Validation\AdminValidator;
 
 class AdminController extends Controller {
 
     private AdminValidator $validation;
+    private TokenCSRFService $tokenCSRFService;
 
     public function __construct() {
 
         // Appelle le constructeur de la classe parente
         parent::__construct();
 
-        // Instancie le validateur
+        // Instancie les services
         $this->validation = new AdminValidator;
+        $this->tokenCSRFService = new TokenCSRFService;
     }
 
     // Affiche la page d'accueil de l'administration
@@ -48,7 +51,7 @@ class AdminController extends Controller {
         if (count($_POST) > 0) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
@@ -121,7 +124,7 @@ class AdminController extends Controller {
 
         // Génère un token CSRF si aucun en session
         if (!isset($_SESSION["tokenCSRF"]["token"])) {
-            $this->_generateCSRFToken();
+            $this->tokenCSRFService->generateCSRFToken();
         }
 
         // Variables d'affichage
@@ -167,7 +170,7 @@ class AdminController extends Controller {
         if (count($_POST) > 0) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->_checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
@@ -213,7 +216,7 @@ class AdminController extends Controller {
 
         // Génère un token CSRF si aucun en session
         if (!isset($_SESSION["tokenCSRF"]["token"])) {
-            $this->_generateCSRFToken();
+            $this->tokenCSRFService->generateCSRFToken();
         }
 
         // Variables d'affichage
