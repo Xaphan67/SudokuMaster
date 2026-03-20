@@ -139,7 +139,7 @@ class PartieController extends Controller {
             'scripts' => ["salon.js"],
             'erreurs' => $erreurs,
             'utilisateurConnecte' => isset($_SESSION["utilisateur"]),
-            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
+            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"] ?? null
         ]);
 
         // Efface les saisies relatives aux formulaires stockées en session

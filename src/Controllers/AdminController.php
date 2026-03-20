@@ -153,7 +153,7 @@ class AdminController extends Controller {
             'erreurs' => $erreurs,
             'utilisateurs' => $utilisateurs,
             'parties' => $parties,
-            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
+            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"] ?? null
         ]);
     }
 
@@ -240,7 +240,7 @@ class AdminController extends Controller {
             'affichage' => $affichage,
             'erreurs' => $erreurs,
             'utilisateurs' => $utilisateurs,
-            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
+            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"] ?? null
         ]);
     }
 

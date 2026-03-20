@@ -150,7 +150,7 @@ class UtilisateurController extends Controller {
         $this->_twig->display("utilisateur/inscription.html.twig",[
             'affichage' => $affichage,
             'erreurs' => $erreurs,
-            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
+            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"] ?? null
         ]);
     }
 
@@ -267,7 +267,7 @@ class UtilisateurController extends Controller {
             'scripts' => ["connexion.js"],
             'affichage' => $affichage,
             'erreurs' => $erreurs,
-            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
+            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"] ?? null
         ]);
     }
 
@@ -472,7 +472,7 @@ class UtilisateurController extends Controller {
             'statistiques' => $statistiques,
             'participations' => $donneesParticiper,
             'participationsModes' => $participationsModes,
-            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
+            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"] ?? null
         ];
         $donneesGabarit = array_merge($variablesGabarit, $variablesSaisiesGabarit ?? []);
 
@@ -572,7 +572,7 @@ class UtilisateurController extends Controller {
             'affichage' => $affichage,
             'erreurs' => $erreurs,
             'emailEnvoye' => $emailEnvoye,
-            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
+            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"] ?? null
         ]);
     }
 
@@ -661,7 +661,7 @@ class UtilisateurController extends Controller {
             'token' => $token,
             'tokenValide' => $tokenValide,
             'mdpReinitialise' => $mdpReinitialise,
-            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"]
+            'tokenCSRF' => $_SESSION["tokenCSRF"]["token"] ?? null
         ]);
     }
 }

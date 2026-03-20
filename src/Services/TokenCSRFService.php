@@ -21,9 +21,11 @@ class TokenCSRFService {
     // Vérifie la validité d'un token CSRF
     public function checkCSRFToken($tokenAVerifier) : bool {
 
+        $estValide = true;
+
         // Vérifie que le token existe en session
         if (!isset($_SESSION["tokenCSRF"]["token"])) {
-            return false;
+            $estValide = false;
         }
 
         // Si le token est identique à celui en session 
@@ -31,15 +33,15 @@ class TokenCSRFService {
 
             // Vérifie que le token n'a pas expiré
             if (time() >= $_SESSION["tokenCSRF"]["expiration"]) {
-                return false;
+                $estValide = false;
             }
 
-            // Retire les données du token en session
-            unset($_SESSION["tokenCSRF"]);
-
-            return true;
+            $estValide = true;
         }
 
-        return false;
+        // Retire les données du token en session
+        unset($_SESSION["tokenCSRF"]);
+
+        return $estValide;
     }
 }
