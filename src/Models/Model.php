@@ -31,4 +31,18 @@ abstract class Model {
         // Assigne la connexion
         $this->_db = self::$_dbInstance;
     }
+
+    // - Pour les tests - //
+
+    // Détermine une insance de PDO à utiliser
+    public static function setDbInstance(PDO $pdo): void
+    {
+        self::$_dbInstance = $pdo;
+    }
+
+    // Reset l'instance PDO
+    public static function resetDbInstance(): void
+    {
+        self::$_dbInstance = null;
+    }
 }

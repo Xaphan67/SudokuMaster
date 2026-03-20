@@ -82,7 +82,7 @@ class PartieController extends Controller {
 
             // Filtrage des données
             // Protège contre la faille XSS
-            $salle = trim(filter_input(INPUT_POST, "salle", FILTER_SANITIZE_SPECIAL_CHARS));
+            $salle = trim(filter_input(INPUT_POST, "salle", FILTER_SANITIZE_SPECIAL_CHARS) ?? "");
 
             // Test des données
             $erreurs["salle"] = $this->validation->validateSalle($salle);

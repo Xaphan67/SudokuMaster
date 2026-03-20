@@ -73,8 +73,8 @@ class UtilisateurController extends Controller {
 
             // Filtrage des données
             // Protège contre la faille XSS
-            $pseudo = trim(filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_SPECIAL_CHARS));
-            $email = trim(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
+            $pseudo = trim(filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_SPECIAL_CHARS) ?? "");
+            $email = trim(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL) ?? "");
 
             // Test des données
             $erreurs["pseudo"] = $this->validation->validatePseudo($pseudo);
@@ -177,7 +177,7 @@ class UtilisateurController extends Controller {
 
             // Filtrage des données
             // Protège contre la faille XSS
-            $email = trim(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
+            $email = trim(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL) ?? "");
 
             // Test des données
             $erreurs["email"] = $this->validation->validateEmail($email);
@@ -315,8 +315,8 @@ class UtilisateurController extends Controller {
 
             // Filtrage des données
             // Protège contre la faille XSS
-            $pseudo = trim(filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_SPECIAL_CHARS));
-            $email = trim(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
+            $pseudo = trim(filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_SPECIAL_CHARS) ?? "");
+            $email = trim(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL) ?? "");
 
             // Test des données
             $erreurs["pseudo"] = $this->validation->validatePseudo($pseudo);
@@ -507,7 +507,7 @@ class UtilisateurController extends Controller {
 
             // Filtrage des données
             // Protège contre la faille XSS
-            $email = trim(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
+            $email = trim(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL) ?? "");
 
             // Test des données
             $erreurs["email"] = $this->validation->validateEmail($email);

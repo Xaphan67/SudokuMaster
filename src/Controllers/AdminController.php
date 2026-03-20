@@ -75,7 +75,7 @@ class AdminController extends Controller {
 
             // Filtrage des données
             // Protège contre la faille XSS
-            $raison = trim(filter_input(INPUT_POST, "raison", FILTER_SANITIZE_SPECIAL_CHARS));
+            $raison = trim(filter_input(INPUT_POST, "raison", FILTER_SANITIZE_SPECIAL_CHARS) ?? "");
             $date = str_replace("T", " ", $_POST["dateFin"]);
             $maintenant = date('Y-m-d H:i', time());
 
@@ -189,7 +189,7 @@ class AdminController extends Controller {
 
             // Filtrage des données
             // Protège contre la faille XSS
-            $raison = trim(filter_input(INPUT_POST, "raison", FILTER_SANITIZE_SPECIAL_CHARS));
+            $raison = trim(filter_input(INPUT_POST, "raison", FILTER_SANITIZE_SPECIAL_CHARS) ?? "");
             $date = str_replace("T", " ", $_POST["dateFin"]);
             $maintenant = date('Y-m-d H:i', time());
 
