@@ -6,6 +6,18 @@ use Xaphan67\SudokuMaster\Models\ClasserModel;
 
 class MainController extends Controller {
 
+    private ClasserModel $classerModel;
+
+    public function __construct(
+        $classerModel = new ClasserModel
+    ) {
+       // Appelle le constructeur de la classe parente
+        parent::__construct();
+
+        // Instancie les modèles
+        $this->classerModel = $classerModel;
+    }
+
     // Affiche la page d'accueil
     public function home() {
 
@@ -28,10 +40,8 @@ class MainController extends Controller {
         // Pour chaque mode de jeu...
         for ($mode = 1; $mode <= 3; $mode++) {
 
-            // Crée une instance du modèle Classer et appelle la méthode
-            // pour récupérer les statistiques du mode en base de donnée
-            $classerModel = new ClasserModel;
-            $donneesClasser = $classerModel->findAllByMode($mode, 10);
+            // Récupére les statistiques du mode en base de donnée
+            $donneesClasser = $this->classerModel->findAllByMode($mode, 10);
 
             // Ajoute les statistiques du mode dans le tableau $classement
             $classements[$mode] = $donneesClasser;

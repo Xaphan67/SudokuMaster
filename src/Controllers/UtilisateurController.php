@@ -17,14 +17,32 @@ class UtilisateurController extends Controller {
     private UtilisateurValidator $validation;
     private TokenCSRFService $tokenCSRFService;
 
-    public function __construct() {
+    private BannissementModel $bannissementModel;
+    private ClasserModel $classerModel;
+    private ParticiperModel $participerModel;
+    private UtilisateurModel $utilisateurModel;
+
+    public function __construct(
+        $validation = new UtilisateurValidator,
+        $tokenCSRFService = new TokenCSRFService,
+        BannissementModel $bannissementModel = new BannissementModel,
+        ClasserModel $classerModel = new ClasserModel,
+        ParticiperModel $participerModel = new ParticiperModel,
+        UtilisateurModel $utilisateurModel = new UtilisateurModel
+    ) {
 
         // Appelle le constructeur de la classe parente
         parent::__construct();
 
         // Instancie les services
-        $this->validation = new UtilisateurValidator;
-        $this->tokenCSRFService = new TokenCSRFService;
+        $this->validation = $validation;
+        $this->tokenCSRFService = $tokenCSRFService;
+
+        // Instancie les modèles
+        $this->bannissementModel = $bannissementModel;
+        $this->classerModel = $classerModel;
+        $this->participerModel = $participerModel;
+        $this->utilisateurModel = $utilisateurModel;
     }
 
     // Affiche la page d'inscription
@@ -60,7 +78,7 @@ class UtilisateurController extends Controller {
             $erreurs["mdp"] = $this->validation->validateMotDePasse($_POST["mdp"]);
             $erreurs["mdp_confirm"] = $this->validation->validateMotDePasseConfirm($_POST["mdp"], $_POST["mdp_confirm"]);
             $erreurs["conditions"] = $this->validation->validateConditions(isset($_POST["conditions"]));
-            
+
             // Retire les valeures null du tableau d'erreur
             $erreurs = array_filter($erreurs);
 
@@ -76,16 +94,11 @@ class UtilisateurController extends Controller {
                 $utilisateur->setEmail($email);
                 $utilisateur->setMdp($mdp);
 
-                // Crée une instance du modèle Utilisateur et appelle la méthode
-                // pour insérer l'utilisateur en base de données
-                $utilisateurModel = new UtilisateurModel;
-                $utilisateurID = $utilisateurModel->add($utilisateur);
+                // Insére l'utilisateur en base de données
+                $utilisateurID = $this->utilisateurModel->add($utilisateur);
 
                 // Si l'utilisateur à été ajouté correctement en base de données
                 if ($utilisateurID) {
-
-                    // Crée une instance du modèle Classer
-                    $classerModel = new ClasserModel;
 
                     // Pour chaque mode de jeu, ajoute les statistiques de base du joueur
                     for ($mode = 1; $mode <= 3; $mode++) {
@@ -97,7 +110,7 @@ class UtilisateurController extends Controller {
                         $classer->setScore_global(1000);
 
                         // Insère les statistiques en base de donnée
-                        $classerModel->add($classer);
+                        $this->classerModel->add($classer);
                     }
 
                     // S'il y a des données d'une partie solo précédente en session
@@ -173,12 +186,9 @@ class UtilisateurController extends Controller {
             // Si il n'y à aucune erreur
             if (count($erreurs) == 0) {
 
-                // Crée une instance du modèle Utilisateur
-                $utilisateurModel = new UtilisateurModel;
-
                 // Récupère les informations de l'utilisateur et le hash de son mot de passe via son email
-                $donneesUtilisateur = $utilisateurModel->findByMail($email);
-                $mdpHash = $utilisateurModel->getPasswordHash($email);
+                $donneesUtilisateur = $this->utilisateurModel->findByMail($email);
+                $mdpHash = $this->utilisateurModel->getPasswordHash($email);
 
                 $valide = false;
 
@@ -190,10 +200,8 @@ class UtilisateurController extends Controller {
 
                         $valide = true;
 
-                        // Crée une instance du modèle Bannissement et appelle la méthode
-                        // pour récupérer les bannissements de l'utilisateur
-                        $bannissementModel = new BannissementModel;
-                        $donneesBannissement = $bannissementModel->findLastByUser($donneesUtilisateur["id_utilisateur"]);
+                        // Récupére les bannissements de l'utilisateur
+                        $donneesBannissement = $this->bannissementModel->findLastByUser($donneesUtilisateur["id_utilisateur"]);
 
                         // Si un bannissement est trouvé...
                         if ($donneesBannissement) {
@@ -295,15 +303,12 @@ class UtilisateurController extends Controller {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
-            // Crée une instance du modèle Utilisateur
-            $utilisateurModel = new UtilisateurModel;
-
             // Crée un nouvel objet Utilisateur et l'hydrate avec les données présentes en base de donnée
             $utilisateur = new Utilisateur;
-            $utilisateur->hydrate($utilisateurModel->findById($_SESSION["utilisateur"]["id_utilisateur"]));
+            $utilisateur->hydrate($this->utilisateurModel->findById($_SESSION["utilisateur"]["id_utilisateur"]));
 
             // Récupère le hash du mot de passe de l'utilisateur via son email
-            $mdpHash = $utilisateurModel->getPasswordHash($_SESSION["utilisateur"]["email_utilisateur"]);
+            $mdpHash = $this->utilisateurModel->getPasswordHash($_SESSION["utilisateur"]["email_utilisateur"]);
 
             // Filtrage des données
             // Protège contre la faille XSS
@@ -341,7 +346,7 @@ class UtilisateurController extends Controller {
                 $utilisateur->setMdp(isset($mdp) ? $mdp : "");
 
                 // Modifie l'utilisateur en base de données
-                $utilisateurModifie = $utilisateurModel->edit($utilisateur);
+                $utilisateurModifie = $this->utilisateurModel->edit($utilisateur);
 
                 // Si l'utilisateur à été modifié correctement en base de données
                 if ($utilisateurModifie) {
@@ -375,11 +380,8 @@ class UtilisateurController extends Controller {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
-            // Crée une instance du modèle Utilisateur
-            $utilisateurModel = new UtilisateurModel;
-
             // Récupère le hash du mot de passe de l'utilisateur via son email
-            $mdpHash = $utilisateurModel->getPasswordHash($_SESSION["utilisateur"]["email_utilisateur"]);
+            $mdpHash = $this->utilisateurModel->getPasswordHash($_SESSION["utilisateur"]["email_utilisateur"]);
 
             // Test des données
              $erreurs["mdp_check"] = $this->validation->validateMotDePasseCheck($_POST["mdp_check"], $mdpHash["mdp_utilisateur"]);
@@ -392,10 +394,10 @@ class UtilisateurController extends Controller {
 
                 // Crée un nouvel objet Utilisateur et l'hydrate avec les données présentes en base de donnée
                 $utilisateur = new Utilisateur;
-                $utilisateur->hydrate($utilisateurModel->findById($_SESSION["utilisateur"]["id_utilisateur"]));
+                $utilisateur->hydrate($this->utilisateurModel->findById($_SESSION["utilisateur"]["id_utilisateur"]));
 
                 // Supprime l'utilisateur en base de données
-                $utilisateurSupprime = $utilisateurModel->delete($utilisateur);
+                $utilisateurSupprime = $this->utilisateurModel->delete($utilisateur);
 
                 // Si l'utilisateur à été supprimé correctement en base de données
                 if ($utilisateurSupprime) {
@@ -408,21 +410,17 @@ class UtilisateurController extends Controller {
                     exit();
                 }
             }
-            
+
             // Ajoute au tableau d'erreurs l'identifiant du formulaire
             $erreurs["formulaire"] = "supprimer_compte";
         }
-
-        // Crée une instance du modèle Classer et appelle la méthode
-        // pour récupérer les statistiques en base de donnée
-        $classerModel = new ClasserModel;
 
         // Instancie un tableau qui contiendra les statistiques
         $statistiques = [];
 
         // Pour chaque mode de jeu, récupère les statistiques
         for($mode = 1; $mode <= 3; $mode++) {
-            $donneesClasser = $classerModel->findByUserAndMode($_SESSION["utilisateur"]["id_utilisateur"], $mode);
+            $donneesClasser = $this->classerModel->findByUserAndMode($_SESSION["utilisateur"]["id_utilisateur"], $mode);
 
             // S'il y à des statistiques pour le mode
             if ($donneesClasser) {
@@ -440,12 +438,8 @@ class UtilisateurController extends Controller {
             }
         };
 
-        // Crée une instance du modèle Participer et appelle la méthode
-        // pour récupérer les participations en base de donnée
-        $participerModel = new ParticiperModel;
-
         // Récupère les participations
-        $donneesParticiper = $participerModel->findAllByUser($_SESSION["utilisateur"]["id_utilisateur"], true);
+        $donneesParticiper = $this->participerModel->findAllByUser($_SESSION["utilisateur"]["id_utilisateur"], true);
 
         // Retire l'affichage des heures (qui sera toujours 00:) et tronque les millisecondes
         foreach ($donneesParticiper as $key => $participation) {
@@ -529,10 +523,8 @@ class UtilisateurController extends Controller {
                 $tokenHash = hash("sha256", $token);
                 $tokenDateExpiration = date("Y-m-d H:i:s", time() + 30 * 60); // Heure actuelle + 30 minutes (30 * 60 secondes)
 
-                // Crée une instance du modèle Utilisateur et appelle la méthode
-                // pour insérer le token de l'utilisateur en base de données
-                $utilisateurModel = new UtilisateurModel;
-                $tokenAjoute = $utilisateurModel->setToken($email, $tokenHash, $tokenDateExpiration);
+                // Insére le token de l'utilisateur en base de données
+                $tokenAjoute = $this->utilisateurModel->setToken($email, $tokenHash, $tokenDateExpiration);
 
                 // Si le tocken à bien été ajouté en base de donnée,
                 // appelle le mailer pour envoyer un email à l'utilisateur
@@ -602,10 +594,8 @@ class UtilisateurController extends Controller {
         $token = count($_POST) > 0 ? $_POST["token"] : $_GET["token"];
         $tokenHash = hash("sha256", $token);
 
-        // Crée une instance du modèle Utilisateur et appelle la méthode
-        // pour récupérer le token de l'utilisateur en base de données
-        $utilisateurModel = new UtilisateurModel;
-        $donneesToken = $utilisateurModel->findToken($tokenHash);
+        // Récupére le token de l'utilisateur en base de données
+        $donneesToken = $this->utilisateurModel->findToken($tokenHash);
 
         // Si le token existe
         if ($donneesToken) {
@@ -644,7 +634,7 @@ class UtilisateurController extends Controller {
 
                 // Modifie l'utilisateur en base de données
                 // Et supprime les informations de son token
-                $utilisateurModifie = $utilisateurModel->resetPassword($tokenHash, $mdp);
+                $utilisateurModifie = $this->utilisateurModel->resetPassword($tokenHash, $mdp);
 
                 // Si l'utilisateur à été modifié correctement en base de données
                 if ($utilisateurModifie) {

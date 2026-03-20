@@ -14,14 +14,29 @@ class AdminController extends Controller {
     private AdminValidator $validation;
     private TokenCSRFService $tokenCSRFService;
 
-    public function __construct() {
+    private BannissementModel $bannissementModel;
+    private PartieModel $partieModel;
+    private UtilisateurModel $utilisateurModel;
+
+    public function __construct(
+        AdminValidator $validation = new AdminValidator,
+        TokenCSRFService $tokenCSRFService = new TokenCSRFService,
+        BannissementModel $bannissementModel = new BannissementModel,
+        PartieModel $partieModel = new PartieModel,
+        UtilisateurModel $utilisateurModel = new UtilisateurModel
+    ) {
 
         // Appelle le constructeur de la classe parente
         parent::__construct();
 
         // Instancie les services
-        $this->validation = new AdminValidator;
-        $this->tokenCSRFService = new TokenCSRFService;
+        $this->validation = $validation;
+        $this->tokenCSRFService = $tokenCSRFService;
+
+        // Instancie les modèles
+        $this->bannissementModel = $bannissementModel;
+        $this->partieModel = $partieModel;
+        $this->utilisateurModel = $utilisateurModel;
     }
 
     // Affiche la page d'accueil de l'administration
@@ -72,26 +87,22 @@ class AdminController extends Controller {
             if (count($erreurs) == 0) {
 
                 // Crée un nouvel objet Banissement et l'ydrate avec les données
-                $banissement = new Bannissement;
-                $banissement->setUtilisateur($_POST["id_utilisateur"]);
-                $banissement->setDate_debut($maintenant);
-                $banissement->setDate_fin($date);
-                $banissement->setRaison($raison);
+                $bannissement = new Bannissement;
+                $bannissement->setUtilisateur($_POST["id_utilisateur"]);
+                $bannissement->setDate_debut($maintenant);
+                $bannissement->setDate_fin($date);
+                $bannissement->setRaison($raison);
 
-                // Crée une instance du modèle Bannissement et appelle la méthode
-                // pour ajouter le bannissement en base de données
-                $banissementModel = new BannissementModel;
-                $banissementModel->add($banissement);
+                // Ajoute le bannissement en base de données
+                $this->bannissementModel->add($bannissement);
             }
         }
 
         // Récupère la liste des utilisateurs
-        $utilisateurModel = new UtilisateurModel;
-        $utilisateurs = $utilisateurModel->findAll(5, true);
+        $utilisateurs = $this->utilisateurModel->findAll(5, true);
 
         // Récupère la liste des parties
-        $partieModel = new PartieModel;
-        $parties = $partieModel->findAll(10, true);
+        $parties = $this->partieModel->findAll(10, true);
 
         // Retire l'affichage des heures (qui sera toujours 00:) et tronque les millisecondes
         foreach ($parties as $key => $partie) {
@@ -191,22 +202,19 @@ class AdminController extends Controller {
             if (count($erreurs) == 0) {
 
                 // Crée un nouvel objet Banissement et l'ydrate avec les données
-                $banissement = new Bannissement;
-                $banissement->setUtilisateur($_POST["id_utilisateur"]);
-                $banissement->setDate_debut($maintenant);
-                $banissement->setDate_fin($date);
-                $banissement->setRaison($raison);
+                $bannissement = new Bannissement;
+                $bannissement->setUtilisateur($_POST["id_utilisateur"]);
+                $bannissement->setDate_debut($maintenant);
+                $bannissement->setDate_fin($date);
+                $bannissement->setRaison($raison);
 
-                // Crée une instance du modèle Bannissement et appelle la méthode
-                // pour ajouter le bannissement en base de données
-                $banissementModel = new BannissementModel;
-                $banissementModel->add($banissement);
+                // Ajoute le bannissement en base de données
+                $this->bannissementModel->add($bannissement);
             }
         }
 
         // Récupère la liste des utilisateurs
-        $utilisateurModel = new UtilisateurModel;
-        $utilisateurs = $utilisateurModel->findAll(desc: true);
+        $utilisateurs = $this->utilisateurModel->findAll(desc: true);
 
         // S'il y a au moins une erreur dans le formulaire
         // Ajoute l'ID de l'utilisateur au tableau d'erreurs pour le récupérer en JS
@@ -255,8 +263,7 @@ class AdminController extends Controller {
         }
 
         // Récupère la liste des parties
-        $partieModel = new PartieModel;
-        $parties = $partieModel->findAll(desc: true);
+        $parties = $this->partieModel->findAll(desc: true);
 
         // Retire l'affichage des heures (qui sera toujours 00:) et tronque les millisecondes
         foreach ($parties as $key => $partie) {

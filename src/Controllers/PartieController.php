@@ -10,14 +10,18 @@ class PartieController extends Controller {
     private PartieValidator $validation;
     private TokenCSRFService $tokenCSRFService;
 
-    public function __construct() {
+    public function __construct(
+        $validation = new PartieValidator,
+        $tokenCSRFService = new TokenCSRFService
+    ) {
 
         // Appelle le constructeur de la classe parente
+
         parent::__construct();
 
         // Instancie les services
-        $this->validation = new PartieValidator;
-        $this->tokenCSRFService = new TokenCSRFService;
+        $this->validation = $validation;
+        $this->tokenCSRFService = $tokenCSRFService;
     }
 
     // Afficher l'écran de partie solo
@@ -78,7 +82,7 @@ class PartieController extends Controller {
 
             // Test des données
             $erreurs["salle"] = $this->validation->validateSalle($salle);
-            
+
             // Retire les valeures null du tableau d'erreur
             $erreurs = array_filter($erreurs);
 
@@ -101,7 +105,7 @@ class PartieController extends Controller {
 
             // Test des données
             $erreurs["salle"] = $this->validation->validateSalle($salle);
-            
+
             // Retire les valeures null du tableau d'erreur
             $erreurs = array_filter($erreurs);
 
