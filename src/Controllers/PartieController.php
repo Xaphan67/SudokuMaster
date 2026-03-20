@@ -2,6 +2,7 @@
 
 namespace Xaphan67\SudokuMaster\Controllers;
 
+use Xaphan67\SudokuMaster\Services\ResponseService;
 use Xaphan67\SudokuMaster\Services\TokenCSRFService;
 use Xaphan67\SudokuMaster\Services\Validation\PartieValidator;
 
@@ -9,10 +10,12 @@ class PartieController extends Controller {
 
     private PartieValidator $validation;
     private TokenCSRFService $tokenCSRFService;
+    private ResponseService $responseService;
 
     public function __construct(
         $validation = new PartieValidator,
-        $tokenCSRFService = new TokenCSRFService
+        $tokenCSRFService = new TokenCSRFService,
+        $responseService = new ResponseService
     ) {
 
         // Appelle le constructeur de la classe parente
@@ -22,6 +25,7 @@ class PartieController extends Controller {
         // Instancie les services
         $this->validation = $validation;
         $this->tokenCSRFService = $tokenCSRFService;
+        $this->responseService = $responseService;
     }
 
     // Afficher l'écran de partie solo
@@ -64,7 +68,7 @@ class PartieController extends Controller {
                 $_SESSION["partie"]["visibilite"] =  $_POST["visibilite"];
 
                 // Redirige l'utilisateur vers la page multijoueur
-                header("Location:multijoueur");
+                $this->responseService->redirect("multijoueur");
             }
         }
 
@@ -92,7 +96,7 @@ class PartieController extends Controller {
                 $_SESSION["partie"]["salle"] = $salle;
 
                 // Redirige l'utilisateur vers la page multijoueur
-                header("Location:multijoueur");
+                $this->responseService->redirect("multijoueur");
             }
         }
 
@@ -115,7 +119,7 @@ class PartieController extends Controller {
                 $_SESSION["partie"]["salle"] = $salle;
 
                 // Redirige l'utilisateur vers la page multijoueur
-                header("Location:multijoueur");
+                $this->responseService->redirect("multijoueur");
             }
         }
 

@@ -9,6 +9,7 @@ use Xaphan67\SudokuMaster\Models\BannissementModel;
 use Xaphan67\SudokuMaster\Models\ClasserModel;
 use Xaphan67\SudokuMaster\Models\ParticiperModel;
 use Xaphan67\SudokuMaster\Models\UtilisateurModel;
+use Xaphan67\SudokuMaster\Services\ResponseService;
 use Xaphan67\SudokuMaster\Services\TokenCSRFService;
 use Xaphan67\SudokuMaster\Services\Validation\UtilisateurValidator;
 
@@ -16,19 +17,22 @@ class UtilisateurController extends Controller {
 
     private UtilisateurValidator $validation;
     private TokenCSRFService $tokenCSRFService;
+    private ResponseService $responseService;
 
     private BannissementModel $bannissementModel;
     private ClasserModel $classerModel;
     private ParticiperModel $participerModel;
     private UtilisateurModel $utilisateurModel;
 
+
     public function __construct(
         $validation = new UtilisateurValidator,
         $tokenCSRFService = new TokenCSRFService,
-        BannissementModel $bannissementModel = new BannissementModel,
-        ClasserModel $classerModel = new ClasserModel,
-        ParticiperModel $participerModel = new ParticiperModel,
-        UtilisateurModel $utilisateurModel = new UtilisateurModel
+        $responseService = new ResponseService,
+        $bannissementModel = new BannissementModel,
+        $classerModel = new ClasserModel,
+        $participerModel = new ParticiperModel,
+        $utilisateurModel = new UtilisateurModel
     ) {
 
         // Appelle le constructeur de la classe parente
@@ -37,6 +41,7 @@ class UtilisateurController extends Controller {
         // Instancie les services
         $this->validation = $validation;
         $this->tokenCSRFService = $tokenCSRFService;
+        $this->responseService = $responseService;
 
         // Instancie les modèles
         $this->bannissementModel = $bannissementModel;
@@ -52,8 +57,7 @@ class UtilisateurController extends Controller {
         if (isset($_SESSION["utilisateur"])) {
 
             // Redirige l'utilisateur vers la page de son profil
-            header("Location:profil");
-            exit();
+            $this->responseService->redirect("profil");
         }
 
         // Crée un tableau pour gérer les erreurs
@@ -123,7 +127,7 @@ class UtilisateurController extends Controller {
                     else {
 
                         // Redirige l'utilisateur vers la page de connexion
-                        header("Location:connexion");
+                        $this->responseService->redirect("connexion");
                     }
                 }
                 else {
@@ -157,8 +161,7 @@ class UtilisateurController extends Controller {
         if (isset($_SESSION["utilisateur"])) {
 
             // Redirige l'utilisateur vers la page de son profil
-            header("Location:profil");
-            exit();
+            $this->responseService->redirect("profil");
         }
 
         // Crée un tableau pour gérer les erreurs
@@ -169,7 +172,7 @@ class UtilisateurController extends Controller {
 
             // Vérifie la validité du token CSRF
             if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
-                $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
+                $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer. Maintenant : " . time() . " - Expiration : " . $_SESSION["tokenCSRF"]["expiration"];
             }
 
             // Filtrage des données
@@ -231,12 +234,12 @@ class UtilisateurController extends Controller {
                             if ($page) {
 
                                 // Redirige l'utilisateur
-                                header("Location:" . substr($_SERVER["HTTP_REFERER"], $page + 5));
+                                $this->responseService->redirect(substr($_SERVER["HTTP_REFERER"], $page + 5));
                             }
                             else {
 
                                 // Redirige l'utilisateur vers la page d'accueil
-                                header("Location:index.php");
+                                $this->responseService->redirect("index.php");
                             }
                         }
                     }
@@ -279,7 +282,7 @@ class UtilisateurController extends Controller {
         }
 
         // Redirige l'utilisateur vers la page d'accueil
-        header("Location:index.php");
+        $this->responseService->redirect("index.php");
     }
 
     // Affiche le profil de l'utilisateur
@@ -356,8 +359,7 @@ class UtilisateurController extends Controller {
                     $_SESSION["utilisateur"]["email_utilisateur"] = $utilisateur->getEmail();
 
                     // Redirige l'utilisateur vers la page de son profil
-                    header("Location:profil");
-                    exit();
+                    $this->responseService->redirect("profil");
                 }
                 else {
                     $erreurs["email"] = "Adresse mail invalide";
@@ -406,8 +408,7 @@ class UtilisateurController extends Controller {
                     session_destroy();
 
                     // Redirige l'utilisateur vers la page d'accueil
-                    header("Location:index.php");
-                    exit();
+                    $this->responseService->redirect("index.php");
                 }
             }
 
@@ -487,8 +488,7 @@ class UtilisateurController extends Controller {
         if (isset($_SESSION["utilisateur"])) {
 
             // Redirige l'utilisateur vers la page de son profil
-            header("Location:profil");
-            exit();
+            $this->responseService->redirect("profil");
         }
 
         // Crée un tableau pour gérer les erreurs
@@ -583,8 +583,7 @@ class UtilisateurController extends Controller {
         if (isset($_SESSION["utilisateur"])) {
 
             // Redirige l'utilisateur vers la page de son profil
-            header("Location:profil");
-            exit();
+            $this->responseService->redirect("profil");
         }
 
         // Déclare une variable qui indiquera si le token est valide (existe, non expiré)

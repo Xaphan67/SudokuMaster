@@ -6,6 +6,7 @@ use Xaphan67\SudokuMaster\Entities\Bannissement;
 use Xaphan67\SudokuMaster\Models\BannissementModel;
 use Xaphan67\SudokuMaster\Models\PartieModel;
 use Xaphan67\SudokuMaster\Models\UtilisateurModel;
+use Xaphan67\SudokuMaster\Services\ResponseService;
 use Xaphan67\SudokuMaster\Services\TokenCSRFService;
 use Xaphan67\SudokuMaster\Services\Validation\AdminValidator;
 
@@ -13,17 +14,19 @@ class AdminController extends Controller {
 
     private AdminValidator $validation;
     private TokenCSRFService $tokenCSRFService;
+    private ResponseService $responseService;
 
     private BannissementModel $bannissementModel;
     private PartieModel $partieModel;
     private UtilisateurModel $utilisateurModel;
 
     public function __construct(
-        AdminValidator $validation = new AdminValidator,
-        TokenCSRFService $tokenCSRFService = new TokenCSRFService,
-        BannissementModel $bannissementModel = new BannissementModel,
-        PartieModel $partieModel = new PartieModel,
-        UtilisateurModel $utilisateurModel = new UtilisateurModel
+        $validation = new AdminValidator,
+        $tokenCSRFService = new TokenCSRFService,
+        $responseService = new ResponseService,
+        $bannissementModel = new BannissementModel,
+        $partieModel = new PartieModel,
+        $utilisateurModel = new UtilisateurModel
     ) {
 
         // Appelle le constructeur de la classe parente
@@ -32,6 +35,7 @@ class AdminController extends Controller {
         // Instancie les services
         $this->validation = $validation;
         $this->tokenCSRFService = $tokenCSRFService;
+        $this->responseService = $responseService;
 
         // Instancie les modèles
         $this->bannissementModel = $bannissementModel;
@@ -45,9 +49,8 @@ class AdminController extends Controller {
         // Si l'utilisateur n'est pas connecté
         if (!isset($_SESSION["utilisateur"])) {
 
-            // Redirige l'utilisateur vers la page de son profil
-            header("Location:index.php");
-            exit();
+            // Redirige l'utilisateur vers la page d'accueil'
+            $this->responseService->redirect("index.php");
         }
         else {
 
@@ -160,9 +163,8 @@ class AdminController extends Controller {
         // Si l'utilisateur n'est pas connecté
         if (!isset($_SESSION["utilisateur"])) {
 
-            // Redirige l'utilisateur vers la page de son profil
-            header("Location:index.php");
-            exit();
+            // Redirige l'utilisateur vers la page d'accueil
+            $this->responseService->redirect("index.php");
         }
         else {
 
