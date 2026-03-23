@@ -651,8 +651,12 @@ BOUTON_JEU.addEventListener("click", (e) => {
         CONTENEUR_JEU.style.filter = "none";
         CONTENEUR_JEU.inert = false;
 
-        // Permet de survoler le score des deux joueurs
-        INFOS_JOUEURS.inert = false;
+        // En mode multijoueur...
+        if (multijoueur) {
+
+            // Permet de survoler le score des deux joueurs
+            INFOS_JOUEURS.inert = false;
+        }
     });
 });
 
