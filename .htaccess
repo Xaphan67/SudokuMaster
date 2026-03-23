@@ -1,6 +1,10 @@
 Options +FollowSymlinks
 RewriteEngine on
 
+# RewriteBase /
+# RewriteCond %{SERVER_PORT} !=443
+# RewriteRule ^(.*)$ https://sudokumaster.cf-formation.fr//$1 [R=301,L]
+
 RewriteRule ^salon$ index.php?controller=partie&action=lobby [L,QSA]
 RewriteRule ^solo$ index.php?controller=partie&action=soloBoard [L]
 RewriteRule ^multijoueur(.*)$ index.php?controller=partie&action=multiBoard [L]
