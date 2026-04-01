@@ -16,7 +16,7 @@ class PartieModel extends Model {
             INNER JOIN mode_de_jeu ON mode_de_jeu.id_mode_de_jeu = partie.id_mode_de_jeu
             INNER JOIN difficulte ON difficulte.id_difficulte = partie.id_difficulte
             LEFT JOIN participer ON participer.id_partie = partie.id_partie
-            LEFT JOIN utilisateur ON utilisateur.id_utilisateur = participer.Id_utilisateur";
+            LEFT JOIN utilisateur ON utilisateur.id_utilisateur = participer.id_utilisateur";
 
         if ($desc) {
             $query .= " ORDER BY partie.id_partie DESC";

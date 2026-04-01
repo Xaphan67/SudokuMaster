@@ -36,7 +36,7 @@ INSERT INTO `role` (`id_role`, `libelle_role`) VALUES
 -- Listage de la structure de table sudoku_master. utilisateur
 DROP TABLE IF EXISTS `utilisateur`;
 CREATE TABLE IF NOT EXISTS `utilisateur` (
-  `Id_utilisateur` int NOT NULL AUTO_INCREMENT,
+  `id_utilisateur` int NOT NULL AUTO_INCREMENT,
   `date_inscription_utilisateur` date NOT NULL DEFAULT (curdate()),
   `pseudo_utilisateur` varchar(50) NOT NULL,
   `email_utilisateur` varchar(100) NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `id_role` int NOT NULL DEFAULT '2',
   `reset_token_hash` varchar(64) DEFAULT NULL,
   `reset_token_date_expiration` datetime DEFAULT NULL,
-  PRIMARY KEY (`Id_utilisateur`),
+  PRIMARY KEY (`id_utilisateur`),
   UNIQUE KEY `reset_token` (`reset_token_hash`) USING BTREE,
   UNIQUE KEY `email` (`email_utilisateur`) USING BTREE,
   KEY `id_role` (`id_role`),
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table sudoku_master.utilisateur : ~1 rows (environ)
-INSERT INTO `utilisateur` (`Id_utilisateur`, `pseudo_utilisateur`, `email_utilisateur`, `mdp_utilisateur`, `inactif`, `id_role`, `reset_token_hash`, `reset_token_date_expiration`) VALUES
+INSERT INTO `utilisateur` (`id_utilisateur`, `pseudo_utilisateur`, `email_utilisateur`, `mdp_utilisateur`, `inactif`, `id_role`, `reset_token_hash`, `reset_token_date_expiration`) VALUES
 	(1, 'Admin', 'admin@sudokumaster.com', '$2y$10$udYnbRxrFHxXHHNo1IYp9uOuhekF7PDn6K95T07LaIpewn4CulsiK', 0, 1, NULL, NULL);
 
 -- Listage de la structure de table sudoku_master. mode_de_jeu
@@ -73,7 +73,7 @@ INSERT INTO `mode_de_jeu` (`id_mode_de_jeu`, `libelle_mode_de_jeu`) VALUES
 -- Listage de la structure de table sudoku_master. classer
 DROP TABLE IF EXISTS `classer`;
 CREATE TABLE IF NOT EXISTS `classer` (
-  `Id_utilisateur` int NOT NULL,
+  `id_utilisateur` int NOT NULL,
   `id_mode_de_jeu` int NOT NULL,
   `score_global` int NOT NULL,
   `grilles_jouees` int NOT NULL,
@@ -81,14 +81,14 @@ CREATE TABLE IF NOT EXISTS `classer` (
   `temps_moyen` time NOT NULL,
   `meilleur_temps` time NOT NULL,
   `serie_victoires` int NOT NULL,
-  PRIMARY KEY (`Id_utilisateur`,`id_mode_de_jeu`),
+  PRIMARY KEY (`id_utilisateur`,`id_mode_de_jeu`),
   KEY `id_mode_de_jeu` (`id_mode_de_jeu`),
-  CONSTRAINT `classer_ibfk_1` FOREIGN KEY (`Id_utilisateur`) REFERENCES `utilisateur` (`Id_utilisateur`),
+  CONSTRAINT `classer_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id_utilisateur`),
   CONSTRAINT `classer_ibfk_2` FOREIGN KEY (`id_mode_de_jeu`) REFERENCES `mode_de_jeu` (`id_mode_de_jeu`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table sudoku_master.classer : ~3 rows (environ)
-INSERT INTO `classer` (`Id_utilisateur`, `id_mode_de_jeu`, `score_global`, `grilles_jouees`, `grilles_resolues`, `temps_moyen`, `meilleur_temps`, `serie_victoires`) VALUES
+INSERT INTO `classer` (`id_utilisateur`, `id_mode_de_jeu`, `score_global`, `grilles_jouees`, `grilles_resolues`, `temps_moyen`, `meilleur_temps`, `serie_victoires`) VALUES
 	(1, 1, 1000, 0, 0, '00:15:00', '00:15:00', 0),
 	(1, 2, 1000, 0, 0, '00:15:00', '00:15:00', 0),
 	(1, 3, 1000, 0, 0, '00:15:00', '00:15:00', 0);
@@ -128,13 +128,13 @@ CREATE TABLE IF NOT EXISTS `partie` (
 -- Listage de la structure de table sudoku_master. participer
 DROP TABLE IF EXISTS `participer`;
 CREATE TABLE IF NOT EXISTS `participer` (
-  `Id_utilisateur` int NOT NULL,
+  `id_utilisateur` int NOT NULL,
   `id_partie` int NOT NULL,
   `gagnant` tinyint NOT NULL DEFAULT '0',
   `score` int NOT NULL DEFAULT '0',
-  PRIMARY KEY (`Id_utilisateur`,`id_partie`),
+  PRIMARY KEY (`id_utilisateur`,`id_partie`),
   KEY `id_partie` (`id_partie`),
-  CONSTRAINT `participer_ibfk_1` FOREIGN KEY (`Id_utilisateur`) REFERENCES `utilisateur` (`Id_utilisateur`),
+  CONSTRAINT `participer_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id_utilisateur`),
   CONSTRAINT `participer_ibfk_2` FOREIGN KEY (`id_partie`) REFERENCES `partie` (`id_partie`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -142,14 +142,14 @@ CREATE TABLE IF NOT EXISTS `participer` (
 
 CREATE TABLE IF NOT EXISTS `bannissement` (
   `id_bannissement` int NOT NULL AUTO_INCREMENT,
-  `Id_utilisateur` int NOT NULL,
+  `id_utilisateur` int NOT NULL,
   `date_debut_bannissement` datetime DEFAULT NULL,
   `date_fin_bannissement` datetime DEFAULT NULL,
   `raison_bannissement` text NOT NULL,
   `date_annulation` datetime DEFAULT NULL,
   PRIMARY KEY (`id_bannissement`),
-  KEY `Id_utilisateur` (`Id_utilisateur`),
-  CONSTRAINT `bannissement_ibfk_1` FOREIGN KEY (`Id_utilisateur`) REFERENCES `utilisateur` (`Id_utilisateur`)
+  KEY `id_utilisateur` (`id_utilisateur`),
+  CONSTRAINT `bannissement_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id_utilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table sudoku_master.bannissement : ~0 rows (environ)

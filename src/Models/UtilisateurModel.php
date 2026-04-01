@@ -18,7 +18,7 @@ class UtilisateurModel extends Model {
             WHERE inactif = 0";
 
         if ($desc) {
-            $query .= " ORDER BY Id_utilisateur DESC";
+            $query .= " ORDER BY id_utilisateur DESC";
         }
 
         if ($limit != 0) {
