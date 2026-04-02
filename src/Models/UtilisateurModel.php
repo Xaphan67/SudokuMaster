@@ -97,7 +97,7 @@ class UtilisateurModel extends Model {
         // Requête préparée pour supprimer (anonymiser) l'utilisateur
         $query =
             "UPDATE utilisateur
-            SET pseudo_utilisateur = 'Utilisateur supprimé', email_utilisateur = 'utilisateur@supprime.com', mdp_utilisateur = '', inactif = 1
+            SET pseudo_utilisateur = 'Utilisateur-" . $utilisateur->getId() . " supprimé', email_utilisateur = 'utilisateur-" . $utilisateur->getId() . "@supprime.com', mdp_utilisateur = '', inactif = 1
             WHERE id_utilisateur=:id_utilisateur";
 
         $prepare = $this->_db->prepare($query);
