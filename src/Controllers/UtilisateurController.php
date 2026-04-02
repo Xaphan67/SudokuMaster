@@ -181,7 +181,7 @@ class UtilisateurController extends Controller {
 
             // Test des données
             $erreurs["email"] = $this->validation->validateEmail($email);
-            $erreurs["mdp"] = $this->validation->validateMotDePasse($_POST["mdp"]);
+            $erreurs["mdp"] = $this->validation->validateMotDePasse($_POST["mdp"], false);
 
             // Retire les valeures null du tableau d'erreur
             $erreurs = array_filter($erreurs);

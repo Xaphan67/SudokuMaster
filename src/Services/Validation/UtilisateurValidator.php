@@ -10,6 +10,9 @@ class UtilisateurValidator {
         if (empty($pseudo)) {
             return "Ce champ est obligatire";
         }
+        else if (strlen($pseudo) > 50) {
+            return "La longueur du pseudo est de 50 caractères maximum";
+        }
         return null;
     }
 
@@ -22,16 +25,19 @@ class UtilisateurValidator {
         else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return "Adresse mail invalide";
         }
+        else if (strlen($email) > 100) {
+            return "La longueur de l'adresse mail est de 100 caractères maximum";
+        }
         return null;
     }
 
     // Validation champ "mot de passe"
-    public function validateMotDePasse(string $mdp) : ?string {
+    public function validateMotDePasse(string $mdp, bool $regex = true) : ?string {
 
         if (empty($mdp)) {
             return "Ce champ est obligatoire";
         }
-        else if(!preg_match("/(?=\S{8,})(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S/", $_POST["mdp"])) {
+        else if($regex && !preg_match("/(?=\S{8,})(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S/", $_POST["mdp"])) {
             return "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un nombre et un caractère spécial";
         }
         return null;
