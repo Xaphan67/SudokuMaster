@@ -1575,7 +1575,7 @@ td:not(.celluleFixe, .selected_highlight) li {
 
 .top_10 {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: space-between;
   margin-top: 10px;
   height: calc(min(680px, calc(100dvh - 230px)) - 234px);
@@ -1975,7 +1975,7 @@ button {
 
 /* --------------------------------  MOBILE MODE PAYSAGE ET PLUS GRAND (<= 767 px)  --------------------------------*/
 
-@media (min-width: 576px) {
+@media only screen and (min-width: 576px) {
 
   /* Accueil */
 
@@ -2080,7 +2080,7 @@ button {
 
 /* -------------------------------------  TABLETTE ET PLUS GRAND (<= 991 px)  --------------------------------------*/
 
-@media (min-width: 768px) {
+@media only screen and (min-width: 768px) {
 
   /* Header */
 
@@ -2561,7 +2561,7 @@ button {
 
 /* --------------------------------  ORDINATEUR BUREAU ET PLUS GRAND (<= 1199 px)  ---------------------------------*/
 
-@media (min-width: 992px) {
+@media only screen and (min-width: 992px) {
 
   /* Header */
 
@@ -2853,7 +2853,7 @@ button {
 
 /* -----------------------------------------  GRANDS ECRANS (>= 1200 px)  ------------------------------------------*/
 
-@media (min-width: 1200px) {
+@media only screen and (min-width: 1200px) {
 
   /* Jeu solo */
 
