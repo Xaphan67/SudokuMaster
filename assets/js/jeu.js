@@ -66,7 +66,8 @@ if (TITRE_JEU.textContent.includes('Multijoueur')) {
 
     // Set la variable multijoueur à vrai, et se connecte au serveur WebSocket
     multijoueur = true;
-    connexion = new WebSocket('ws://localhost:8080');
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    connexion = new WebSocket(protocol + '//' + window.location.hostname + ':8080');
 
     // En cas de problème de connexion au serveur
     connexion.addEventListener("error", (event) => {

@@ -2,7 +2,7 @@
 set_time_limit(0);
 ob_implicit_flush();
 
-$hote = 'localhost';
+$hote = '0.0.0.0';
 $port = 8080;
 
 // Ouvre un nouveau socket
@@ -105,7 +105,12 @@ while (true) {
                     // et les stocke dans le tableau $listeSalles
                     foreach ($salles as $numero => $infos) {
                         if (!array_key_exists("clos", $infos) && $infos["visibilite"] == "publique") {
-                            $listeSalles["salles"][] = ["numero" => $numero, "mode" => $infos["mode"], "difficulte" => $infos["difficulte"], "hote" => $infos["hote"]];
+                            $listeSalles["salles"][] = [
+                                "numero" => $numero,
+                                "mode" => $infos["mode"],
+                                "difficulte" => $infos["difficulte"],
+                                "hote" => $infos["hote"]
+                            ];
                         }
                     }
 

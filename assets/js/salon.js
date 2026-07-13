@@ -18,7 +18,8 @@ connect();
 function connect() {
 
     // Se connecte au serveur WebSocket
-    connexion = new WebSocket('ws://localhost:8080');
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    connexion = new WebSocket(protocol + '//' + window.location.hostname + ':8080');
 
     // En cas de problème de connexion au serveur WebSocket
     connexion.addEventListener("error", (event) => {

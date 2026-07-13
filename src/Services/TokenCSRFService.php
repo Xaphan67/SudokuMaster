@@ -28,15 +28,13 @@ class TokenCSRFService {
             $estValide = false;
         }
 
-        // Si le token est identique à celui en session 
+        // Si le token est identique à celui en session
         if ($_SESSION["tokenCSRF"]["token"] == $tokenAVerifier) {
 
             // Vérifie que le token n'a pas expiré
             if (time() >= $_SESSION["tokenCSRF"]["expiration"]) {
                 $estValide = false;
             }
-
-            $estValide = true;
         }
 
         // Retire les données du token en session
