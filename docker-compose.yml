@@ -50,6 +50,7 @@ services:
       - "8081:80"
     depends_on:
       - mysql
+    restart: unless-stopped
 
 volumes:
   db_data:
