@@ -1173,8 +1173,10 @@ async function startTimer() {
     if (timerActif == false) { // Si le timer n'a pas démarré ou est en pause, on le démarre
 
         // Change l'icone du bouton
-        document.getElementById("bouton_pause_play").style.display = "none";
-        document.getElementById("bouton_pause_pause").style.display = "block";
+        if (!multijoueur) {
+            document.getElementById("bouton_pause_play").style.display = "none";
+            document.getElementById("bouton_pause_pause").style.display = "block";
+        }
 
         // Rends les éléments visibles et interactibles
         BOUTON_NOTES.style.filter = "revert-layer";
