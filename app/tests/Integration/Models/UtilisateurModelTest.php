@@ -269,7 +269,7 @@ class UtilisateurModelTest extends IntegrationTestCase {
         $donnesUtilisateur = $prepare->fetch();
 
         // Vérifie que les informations ont bien été annonylisées en base de donnée et que l'utilisateur est marqué comme inactif
-        $this->assertEquals("Utilisateur supprimé", $donnesUtilisateur["pseudo_utilisateur"]);
+        $this->assertEquals("Utilisateur-" . $id ." supprimé", $donnesUtilisateur["pseudo_utilisateur"]);
         $this->assertEquals(1, $donnesUtilisateur["inactif"]);
     }
 }
