@@ -41,23 +41,23 @@ class Utilisateur extends Entity {
 
     // Setters
 
-    public function setId($id) {
+    public function setId(int $id) {
         $this->id = $id;
     }
 
-    public function setPseudo($pseudo) {
+    public function setPseudo(string $pseudo) {
         $this->pseudo = $pseudo;
     }
 
-    public function setEmail($email) {
+    public function setEmail(string $email) {
         $this->email = $email;
     }
 
-    public function setMdp($mdp) {
+    public function setMdp(string $mdp) {
         $this->mdp = $mdp;
     }
 
-    public function setRole($role) {
+    public function setRole(int $role) {
         $this->role = $role;
     }
 }

@@ -62,39 +62,39 @@ class Classer extends Entity {
 
     // Setters
 
-    public function setId($id) {
+    public function setId(int $id) {
         $this->id = $id;
     }
 
-    public function setUtilisateur($utilisateur) {
+    public function setUtilisateur(int $utilisateur) {
         $this->utilisateur = $utilisateur;
     }
 
-    public function setMode_de_jeu($mode_de_jeu) {
+    public function setMode_de_jeu(int $mode_de_jeu) {
         $this->mode_de_jeu = $mode_de_jeu;
     }
 
-    public function setGrilles_jouees($grilles_jouees) {
+    public function setGrilles_jouees(int $grilles_jouees) {
         $this->grilles_jouees = $grilles_jouees;
     }
 
-    public function setGrilles_resolues($grilles_resolues) {
+    public function setGrilles_resolues(int $grilles_resolues) {
         $this->grilles_resolues = $grilles_resolues;
     }
 
-    public function setTemps_moyen($temps_moyen) {
+    public function setTemps_moyen(string $temps_moyen) {
         $this->temps_moyen = $temps_moyen;
     }
 
-    public function setMeilleur_temps($meilleur_temps) {
+    public function setMeilleur_temps(string $meilleur_temps) {
         $this->meilleur_temps = $meilleur_temps;
     }
 
-    public function setSerie_victoires($serie_victoires) {
+    public function setSerie_victoires(int $serie_victoires) {
         $this->serie_victoires = $serie_victoires;
     }
 
-    public function setScore_global($score_global) {
+    public function setScore_global(int $score_global) {
         $this->score_global = $score_global;
     }
 }

@@ -41,23 +41,23 @@ class Participer extends Entity {
 
     // Setters
 
-    public function setId($id) {
+    public function setId(int $id) {
         $this->id = $id;
     }
 
-    public function setUtilisateur($utilisateur) {
+    public function setUtilisateur(?int $utilisateur) {
         $this->utilisateur = $utilisateur;
     }
 
-    public function setPartie($partie) {
+    public function setPartie(int $partie) {
         $this->partie = $partie;
     }
 
-    public function setGagnant($gagnant) {
+    public function setGagnant(int $gagnant) {
         $this->gagnant = $gagnant;
     }
 
-    public function setScore($score) {
+    public function setScore(int $score) {
         $this->score = $score;
     }
 }

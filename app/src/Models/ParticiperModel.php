@@ -68,7 +68,7 @@ class ParticiperModel extends Model {
         return $prepare->execute();
     }
 
-    function addScore(Participer $participer, $score) : bool {
+    function addScore(Participer $participer, int $score) : bool {
 
         // Requête préparée pour ajouter le score à la participation
         $query = "UPDATE participer SET score = :score

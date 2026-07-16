@@ -4,7 +4,7 @@ namespace Xaphan67\SudokuMaster\Services\Validation;
 
 class PartieValidator {
 
-    public function validateSalle($salle) : ?string {
+    public function validateSalle(string $salle) : ?string {
 
         if (empty($salle)) {
             return "Ce champ est obligatire";

@@ -41,23 +41,23 @@ class Partie extends Entity {
 
     // Setters
 
-    public function setId($id) {
+    public function setId(int $id) {
         $this->id = $id;
     }
 
-    public function setMode_de_jeu($mode_de_jeu) {
+    public function setMode_de_jeu(int $mode_de_jeu) {
         $this->mode_de_jeu = $mode_de_jeu;
     }
 
-    public function setDifficulte($difficulte) {
+    public function setDifficulte(int $difficulte) {
         $this->difficulte = $difficulte;
     }
 
-    public function setDuree($duree) {
+    public function setDuree(?string $duree) {
         $this->duree = $duree;
     }
 
-    public function setSolution($solution) {
+    public function setSolution(?string $solution) {
         $this->solution = $solution;
     }
 }

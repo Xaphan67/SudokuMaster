@@ -58,7 +58,7 @@ class BannissementModel extends Model {
         return $prepare->execute();
     }
 
-    function findAllByUser($utilisateurId) {
+    function findAllByUser(int $utilisateurId) {
 
         // Requête préparée pour récupérer les bannissements d'un utilisateur
         $query = "SELECT date_debut_bannissement, date_fin_bannissement, raison_bannissement, date_annulation
@@ -75,7 +75,7 @@ class BannissementModel extends Model {
         return $prepare->fetchAll();
     }
 
-    function findLastByUser($utilisateurId) {
+    function findLastByUser(int $utilisateurId) {
 
         // Requête préparée pour récupérer le dernier bannissement de l'utilisateur
         $query = "SELECT id_bannissement, id_utilisateur, date_debut_bannissement, date_fin_bannissement, raison_bannissement, date_annulation

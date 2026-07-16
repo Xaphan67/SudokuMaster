@@ -19,7 +19,7 @@ class TokenCSRFService {
     }
 
     // Vérifie la validité d'un token CSRF
-    public function checkCSRFToken($tokenAVerifier) : bool {
+    public function checkCSRFToken(string $tokenAVerifier) : bool {
 
         $estValide = true;
 

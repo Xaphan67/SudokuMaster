@@ -74,7 +74,7 @@ class PartieModel extends Model {
         return $prepare->execute();
     }
 
-    function getSolution($id) {
+    function getSolution(int $id) {
 
         // Requête préparée pour récupérer la solution de la partie
         $query =
@@ -109,7 +109,7 @@ class PartieModel extends Model {
         return $prepare->execute();
     }
 
-    function findById($id) {
+    function findById(int $id) {
 
         // Requête préparée pour récupérer les informations de la partie
         $query =
@@ -126,7 +126,7 @@ class PartieModel extends Model {
         return $prepare->fetch();
     }
 
-    function getAverageTime($id, $mode) {
+    function getAverageTime(int $id, int $mode) {
 
         // Requête préparée pour trouver le temps moyen de l'utilisateur
         $query =
@@ -146,7 +146,7 @@ class PartieModel extends Model {
         return $prepare->fetch();
     }
 
-    function getBestTime($id, $mode) {
+    function getBestTime(int $id, int $mode) {
 
         // Requête préparée pour trouver le meilleur temps de l'utilisateur
         $query =

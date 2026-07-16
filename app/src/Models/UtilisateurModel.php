@@ -211,7 +211,7 @@ class UtilisateurModel extends Model {
         return $prepare->fetch();
     }
 
-    function resetPassword(string $tokenHash, $mdp) : bool {
+    function resetPassword(string $tokenHash, string $mdp) : bool {
 
         // Requête préparée pour modifier l'utilisateur
         $query =

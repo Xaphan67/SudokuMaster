@@ -29,6 +29,7 @@ class PartieApi extends Controller {
         }
 
         // Si les informations de la partie sont en session
+        $infos = [];
         if (isset($_SESSION["partie"]["hote"])) {
 
             // Crée un tableau qui contiendra les informations de la partie à envoye au JS
@@ -52,7 +53,9 @@ class PartieApi extends Controller {
         }
 
         // Ajoute l'id de l'utilisateur
-        $infos += ["utilisateur" => $_SESSION["utilisateur"]["id_utilisateur"]];
+        if ($infos) {
+            $infos["utilisateur"] = $_SESSION["utilisateur"]["id_utilisateur"];
+        }
 
         // Retourne les informations au JS au format JSON
         echo json_encode($infos);
@@ -81,7 +84,7 @@ class PartieApi extends Controller {
         }
 
         // Détermine si un chiffre est valide
-        function isValid($grille, $ligne, $colonne, $chiffre) : bool {
+        function isValid(array $grille, int $ligne, int $colonne, int $chiffre) : bool {
 
             // Vérifie que le chiffre n'est pas déjà présent sur la ligne
             for ($c = 0; $c <= 8; $c++) {
@@ -102,7 +105,7 @@ class PartieApi extends Controller {
             $colonneBloc = floor($colonne / 3) * 3;
             for ($l = 0; $l <= 2; $l++) {
                 for ($c = 0; $c <= 2; $c++) {
-                    if ($grille[$ligneBloc + $l][$colonneBloc + $c] == $chiffre) {
+                    if ($grille[(int)$ligneBloc + $l][$colonneBloc + $c] == $chiffre) {
                         return false;
                     }
                 }
@@ -113,7 +116,7 @@ class PartieApi extends Controller {
         }
 
         // Remplit la grille à l'aide du backtracking récursif
-        function generateGrid($grille) {
+        function generateGrid(array $grille) {
 
             // Pour chaque ligne, et chaque colonne...
             for ($ligne = 0; $ligne < 9; $ligne++) {
@@ -170,7 +173,7 @@ class PartieApi extends Controller {
                         $bit = 1 << $valeur;
                         $lignes[$ligne] |= $bit;
                         $colonnes[$colonne] |= $bit;
-                        $carres[floor($ligne / 3) * 3 + floor($colonne / 3)] |= $bit;
+                        $carres[(int)(floor($ligne / 3) * 3 + floor($colonne / 3))] |= $bit;
                     } else {
                         $cellulesVides[] = [$ligne, $colonne];
                     }
@@ -196,7 +199,7 @@ class PartieApi extends Controller {
             $meilleurSolution = 10;
 
             foreach ($cellulesVides as $i => [$ligne, $colonne]) {
-                $carre = floor($ligne / 3) * 3 + floor($colonne / 3);
+                $carre = (int)(floor($ligne / 3) * 3 + floor($colonne / 3));
                 $utilise = $lignes[$ligne] | $colonnes[$colonne] | $carres[$carre];
                 $libre = 9 - substr_count(decbin($utilise & 0b1111111110), '1');
 
@@ -210,7 +213,7 @@ class PartieApi extends Controller {
             }
 
             [$ligne, $colonne] = $cellulesVides[$meilleurChoix];
-            $carre = floor($ligne / 3) * 3 + floor($colonne / 3);
+            $carre = (int)(floor($ligne / 3) * 3 + floor($colonne / 3));
             $utilise = $lignes[$ligne] | $colonnes[$colonne] | $carres[$carre];
 
             // Retirer cette cellule de la liste pour les appels récursifs
@@ -253,10 +256,10 @@ class PartieApi extends Controller {
         }
 
         // Détermine si la grille n'a qu'une solution
-        function hasUniqueSolution($grille) {
+        function hasUniqueSolution(array $grille) {
 
             $count = 0;
-            $count = countSolutions($grille, $count);
+            $count = countSolutions($grille);
             return $count === 1;
         }
 

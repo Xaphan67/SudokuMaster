@@ -46,27 +46,27 @@ class Bannissement extends Entity {
 
     // Setters
 
-    public function setId($id) {
+    public function setId(int $id) {
         $this->id = $id;
     }
 
-    public function setUtilisateur($utilisateur) {
+    public function setUtilisateur(int $utilisateur) {
         $this->utilisateur = $utilisateur;
     }
 
-    public function setDate_debut($date_debut) {
+    public function setDate_debut(string $date_debut) {
         $this->date_debut = $date_debut;
     }
 
-    public function setDate_fin($date_fin) {
+    public function setDate_fin(?string $date_fin) {
         $this->date_fin = $date_fin;
     }
 
-    public function setRaison($raison) {
+    public function setRaison(string $raison) {
         $this->raison = $raison;
     }
 
-    public function setDate_annulation($date_annulation) {
+    public function setDate_annulation(?string $date_annulation) {
         $this->date_annulation = $date_annulation;
     }
 }

@@ -15,7 +15,7 @@ abstract class Controller {
     private static ?PHPMailer $_mailerInstance = null;
 
     protected object $_twig;
-    private $loader;
+    private FilesystemLoader $loader;
 
     public function __construct() {
 

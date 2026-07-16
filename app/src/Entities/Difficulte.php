@@ -27,11 +27,11 @@ class Difficulte extends Entity {
 
     // Setters
 
-    public function setId($id) {
+    public function setId(int $id) {
         $this->id = $id;
     }
 
-    public function setLibelle($libelle) {
+    public function setLibelle(string $libelle) {
         $this->libelle = $libelle;
     }
 }
