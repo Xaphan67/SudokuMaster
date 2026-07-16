@@ -36,7 +36,7 @@ class ParticiperModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $participer->getUtilisateur(), PDO::PARAM_INT);
         $prepare->bindValue(":id_partie", $participer->getPartie(), PDO::PARAM_INT);
 
@@ -60,7 +60,7 @@ class ParticiperModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $participer->getUtilisateur(), PDO::PARAM_INT);
         $prepare->bindValue(":id_partie", $participer->getPartie(), PDO::PARAM_INT);
 
@@ -76,7 +76,7 @@ class ParticiperModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $participer->getUtilisateur(), PDO::PARAM_INT);
         $prepare->bindValue(":id_partie", $participer->getPartie(), PDO::PARAM_INT);
         $prepare->bindValue(":score", $score, PDO::PARAM_INT);
@@ -100,7 +100,7 @@ class ParticiperModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $utilisateurId, PDO::PARAM_INT);
 
         // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
@@ -117,7 +117,7 @@ class ParticiperModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $utilisateurId, PDO::PARAM_INT);
         $prepare->bindValue(":id_partie", $partieId, PDO::PARAM_INT);
 

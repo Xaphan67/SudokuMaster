@@ -27,7 +27,7 @@ class BannissementModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $bannissement->getUtilisateur(), PDO::PARAM_INT);
         $prepare->bindValue(":date_debut_bannissement", $bannissement->getDate_debut(), PDO::PARAM_STR);
 
@@ -50,7 +50,7 @@ class BannissementModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":date_annulation", $bannissement->getDate_annulation(), PDO::PARAM_STR);
         $prepare->bindValue(":id_bannissement", $bannissement->getId(), PDO::PARAM_INT);
 
@@ -67,7 +67,7 @@ class BannissementModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $utilisateurId, PDO::PARAM_INT);
 
         // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
@@ -86,7 +86,7 @@ class BannissementModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $utilisateurId, PDO::PARAM_INT);
 
         // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)

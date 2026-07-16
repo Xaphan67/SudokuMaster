@@ -15,7 +15,7 @@ class ClasserModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $classer->getUtilisateur(), PDO::PARAM_INT);
         $prepare->bindValue(":id_mode_de_jeu", $classer->getMode_de_jeu(), PDO::PARAM_INT);
         $prepare->bindValue(":score_global", $classer->getScore_global(), PDO::PARAM_INT);
@@ -34,7 +34,7 @@ class ClasserModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":score_global", $classer->getScore_global(), PDO::PARAM_INT);
         $prepare->bindValue(":grilles_jouees", $classer->getGrilles_jouees(), PDO::PARAM_INT);
         $prepare->bindValue(":grilles_resolues", $classer->getGrilles_resolues(), PDO::PARAM_INT);
@@ -77,7 +77,7 @@ class ClasserModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_mode_de_jeu", $modeId, PDO::PARAM_INT);
         $prepare->bindValue(":limit", $limit, PDO::PARAM_INT);
 
@@ -108,7 +108,7 @@ class ClasserModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $utilisateurId, PDO::PARAM_INT);
         $prepare->bindValue(":id_mode_de_jeu", $modeId, PDO::PARAM_INT);
 

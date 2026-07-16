@@ -1124,7 +1124,7 @@ function resetTimer() {
     TIMER.textContent = "Temps : 15:00";
 }
 
-// Force l'attente du sript pendant la durée pasée en paramettres (en milisecondes)
+// Force l'attente du sript pendant la durée pasée en paramètres (en milisecondes)
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }

@@ -20,7 +20,7 @@ class DifficulteModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":libelle_difficulte", $libelle, PDO::PARAM_STR);
 
         // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)

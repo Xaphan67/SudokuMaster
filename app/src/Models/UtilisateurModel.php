@@ -41,7 +41,7 @@ class UtilisateurModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":pseudo_utilisateur", $utilisateur->getPseudo(), PDO::PARAM_STR);
         $prepare->bindValue(":email_utilisateur", $utilisateur->getEmail(), PDO::PARAM_STR);
         $prepare->bindValue(":mdp_utilisateur", $utilisateur->getMdp(), PDO::PARAM_STR);
@@ -73,7 +73,7 @@ class UtilisateurModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":pseudo_utilisateur", $utilisateur->getPseudo(), PDO::PARAM_STR);
         $prepare->bindValue(":email_utilisateur", $utilisateur->getEmail(), PDO::PARAM_STR);
         $prepare->bindValue(":id_utilisateur", $utilisateur->getId(), PDO::PARAM_INT);
@@ -102,7 +102,7 @@ class UtilisateurModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $utilisateur->getId(), PDO::PARAM_INT);
 
         // Execute la requête. Retourne true (si réussite) ou false (si echec)
@@ -133,7 +133,7 @@ class UtilisateurModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $id, PDO::PARAM_INT);
 
         // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
@@ -150,7 +150,7 @@ class UtilisateurModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":email_utilisateur", $email, PDO::PARAM_STR);
 
         // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
@@ -167,7 +167,7 @@ class UtilisateurModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":email_utilisateur", $email, PDO::PARAM_STR);
 
         // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
@@ -185,7 +185,7 @@ class UtilisateurModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":reset_token_hash", $tokenHash, PDO::PARAM_STR);
         $prepare->bindValue(":reset_token_date_expiration", $tokenDateExpiration, PDO::PARAM_STR);
         $prepare->bindValue(":email_utilisateur", $email, PDO::PARAM_STR);
@@ -203,7 +203,7 @@ class UtilisateurModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":reset_token_hash", $tokenHash, PDO::PARAM_STR);
 
         // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
@@ -221,7 +221,7 @@ class UtilisateurModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":mdp_utilisateur", $mdp, PDO::PARAM_STR);
         $prepare->bindValue(":reset_token_hash", $tokenHash, PDO::PARAM_STR);
 

@@ -42,7 +42,7 @@ class PartieModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_mode_de_jeu", $partie->getMode_de_jeu(), PDO::PARAM_INT);
         $prepare->bindValue(":id_difficulte", $partie->getDifficulte(), PDO::PARAM_INT);
 
@@ -66,7 +66,7 @@ class PartieModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":solution_partie", $partie->getSolution(), PDO::PARAM_STR);
         $prepare->bindValue(":id_partie", $partie->getId(), PDO::PARAM_INT);
 
@@ -84,7 +84,7 @@ class PartieModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_partie", $id, PDO::PARAM_INT);
 
         // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
@@ -101,7 +101,7 @@ class PartieModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":duree_partie", $partie->getDuree(), PDO::PARAM_STR);
         $prepare->bindValue(":id_partie", $partie->getId(), PDO::PARAM_INT);
 
@@ -118,7 +118,7 @@ class PartieModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_partie", $id, PDO::PARAM_INT);
 
         // Execute la requête. Retourne un tableau (si résussite) ou false (si echec)
@@ -137,7 +137,7 @@ class PartieModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $id, PDO::PARAM_INT);
         $prepare->bindValue("id_mode_de_jeu", $mode, PDO::PARAM_INT);
 
@@ -157,7 +157,7 @@ class PartieModel extends Model {
 
         $prepare = $this->_db->prepare($query);
 
-        // Définition des paramettres de la requête préparée
+        // Définition des paramètres de la requête préparée
         $prepare->bindValue(":id_utilisateur", $id, PDO::PARAM_INT);
         $prepare->bindValue("id_mode_de_jeu", $mode, PDO::PARAM_INT);
 
