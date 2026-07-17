@@ -80,6 +80,10 @@ class AdminController extends Controller {
             $maintenant = date('Y-m-d H:i', time());
 
             // Test des données
+            $erreurs["role"] = $this->validation->validateRole($_POST["id_utilisateur"]);
+
+            var_dump($erreurs);
+            die();
             $erreurs["dateFin"] = $this->validation->validateDate($date, $maintenant);
             $erreurs["raison"] = $this->validation->validateRaison($raison);
 

@@ -35,6 +35,12 @@ class UtilisateurApi extends Controller {
         $utilisateur = new Utilisateur;
         $utilisateur->hydrate($utilisateurModel->findById($dataJS["id"]));
 
+        // Vérifie que l'utilisateur n'est pas l'administrateur
+        if ($utilisateur->getRole() == 1) {
+            echo $this->jsonErrorResponse(403, "Impossible de supprimer cet utilisateur");
+            exit();
+        }
+
         // Supprime l'utilisateur en base de données
         $utilisateurModel->delete($utilisateur);
     }

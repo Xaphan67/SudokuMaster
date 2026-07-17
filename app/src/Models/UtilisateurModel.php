@@ -126,7 +126,7 @@ class UtilisateurModel extends Model {
 
         // Requête préparée pour récupérer les informations de l'utilisateur
         $query =
-            "SELECT id_utilisateur, date_inscription_utilisateur, pseudo_utilisateur, email_utilisateur, libelle_role
+            "SELECT id_utilisateur, date_inscription_utilisateur, pseudo_utilisateur, email_utilisateur, utilisateur.id_role AS 'role', libelle_role
             FROM utilisateur
             INNER JOIN role ON role.id_role = utilisateur.id_role
             WHERE id_utilisateur=:id_utilisateur";
