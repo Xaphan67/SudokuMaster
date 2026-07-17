@@ -69,7 +69,7 @@ class AdminController extends Controller {
         if (count($_POST) > 0) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || (isset($_POST["tokenCSRF"]) && !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"]))) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
@@ -82,8 +82,6 @@ class AdminController extends Controller {
             // Test des données
             $erreurs["role"] = $this->validation->validateRole($_POST["id_utilisateur"]);
 
-            var_dump($erreurs);
-            die();
             $erreurs["dateFin"] = $this->validation->validateDate($date, $maintenant);
             $erreurs["raison"] = $this->validation->validateRaison($raison);
 
@@ -187,7 +185,7 @@ class AdminController extends Controller {
         if (count($_POST) > 0) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || (isset($_POST["tokenCSRF"]) && !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"]))) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 

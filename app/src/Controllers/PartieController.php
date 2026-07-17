@@ -53,7 +53,7 @@ class PartieController extends Controller {
         if (isset($_POST["creer_salle"])) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || (isset($_POST["tokenCSRF"]) && !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"]))) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
@@ -76,7 +76,7 @@ class PartieController extends Controller {
         if (isset($_POST["rejoindre_salle"])) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || (isset($_POST["tokenCSRF"]) && !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"]))) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 

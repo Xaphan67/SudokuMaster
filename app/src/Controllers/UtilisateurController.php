@@ -67,7 +67,7 @@ class UtilisateurController extends Controller {
         if (count($_POST) > 0) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || (isset($_POST["tokenCSRF"]) && !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"]))) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
@@ -171,8 +171,8 @@ class UtilisateurController extends Controller {
         if (count($_POST) > 0) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
-                $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer. Maintenant : " . time() . " - Expiration : " . $_SESSION["tokenCSRF"]["expiration"];
+            if (!isset($_POST["tokenCSRF"]) || (isset($_POST["tokenCSRF"]) && !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"]))) {
+                $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
             // Filtrage des données
@@ -302,7 +302,7 @@ class UtilisateurController extends Controller {
         if (isset($_POST["modifier_compte"])) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || (isset($_POST["tokenCSRF"]) && !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"]))) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
@@ -378,7 +378,7 @@ class UtilisateurController extends Controller {
         if (isset($_POST["supprimer_compte"])) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || (isset($_POST["tokenCSRF"]) && !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"]))) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
@@ -501,7 +501,7 @@ class UtilisateurController extends Controller {
         if (count($_POST) > 0) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || (isset($_POST["tokenCSRF"]) && !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"]))) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
@@ -615,7 +615,7 @@ class UtilisateurController extends Controller {
         if (count($_POST) > 0 && $tokenValide) {
 
             // Vérifie la validité du token CSRF
-            if (!isset($_POST["tokenCSRF"]) || !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"])) {
+            if (!isset($_POST["tokenCSRF"]) || (isset($_POST["tokenCSRF"]) && !$this->tokenCSRFService->checkCSRFToken($_POST["tokenCSRF"]))) {
                 $erreurs["general"] = "Une erreur s'est produite, Veuillez ré-essayer";
             }
 
