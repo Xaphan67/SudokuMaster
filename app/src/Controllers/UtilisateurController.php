@@ -523,31 +523,35 @@ class UtilisateurController extends Controller {
                 $tokenHash = hash("sha256", $token);
                 $tokenDateExpiration = date("Y-m-d H:i:s", time() + 30 * 60); // Heure actuelle + 30 minutes (30 * 60 secondes)
 
-                // Insére le token de l'utilisateur en base de données
-                $tokenAjoute = $this->utilisateurModel->setToken($email, $tokenHash, $tokenDateExpiration);
+                // vérifie que l'email existe dans la base de données
+                $user = $this->utilisateurModel->findByMail($email);
+                if ($user) {
+                    // Insére le token de l'utilisateur en base de données
+                    $tokenAjoute = $this->utilisateurModel->setToken($email, $tokenHash, $tokenDateExpiration);
 
-                // Si le tocken à bien été ajouté en base de donnée,
-                // appelle le mailer pour envoyer un email à l'utilisateur
-                if ($tokenAjoute) {
+                    // Si le tocken à bien été ajouté en base de donnée,
+                    // appelle le mailer pour envoyer un email à l'utilisateur
+                    if ($tokenAjoute) {
 
-                    // Ajoute l'adresse mail saisie en tant que destinataire
-                    $this->_mailer->addAddress($email);
+                        // Ajoute l'adresse mail saisie en tant que destinataire
+                        $this->_mailer->addAddress($email);
 
-                    // Ajoute un sujet à l'email
-                    $this->_mailer->Subject = "Sudoku Master - Réinitialisation de votre mot de passe";
+                        // Ajoute un sujet à l'email
+                        $this->_mailer->Subject = "Sudoku Master - Réinitialisation de votre mot de passe";
 
-                    // Ajoute le corps de l'email
-                    $this->_mailer->Body = 'Bonjour, Vous avez demandé la réinitialisation de votre mot de passe Sudoku Master.
-                    Pour ce faire, merci de cliquer sur <a href="' . $_ENV["DOMAIN_NAME"] . '/reinitialisationMdp?token=' . $token . '">ce lien</a>';
+                        // Ajoute le corps de l'email
+                        $this->_mailer->Body = 'Bonjour, Vous avez demandé la réinitialisation de votre mot de passe Sudoku Master.
+                        Pour ce faire, merci de cliquer sur <a href="' . $_ENV["DOMAIN_NAME"] . '/reinitialisationMdp?token=' . $token . '">ce lien</a>';
 
-                    // Envoie l'email
-                    try {
-                        $this->_mailer->send();
+                        // Envoie l'email
+                        try {
+                            $this->_mailer->send();
+                        }
+                        catch (\Exception $e) {
+                            echo "Erreur d'envoi : " . $this->_mailer->ErrorInfo;
+                        }
+
                     }
-                    catch (\Exception $e) {
-                        echo "Erreur d'envoi : " . $this->_mailer->ErrorInfo;
-                    }
-
                 }
 
                 // Indiquer à la vue qu'un email à été envoyé
